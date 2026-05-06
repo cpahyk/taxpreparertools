@@ -1,0 +1,609 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Tax Tools Directory | TaxPreparerTools.com</title>
+<meta name="description" content="40+ free tax tools for CPAs, Enrolled Agents, Tax Preparers and individuals. Calculators, deadline trackers, form guides and more.">
+<link rel="canonical" href="https://taxpreparertools.com/tools" />
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700;900&family=DM+Sans:ital,wght@0,300;0,400;0,500;0,600;1,400&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --navy: #08152a;
+    --navy-mid: #0f1f3d;
+    --slate: #1a2f52;
+    --gold: #c8a84b;
+    --gold-light: #e8c96a;
+    --gold-dim: rgba(200,168,75,0.15);
+    --cream: #faf7ef;
+    --white: #ffffff;
+    --muted: #7a8fac;
+    --text: #dde4f0;
+    --border: rgba(200,168,75,0.14);
+    --card: rgba(255,255,255,0.035);
+    --card-h: rgba(200,168,75,0.06);
+    --green: #4ade80;
+    --blue: #60a5fa;
+    --purple: #a78bfa;
+    --orange: #fb923c;
+    --red: #f87171;
+  }
+
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; }
+
+  body {
+    font-family: 'DM Sans', sans-serif;
+    background: var(--navy);
+    color: var(--text);
+    min-height: 100vh;
+  }
+
+  /* ── NAV ── */
+  nav {
+    position: sticky; top: 0; z-index: 200;
+    padding: 16px 48px;
+    display: flex; align-items: center; justify-content: space-between;
+    background: rgba(8,21,42,0.92);
+    backdrop-filter: blur(20px);
+    border-bottom: 1px solid var(--border);
+  }
+  .logo { display:flex; align-items:center; gap:10px; text-decoration:none; }
+  .logo-mark {
+    width:34px; height:34px; background:var(--gold); border-radius:7px;
+    display:flex; align-items:center; justify-content:center; font-size:17px;
+  }
+  .logo-name {
+    font-family:'Playfair Display',serif; font-size:1.2rem; font-weight:700;
+    color:var(--white);
+  }
+  .logo-name span { color:var(--gold); }
+  .logo-domain { font-size:0.68rem; color:var(--muted); font-family:'DM Mono',monospace; letter-spacing:0.05em; margin-left:2px; display:block; line-height:1; }
+
+  .nav-links { display:flex; gap:28px; list-style:none; }
+  .nav-links a { color:var(--muted); font-size:0.85rem; font-weight:500; text-decoration:none; transition:color .2s; }
+  .nav-links a:hover, .nav-links a.active { color:var(--gold); }
+
+  .nav-right { display:flex; gap:12px; align-items:center; }
+  .btn-sm {
+    padding:8px 18px; border-radius:6px; font-size:0.82rem; font-weight:700;
+    cursor:pointer; text-decoration:none; transition:all .2s; border:none;
+    font-family:'DM Sans',sans-serif;
+  }
+  .btn-ghost { background:transparent; color:var(--muted); border:1px solid var(--border); }
+  .btn-ghost:hover { color:var(--gold); border-color:var(--gold); }
+  .btn-gold { background:var(--gold); color:var(--navy); }
+  .btn-gold:hover { background:var(--gold-light); transform:translateY(-1px); }
+
+  /* ── PAGE HEADER ── */
+  .page-header {
+    padding: 72px 48px 56px;
+    background: linear-gradient(180deg, rgba(200,168,75,0.07) 0%, transparent 100%);
+    border-bottom: 1px solid var(--border);
+    position: relative;
+    overflow: hidden;
+  }
+  .page-header::before {
+    content:'';
+    position:absolute; top:0; left:0; right:0; bottom:0;
+    background-image:
+      linear-gradient(rgba(200,168,75,0.03) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(200,168,75,0.03) 1px, transparent 1px);
+    background-size: 48px 48px;
+  }
+  .header-inner { position:relative; max-width:1200px; margin:0 auto; }
+  .breadcrumb {
+    font-size:0.75rem; font-family:'DM Mono',monospace; color:var(--muted);
+    margin-bottom:16px; display:flex; gap:8px; align-items:center;
+  }
+  .breadcrumb a { color:var(--gold); text-decoration:none; }
+  .breadcrumb span { opacity:.4; }
+  h1 {
+    font-family:'Playfair Display',serif; font-size:clamp(2rem,4vw,3.2rem);
+    font-weight:900; color:var(--white); letter-spacing:-0.03em;
+    margin-bottom:14px; line-height:1.1;
+  }
+  .header-sub { color:var(--muted); font-size:1rem; max-width:560px; line-height:1.7; margin-bottom:28px; }
+  .header-meta { display:flex; gap:28px; flex-wrap:wrap; }
+  .meta-pill {
+    display:flex; align-items:center; gap:7px; font-size:0.78rem;
+    color:var(--muted); font-family:'DM Mono',monospace;
+  }
+  .meta-pill .dot { width:7px; height:7px; border-radius:50%; }
+  .dot-green { background:var(--green); box-shadow:0 0 6px var(--green); }
+  .dot-gold { background:var(--gold); }
+  .dot-blue { background:var(--blue); }
+
+  /* ── SEARCH & FILTER BAR ── */
+  .controls {
+    position: sticky; top: 65px; z-index: 100;
+    background: rgba(8,21,42,0.95);
+    backdrop-filter: blur(16px);
+    border-bottom: 1px solid var(--border);
+    padding: 16px 48px;
+  }
+  .controls-inner { max-width:1200px; margin:0 auto; display:flex; gap:16px; align-items:center; flex-wrap:wrap; }
+
+  .search-wrap {
+    position:relative; flex:1; min-width:240px;
+  }
+  .search-icon { position:absolute; left:14px; top:50%; transform:translateY(-50%); color:var(--muted); font-size:15px; pointer-events:none; }
+  #searchInput {
+    width:100%; background:rgba(255,255,255,0.05); border:1px solid var(--border);
+    border-radius:8px; padding:10px 14px 10px 40px;
+    color:var(--white); font-size:0.875rem; font-family:'DM Sans',sans-serif;
+    outline:none; transition:border-color .2s;
+  }
+  #searchInput:focus { border-color:var(--gold); }
+  #searchInput::placeholder { color:var(--muted); }
+
+  .filter-row { display:flex; gap:8px; flex-wrap:wrap; }
+  .chip {
+    padding:7px 16px; border-radius:50px; font-size:0.78rem; font-weight:600;
+    cursor:pointer; border:1px solid var(--border); background:transparent;
+    color:var(--muted); transition:all .18s; font-family:'DM Sans',sans-serif;
+    white-space:nowrap;
+  }
+  .chip:hover { color:var(--text); border-color:rgba(255,255,255,0.2); }
+  .chip.on { background:var(--gold); color:var(--navy); border-color:var(--gold); }
+
+  .view-btns { display:flex; gap:4px; margin-left:auto; }
+  .view-btn {
+    width:34px; height:34px; border-radius:6px; border:1px solid var(--border);
+    background:transparent; color:var(--muted); cursor:pointer;
+    display:flex; align-items:center; justify-content:center; font-size:14px;
+    transition:all .18s;
+  }
+  .view-btn.on { background:var(--gold-dim); color:var(--gold); border-color:var(--gold); }
+
+  /* ── MAIN LAYOUT ── */
+  .main-wrap { max-width:1200px; margin:0 auto; padding:40px 48px 80px; display:flex; gap:36px; }
+
+  /* ── SIDEBAR ── */
+  .sidebar { width:220px; flex-shrink:0; }
+  .sidebar-section { margin-bottom:32px; }
+  .sidebar-label { font-size:0.68rem; font-weight:700; letter-spacing:0.12em; text-transform:uppercase; color:var(--muted); font-family:'DM Mono',monospace; margin-bottom:12px; }
+  .sidebar-item {
+    display:flex; align-items:center; justify-content:space-between;
+    padding:8px 12px; border-radius:7px; cursor:pointer;
+    font-size:0.83rem; color:var(--muted); transition:all .18s;
+    margin-bottom:2px;
+  }
+  .sidebar-item:hover { background:var(--card); color:var(--text); }
+  .sidebar-item.on { background:var(--gold-dim); color:var(--gold); font-weight:600; }
+  .sidebar-item .count {
+    font-family:'DM Mono',monospace; font-size:0.7rem;
+    background:rgba(255,255,255,0.07); padding:2px 7px; border-radius:50px;
+  }
+  .sidebar-item.on .count { background:rgba(200,168,75,0.2); }
+
+  /* ── TOOLS CONTENT ── */
+  .tools-content { flex:1; min-width:0; }
+  .results-bar { display:flex; align-items:center; justify-content:space-between; margin-bottom:24px; flex-wrap:wrap; gap:12px; }
+  .results-count { font-size:0.82rem; color:var(--muted); font-family:'DM Mono',monospace; }
+  .results-count strong { color:var(--gold); }
+  .sort-sel {
+    background:rgba(255,255,255,0.05); border:1px solid var(--border);
+    color:var(--text); border-radius:7px; padding:7px 12px;
+    font-size:0.8rem; font-family:'DM Sans',sans-serif; outline:none; cursor:pointer;
+  }
+
+  /* Grid View */
+  #toolsContainer.grid-view {
+    display:grid; grid-template-columns:repeat(auto-fill, minmax(280px,1fr)); gap:18px;
+  }
+  /* List View */
+  #toolsContainer.list-view { display:flex; flex-direction:column; gap:10px; }
+
+  /* GRID CARD */
+  .tool-card {
+    background:var(--card); border:1px solid var(--border);
+    border-radius:16px; padding:26px; transition:all .25s;
+    cursor:pointer; position:relative; overflow:hidden; text-decoration:none; display:block;
+  }
+  .tool-card::after {
+    content:''; position:absolute; inset:0;
+    background:linear-gradient(135deg, rgba(200,168,75,0.05) 0%, transparent 60%);
+    opacity:0; transition:opacity .25s;
+  }
+  .tool-card:hover { border-color:rgba(200,168,75,0.35); transform:translateY(-4px); box-shadow:0 20px 50px rgba(0,0,0,.35); }
+  .tool-card:hover::after { opacity:1; }
+
+  .card-top { display:flex; align-items:flex-start; justify-content:space-between; margin-bottom:14px; }
+  .tool-emoji { font-size:1.9rem; line-height:1; }
+  .card-badges { display:flex; flex-direction:column; gap:4px; align-items:flex-end; }
+  .badge {
+    font-size:0.65rem; font-weight:700; letter-spacing:0.08em; text-transform:uppercase;
+    padding:3px 9px; border-radius:50px; font-family:'DM Mono',monospace; white-space:nowrap;
+  }
+  .b-free { background:rgba(74,222,128,0.12); color:var(--green); }
+  .b-pro { background:rgba(200,168,75,0.14); color:var(--gold); }
+  .b-new { background:rgba(96,165,250,0.14); color:var(--blue); }
+
+  .card-name { font-family:'Playfair Display',serif; font-size:1.05rem; font-weight:700; color:var(--white); margin-bottom:8px; line-height:1.25; }
+  .card-desc { font-size:0.8rem; color:var(--muted); line-height:1.6; margin-bottom:18px; }
+  .card-footer { display:flex; align-items:center; justify-content:space-between; }
+  .card-cat { font-size:0.7rem; font-family:'DM Mono',monospace; font-weight:600; letter-spacing:0.08em; text-transform:uppercase; }
+  .cat-calc { color:#60a5fa; }
+  .cat-pro { color:var(--gold); }
+  .cat-ind { color:var(--green); }
+  .cat-biz { color:#a78bfa; }
+  .cat-dead { color:var(--orange); }
+  .cat-ref { color:#f472b6; }
+
+  .card-arrow { color:var(--muted); font-size:0.9rem; transition:all .2s; }
+  .tool-card:hover .card-arrow { color:var(--gold); transform:translateX(4px); }
+
+  /* LIST CARD */
+  .tool-card.list-card {
+    padding:18px 22px; border-radius:10px;
+    display:flex !important; align-items:center; gap:18px;
+    transform:none !important;
+  }
+  .tool-card.list-card:hover { transform:translateX(4px) !important; }
+  .list-emoji { font-size:1.5rem; flex-shrink:0; }
+  .list-body { flex:1; min-width:0; }
+  .list-name { font-family:'Playfair Display',serif; font-size:0.95rem; font-weight:700; color:var(--white); margin-bottom:3px; }
+  .list-desc { font-size:0.78rem; color:var(--muted); line-height:1.5; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
+  .list-right { display:flex; align-items:center; gap:16px; flex-shrink:0; }
+  .list-cat { font-size:0.68rem; font-family:'DM Mono',monospace; font-weight:700; text-transform:uppercase; letter-spacing:0.08em; }
+
+  /* SECTION HEADERS inside grid */
+  .cat-header {
+    grid-column:1/-1; display:flex; align-items:center; gap:14px;
+    padding:12px 0 4px; margin-top:8px;
+    border-bottom:1px solid var(--border);
+  }
+  .cat-header-icon { font-size:1.2rem; }
+  .cat-header-name { font-family:'Playfair Display',serif; font-size:1.1rem; font-weight:700; color:var(--white); }
+  .cat-header-count { font-size:0.72rem; font-family:'DM Mono',monospace; color:var(--muted); }
+
+  /* ── EMPTY STATE ── */
+  .empty-state { grid-column:1/-1; text-align:center; padding:80px 40px; }
+  .empty-icon { font-size:3rem; margin-bottom:16px; opacity:.4; }
+  .empty-title { font-family:'Playfair Display',serif; font-size:1.4rem; color:var(--white); margin-bottom:10px; }
+  .empty-sub { color:var(--muted); font-size:0.875rem; }
+
+  /* ── FOOTER ── */
+  footer {
+    border-top:1px solid var(--border); padding:36px 48px;
+    display:flex; align-items:center; justify-content:space-between; flex-wrap:wrap; gap:16px;
+    background:var(--navy-mid);
+  }
+  .footer-left { font-size:0.78rem; color:var(--muted); }
+  .footer-left a { color:var(--gold); text-decoration:none; }
+  .footer-links { display:flex; gap:24px; }
+  .footer-links a { font-size:0.78rem; color:var(--muted); text-decoration:none; transition:color .2s; }
+  .footer-links a:hover { color:var(--gold); }
+
+  /* ── RESPONSIVE ── */
+  @media(max-width:900px){
+    nav { padding:14px 20px; }
+    .nav-links { display:none; }
+    .page-header { padding:48px 20px 36px; }
+    .controls { padding:14px 20px; }
+    .main-wrap { flex-direction:column; padding:24px 20px 60px; }
+    .sidebar { width:100%; }
+    footer { padding:24px 20px; flex-direction:column; }
+  }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <a href="/" class="logo">
+    <div class="logo-mark">⚖</div>
+    <div>
+      <span class="logo-name">TaxPreparer<span>Tools</span></span>
+      <span class="logo-domain">taxpreparertools.com</span>
+    </div>
+  </a>
+  <ul class="nav-links">
+    <li><a href="/tools" class="active">Tools</a></li>
+    <li><a href="/calculator">Calculator</a></li>
+    <li><a href="/deadlines">Deadlines</a></li>
+    <li><a href="/ai-assistant">AI Assistant</a></li>
+    <li><a href="/resources">Resources</a></li>
+  </ul>
+  <div class="nav-right">
+    <a href="/login" class="btn-sm btn-ghost">Log In</a>
+    <a href="/signup" class="btn-sm btn-gold">Get Pro Free</a>
+  </div>
+</nav>
+
+<!-- PAGE HEADER -->
+<div class="page-header">
+  <div class="header-inner">
+    <div class="breadcrumb">
+      <a href="/">taxpreparertools.com</a>
+      <span>/</span>
+      tools
+    </div>
+    <h1>The Complete Tax Tools<br>Directory</h1>
+    <p class="header-sub">40+ purpose-built tools for CPAs, Enrolled Agents, tax preparers, and individuals. Free to use, always current.</p>
+    <div class="header-meta">
+      <div class="meta-pill"><span class="dot dot-green"></span>42 Tools Available</div>
+      <div class="meta-pill"><span class="dot dot-gold"></span>Updated for 2025 Tax Year</div>
+      <div class="meta-pill"><span class="dot dot-blue"></span>8 New Tools Added</div>
+    </div>
+  </div>
+</div>
+
+<!-- CONTROLS -->
+<div class="controls">
+  <div class="controls-inner">
+    <div class="search-wrap">
+      <span class="search-icon">🔍</span>
+      <input type="text" id="searchInput" placeholder="Search tools… e.g. 'depreciation', 'W-4', 'penalty'" oninput="applyFilters()" />
+    </div>
+    <div class="filter-row" id="chipRow">
+      <button class="chip on" data-cat="all" onclick="setChip(this)">All</button>
+      <button class="chip" data-cat="calc" onclick="setChip(this)">🧮 Calculators</button>
+      <button class="chip" data-cat="pro" onclick="setChip(this)">🏛️ CPA / EA Pro</button>
+      <button class="chip" data-cat="ind" onclick="setChip(this)">🏠 Individual</button>
+      <button class="chip" data-cat="biz" onclick="setChip(this)">🏢 Business</button>
+      <button class="chip" data-cat="dead" onclick="setChip(this)">📅 Deadlines</button>
+      <button class="chip" data-cat="ref" onclick="setChip(this)">📚 Reference</button>
+    </div>
+    <div class="view-btns">
+      <button class="view-btn on" id="gridBtn" onclick="setView('grid')" title="Grid view">⊞</button>
+      <button class="view-btn" id="listBtn" onclick="setView('list')" title="List view">☰</button>
+    </div>
+  </div>
+</div>
+
+<!-- MAIN -->
+<div class="main-wrap">
+
+  <!-- SIDEBAR -->
+  <aside class="sidebar">
+    <div class="sidebar-section">
+      <div class="sidebar-label">Categories</div>
+      <div class="sidebar-item on" data-cat="all" onclick="sidebarFilter(this)">All Tools <span class="count">42</span></div>
+      <div class="sidebar-item" data-cat="calc" onclick="sidebarFilter(this)">Calculators <span class="count">12</span></div>
+      <div class="sidebar-item" data-cat="pro" onclick="sidebarFilter(this)">CPA / EA Pro <span class="count">10</span></div>
+      <div class="sidebar-item" data-cat="ind" onclick="sidebarFilter(this)">Individual <span class="count">9</span></div>
+      <div class="sidebar-item" data-cat="biz" onclick="sidebarFilter(this)">Business <span class="count">7</span></div>
+      <div class="sidebar-item" data-cat="dead" onclick="sidebarFilter(this)">Deadlines <span class="count">3</span></div>
+      <div class="sidebar-item" data-cat="ref" onclick="sidebarFilter(this)">Reference <span class="count">1</span></div>
+    </div>
+    <div class="sidebar-section">
+      <div class="sidebar-label">Availability</div>
+      <div class="sidebar-item on" data-avail="all" onclick="availFilter(this)">All <span class="count">42</span></div>
+      <div class="sidebar-item" data-avail="free" onclick="availFilter(this)">Free <span class="count">34</span></div>
+      <div class="sidebar-item" data-avail="pro" onclick="availFilter(this)">Pro Only <span class="count">8</span></div>
+    </div>
+    <div class="sidebar-section">
+      <div class="sidebar-label">Quick Links</div>
+      <div class="sidebar-item" onclick="document.getElementById('searchInput').value='new';applyFilters()">🆕 New Tools</div>
+      <div class="sidebar-item" onclick="document.getElementById('searchInput').value='';applyFilters()">⭐ Most Used</div>
+      <div class="sidebar-item" onclick="document.getElementById('searchInput').value='2025';applyFilters()">📅 2025 Updated</div>
+    </div>
+  </aside>
+
+  <!-- TOOLS GRID -->
+  <div class="tools-content">
+    <div class="results-bar">
+      <div class="results-count">Showing <strong id="resultCount">42</strong> tools</div>
+      <select class="sort-sel" onchange="applyFilters()">
+        <option>Most Popular</option>
+        <option>Newest First</option>
+        <option>A → Z</option>
+        <option>Z → A</option>
+      </select>
+    </div>
+    <div id="toolsContainer" class="grid-view"></div>
+  </div>
+</div>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-left">
+    © 2026 <a href="https://taxpreparertools.com">TaxPreparerTools.com</a> · For informational purposes only · Not affiliated with the IRS
+  </div>
+  <div class="footer-links">
+    <a href="/privacy">Privacy</a>
+    <a href="/terms">Terms</a>
+    <a href="/contact">Contact</a>
+    <a href="https://irs.gov" target="_blank">IRS.gov ↗</a>
+  </div>
+</footer>
+
+<script>
+const ALL_TOOLS = [
+  // CALCULATORS
+  { id:1, emoji:"🧮", name:"Federal Income Tax Estimator", desc:"Estimate 2025 federal taxes across all filing statuses with full bracket breakdown and effective rate.", cat:"calc", catLabel:"Calculator", avail:"free", url:"/tools/federal-tax-estimator", tags:["income tax","brackets","2025","federal","filing status"] },
+  { id:2, emoji:"💼", name:"Self-Employment Tax Calculator", desc:"Compute SE tax (SS + Medicare), deductible SE portion, and impact on AGI for Schedule SE.", cat:"calc", catLabel:"Calculator", avail:"free", url:"/tools/se-tax-calculator", tags:["self employment","schedule se","social security","medicare","freelance"] },
+  { id:3, emoji:"📆", name:"Quarterly Estimated Payment Calc", desc:"Determine safe-harbor amounts and generate a full quarterly payment schedule for the year.", cat:"calc", catLabel:"Calculator", avail:"free", url:"/tools/quarterly-payments", tags:["estimated tax","quarterly","1040-ES","safe harbor"] },
+  { id:4, emoji:"🏠", name:"Home Office Deduction Calculator", desc:"Calculate home office deduction using both simplified and regular methods — pick the better outcome.", cat:"calc", catLabel:"Calculator", avail:"free", url:"/tools/home-office", tags:["home office","schedule C","deduction","simplified method"] },
+  { id:5, emoji:"🚗", name:"Mileage Deduction Calculator", desc:"Standard mileage rate calculator for business, medical, charity, and military use with 2025 IRS rates.", cat:"calc", catLabel:"Calculator", avail:"free", url:"/tools/mileage", tags:["mileage","vehicle","standard rate","business miles","2025"] },
+  { id:6, emoji:"📉", name:"Depreciation Calculator (MACRS)", desc:"Full MACRS depreciation schedules, Section 179 election, and bonus depreciation for any asset class.", cat:"calc", catLabel:"Calculator", avail:"free", url:"/tools/depreciation", tags:["depreciation","MACRS","section 179","bonus depreciation","assets"] },
+  { id:7, emoji:"👨‍👩‍👧", name:"Child Tax Credit Estimator", desc:"Calculate CTC and Additional Child Tax Credit based on qualifying children and income phase-outs.", cat:"calc", catLabel:"Calculator", avail:"free", url:"/tools/ctc", tags:["child tax credit","CTC","ACTC","dependents","phase out"] },
+  { id:8, emoji:"🎓", name:"Education Tax Credits Calc", desc:"Compare American Opportunity Credit vs Lifetime Learning Credit and find the maximum benefit.", cat:"calc", catLabel:"Calculator", avail:"free", url:"/tools/education-credits", tags:["education","AOC","LLC","tuition","1098-T","credits"] },
+  { id:9, emoji:"🗺️", name:"State Tax Rate Lookup", desc:"Quick reference for income, sales, and property tax rates across all 50 states plus DC.", cat:"calc", catLabel:"Calculator", avail:"free", url:"/tools/state-taxes", tags:["state tax","50 states","sales tax","property tax","income tax"] },
+  { id:10, emoji:"💰", name:"Capital Gains Tax Calculator", desc:"Short-term and long-term capital gains tax rates with NIIT overlay for high-income taxpayers.", cat:"calc", catLabel:"Calculator", avail:"free", url:"/tools/capital-gains", tags:["capital gains","stocks","investments","NIIT","1099-B","long term short term"] },
+  { id:11, emoji:"🏖️", name:"Retirement Contribution Optimizer", desc:"Max out 401k, IRA, SEP-IRA, SIMPLE IRA — see tax savings for each contribution level.", cat:"calc", catLabel:"Calculator", avail:"free", url:"/tools/retirement-optimizer", tags:["401k","IRA","SEP","SIMPLE","retirement","contribution limit"] },
+  { id:12, emoji:"🔢", name:"AMT Calculator", desc:"Determine Alternative Minimum Tax exposure and AMT credit carryforward for Form 6251.", cat:"calc", catLabel:"Calculator", avail:"pro", isNew:true, url:"/tools/amt", tags:["AMT","alternative minimum tax","6251","ISO","preferences"] },
+
+  // CPA / EA PRO
+  { id:13, emoji:"⚠️", name:"IRS Penalty Calculator", desc:"Failure-to-file, failure-to-pay, and underpayment penalty computations with daily interest accrual.", cat:"pro", catLabel:"CPA / EA Pro", avail:"free", url:"/tools/penalty-calculator", tags:["penalty","FTF","FTP","interest","underpayment","abatement"] },
+  { id:14, emoji:"🤝", name:"Installment Agreement Planner", desc:"Model IRS payment plan options, OIC eligibility pre-screen, and PPIA computation worksheet.", cat:"pro", catLabel:"CPA / EA Pro", avail:"pro", url:"/tools/installment-agreement", tags:["installment agreement","IRS","payment plan","OIC","PPIA","collection"] },
+  { id:15, emoji:"🔍", name:"Audit Risk Indicator", desc:"Score a return's audit risk based on income type, deduction ratios, and IRS DIF score proxies.", cat:"pro", catLabel:"CPA / EA Pro", avail:"pro", isNew:true, url:"/tools/audit-risk", tags:["audit","DIF","red flags","risk score","IRS examination"] },
+  { id:16, emoji:"📋", name:"IRS Notice Decoder", desc:"Paste any IRS notice number (CP2000, CP503, LT11…) and get a plain-English explanation + action plan.", cat:"pro", catLabel:"CPA / EA Pro", avail:"free", isNew:true, url:"/tools/notice-decoder", tags:["IRS notice","CP2000","LT11","CP503","letter","response"] },
+  { id:17, emoji:"🛡️", name:"Penalty Abatement Request Builder", desc:"Generate Form 843 arguments for first-time abatement and reasonable cause relief automatically.", cat:"pro", catLabel:"CPA / EA Pro", avail:"pro", url:"/tools/abatement-builder", tags:["abatement","843","FTA","reasonable cause","penalty relief"] },
+  { id:18, emoji:"📊", name:"Engagement Letter Generator", desc:"Customizable engagement letters for individual, business, and representation matters.", cat:"pro", catLabel:"CPA / EA Pro", avail:"pro", url:"/tools/engagement-letter", tags:["engagement letter","CPA","EA","practice management","client"] },
+  { id:19, emoji:"🔄", name:"Amended Return Checklist", desc:"Step-by-step 1040-X preparation checklist with common triggers and timing guidance.", cat:"pro", catLabel:"CPA / EA Pro", avail:"free", url:"/tools/amended-return", tags:["1040-X","amended","correction","refund claim"] },
+  { id:20, emoji:"💼", name:"Practice Revenue Calculator", desc:"Model billing scenarios, hourly vs flat-fee pricing, and capacity planning for your practice.", cat:"pro", catLabel:"CPA / EA Pro", avail:"pro", url:"/tools/revenue-calculator", tags:["billing","practice management","pricing","revenue","CPA firm"] },
+  { id:21, emoji:"📌", name:"Statute of Limitations Tracker", desc:"Calculate assessment and collection SOL dates for any tax year, including tolling events.", cat:"pro", catLabel:"CPA / EA Pro", avail:"free", url:"/tools/sol-tracker", tags:["statute of limitations","SOL","assessment","collection","3 years","6 years"] },
+  { id:22, emoji:"🗃️", name:"Client Organizer Builder", desc:"Generate customized data-gathering organizers for individual and business clients.", cat:"pro", catLabel:"CPA / EA Pro", avail:"pro", isNew:true, url:"/tools/organizer-builder", tags:["client organizer","data gathering","onboarding","checklist","intake"] },
+
+  // INDIVIDUAL
+  { id:23, emoji:"📝", name:"W-4 Withholding Optimizer", desc:"Answer guided questions to determine the perfect W-4 elections and avoid under/over withholding.", cat:"ind", catLabel:"Individual", avail:"free", url:"/tools/w4-optimizer", tags:["W-4","withholding","paycheck","allowances","employer"] },
+  { id:24, emoji:"🔖", name:"Itemized vs Standard Deduction", desc:"Input your deductions and instantly see whether itemizing or taking the standard deduction saves more.", cat:"ind", catLabel:"Individual", avail:"free", url:"/tools/itemize-vs-standard", tags:["standard deduction","itemized","Schedule A","mortgage interest","charitable"] },
+  { id:25, emoji:"💳", name:"Deduction Finder", desc:"Answer a few questions about your life events and discover deductions you may be missing.", cat:"ind", catLabel:"Individual", avail:"free", isNew:true, url:"/tools/deduction-finder", tags:["deductions","tax savings","credits","missed","overlooked"] },
+  { id:26, emoji:"📬", name:"Refund Tracker & Timeline", desc:"Step-by-step guide to checking your refund status and understanding IRS processing timelines.", cat:"ind", catLabel:"Individual", avail:"free", url:"/tools/refund-tracker", tags:["refund","where is my refund","processing","IRS","direct deposit"] },
+  { id:27, emoji:"🎁", name:"Gift Tax Estimator", desc:"Annual exclusion tracker and lifetime exemption calculator for 709 filing requirements.", cat:"ind", catLabel:"Individual", avail:"free", url:"/tools/gift-tax", tags:["gift tax","709","annual exclusion","lifetime exemption","estate"] },
+  { id:28, emoji:"🏡", name:"Home Sale Gain Exclusion", desc:"Calculate Section 121 exclusion eligibility and taxable gain on the sale of your primary residence.", cat:"ind", catLabel:"Individual", avail:"free", url:"/tools/home-sale", tags:["home sale","section 121","exclusion","capital gains","real estate"] },
+  { id:29, emoji:"🎰", name:"Gambling Winnings Tax Calc", desc:"Compute tax on gambling income, W-2G thresholds, and allowable losses on Schedule A.", cat:"ind", catLabel:"Individual", avail:"free", url:"/tools/gambling-tax", tags:["gambling","W-2G","casino","lottery","winnings","losses"] },
+  { id:30, emoji:"🌍", name:"Foreign Income Exclusion (FEIE)", desc:"Form 2555 bona fide residence and physical presence test calculator with housing exclusion.", cat:"ind", catLabel:"Individual", avail:"free", url:"/tools/feie", tags:["FEIE","foreign income","2555","expat","bona fide","physical presence"] },
+  { id:31, emoji:"🧾", name:"1099 Income Tax Planner", desc:"For gig workers and 1099 contractors — estimate tax, plan deductions, and budget quarterly payments.", cat:"ind", catLabel:"Individual", avail:"free", isNew:true, url:"/tools/1099-planner", tags:["1099","gig","contractor","freelance","Uber","DoorDash","side income"] },
+
+  // BUSINESS
+  { id:32, emoji:"⚖️", name:"Entity Comparison Tool", desc:"Side-by-side tax analysis of Sole Prop, LLC, S-Corp, and C-Corp across multiple income scenarios.", cat:"biz", catLabel:"Business", avail:"free", url:"/tools/entity-comparison", tags:["LLC","S-Corp","C-Corp","sole proprietor","entity","business structure"] },
+  { id:33, emoji:"💼", name:"S-Corp Payroll Optimizer", desc:"Model reasonable compensation vs distributions to minimize self-employment tax for S-Corp owners.", cat:"biz", catLabel:"Business", avail:"free", url:"/tools/scorp-optimizer", tags:["S-Corp","reasonable compensation","payroll","distributions","FICA","owner"] },
+  { id:34, emoji:"📈", name:"QBI Deduction Calculator", desc:"Qualified Business Income deduction with W-2 wages and UBIA limitation analysis for specified service trades.", cat:"biz", catLabel:"Business", avail:"free", url:"/tools/qbi", tags:["QBI","section 199A","pass through","SSTB","W-2 wages","deduction"] },
+  { id:35, emoji:"🧑‍💼", name:"Payroll Tax Estimator", desc:"Employer and employee payroll tax obligations — FICA, FUTA, SUTA, and withholding estimates.", cat:"biz", catLabel:"Business", avail:"free", url:"/tools/payroll-tax", tags:["payroll","FICA","FUTA","SUTA","employer","941","940"] },
+  { id:36, emoji:"🏗️", name:"Cost Segregation Estimator", desc:"Estimate potential tax acceleration from a cost segregation study on commercial real estate.", cat:"biz", catLabel:"Business", avail:"pro", isNew:true, url:"/tools/cost-seg", tags:["cost segregation","real estate","depreciation","commercial","accelerated"] },
+  { id:37, emoji:"🌱", name:"ERC Eligibility Checker", desc:"Employee Retention Credit eligibility pre-screen with revenue decline test and qualifying period analysis.", cat:"biz", catLabel:"Business", avail:"free", url:"/tools/erc", tags:["ERC","employee retention credit","COVID","941-X","credit","payroll"] },
+  { id:38, emoji:"📦", name:"Inventory Method Comparison", desc:"FIFO vs LIFO vs weighted average — model the tax impact of different inventory accounting methods.", cat:"biz", catLabel:"Business", avail:"pro", url:"/tools/inventory", tags:["inventory","FIFO","LIFO","weighted average","COGS","retail"] },
+
+  // DEADLINES
+  { id:39, emoji:"📅", name:"2025–26 Tax Deadline Calendar", desc:"Complete filing calendar with all individual, business, payroll, and estimated payment due dates.", cat:"dead", catLabel:"Deadlines", avail:"free", url:"/tools/deadline-calendar", tags:["deadlines","calendar","due dates","2025","2026","extensions"] },
+  { id:40, emoji:"🔔", name:"Deadline Reminder Setup", desc:"Subscribe to email or SMS alerts for deadlines relevant to your client type and filing situation.", cat:"dead", catLabel:"Deadlines", avail:"free", isNew:true, url:"/tools/deadline-reminders", tags:["reminders","alerts","email","SMS","deadlines","notifications"] },
+  { id:41, emoji:"🕐", name:"Extension Toolkit", desc:"File Form 4868 or 7004 correctly — includes payment due with extension calculator and confirmation checklist.", cat:"dead", catLabel:"Deadlines", avail:"free", url:"/tools/extensions", tags:["extension","4868","7004","October","6 months","automatic"] },
+
+  // REFERENCE
+  { id:42, emoji:"📚", name:"IRS Forms Library", desc:"Searchable index of all current IRS forms, instructions, and publications with direct download links.", cat:"ref", catLabel:"Reference", avail:"free", url:"/tools/forms-library", tags:["forms","publications","IRS","1040","instructions","library"] },
+];
+
+let currentCat = "all";
+let currentAvail = "all";
+let currentView = "grid";
+
+function setChip(el) {
+  document.querySelectorAll('#chipRow .chip').forEach(c => c.classList.remove('on'));
+  el.classList.add('on');
+  currentCat = el.dataset.cat;
+  // Sync sidebar
+  document.querySelectorAll('.sidebar-item[data-cat]').forEach(s => {
+    s.classList.toggle('on', s.dataset.cat === currentCat);
+  });
+  applyFilters();
+}
+
+function sidebarFilter(el) {
+  document.querySelectorAll('.sidebar-item[data-cat]').forEach(s => s.classList.remove('on'));
+  el.classList.add('on');
+  currentCat = el.dataset.cat;
+  // Sync chips
+  document.querySelectorAll('#chipRow .chip').forEach(c => {
+    c.classList.toggle('on', c.dataset.cat === currentCat);
+  });
+  applyFilters();
+}
+
+function availFilter(el) {
+  document.querySelectorAll('.sidebar-item[data-avail]').forEach(s => s.classList.remove('on'));
+  el.classList.add('on');
+  currentAvail = el.dataset.avail;
+  applyFilters();
+}
+
+function setView(v) {
+  currentView = v;
+  document.getElementById('gridBtn').classList.toggle('on', v==='grid');
+  document.getElementById('listBtn').classList.toggle('on', v==='list');
+  document.getElementById('toolsContainer').className = v === 'grid' ? 'grid-view' : 'list-view';
+  applyFilters();
+}
+
+function applyFilters() {
+  const q = document.getElementById('searchInput').value.toLowerCase().trim();
+  let list = ALL_TOOLS.filter(t => {
+    if (currentCat !== 'all' && t.cat !== currentCat) return false;
+    if (currentAvail !== 'all' && t.avail !== currentAvail) return false;
+    if (q) {
+      const haystack = [t.name, t.desc, t.catLabel, ...t.tags].join(' ').toLowerCase();
+      return q.split(' ').every(w => haystack.includes(w));
+    }
+    return true;
+  });
+
+  document.getElementById('resultCount').textContent = list.length;
+  renderTools(list);
+}
+
+function renderTools(list) {
+  const container = document.getElementById('toolsContainer');
+
+  if (!list.length) {
+    container.innerHTML = `
+      <div class="empty-state">
+        <div class="empty-icon">🔎</div>
+        <div class="empty-title">No tools found</div>
+        <div class="empty-sub">Try adjusting your search or filter.</div>
+      </div>`;
+    return;
+  }
+
+  if (currentView === 'list') {
+    container.innerHTML = list.map(t => `
+      <a href="${t.url}" class="tool-card list-card">
+        <div class="list-emoji">${t.emoji}</div>
+        <div class="list-body">
+          <div class="list-name">${t.name}${t.isNew ? ' <span class="badge b-new">New</span>' : ''}</div>
+          <div class="list-desc">${t.desc}</div>
+        </div>
+        <div class="list-right">
+          <span class="list-cat cat-${t.cat}">${t.catLabel}</span>
+          <span class="badge ${t.avail==='free'?'b-free':'b-pro'}">${t.avail==='free'?'Free':'Pro'}</span>
+          <span style="color:var(--muted)">→</span>
+        </div>
+      </a>
+    `).join('');
+    return;
+  }
+
+  // Group by category
+  const cats = ['calc','pro','ind','biz','dead','ref'];
+  const catMeta = {
+    calc: { icon:'🧮', name:'Calculators' },
+    pro:  { icon:'🏛️', name:'CPA / EA Pro Tools' },
+    ind:  { icon:'🏠', name:'Individual Filer Tools' },
+    biz:  { icon:'🏢', name:'Business Tools' },
+    dead: { icon:'📅', name:'Deadline Tools' },
+    ref:  { icon:'📚', name:'Reference & Library' },
+  };
+
+  let html = '';
+  const activeCats = currentCat === 'all' ? cats : [currentCat];
+
+  activeCats.forEach(cat => {
+    const group = list.filter(t => t.cat === cat);
+    if (!group.length) return;
+    if (currentCat === 'all') {
+      html += `<div class="cat-header">
+        <span class="cat-header-icon">${catMeta[cat].icon}</span>
+        <span class="cat-header-name">${catMeta[cat].name}</span>
+        <span class="cat-header-count">${group.length} tools</span>
+      </div>`;
+    }
+    group.forEach(t => {
+      html += `
+      <a href="${t.url}" class="tool-card">
+        <div class="card-top">
+          <span class="tool-emoji">${t.emoji}</span>
+          <div class="card-badges">
+            ${t.isNew ? '<span class="badge b-new">New</span>' : ''}
+            <span class="badge ${t.avail==='free'?'b-free':'b-pro'}">${t.avail==='free'?'Free':'Pro'}</span>
+          </div>
+        </div>
+        <div class="card-name">${t.name}</div>
+        <div class="card-desc">${t.desc}</div>
+        <div class="card-footer">
+          <span class="card-cat cat-${t.cat}">${t.catLabel}</span>
+          <span class="card-arrow">→</span>
+        </div>
+      </a>`;
+    });
+  });
+
+  container.innerHTML = html;
+}
+
+// Init
+applyFilters();
+</script>
+</body>
+</html>

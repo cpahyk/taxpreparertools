@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Page Not Found | TaxPreparerTools.com</title>
+<!-- GitHub Pages SPA clean-URL redirect: maps /path/to/page → /?/path/to/page -->
+<script>
+  (function(){
+    var seg = 1;
+    var l = window.location;
+    var path = l.pathname.slice(1).split('/').slice(seg).join('/').replace(/\/$/,'');
+    if (path) {
+      // Remap known clean paths to their .html equivalents
+      var map = {
+        'tools':'tools','ai-assistant':'ai-assistant','deadlines':'deadlines',
+        'resources':'resources','dashboard':'dashboard','login':'login',
+        'signup':'signup','contact':'contact','privacy':'privacy','terms':'terms',
+        'forgot-password':'forgot-password',
+        'tools/federal-tax-estimator':'tools/federal-tax-estimator',
+        'tools/se-tax-calculator':'tools/se-tax-calculator',
+        'tools/quarterly-payments':'tools/quarterly-payments',
+        'tools/qbi':'tools/qbi','tools/capital-gains':'tools/capital-gains',
+        'tools/penalty-calculator':'tools/penalty-calculator',
+        'tools/home-office':'tools/home-office',
+        'tools/mileage':'tools/mileage','tools/depreciation':'tools/depreciation'
+      };
+      if (map[path] !== undefined) {
+        // Let the 404 page render but show a helpful redirect button
+        document.addEventListener('DOMContentLoaded', function() {
+          var btn = document.getElementById('redirect-btn');
+          if(btn){ btn.href = l.origin + '/' + map[path] + '.html'; btn.style.display='inline-flex'; }
+        });
+      }
+    }
+  })();
+</script>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=DM+Sans:wght@400;500;600&family=DM+Mono:wght@400&display=swap" rel="stylesheet">
+<style>
+:root{--navy:#08152a;--gold:#c8a84b;--gold-light:#e8c96a;--muted:#7a8fac;--text:#dde4f0;--border:rgba(200,168,75,0.14);}
+*{box-sizing:border-box;margin:0;padding:0;}
+body{font-family:'DM Sans',sans-serif;background:var(--navy);color:var(--text);min-height:100vh;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:40px 20px;}
+.logo{display:flex;align-items:center;gap:10px;text-decoration:none;margin-bottom:48px;}
+.logo-mark{width:36px;height:36px;background:var(--gold);border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:18px;}
+.logo-name{font-family:'Playfair Display',serif;font-size:1.2rem;font-weight:700;color:#fff;}
+.logo-name span{color:var(--gold);}
+.err-code{font-family:'DM Mono',monospace;font-size:0.8rem;font-weight:700;color:var(--gold);letter-spacing:.15em;text-transform:uppercase;margin-bottom:16px;}
+h1{font-family:'Playfair Display',serif;font-size:clamp(2rem,5vw,3.5rem);font-weight:900;color:#fff;letter-spacing:-0.03em;margin-bottom:14px;line-height:1.1;}
+p{color:var(--muted);font-size:1rem;line-height:1.7;max-width:440px;margin-bottom:36px;}
+.btn-row{display:flex;gap:12px;justify-content:center;flex-wrap:wrap;}
+.btn{padding:12px 24px;border-radius:9px;font-size:0.88rem;font-weight:700;cursor:pointer;text-decoration:none;transition:all .2s;font-family:'DM Sans',sans-serif;}
+.btn-gold{background:var(--gold);color:var(--navy);}
+.btn-gold:hover{background:var(--gold-light);}
+.btn-outline{background:transparent;color:var(--text);border:1px solid var(--border);}
+.btn-outline:hover{border-color:var(--gold);color:var(--gold);}
+.quick-links{margin-top:52px;padding-top:32px;border-top:1px solid var(--border);display:flex;gap:24px;flex-wrap:wrap;justify-content:center;}
+.ql{text-decoration:none;color:var(--muted);font-size:0.82rem;transition:color .2s;}
+.ql:hover{color:var(--gold);}
+</style>
+</head>
+<body>
+  <a href="/" class="logo">
+    <div class="logo-mark">⚖</div>
+    <span class="logo-name">TaxPreparer<span>Tools</span></span>
+  </a>
+
+  <div class="err-code">404 — Page Not Found</div>
+  <h1>This page took<br>an extension</h1>
+  <p>The page you're looking for doesn't exist or may have moved. Let's get you back on track.</p>
+
+  <div class="btn-row">
+    <a href="/" class="btn btn-gold">Back to Homepage</a>
+    <a href="/tools" class="btn btn-outline">Browse All Tools</a>
+  </div>
+
+  <div class="quick-links">
+    <a href="/tools/federal-tax-estimator" class="ql">🧮 Tax Estimator</a>
+    <a href="/tools/se-tax-calculator" class="ql">💼 SE Tax Calc</a>
+    <a href="/deadlines" class="ql">📅 Deadlines</a>
+    <a href="/ai-assistant" class="ql">⚖️ AI Assistant</a>
+    <a href="/resources" class="ql">📚 Resources</a>
+  </div>
+</body>
+</html>

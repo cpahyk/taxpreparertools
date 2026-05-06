@@ -1,0 +1,405 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Quarterly Estimated Tax Calculator 2026 | TaxPreparerTools.com</title>
+<meta name="description" content="Calculate your 2026 quarterly estimated tax payments. Safe harbor amounts, underpayment penalty avoidance, and payment schedule for self-employed individuals.">
+<link rel="canonical" href="https://taxpreparertools.com/tools/quarterly-payments" />
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700;900&family=DM+Sans:wght@300;400;500;600&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root{--navy:#08152a;--navy-mid:#0f1f3d;--slate:#1a2f52;--gold:#c8a84b;--gold-light:#e8c96a;--gold-dim:rgba(200,168,75,0.13);--white:#fff;--muted:#7a8fac;--text:#dde4f0;--border:rgba(200,168,75,0.14);--card:rgba(255,255,255,0.04);--green:#4ade80;--blue:#60a5fa;--red:#f87171;--orange:#fb923c;}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+html{scroll-behavior:smooth;}
+body{font-family:'DM Sans',sans-serif;background:var(--navy);color:var(--text);min-height:100vh;}
+nav{position:sticky;top:0;z-index:200;padding:14px 48px;display:flex;align-items:center;justify-content:space-between;background:rgba(8,21,42,0.95);backdrop-filter:blur(20px);border-bottom:1px solid var(--border);}
+.logo{display:flex;align-items:center;gap:10px;text-decoration:none;}
+.logo-mark{width:32px;height:32px;background:var(--gold);border-radius:7px;display:flex;align-items:center;justify-content:center;font-size:15px;}
+.logo-name{font-family:'Playfair Display',serif;font-size:1.1rem;font-weight:700;color:var(--white);}
+.logo-name span{color:var(--gold);}
+.logo-domain{font-size:0.62rem;color:var(--muted);font-family:'DM Mono',monospace;display:block;}
+.nav-links{display:flex;gap:24px;list-style:none;}
+.nav-links a{color:var(--muted);font-size:0.82rem;font-weight:500;text-decoration:none;transition:color .2s;}
+.nav-links a:hover{color:var(--gold);}
+.btn-gold-sm{padding:7px 16px;border-radius:6px;font-size:0.8rem;font-weight:700;cursor:pointer;text-decoration:none;transition:all .2s;border:none;font-family:'DM Sans',sans-serif;background:var(--gold);color:var(--navy);}
+.btn-gold-sm:hover{background:var(--gold-light);}
+.page-wrap{max-width:1160px;margin:0 auto;padding:40px 48px 80px;}
+.breadcrumb{font-size:0.73rem;font-family:'DM Mono',monospace;color:var(--muted);margin-bottom:20px;display:flex;gap:7px;flex-wrap:wrap;}
+.breadcrumb a{color:var(--gold);text-decoration:none;}
+.tool-header{display:flex;gap:22px;align-items:flex-start;margin-bottom:32px;}
+.tool-icon{width:58px;height:58px;background:linear-gradient(135deg,var(--gold-dim),rgba(200,168,75,0.04));border:1px solid rgba(200,168,75,0.28);border-radius:15px;display:flex;align-items:center;justify-content:center;font-size:26px;flex-shrink:0;}
+.badge{font-size:0.63rem;font-family:'DM Mono',monospace;font-weight:700;text-transform:uppercase;letter-spacing:.08em;padding:3px 10px;border-radius:50px;}
+.bg-free{background:rgba(74,222,128,.12);color:var(--green);}
+.bg-upd{background:rgba(96,165,250,.1);color:var(--blue);}
+.bg-cat{background:var(--gold-dim);color:var(--gold);}
+h1{font-family:'Playfair Display',serif;font-size:clamp(1.5rem,3vw,2.2rem);font-weight:900;color:var(--white);letter-spacing:-0.03em;line-height:1.1;margin-bottom:8px;}
+.tool-desc{color:var(--muted);font-size:0.88rem;line-height:1.7;max-width:600px;}
+.layout{display:grid;grid-template-columns:1fr 350px;gap:22px;align-items:start;}
+.card{background:var(--navy-mid);border:1px solid var(--border);border-radius:18px;overflow:hidden;}
+.ch{padding:20px 24px;border-bottom:1px solid var(--border);background:rgba(200,168,75,.04);}
+.ct{font-family:'Playfair Display',serif;font-size:1.05rem;font-weight:700;color:var(--white);}
+.cs{font-size:0.74rem;color:var(--muted);margin-top:2px;}
+.cb{padding:24px;}
+.sec{font-size:0.7rem;font-weight:700;color:var(--muted);text-transform:uppercase;letter-spacing:.1em;font-family:'DM Mono',monospace;margin-bottom:11px;padding-bottom:7px;border-bottom:1px solid var(--border);}
+.field{display:flex;flex-direction:column;gap:6px;margin-bottom:14px;}
+.lbl{font-size:0.7rem;font-weight:700;color:var(--muted);text-transform:uppercase;letter-spacing:.06em;font-family:'DM Mono',monospace;display:flex;justify-content:space-between;align-items:center;}
+.hint{font-size:0.64rem;color:var(--muted);font-weight:400;text-transform:none;letter-spacing:0;font-family:'DM Sans',sans-serif;opacity:.75;}
+.iw{position:relative;}
+.pfx{position:absolute;left:12px;top:50%;transform:translateY(-50%);color:var(--muted);font-size:0.84rem;pointer-events:none;}
+input,select{width:100%;background:rgba(255,255,255,.05);border:1px solid rgba(200,168,75,.17);border-radius:8px;padding:10px 12px 10px 28px;color:var(--white);font-size:0.87rem;font-family:'DM Sans',sans-serif;outline:none;transition:all .2s;appearance:none;}
+input.np,select.np{padding-left:12px;}
+input:focus,select:focus{border-color:var(--gold);background:rgba(255,255,255,.07);box-shadow:0 0 0 3px rgba(200,168,75,.06);}
+input::placeholder{color:var(--muted);}
+select option{background:var(--navy);}
+.frow{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:14px;}
+.method-toggle{display:flex;gap:3px;background:rgba(255,255,255,.04);border-radius:8px;padding:3px;margin-bottom:16px;}
+.mt-btn{flex:1;padding:8px 10px;border-radius:6px;font-size:0.77rem;font-weight:600;cursor:pointer;text-align:center;transition:all .2s;color:var(--muted);border:none;font-family:'DM Sans',sans-serif;background:transparent;}
+.mt-btn.on{background:var(--gold);color:var(--navy);}
+.calc-btn{width:100%;background:var(--gold);color:var(--navy);border:none;border-radius:10px;padding:14px;font-size:0.95rem;font-weight:800;cursor:pointer;transition:all .25s;font-family:'DM Sans',sans-serif;margin-top:4px;}
+.calc-btn:hover{background:var(--gold-light);transform:translateY(-2px);box-shadow:0 10px 30px rgba(200,168,75,.25);}
+.results{display:none;margin-top:20px;animation:fu .4s ease;}
+.results.show{display:block;}
+@keyframes fu{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:translateY(0)}}
+.method-badge{display:inline-flex;align-items:center;gap:7px;background:var(--gold-dim);border:1px solid rgba(200,168,75,.25);color:var(--gold);padding:6px 14px;border-radius:8px;font-size:0.75rem;font-weight:700;font-family:'DM Mono',monospace;margin-bottom:16px;}
+.qcards{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:14px;}
+.qcard{border-radius:12px;padding:16px;position:relative;overflow:hidden;border:1px solid var(--border);}
+.qcard.past{background:rgba(255,255,255,.03);opacity:.65;}
+.qcard.active{background:linear-gradient(135deg,rgba(200,168,75,.12),rgba(200,168,75,.03));border-color:rgba(200,168,75,.3);}
+.qcard.future{background:var(--card);}
+.qc-q{font-size:0.65rem;font-family:'DM Mono',monospace;font-weight:700;text-transform:uppercase;letter-spacing:.1em;color:var(--muted);margin-bottom:4px;}
+.qc-amt{font-family:'Playfair Display',serif;font-size:1.5rem;font-weight:900;color:var(--white);line-height:1;margin-bottom:5px;}
+.qc-due{font-size:0.68rem;color:var(--muted);font-family:'DM Mono',monospace;margin-bottom:6px;}
+.qc-status{font-size:0.62rem;font-family:'DM Mono',monospace;font-weight:700;padding:2px 8px;border-radius:50px;display:inline-block;}
+.s-past{background:rgba(255,255,255,.07);color:var(--muted);}
+.s-due{background:rgba(251,146,60,.12);color:var(--orange);}
+.s-future{background:rgba(96,165,250,.1);color:var(--blue);}
+.annual-summary{background:var(--card);border:1px solid var(--border);border-radius:12px;padding:16px;margin-bottom:12px;}
+.as-title{font-size:0.7rem;font-family:'DM Mono',monospace;font-weight:700;text-transform:uppercase;letter-spacing:.08em;color:var(--muted);margin-bottom:12px;}
+.as-row{display:flex;justify-content:space-between;align-items:center;padding:8px 0;border-bottom:1px solid rgba(255,255,255,.04);font-size:0.8rem;}
+.as-row:last-child{border-bottom:none;}
+.as-k{color:var(--muted);}
+.as-v{font-family:'DM Mono',monospace;font-weight:600;color:var(--text);}
+.as-v.gold{color:var(--gold);}
+.as-v.green{color:var(--green);}
+.as-v.red{color:var(--red);}
+.penalty-box{background:var(--card);border:1px solid var(--border);border-radius:12px;padding:16px;}
+.pb-title{font-size:0.7rem;font-family:'DM Mono',monospace;font-weight:700;text-transform:uppercase;letter-spacing:.08em;color:var(--muted);margin-bottom:10px;}
+.pb-status{padding:12px;border-radius:8px;text-align:center;}
+.pb-safe{background:rgba(74,222,128,.1);border:1px solid rgba(74,222,128,.2);}
+.pb-warn{background:rgba(251,146,60,.1);border:1px solid rgba(251,146,60,.2);}
+.pb-label{font-size:0.8rem;font-weight:700;margin-bottom:3px;}
+.pb-safe .pb-label{color:var(--green);}
+.pb-warn .pb-label{color:var(--orange);}
+.pb-sub{font-size:0.71rem;color:var(--muted);line-height:1.5;}
+.ic-title{font-family:'Playfair Display',serif;font-size:0.93rem;font-weight:700;color:var(--white);margin-bottom:11px;}
+.ic-row{display:flex;justify-content:space-between;padding:7px 0;border-bottom:1px solid rgba(255,255,255,.05);font-size:0.77rem;}
+.ic-row:last-child{border-bottom:none;}
+.ic-k{color:var(--muted);}
+.ic-v{font-family:'DM Mono',monospace;font-weight:600;color:var(--text);}
+.ic-v.gold{color:var(--gold);}
+.ic-v.red{color:var(--red);}
+.tip-item{display:flex;gap:9px;padding:8px 0;border-bottom:1px solid rgba(255,255,255,.04);}
+.tip-item:last-child{border-bottom:none;}
+.ti{font-size:.9rem;flex-shrink:0;margin-top:1px;}
+.tt{font-size:0.75rem;color:var(--muted);line-height:1.55;}
+.tt strong{color:var(--text);}
+.rel-link{display:flex;align-items:center;gap:10px;padding:8px 0;border-bottom:1px solid rgba(255,255,255,.05);text-decoration:none;transition:all .18s;}
+.rel-link:last-child{border-bottom:none;}
+.rel-link:hover .rln{color:var(--gold);}
+.rli{font-size:1.05rem;width:26px;text-align:center;}
+.rln{font-size:0.79rem;font-weight:600;color:var(--text);transition:color .18s;}
+.rld{font-size:0.65rem;color:var(--muted);}
+.rla{margin-left:auto;color:var(--muted);font-size:0.82rem;transition:all .18s;}
+.rel-link:hover .rla{color:var(--gold);transform:translateX(3px);}
+.sidebar-card{background:var(--navy-mid);border:1px solid var(--border);border-radius:15px;padding:20px;margin-bottom:14px;}
+.explainer{background:var(--navy-mid);border:1px solid var(--border);border-radius:15px;padding:22px;margin-top:20px;}
+.exp-h2{font-family:'Playfair Display',serif;font-size:1.05rem;font-weight:700;color:var(--white);margin-bottom:12px;}
+.exp-sec{margin-bottom:14px;}
+.exp-h{font-size:0.77rem;font-weight:700;color:var(--gold);margin-bottom:5px;}
+.exp-p{font-size:0.79rem;color:var(--muted);line-height:1.68;}
+.exp-p strong{color:var(--text);}
+footer{border-top:1px solid var(--border);padding:26px 48px;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:12px;background:var(--navy-mid);}
+.fl{font-size:0.72rem;color:var(--muted);}
+.fl a{color:var(--gold);text-decoration:none;}
+.flinks{display:flex;gap:18px;}
+.flinks a{font-size:0.72rem;color:var(--muted);text-decoration:none;transition:color .2s;}
+.flinks a:hover{color:var(--gold);}
+@media(max-width:960px){nav{padding:13px 18px;}.nav-links{display:none;}.page-wrap{padding:26px 18px 60px;}.layout{grid-template-columns:1fr;}.frow{grid-template-columns:1fr;}.qcards{grid-template-columns:1fr 1fr;}footer{padding:18px;flex-direction:column;}}
+</style>
+</head>
+<body>
+<nav>
+  <a href="/" class="logo"><div class="logo-mark">⚖</div><div><span class="logo-name">TaxPreparer<span>Tools</span></span><span class="logo-domain">taxpreparertools.com</span></div></a>
+  <ul class="nav-links"><li><a href="/tools">Tools</a></li><li><a href="/deadlines">Deadlines</a></li><li><a href="/ai-assistant">AI Assistant</a></li><li><a href="/resources">Resources</a></li></ul>
+  <a href="/signup" class="btn-gold-sm">Get Pro Free</a>
+</nav>
+
+<div class="page-wrap">
+  <div class="breadcrumb"><a href="/">Home</a><span>/</span><a href="/tools">Tools</a><span>/</span><a href="/tools?cat=calc">Calculators</a><span>/</span>Quarterly Estimated Payments</div>
+
+  <div class="tool-header">
+    <div class="tool-icon">📆</div>
+    <div>
+      <div style="display:flex;gap:7px;margin-bottom:9px;flex-wrap:wrap;"><span class="badge bg-free">Free</span><span class="badge bg-upd">Updated Jan 2026</span><span class="badge bg-cat">Calculator</span></div>
+      <h1>Quarterly Estimated Tax<br>Payment Calculator 2026</h1>
+      <p class="tool-desc">Calculate your four 2026 quarterly estimated tax payments using the safe harbor method or current-year projection. Avoid underpayment penalties with the right payment schedule.</p>
+    </div>
+  </div>
+
+  <div class="layout">
+    <div>
+      <div class="card">
+        <div class="ch"><div class="ct">Enter Your Tax Information</div><div class="cs">Calculates 2026 quarterly payments due April–January</div></div>
+        <div class="cb">
+          <div class="sec">Safe Harbor Method</div>
+          <div style="margin-bottom:16px;font-size:0.79rem;color:var(--muted);line-height:1.6;">Choose your calculation method. <strong style="color:var(--text)">Safe Harbor</strong> guarantees no penalty regardless of current-year income.</div>
+          <div class="method-toggle" id="methodToggle">
+            <button class="mt-btn on" data-method="safeharbor" onclick="setMethod(this)">Safe Harbor (Prior Year)</button>
+            <button class="mt-btn" data-method="currentyear" onclick="setMethod(this)">Current Year Estimate</button>
+          </div>
+
+          <!-- SAFE HARBOR FIELDS -->
+          <div id="safeHarborFields">
+            <div class="sec">2025 Tax Return (Prior Year)</div>
+            <div class="field">
+              <div class="lbl">2025 Total Tax Liability <span class="hint">Line 24 of your 2025 Form 1040</span></div>
+              <div class="iw"><span class="pfx">$</span><input type="number" id="priorYearTax" placeholder="0" min="0"/></div>
+            </div>
+            <div class="frow">
+              <div class="field" style="margin-bottom:0">
+                <div class="lbl">2025 AGI <span class="hint">Line 11 of 2025 Form 1040</span></div>
+                <div class="iw"><span class="pfx">$</span><input type="number" id="priorYearAGI" placeholder="0" min="0"/></div>
+              </div>
+              <div class="field" style="margin-bottom:0">
+                <div class="lbl">Filing Status</div>
+                <select class="np" id="sh_status">
+                  <option value="single">Single / MFS / HOH</option>
+                  <option value="mfj">Married Filing Jointly</option>
+                </select>
+              </div>
+            </div>
+            <div class="field" style="margin-top:12px;">
+              <div class="lbl">Tax Already Withheld in 2026 <span class="hint">W-2 withholding YTD</span></div>
+              <div class="iw"><span class="pfx">$</span><input type="number" id="sh_withheld" placeholder="0" min="0"/></div>
+            </div>
+          </div>
+
+          <!-- CURRENT YEAR FIELDS -->
+          <div id="currentYearFields" style="display:none">
+            <div class="sec">2026 Income Projection</div>
+            <div class="field">
+              <div class="lbl">Expected W-2 / Wages</div>
+              <div class="iw"><span class="pfx">$</span><input type="number" id="cy_wages" placeholder="0" min="0"/></div>
+            </div>
+            <div class="field">
+              <div class="lbl">Expected Self-Employment Income (Net)</div>
+              <div class="iw"><span class="pfx">$</span><input type="number" id="cy_business" placeholder="0" min="0"/></div>
+            </div>
+            <div class="field">
+              <div class="lbl">Other Income (interest, dividends, rental)</div>
+              <div class="iw"><span class="pfx">$</span><input type="number" id="cy_other" placeholder="0" min="0"/></div>
+            </div>
+            <div class="frow">
+              <div class="field" style="margin-bottom:0">
+                <div class="lbl">Filing Status</div>
+                <select class="np" id="cy_status">
+                  <option value="single">Single</option>
+                  <option value="mfj">Married Filing Jointly</option>
+                  <option value="mfs">Married Filing Separately</option>
+                  <option value="hoh">Head of Household</option>
+                </select>
+              </div>
+              <div class="field" style="margin-bottom:0">
+                <div class="lbl">Expected W-2 Withholding</div>
+                <div class="iw"><span class="pfx">$</span><input type="number" id="cy_withheld" placeholder="0" min="0"/></div>
+              </div>
+            </div>
+          </div>
+
+          <button class="calc-btn" onclick="calculate()" style="margin-top:18px;">Calculate Payment Schedule →</button>
+
+          <div class="results" id="resultsPanel">
+            <div class="method-badge" id="methodBadge">📊 Safe Harbor Method</div>
+
+            <div class="qcards">
+              <div class="qcard past" id="qc1">
+                <div class="qc-q">Q1 2026</div>
+                <div class="qc-amt" id="q1amt">$0</div>
+                <div class="qc-due">Due Apr 15, 2026</div>
+                <span class="qc-status s-past">Past Due</span>
+              </div>
+              <div class="qcard active" id="qc2">
+                <div class="qc-q">Q2 2026</div>
+                <div class="qc-amt" id="q2amt">$0</div>
+                <div class="qc-due">Due Jun 16, 2026</div>
+                <span class="qc-status s-due">Coming Up</span>
+              </div>
+              <div class="qcard future" id="qc3">
+                <div class="qc-q">Q3 2026</div>
+                <div class="qc-amt" id="q3amt">$0</div>
+                <div class="qc-due">Due Sep 15, 2026</div>
+                <span class="qc-status s-future">Future</span>
+              </div>
+              <div class="qcard future" id="qc4">
+                <div class="qc-q">Q4 2026</div>
+                <div class="qc-amt" id="q4amt">$0</div>
+                <div class="qc-due">Due Jan 15, 2027</div>
+                <span class="qc-status s-future">Future</span>
+              </div>
+            </div>
+
+            <div class="annual-summary">
+              <div class="as-title">Annual Payment Summary</div>
+              <div class="as-row"><span class="as-k">Total Tax Liability</span><span class="as-v" id="as_total">—</span></div>
+              <div class="as-row"><span class="as-k">W-2 Withholding (est.)</span><span class="as-v" id="as_withheld">—</span></div>
+              <div class="as-row"><span class="as-k">Total Estimated Payments</span><span class="as-v gold" id="as_payments">—</span></div>
+              <div class="as-row"><span class="as-k">Balance Due / (Refund)</span><span class="as-v green" id="as_balance">—</span></div>
+              <div class="as-row"><span class="as-k">Each Quarterly Payment</span><span class="as-v gold" id="as_each">—</span></div>
+            </div>
+
+            <div class="penalty-box">
+              <div class="pb-title">Underpayment Penalty Status</div>
+              <div class="pb-status pb-safe" id="penaltyStatus">
+                <div class="pb-label">✅ Safe Harbor Satisfied</div>
+                <div class="pb-sub">Paying these amounts guarantees no underpayment penalty, regardless of your actual 2026 tax liability.</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="explainer">
+        <div class="exp-h2">How Quarterly Estimated Taxes Work</div>
+        <div class="exp-sec">
+          <div class="exp-h">Who Needs to Pay?</div>
+          <div class="exp-p">You generally must make estimated tax payments if you expect to owe <strong>at least $1,000</strong> in federal tax after subtracting withholding and credits. This applies to self-employed individuals, freelancers, investors with capital gains, and anyone with non-wage income.</div>
+        </div>
+        <div class="exp-sec">
+          <div class="exp-h">Safe Harbor Rule</div>
+          <div class="exp-p">Pay <strong>100% of prior year tax</strong> (or <strong>110%</strong> if prior year AGI exceeded $150,000) in four equal installments. If you meet safe harbor, the IRS cannot assess an underpayment penalty — even if you owe more at filing time.</div>
+        </div>
+        <div class="exp-sec">
+          <div class="exp-h">Q2 Is Shorter Than You Think</div>
+          <div class="exp-p">The "second quarter" covers only <strong>April 1–May 31</strong>, not the full three months. That's why Q2 is due June 15 despite covering just two months. Plan accordingly if your income is seasonal.</div>
+        </div>
+        <div class="exp-sec">
+          <div class="exp-h">How to Pay</div>
+          <div class="exp-p">Use <strong>IRS Direct Pay</strong> (free, no fee) at irs.gov/payments, or mail Form 1040-ES vouchers with a check. You can also pay via EFTPS (Electronic Federal Tax Payment System) — recommended for regular filers.</div>
+        </div>
+      </div>
+    </div>
+
+    <div>
+      <div class="sidebar-card">
+        <div class="ic-title">📅 2026 Payment Deadlines</div>
+        <div class="ic-row"><span class="ic-k">Q1 (Jan 1–Mar 31)</span><span class="ic-v red">Apr 15, 2026</span></div>
+        <div class="ic-row"><span class="ic-k">Q2 (Apr 1–May 31)</span><span class="ic-v">Jun 16, 2026</span></div>
+        <div class="ic-row"><span class="ic-k">Q3 (Jun 1–Aug 31)</span><span class="ic-v">Sep 15, 2026</span></div>
+        <div class="ic-row"><span class="ic-k">Q4 (Sep 1–Dec 31)</span><span class="ic-v">Jan 15, 2027</span></div>
+        <div class="ic-row"><span class="ic-k">Safe Harbor (AGI ≤$150k)</span><span class="ic-v gold">100% prior year</span></div>
+        <div class="ic-row"><span class="ic-k">Safe Harbor (AGI >$150k)</span><span class="ic-v gold">110% prior year</span></div>
+        <div class="ic-row"><span class="ic-k">Penalty Rate (2026)</span><span class="ic-v">8% (approx.)</span></div>
+        <div class="ic-row"><span class="ic-k">Min. owed to require payment</span><span class="ic-v">$1,000</span></div>
+      </div>
+
+      <div class="sidebar-card">
+        <div class="ic-title">💡 Estimated Payment Tips</div>
+        <div class="tip-item"><div class="ti">🏦</div><div class="tt"><strong>Pay online via IRS Direct Pay</strong> — free, immediate confirmation, no paper forms needed.</div></div>
+        <div class="tip-item"><div class="ti">📱</div><div class="tt"><strong>Set calendar reminders</strong> for each due date — penalties accrue from the missed due date, not year-end.</div></div>
+        <div class="tip-item"><div class="ti">📊</div><div class="tt"><strong>Seasonal income?</strong> Use the annualization method (Schedule AI) to match payments to when income was actually earned.</div></div>
+        <div class="tip-item"><div class="ti">💰</div><div class="tt"><strong>Withhold more from W-2</strong> — extra withholding applies equally to all four quarters, unlike estimated payments.</div></div>
+      </div>
+
+      <div class="sidebar-card">
+        <div class="ic-title">🔗 Related Tools</div>
+        <a href="/tools/federal-tax-estimator" class="rel-link"><span class="rli">🧮</span><div><div class="rln">Federal Tax Estimator</div><div class="rld">Full 1040 calculation</div></div><span class="rla">→</span></a>
+        <a href="/tools/se-tax-calculator" class="rel-link"><span class="rli">💼</span><div><div class="rln">SE Tax Calculator</div><div class="rld">Schedule SE computation</div></div><span class="rla">→</span></a>
+        <a href="/tools/penalty-calculator" class="rel-link"><span class="rli">⚠️</span><div><div class="rln">IRS Penalty Calculator</div><div class="rld">Underpayment penalty tool</div></div><span class="rla">→</span></a>
+        <a href="/deadlines" class="rel-link"><span class="rli">📅</span><div><div class="rln">Full Deadline Calendar</div><div class="rld">All 2026 tax due dates</div></div><span class="rla">→</span></a>
+      </div>
+    </div>
+  </div>
+</div>
+
+<footer>
+  <div class="fl">© 2026 <a href="/">TaxPreparerTools.com</a> · For informational use only · See IRS Publication 505 for complete rules</div>
+  <div class="flinks"><a href="/privacy">Privacy</a><a href="/terms">Terms</a><a href="https://irs.gov/payments" target="_blank">IRS Direct Pay ↗</a></div>
+</footer>
+
+<script>
+const BRACKETS={single:[[11925,.10],[48475,.12],[103350,.22],[197300,.24],[250525,.32],[626350,.35],[Infinity,.37]],mfj:[[23850,.10],[96950,.12],[206700,.22],[394600,.24],[501050,.32],[751600,.35],[Infinity,.37]],mfs:[[11925,.10],[48475,.12],[103350,.22],[197300,.24],[250525,.32],[375800,.35],[Infinity,.37]],hoh:[[17000,.10],[64850,.12],[103350,.22],[197300,.24],[250500,.32],[626350,.35],[Infinity,.37]]};
+const STD={single:15000,mfj:30000,mfs:15000,hoh:22500};
+let method='safeharbor';
+
+function setMethod(btn){
+  document.querySelectorAll('#methodToggle .mt-btn').forEach(b=>b.classList.remove('on'));
+  btn.classList.add('on');method=btn.dataset.method;
+  document.getElementById('safeHarborFields').style.display=method==='safeharbor'?'':'none';
+  document.getElementById('currentYearFields').style.display=method==='currentyear'?'':'none';
+}
+
+function fmt(n){return'$'+Math.round(n).toLocaleString();}
+
+function calcIncomeTax(taxable,status){
+  const b=BRACKETS[status]||BRACKETS.single;
+  let tax=0,prev=0;
+  for(const[upper,rate]of b){if(taxable<=prev)break;tax+=(Math.min(taxable,upper)-prev)*rate;prev=upper;if(taxable<=upper)break;}
+  return tax;
+}
+
+function calculate(){
+  let totalTax=0,withheld=0;
+  if(method==='safeharbor'){
+    const priorTax=+document.getElementById('priorYearTax').value||0;
+    const priorAGI=+document.getElementById('priorYearAGI').value||0;
+    const status=document.getElementById('sh_status').value;
+    withheld=+document.getElementById('sh_withheld').value||0;
+    const threshold=status==='mfj'?150000:150000;
+    const multiplier=priorAGI>threshold?1.10:1.00;
+    totalTax=priorTax*multiplier;
+    document.getElementById('methodBadge').textContent=`📊 Safe Harbor · ${multiplier===1.10?'110%':'100%'} of Prior Year Tax`;
+  }else{
+    const wages=+document.getElementById('cy_wages').value||0;
+    const biz=+document.getElementById('cy_business').value||0;
+    const other=+document.getElementById('cy_other').value||0;
+    const status=document.getElementById('cy_status').value;
+    withheld=+document.getElementById('cy_withheld').value||0;
+    const seTax=biz*0.9235*0.153;
+    const seDeduction=seTax/2;
+    const gross=wages+biz+other;
+    const taxable=Math.max(0,gross-seDeduction-STD[status]);
+    const incomeTax=calcIncomeTax(taxable,status);
+    totalTax=incomeTax+seTax;
+    document.getElementById('methodBadge').textContent='📈 Current Year Projection';
+  }
+
+  const needed=Math.max(0,totalTax-withheld);
+  const each=needed/4;
+
+  document.getElementById('q1amt').textContent=fmt(each);
+  document.getElementById('q2amt').textContent=fmt(each);
+  document.getElementById('q3amt').textContent=fmt(each);
+  document.getElementById('q4amt').textContent=fmt(each);
+
+  document.getElementById('as_total').textContent=fmt(totalTax);
+  document.getElementById('as_withheld').textContent=fmt(withheld);
+  document.getElementById('as_payments').textContent=fmt(needed);
+  document.getElementById('as_balance').textContent=needed===0?'Refund / Even':fmt(needed)+' due';
+  document.getElementById('as_each').textContent=fmt(each)+' / quarter';
+
+  const safeHarborMet=method==='safeharbor';
+  const ps=document.getElementById('penaltyStatus');
+  if(safeHarborMet){
+    ps.className='pb-status pb-safe';
+    ps.innerHTML='<div class="pb-label">✅ Safe Harbor Satisfied</div><div class="pb-sub">Paying these amounts guarantees no underpayment penalty regardless of your actual 2026 tax liability.</div>';
+  }else{
+    ps.className='pb-status pb-warn';
+    ps.innerHTML='<div class="pb-label">⚠️ Current Year Estimate</div><div class="pb-sub">Amounts based on projected income. If actual income is higher, additional payments may be needed to avoid penalties. Consider switching to Safe Harbor method.</div>';
+  }
+
+  document.getElementById('resultsPanel').classList.add('show');
+  setTimeout(()=>document.getElementById('resultsPanel').scrollIntoView({behavior:'smooth',block:'nearest'}),50);
+}
+</script>
+</body>
+</html>

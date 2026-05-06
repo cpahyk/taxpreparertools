@@ -1,0 +1,19 @@
+title: TaxPreparerTools.com
+description: Professional tax tools for CPAs, Enrolled Agents, tax preparers, and individuals
+url: "https://taxpreparertools.com"
+baseurl: ""
+
+# GitHub Pages settings
+theme: null
+plugins: []
+
+# SEO
+author: TaxPreparerTools
+lang: en-US
+
+# Exclude from build
+exclude:
+  - README.md
+  - Gemfile
+  - Gemfile.lock
+  - node_modules

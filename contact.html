@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Contact Us | TaxPreparerTools.com</title>
+<meta name="description" content="Get in touch with the TaxPreparerTools.com team. Questions about tools, billing, or partnerships.">
+<link rel="canonical" href="https://taxpreparertools.com/contact" />
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700;900&family=DM+Sans:wght@300;400;500;600&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root{--navy:#08152a;--navy-mid:#0f1f3d;--slate:#1a2f52;--gold:#c8a84b;--gold-light:#e8c96a;--gold-dim:rgba(200,168,75,0.13);--white:#fff;--muted:#7a8fac;--text:#dde4f0;--border:rgba(200,168,75,0.14);--card:rgba(255,255,255,0.04);--green:#4ade80;}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+body{font-family:'DM Sans',sans-serif;background:var(--navy);color:var(--text);min-height:100vh;}
+nav{position:sticky;top:0;z-index:200;padding:14px 48px;display:flex;align-items:center;justify-content:space-between;background:rgba(8,21,42,0.95);backdrop-filter:blur(20px);border-bottom:1px solid var(--border);}
+.logo{display:flex;align-items:center;gap:10px;text-decoration:none;}
+.logo-mark{width:32px;height:32px;background:var(--gold);border-radius:7px;display:flex;align-items:center;justify-content:center;font-size:15px;}
+.logo-name{font-family:'Playfair Display',serif;font-size:1.1rem;font-weight:700;color:var(--white);}
+.logo-name span{color:var(--gold);}
+.nav-links{display:flex;gap:24px;list-style:none;}
+.nav-links a{color:var(--muted);font-size:0.82rem;font-weight:500;text-decoration:none;transition:color .2s;}
+.nav-links a:hover,.nav-links a.active{color:var(--gold);}
+.btn-sm{padding:7px 16px;border-radius:6px;font-size:0.8rem;font-weight:700;cursor:pointer;text-decoration:none;transition:all .2s;border:none;font-family:'DM Sans',sans-serif;background:var(--gold);color:var(--navy);}
+.btn-sm:hover{background:var(--gold-light);}
+.page-wrap{max-width:900px;margin:0 auto;padding:60px 48px 80px;}
+.page-header{margin-bottom:48px;text-align:center;}
+.page-tag{display:inline-block;font-size:0.62rem;font-family:'DM Mono',monospace;font-weight:700;text-transform:uppercase;letter-spacing:.12em;color:var(--gold);background:var(--gold-dim);border:1px solid rgba(200,168,75,0.25);padding:4px 12px;border-radius:50px;margin-bottom:16px;}
+h1{font-family:'Playfair Display',serif;font-size:clamp(2rem,4vw,3rem);font-weight:900;color:var(--white);letter-spacing:-0.03em;margin-bottom:12px;}
+.sub{color:var(--muted);font-size:0.95rem;line-height:1.7;}
+.contact-grid{display:grid;grid-template-columns:1fr 1.4fr;gap:32px;align-items:start;}
+.contact-cards{display:flex;flex-direction:column;gap:16px;}
+.contact-card{background:var(--card);border:1px solid var(--border);border-radius:16px;padding:24px;}
+.cc-icon{font-size:1.5rem;margin-bottom:10px;}
+.cc-title{font-family:'Playfair Display',serif;font-size:1rem;font-weight:700;color:var(--white);margin-bottom:6px;}
+.cc-text{font-size:0.82rem;color:var(--muted);line-height:1.6;}
+.cc-link{display:inline-block;margin-top:10px;color:var(--gold);text-decoration:none;font-size:0.82rem;font-weight:600;}
+.cc-link:hover{color:var(--gold-light);}
+.form-card{background:var(--card);border:1px solid var(--border);border-radius:16px;padding:32px;}
+.form-title{font-family:'Playfair Display',serif;font-size:1.2rem;font-weight:700;color:var(--white);margin-bottom:24px;}
+.field{display:flex;flex-direction:column;gap:6px;margin-bottom:18px;}
+.f-label{font-size:0.7rem;font-weight:700;color:var(--muted);text-transform:uppercase;letter-spacing:.08em;font-family:'DM Mono',monospace;}
+.f-input{background:rgba(255,255,255,0.05);border:1px solid var(--border);border-radius:8px;padding:10px 14px;color:var(--white);font-size:0.88rem;font-family:'DM Sans',sans-serif;transition:border-color .2s;width:100%;}
+.f-input:focus{outline:none;border-color:var(--gold);}
+textarea.f-input{min-height:120px;resize:vertical;}
+select.f-input{cursor:pointer;}
+.submit-btn{width:100%;padding:12px;background:var(--gold);border:none;border-radius:8px;color:var(--navy);font-size:0.9rem;font-weight:700;cursor:pointer;font-family:'DM Sans',sans-serif;transition:all .2s;}
+.submit-btn:hover{background:var(--gold-light);transform:translateY(-1px);}
+.success-msg{display:none;text-align:center;padding:20px;background:rgba(74,222,128,.08);border:1px solid rgba(74,222,128,.2);border-radius:10px;color:var(--green);margin-top:16px;}
+footer{border-top:1px solid var(--border);padding:24px 48px;display:flex;justify-content:space-between;align-items:center;font-size:0.75rem;color:var(--muted);}
+footer a{color:var(--muted);text-decoration:none;margin-left:20px;}
+footer a:hover{color:var(--gold);}
+</style>
+</head>
+<body>
+<nav>
+  <a href="/" class="logo">
+    <div class="logo-mark">⚖️</div>
+    <div><div class="logo-name">TaxPreparer<span>Tools</span></div></div>
+  </a>
+  <ul class="nav-links">
+    <li><a href="/tools">Tools</a></li>
+    <li><a href="/deadlines">Deadlines</a></li>
+    <li><a href="/ai-assistant">AI Assistant</a></li>
+    <li><a href="/resources">Resources</a></li>
+  </ul>
+  <a href="/signup" class="btn-sm">Get Pro Free</a>
+</nav>
+
+<div class="page-wrap">
+  <div class="page-header">
+    <div class="page-tag">Support</div>
+    <h1>Contact Us</h1>
+    <p class="sub">Questions, feedback, or partnership inquiries — we're here to help.</p>
+  </div>
+
+  <div class="contact-grid">
+    <div class="contact-cards">
+      <div class="contact-card">
+        <div class="cc-icon">📧</div>
+        <div class="cc-title">General & Support</div>
+        <div class="cc-text">For account questions, tool feedback, or bug reports. We respond within 1 business day.</div>
+        <a href="mailto:support@taxpreparertools.com" class="cc-link">support@taxpreparertools.com</a>
+      </div>
+      <div class="contact-card">
+        <div class="cc-icon">💼</div>
+        <div class="cc-title">Firm & Enterprise</div>
+        <div class="cc-text">CPA firms and EA practices with 5+ users. Ask about team pricing and white-label options.</div>
+        <a href="mailto:firms@taxpreparertools.com" class="cc-link">firms@taxpreparertools.com</a>
+      </div>
+      <div class="contact-card">
+        <div class="cc-icon">🤝</div>
+        <div class="cc-title">Partnerships</div>
+        <div class="cc-text">Integration partnerships, content collaborations, and affiliate inquiries.</div>
+        <a href="mailto:partners@taxpreparertools.com" class="cc-link">partners@taxpreparertools.com</a>
+      </div>
+      <div class="contact-card">
+        <div class="cc-icon">⏱️</div>
+        <div class="cc-title">Response Times</div>
+        <div class="cc-text">Support: &lt;24hrs · Billing: Same day · Enterprise: Within 2 hours during business hours (Mon–Fri, 9am–6pm ET).</div>
+      </div>
+    </div>
+
+    <div class="form-card">
+      <div class="form-title">Send a Message</div>
+      <div class="field">
+        <label class="f-label">Your Name</label>
+        <input class="f-input" type="text" id="name" placeholder="Jane Smith, CPA" />
+      </div>
+      <div class="field">
+        <label class="f-label">Email Address</label>
+        <input class="f-input" type="email" id="email" placeholder="jane@yourfirm.com" />
+      </div>
+      <div class="field">
+        <label class="f-label">Topic</label>
+        <select class="f-input" id="topic">
+          <option value="">Select a topic…</option>
+          <option>Tool feedback or bug report</option>
+          <option>Billing or account question</option>
+          <option>Feature request</option>
+          <option>Enterprise / firm pricing</option>
+          <option>Partnership inquiry</option>
+          <option>Tax law accuracy concern</option>
+          <option>Other</option>
+        </select>
+      </div>
+      <div class="field">
+        <label class="f-label">Message</label>
+        <textarea class="f-input" id="message" placeholder="Tell us how we can help…"></textarea>
+      </div>
+      <button class="submit-btn" onclick="submitForm()">Send Message →</button>
+      <div class="success-msg" id="successMsg">✅ Message sent! We'll get back to you within 1 business day.</div>
+    </div>
+  </div>
+</div>
+
+<footer>
+  <span>© 2026 TaxPreparerTools.com · For informational use only · Not affiliated with the IRS</span>
+  <div>
+    <a href="/privacy">Privacy</a>
+    <a href="/terms">Terms</a>
+    <a href="/contact" class="active" style="color:var(--gold)">Contact</a>
+    <a href="https://irs.gov" target="_blank" rel="noopener">IRS.gov ↗</a>
+  </div>
+</footer>
+
+<script>
+function submitForm() {
+  const name = document.getElementById('name').value.trim();
+  const email = document.getElementById('email').value.trim();
+  const topic = document.getElementById('topic').value;
+  const message = document.getElementById('message').value.trim();
+  if (!name || !email || !topic || !message) {
+    alert('Please fill in all fields before sending.');
+    return;
+  }
+  document.getElementById('successMsg').style.display = 'block';
+  document.querySelectorAll('.f-input').forEach(i => i.value = '');
+}
+</script>
+</body>
+</html>

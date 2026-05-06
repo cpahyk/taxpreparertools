@@ -1,0 +1,486 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>2025–2026 Tax Deadline Calendar | TaxPreparerTools.com</title>
+<meta name="description" content="Complete 2025-2026 US tax deadline calendar for CPAs, EAs, tax preparers and individuals. Never miss a filing deadline.">
+<link rel="canonical" href="https://taxpreparertools.com/deadlines" />
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700;900&family=DM+Sans:wght@300;400;500;600&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --navy: #08152a; --navy-mid: #0f1f3d; --slate: #1a2f52;
+    --gold: #c8a84b; --gold-light: #e8c96a; --gold-dim: rgba(200,168,75,0.13);
+    --white: #fff; --muted: #7a8fac; --text: #dde4f0; --border: rgba(200,168,75,0.14);
+    --card: rgba(255,255,255,0.04); --card-h: rgba(200,168,75,0.07);
+    --red: #f87171; --orange: #fb923c; --green: #4ade80; --blue: #60a5fa; --purple: #a78bfa;
+    --red-dim: rgba(248,113,113,0.12); --orange-dim: rgba(251,146,60,0.12);
+    --green-dim: rgba(74,222,128,0.12); --blue-dim: rgba(96,165,250,0.12);
+  }
+  *, *::before, *::after { box-sizing:border-box; margin:0; padding:0; }
+  html { scroll-behavior:smooth; }
+  body { font-family:'DM Sans',sans-serif; background:var(--navy); color:var(--text); min-height:100vh; }
+
+  /* NAV */
+  nav { position:sticky; top:0; z-index:200; padding:15px 48px; display:flex; align-items:center; justify-content:space-between; background:rgba(8,21,42,0.94); backdrop-filter:blur(20px); border-bottom:1px solid var(--border); }
+  .logo { display:flex; align-items:center; gap:10px; text-decoration:none; }
+  .logo-mark { width:33px; height:33px; background:var(--gold); border-radius:7px; display:flex; align-items:center; justify-content:center; font-size:16px; }
+  .logo-name { font-family:'Playfair Display',serif; font-size:1.15rem; font-weight:700; color:var(--white); }
+  .logo-name span { color:var(--gold); }
+  .logo-domain { font-size:0.64rem; color:var(--muted); font-family:'DM Mono',monospace; display:block; }
+  .nav-links { display:flex; gap:26px; list-style:none; }
+  .nav-links a { color:var(--muted); font-size:0.83rem; font-weight:500; text-decoration:none; transition:color .2s; }
+  .nav-links a:hover { color:var(--text); }
+  .nav-links a.active { color:var(--gold); }
+  .nav-right { display:flex; gap:10px; }
+  .btn-sm { padding:7px 16px; border-radius:6px; font-size:0.8rem; font-weight:700; cursor:pointer; text-decoration:none; transition:all .2s; border:none; font-family:'DM Sans',sans-serif; }
+  .btn-ghost { background:transparent; color:var(--muted); border:1px solid var(--border); }
+  .btn-ghost:hover { color:var(--gold); border-color:var(--gold); }
+  .btn-gold { background:var(--gold); color:var(--navy); }
+  .btn-gold:hover { background:var(--gold-light); }
+
+  /* PAGE HEADER */
+  .page-header { padding:64px 48px 48px; background:linear-gradient(180deg,rgba(200,168,75,0.07) 0%,transparent 100%); border-bottom:1px solid var(--border); position:relative; overflow:hidden; }
+  .page-header::before { content:''; position:absolute; inset:0; background-image:linear-gradient(rgba(200,168,75,0.025) 1px,transparent 1px),linear-gradient(90deg,rgba(200,168,75,0.025) 1px,transparent 1px); background-size:52px 52px; }
+  .header-inner { position:relative; max-width:1200px; margin:0 auto; }
+  .breadcrumb { font-size:0.74rem; font-family:'DM Mono',monospace; color:var(--muted); margin-bottom:16px; display:flex; gap:8px; align-items:center; }
+  .breadcrumb a { color:var(--gold); text-decoration:none; }
+  h1 { font-family:'Playfair Display',serif; font-size:clamp(1.9rem,4vw,3rem); font-weight:900; color:var(--white); letter-spacing:-0.03em; margin-bottom:12px; line-height:1.1; }
+  .header-sub { color:var(--muted); font-size:0.95rem; max-width:540px; line-height:1.7; margin-bottom:28px; }
+  .header-actions { display:flex; gap:12px; flex-wrap:wrap; }
+  .action-btn { display:inline-flex; align-items:center; gap:8px; padding:10px 20px; border-radius:8px; font-size:0.82rem; font-weight:600; cursor:pointer; text-decoration:none; transition:all .2s; border:none; font-family:'DM Sans',sans-serif; }
+  .action-btn-gold { background:var(--gold); color:var(--navy); }
+  .action-btn-gold:hover { background:var(--gold-light); transform:translateY(-1px); }
+  .action-btn-outline { background:transparent; color:var(--text); border:1px solid var(--border); }
+  .action-btn-outline:hover { border-color:var(--gold); color:var(--gold); }
+
+  /* LEGEND */
+  .legend { display:flex; gap:20px; flex-wrap:wrap; margin-top:24px; }
+  .legend-item { display:flex; align-items:center; gap:7px; font-size:0.75rem; color:var(--muted); }
+  .legend-dot { width:10px; height:10px; border-radius:50%; }
+
+  /* CONTROLS */
+  .controls { position:sticky; top:63px; z-index:100; background:rgba(8,21,42,0.96); backdrop-filter:blur(16px); border-bottom:1px solid var(--border); padding:14px 48px; }
+  .controls-inner { max-width:1200px; margin:0 auto; display:flex; gap:14px; align-items:center; flex-wrap:wrap; }
+  .filter-chips { display:flex; gap:8px; flex-wrap:wrap; }
+  .chip { padding:7px 16px; border-radius:50px; font-size:0.77rem; font-weight:600; cursor:pointer; border:1px solid var(--border); background:transparent; color:var(--muted); transition:all .18s; font-family:'DM Sans',sans-serif; white-space:nowrap; }
+  .chip:hover { color:var(--text); border-color:rgba(255,255,255,.2); }
+  .chip.on { background:var(--gold); color:var(--navy); border-color:var(--gold); }
+  .view-toggle { display:flex; gap:4px; margin-left:auto; }
+  .vbtn { width:34px; height:34px; border-radius:6px; border:1px solid var(--border); background:transparent; color:var(--muted); cursor:pointer; display:flex; align-items:center; justify-content:center; font-size:13px; transition:all .18s; }
+  .vbtn.on { background:var(--gold-dim); color:var(--gold); border-color:var(--gold); }
+
+  /* MAIN */
+  .main { max-width:1200px; margin:0 auto; padding:40px 48px 80px; display:flex; gap:32px; }
+
+  /* MINI CALENDAR */
+  .mini-cal-section { width:280px; flex-shrink:0; }
+  .mini-cal-wrap { background:var(--card); border:1px solid var(--border); border-radius:16px; padding:20px; margin-bottom:20px; }
+  .cal-nav { display:flex; align-items:center; justify-content:space-between; margin-bottom:16px; }
+  .cal-month { font-family:'Playfair Display',serif; font-size:1rem; font-weight:700; color:var(--white); }
+  .cal-arrow { background:none; border:none; color:var(--muted); cursor:pointer; font-size:16px; padding:4px 8px; border-radius:5px; transition:all .18s; }
+  .cal-arrow:hover { color:var(--gold); background:var(--gold-dim); }
+  .cal-grid { display:grid; grid-template-columns:repeat(7,1fr); gap:2px; }
+  .cal-dow { font-size:0.62rem; font-family:'DM Mono',monospace; color:var(--muted); text-align:center; padding:4px 0; font-weight:700; text-transform:uppercase; letter-spacing:.05em; }
+  .cal-day { aspect-ratio:1; display:flex; align-items:center; justify-content:center; font-size:0.75rem; border-radius:6px; cursor:pointer; color:var(--muted); transition:all .18s; position:relative; }
+  .cal-day:hover { background:var(--card-h); color:var(--text); }
+  .cal-day.today { background:var(--gold-dim); color:var(--gold); font-weight:700; }
+  .cal-day.has-deadline::after { content:''; position:absolute; bottom:3px; left:50%; transform:translateX(-50%); width:4px; height:4px; border-radius:50%; background:var(--orange); }
+  .cal-day.has-deadline.urgent::after { background:var(--red); }
+  .cal-day.other-month { opacity:.25; }
+
+  .upcoming-section { background:var(--card); border:1px solid var(--border); border-radius:16px; padding:18px; }
+  .up-title { font-size:0.72rem; font-family:'DM Mono',monospace; font-weight:700; text-transform:uppercase; letter-spacing:.1em; color:var(--muted); margin-bottom:14px; }
+  .up-item { display:flex; gap:12px; padding:10px 0; border-bottom:1px solid rgba(255,255,255,.05); }
+  .up-item:last-child { border-bottom:none; }
+  .up-date { font-family:'DM Mono',monospace; font-size:0.72rem; color:var(--gold); flex-shrink:0; padding-top:2px; }
+  .up-name { font-size:0.8rem; color:var(--text); font-weight:500; line-height:1.4; }
+  .up-sub { font-size:0.7rem; color:var(--muted); margin-top:2px; }
+
+  /* DEADLINE LIST */
+  .deadlines-content { flex:1; min-width:0; }
+  .year-nav { display:flex; gap:8px; margin-bottom:28px; }
+  .year-btn { padding:8px 20px; border-radius:8px; font-size:0.83rem; font-weight:700; border:1px solid var(--border); background:transparent; color:var(--muted); cursor:pointer; transition:all .2s; font-family:'DM Sans',sans-serif; }
+  .year-btn.on { background:var(--gold); color:var(--navy); border-color:var(--gold); }
+  .year-btn:hover:not(.on) { color:var(--gold); border-color:var(--gold); }
+
+  /* Month group */
+  .month-group { margin-bottom:36px; }
+  .month-header { display:flex; align-items:center; gap:14px; margin-bottom:14px; padding-bottom:10px; border-bottom:1px solid var(--border); }
+  .month-name { font-family:'Playfair Display',serif; font-size:1.2rem; font-weight:700; color:var(--white); }
+  .month-count { font-size:0.72rem; font-family:'DM Mono',monospace; color:var(--muted); }
+  .month-past { opacity:.45; }
+
+  /* Deadline card */
+  .dl-card { background:var(--card); border:1px solid var(--border); border-radius:12px; padding:18px 22px; margin-bottom:10px; display:grid; grid-template-columns:72px 1fr auto; gap:18px; align-items:center; transition:all .22s; cursor:pointer; position:relative; overflow:hidden; }
+  .dl-card::before { content:''; position:absolute; left:0; top:0; bottom:0; width:3px; border-radius:3px 0 0 3px; }
+  .dl-card.urgent::before { background:var(--red); }
+  .dl-card.soon::before { background:var(--orange); }
+  .dl-card.upcoming::before { background:var(--gold); }
+  .dl-card.later::before { background:var(--blue); }
+  .dl-card.past::before { background:rgba(255,255,255,.1); }
+  .dl-card:hover { border-color:rgba(200,168,75,.3); transform:translateX(3px); box-shadow:0 8px 30px rgba(0,0,0,.25); }
+
+  .dl-date-block { text-align:center; }
+  .dl-month { font-family:'DM Mono',monospace; font-size:0.65rem; font-weight:700; text-transform:uppercase; letter-spacing:.1em; color:var(--muted); }
+  .dl-day { font-family:'Playfair Display',serif; font-size:2rem; font-weight:900; color:var(--white); line-height:1; }
+  .dl-year { font-family:'DM Mono',monospace; font-size:0.62rem; color:var(--muted); }
+
+  .dl-info {}
+  .dl-name { font-size:0.95rem; font-weight:700; color:var(--white); margin-bottom:4px; }
+  .dl-desc { font-size:0.78rem; color:var(--muted); line-height:1.5; margin-bottom:8px; }
+  .dl-tags { display:flex; gap:6px; flex-wrap:wrap; }
+  .dl-tag { font-size:0.65rem; font-family:'DM Mono',monospace; font-weight:700; text-transform:uppercase; letter-spacing:.06em; padding:3px 9px; border-radius:50px; }
+  .tag-ind { background:rgba(74,222,128,.1); color:var(--green); }
+  .tag-biz { background:rgba(167,139,250,.1); color:var(--purple); }
+  .tag-emp { background:rgba(96,165,250,.1); color:var(--blue); }
+  .tag-pay { background:rgba(251,146,60,.1); color:var(--orange); }
+  .tag-est { background:rgba(200,168,75,.1); color:var(--gold); }
+  .tag-ext { background:rgba(248,113,113,.1); color:var(--red); }
+
+  .dl-right { display:flex; flex-direction:column; align-items:flex-end; gap:8px; }
+  .status-badge { font-size:0.68rem; font-family:'DM Mono',monospace; font-weight:700; padding:4px 11px; border-radius:50px; text-transform:uppercase; letter-spacing:.06em; white-space:nowrap; }
+  .sb-urgent { background:var(--red-dim); color:var(--red); }
+  .sb-soon { background:var(--orange-dim); color:var(--orange); }
+  .sb-upcoming { background:var(--gold-dim); color:var(--gold); }
+  .sb-later { background:var(--blue-dim); color:var(--blue); }
+  .sb-past { background:rgba(255,255,255,.06); color:var(--muted); }
+  .days-away { font-size:0.72rem; color:var(--muted); font-family:'DM Mono',monospace; }
+  .remind-btn { background:transparent; border:1px solid var(--border); color:var(--muted); font-size:0.7rem; padding:4px 11px; border-radius:50px; cursor:pointer; transition:all .18s; font-family:'DM Sans',sans-serif; }
+  .remind-btn:hover { border-color:var(--gold); color:var(--gold); }
+
+  /* FOOTER */
+  footer { border-top:1px solid var(--border); padding:32px 48px; display:flex; align-items:center; justify-content:space-between; flex-wrap:wrap; gap:14px; background:var(--navy-mid); }
+  .footer-left { font-size:0.76rem; color:var(--muted); }
+  .footer-left a { color:var(--gold); text-decoration:none; }
+  .footer-links { display:flex; gap:22px; }
+  .footer-links a { font-size:0.76rem; color:var(--muted); text-decoration:none; transition:color .2s; }
+  .footer-links a:hover { color:var(--gold); }
+
+  /* TOAST */
+  .toast { position:fixed; bottom:28px; right:28px; background:var(--slate); border:1px solid var(--gold); color:var(--white); padding:14px 22px; border-radius:10px; font-size:0.85rem; font-weight:500; z-index:999; transform:translateY(80px); opacity:0; transition:all .3s; }
+  .toast.show { transform:translateY(0); opacity:1; }
+
+  @media(max-width:900px){ nav{padding:13px 18px;} .nav-links{display:none;} .page-header,.controls,.main{padding-left:18px;padding-right:18px;} .main{flex-direction:column;} .mini-cal-section{width:100%;} footer{padding:22px 18px;flex-direction:column;} .dl-card{grid-template-columns:60px 1fr; } .dl-right{display:none;} }
+</style>
+</head>
+<body>
+
+<nav>
+  <a href="/" class="logo">
+    <div class="logo-mark">⚖</div>
+    <div>
+      <span class="logo-name">TaxPreparer<span>Tools</span></span>
+      <span class="logo-domain">taxpreparertools.com</span>
+    </div>
+  </a>
+  <ul class="nav-links">
+    <li><a href="/tools">Tools</a></li>
+    <li><a href="/calculator">Calculator</a></li>
+    <li><a href="/deadlines" class="active">Deadlines</a></li>
+    <li><a href="/ai-assistant">AI Assistant</a></li>
+    <li><a href="/resources">Resources</a></li>
+  </ul>
+  <div class="nav-right">
+    <a href="/login" class="btn-sm btn-ghost">Log In</a>
+    <a href="/signup" class="btn-sm btn-gold">Get Pro Free</a>
+  </div>
+</nav>
+
+<div class="page-header">
+  <div class="header-inner">
+    <div class="breadcrumb"><a href="/">taxpreparertools.com</a> <span>/</span> deadlines</div>
+    <h1>2025–2026 Tax<br>Deadline Calendar</h1>
+    <p class="header-sub">Every IRS filing deadline for individuals, businesses, payroll, and estimated payments — updated for 2025 and 2026.</p>
+    <div class="header-actions">
+      <button class="action-btn action-btn-gold" onclick="exportCal()">📅 Export to Google Calendar</button>
+      <button class="action-btn action-btn-outline" onclick="showReminderModal()">🔔 Set Email Reminders</button>
+      <button class="action-btn action-btn-outline" onclick="downloadPDF()">⬇ Download PDF</button>
+    </div>
+    <div class="legend">
+      <div class="legend-item"><div class="legend-dot" style="background:var(--red)"></div> Urgent (≤7 days)</div>
+      <div class="legend-item"><div class="legend-dot" style="background:var(--orange)"></div> Soon (≤30 days)</div>
+      <div class="legend-item"><div class="legend-dot" style="background:var(--gold)"></div> Upcoming</div>
+      <div class="legend-item"><div class="legend-dot" style="background:var(--blue)"></div> Later this year</div>
+      <div class="legend-item"><div class="legend-dot" style="background:rgba(255,255,255,.2)"></div> Past</div>
+    </div>
+  </div>
+</div>
+
+<div class="controls">
+  <div class="controls-inner">
+    <div class="filter-chips">
+      <button class="chip on" data-filter="all" onclick="setFilter(this)">All</button>
+      <button class="chip" data-filter="ind" onclick="setFilter(this)">👤 Individual</button>
+      <button class="chip" data-filter="biz" onclick="setFilter(this)">🏢 Business</button>
+      <button class="chip" data-filter="pay" onclick="setFilter(this)">💼 Payroll</button>
+      <button class="chip" data-filter="est" onclick="setFilter(this)">📆 Estimated Tax</button>
+      <button class="chip" data-filter="ext" onclick="setFilter(this)">🕐 Extensions</button>
+    </div>
+    <div class="view-toggle">
+      <button class="vbtn on" id="listVBtn" onclick="setView('list')" title="List">☰</button>
+      <button class="vbtn" id="calVBtn" onclick="setView('cal')" title="Calendar">📅</button>
+    </div>
+  </div>
+</div>
+
+<div class="main">
+  <!-- Mini Calendar -->
+  <div class="mini-cal-section">
+    <div class="mini-cal-wrap">
+      <div class="cal-nav">
+        <button class="cal-arrow" onclick="prevMonth()">‹</button>
+        <div class="cal-month" id="calMonthLabel"></div>
+        <button class="cal-arrow" onclick="nextMonth()">›</button>
+      </div>
+      <div class="cal-grid" id="calGrid"></div>
+    </div>
+    <div class="upcoming-section">
+      <div class="up-title">⚡ Coming Up Next</div>
+      <div id="upcomingList"></div>
+    </div>
+  </div>
+
+  <!-- Main Deadlines -->
+  <div class="deadlines-content">
+    <div class="year-nav">
+      <button class="year-btn on" onclick="setYear(2025,this)">2025 Deadlines</button>
+      <button class="year-btn" onclick="setYear(2026,this)">2026 Deadlines</button>
+    </div>
+    <div id="deadlinesList"></div>
+  </div>
+</div>
+
+<footer>
+  <div class="footer-left">© 2026 <a href="https://taxpreparertools.com">TaxPreparerTools.com</a> · Deadlines based on IRS publications. Verify at <a href="https://irs.gov">IRS.gov</a>.</div>
+  <div class="footer-links">
+    <a href="/privacy">Privacy</a><a href="/terms">Terms</a><a href="/contact">Contact</a><a href="https://irs.gov" target="_blank">IRS.gov ↗</a>
+  </div>
+</footer>
+
+<div class="toast" id="toast"></div>
+
+<script>
+const TODAY = new Date(2026, 4, 2); // May 2, 2026
+
+const DEADLINES = [
+  // 2025
+  { date:'2025-01-15', name:'Q4 2024 Estimated Tax Payment', desc:'Fourth quarter estimated tax due for self-employed individuals and those with non-wage income.', tags:['est','ind'], year:2025 },
+  { date:'2025-01-31', name:'W-2 & 1099-NEC Furnishing Deadline', desc:'Employers must provide W-2s to employees and 1099-NECs to contractors by this date.', tags:['pay','emp'], year:2025 },
+  { date:'2025-01-31', name:'Form 941 – Q4 2024 Payroll Tax Return', desc:'Quarterly payroll tax return for October–December 2024 wages.', tags:['pay','biz'], year:2025 },
+  { date:'2025-02-18', name:'1099-B, 1099-S & 1099-MISC Deadline', desc:'Brokerages must furnish 1099-B for investment sales; 1099-MISC for royalties.', tags:['ind','biz'], year:2025 },
+  { date:'2025-02-28', name:'Paper 1099/W-2 Filing with IRS', desc:'Deadline to file paper copies of information returns with the IRS (W-2, 1099 series).', tags:['pay','biz'], year:2025 },
+  { date:'2025-03-17', name:'S-Corp & Partnership Returns Due (1120-S / 1065)', desc:'Federal tax returns for calendar-year S-corporations and partnerships. 6-month extension available.', tags:['biz','ext'], year:2025 },
+  { date:'2025-03-31', name:'Electronic 1099/W-2 Filing Deadline', desc:'Deadline to electronically file information returns (W-2, 1099) with the IRS/SSA.', tags:['pay','biz'], year:2025 },
+  { date:'2025-04-15', name:'Individual Tax Return Due (Form 1040)', desc:'Federal income tax return deadline for all individuals. 6-month automatic extension available via Form 4868.', tags:['ind','ext'], year:2025 },
+  { date:'2025-04-15', name:'Q1 2025 Estimated Tax Payment', desc:'First quarter 2025 estimated tax payment due for self-employed and individuals with non-wage income.', tags:['est','ind'], year:2025 },
+  { date:'2025-04-15', name:'C-Corp Tax Return Due (Form 1120)', desc:'Federal income tax return due for calendar-year C-corporations. 6-month extension available.', tags:['biz','ext'], year:2025 },
+  { date:'2025-04-15', name:'FBAR Deadline (FinCEN 114)', desc:'Report of Foreign Bank and Financial Accounts for those with foreign financial accounts over $10k.', tags:['ind'], year:2025 },
+  { date:'2025-05-15', name:'Nonprofit Return Due (Form 990)', desc:'Annual information return for calendar-year tax-exempt organizations. 6-month extension available.', tags:['biz'], year:2025 },
+  { date:'2025-06-16', name:'Q2 2025 Estimated Tax Payment', desc:'Second quarter estimated tax payment. Note: Q2 covers April 1–May 31.', tags:['est','ind'], year:2025 },
+  { date:'2025-06-16', name:'U.S. Expat Tax Return Deadline', desc:'Automatic 2-month extension for U.S. citizens and resident aliens living abroad.', tags:['ind'], year:2025 },
+  { date:'2025-07-31', name:'Form 5500 – Retirement Plan Annual Report', desc:'Annual return for employee benefit plans (401k, pension). Due July 31 or extended to Oct 15.', tags:['biz','pay'], year:2025 },
+  { date:'2025-09-15', name:'Q3 2025 Estimated Tax Payment', desc:'Third quarter estimated tax payment due for self-employed individuals.', tags:['est','ind'], year:2025 },
+  { date:'2025-09-15', name:'Extended S-Corp & Partnership Returns Due', desc:'Extended deadline for S-Corp (1120-S) and Partnership (1065) returns that filed for extension.', tags:['biz','ext'], year:2025 },
+  { date:'2025-10-15', name:'Extended Individual Return Due (Form 1040)', desc:'Final deadline for individuals who filed a 6-month extension in April. No further extensions.', tags:['ind','ext'], year:2025 },
+  { date:'2025-10-15', name:'Extended C-Corp Return Due (Form 1120)', desc:'Final deadline for C-corporations that filed a 6-month extension in April.', tags:['biz','ext'], year:2025 },
+  { date:'2025-12-15', name:'C-Corp Estimated Tax (Calendar Year)', desc:'Fourth installment of estimated income tax for calendar-year C-corporations.', tags:['biz','est'], year:2025 },
+  { date:'2025-12-31', name:'Year-End Tax Planning Deadline', desc:'Last day for tax-year 2025 transactions: retirement contributions (some), charitable donations, capital loss harvesting, business purchases.', tags:['ind','biz'], year:2025 },
+
+  // 2026
+  { date:'2026-01-15', name:'Q4 2025 Estimated Tax Payment', desc:'Fourth quarter 2025 estimated tax due. Safe harbor: pay 100% (or 110% if AGI >$150k) of prior year tax.', tags:['est','ind'], year:2026 },
+  { date:'2026-01-31', name:'W-2 & 1099-NEC Furnishing Deadline', desc:'Employers furnish W-2s to employees and 1099-NECs to contractors for tax year 2025.', tags:['pay','emp'], year:2026 },
+  { date:'2026-01-31', name:'Form 941 – Q4 2025 Payroll Tax Return', desc:'Quarterly payroll tax return for wages paid October–December 2025.', tags:['pay','biz'], year:2026 },
+  { date:'2026-03-16', name:'S-Corp & Partnership Returns Due (1120-S / 1065)', desc:'Federal returns for calendar-year S-corporations and partnerships for tax year 2025.', tags:['biz','ext'], year:2026 },
+  { date:'2026-04-15', name:'Individual Tax Return Due (Form 1040)', desc:'2025 federal income tax return deadline. File Form 4868 for automatic 6-month extension.', tags:['ind','ext'], year:2026 },
+  { date:'2026-04-15', name:'Q1 2026 Estimated Tax Payment', desc:'First quarter 2026 estimated tax for self-employed individuals and high-income filers.', tags:['est','ind'], year:2026 },
+  { date:'2026-04-15', name:'IRA & HSA Contribution Deadline (2025)', desc:'Last day to make 2025 IRA, Roth IRA, and HSA contributions.', tags:['ind'], year:2026 },
+  { date:'2026-06-15', name:'Q2 2026 Estimated Tax Payment', desc:'Second quarter 2026 estimated tax payment due.', tags:['est','ind'], year:2026 },
+  { date:'2026-09-15', name:'Q3 2026 Estimated Tax Payment', desc:'Third quarter 2026 estimated tax payment due.', tags:['est','ind'], year:2026 },
+  { date:'2026-09-15', name:'Extended S-Corp & Partnership Returns', desc:'Extended deadline for S-Corp and Partnership returns that requested extension in March.', tags:['biz','ext'], year:2026 },
+  { date:'2026-10-15', name:'Extended Individual Return (Form 1040)', desc:'Final extended deadline for 2025 individual returns. No further extensions available.', tags:['ind','ext'], year:2026 },
+];
+
+let currentFilter = 'all';
+let currentYear = 2025;
+let calYear = 2026;
+let calMonth = 4; // May = 4 (0-indexed)
+
+function getStatus(dateStr) {
+  const d = new Date(dateStr + 'T12:00:00');
+  const diff = Math.ceil((d - TODAY) / 86400000);
+  if (diff < 0) return { label:'Past', cls:'sb-past', cardCls:'past', days: `${Math.abs(diff)}d ago` };
+  if (diff <= 7) return { label:'Urgent', cls:'sb-urgent', cardCls:'urgent', days:`${diff}d left` };
+  if (diff <= 30) return { label:'Soon', cls:'sb-soon', cardCls:'soon', days:`${diff}d left` };
+  if (diff <= 120) return { label:'Upcoming', cls:'sb-upcoming', cardCls:'upcoming', days:`${diff}d away` };
+  return { label:'Later', cls:'sb-later', cardCls:'later', days:`${diff}d away` };
+}
+
+function formatDate(dateStr) {
+  const d = new Date(dateStr + 'T12:00:00');
+  return {
+    month: d.toLocaleString('en-US',{month:'short'}).toUpperCase(),
+    day: d.getDate(),
+    year: d.getFullYear()
+  };
+}
+
+function setFilter(el) {
+  document.querySelectorAll('.chip').forEach(c => c.classList.remove('on'));
+  el.classList.add('on');
+  currentFilter = el.dataset.filter;
+  renderDeadlines();
+}
+
+function setYear(yr, el) {
+  currentYear = yr;
+  document.querySelectorAll('.year-btn').forEach(b => b.classList.remove('on'));
+  el.classList.add('on');
+  renderDeadlines();
+}
+
+function renderDeadlines() {
+  const list = DEADLINES.filter(d => {
+    if (d.year !== currentYear) return false;
+    if (currentFilter === 'all') return true;
+    return d.tags.includes(currentFilter);
+  });
+
+  // Group by month
+  const groups = {};
+  list.forEach(d => {
+    const key = d.date.slice(0,7);
+    if (!groups[key]) groups[key] = [];
+    groups[key].push(d);
+  });
+
+  const monthNames = ['January','February','March','April','May','June','July','August','September','October','November','December'];
+  let html = '';
+  Object.keys(groups).sort().forEach(key => {
+    const [y, m] = key.split('-').map(Number);
+    const monthDate = new Date(y, m-1, 1);
+    const isPast = monthDate < new Date(TODAY.getFullYear(), TODAY.getMonth(), 1);
+    html += `<div class="month-group ${isPast?'month-past':''}">
+      <div class="month-header">
+        <span class="month-name">${monthNames[m-1]} ${y}</span>
+        <span class="month-count">${groups[key].length} deadline${groups[key].length>1?'s':''}</span>
+      </div>`;
+    groups[key].forEach(d => {
+      const st = getStatus(d.date);
+      const fd = formatDate(d.date);
+      const tagsHTML = d.tags.map(t => {
+        const map = {ind:'👤 Individual',biz:'🏢 Business',pay:'💼 Payroll',emp:'📋 Employer',est:'📆 Est. Tax',ext:'🕐 Extension'};
+        return `<span class="dl-tag tag-${t}">${map[t]||t}</span>`;
+      }).join('');
+      html += `<div class="dl-card ${st.cardCls}" onclick="showDetail('${d.date}','${d.name.replace(/'/g,"\\'")}')">
+        <div class="dl-date-block">
+          <div class="dl-month">${fd.month}</div>
+          <div class="dl-day">${fd.day}</div>
+          <div class="dl-year">${fd.year}</div>
+        </div>
+        <div class="dl-info">
+          <div class="dl-name">${d.name}</div>
+          <div class="dl-desc">${d.desc}</div>
+          <div class="dl-tags">${tagsHTML}</div>
+        </div>
+        <div class="dl-right">
+          <span class="status-badge ${st.cls}">${st.label}</span>
+          <span class="days-away">${st.days}</span>
+          <button class="remind-btn" onclick="event.stopPropagation();setReminder('${d.name}','${d.date}')">🔔 Remind me</button>
+        </div>
+      </div>`;
+    });
+    html += '</div>';
+  });
+
+  if (!html) html = `<div style="text-align:center;padding:60px 20px;color:var(--muted);font-size:.9rem;">No deadlines match this filter.</div>`;
+  document.getElementById('deadlinesList').innerHTML = html;
+}
+
+// Mini Calendar
+function renderMiniCal() {
+  document.getElementById('calMonthLabel').textContent =
+    new Date(calYear, calMonth).toLocaleString('en-US',{month:'long'}) + ' ' + calYear;
+  const firstDay = new Date(calYear, calMonth, 1).getDay();
+  const daysInMonth = new Date(calYear, calMonth+1, 0).getDate();
+  const daysInPrev = new Date(calYear, calMonth, 0).getDate();
+  const deadlineDays = new Set(DEADLINES.filter(d => {
+    const [y,m] = d.date.split('-').map(Number);
+    return y === calYear && m-1 === calMonth;
+  }).map(d => parseInt(d.date.split('-')[2])));
+
+  const urgentDays = new Set(DEADLINES.filter(d => {
+    const [y,m] = d.date.split('-').map(Number);
+    if (y !== calYear || m-1 !== calMonth) return false;
+    return getStatus(d.date).label === 'Urgent';
+  }).map(d => parseInt(d.date.split('-')[2])));
+
+  const dows = ['S','M','T','W','T','F','S'];
+  let html = dows.map(d => `<div class="cal-dow">${d}</div>`).join('');
+
+  for (let i = 0; i < firstDay; i++) {
+    html += `<div class="cal-day other-month">${daysInPrev - firstDay + i + 1}</div>`;
+  }
+  for (let d = 1; d <= daysInMonth; d++) {
+    const isToday = calYear === TODAY.getFullYear() && calMonth === TODAY.getMonth() && d === TODAY.getDate();
+    const hasDl = deadlineDays.has(d);
+    const isUrgent = urgentDays.has(d);
+    html += `<div class="cal-day${isToday?' today':''}${hasDl?' has-deadline':''}${isUrgent?' urgent':''}">${d}</div>`;
+  }
+  const rem = (firstDay + daysInMonth) % 7;
+  if (rem > 0) {
+    for (let d = 1; d <= 7-rem; d++) html += `<div class="cal-day other-month">${d}</div>`;
+  }
+  document.getElementById('calGrid').innerHTML = html;
+}
+
+function prevMonth() { calMonth--; if(calMonth<0){calMonth=11;calYear--;} renderMiniCal(); }
+function nextMonth() { calMonth++; if(calMonth>11){calMonth=0;calYear++;} renderMiniCal(); }
+
+function renderUpcoming() {
+  const upcoming = DEADLINES
+    .filter(d => { const diff = Math.ceil((new Date(d.date+'T12:00:00') - TODAY)/86400000); return diff >= 0 && diff <= 90; })
+    .sort((a,b) => a.date.localeCompare(b.date))
+    .slice(0,5);
+
+  document.getElementById('upcomingList').innerHTML = upcoming.map(d => {
+    const fd = formatDate(d.date);
+    const st = getStatus(d.date);
+    return `<div class="up-item">
+      <div class="up-date">${fd.month} ${fd.day}</div>
+      <div>
+        <div class="up-name">${d.name}</div>
+        <div class="up-sub">${st.days}</div>
+      </div>
+    </div>`;
+  }).join('');
+}
+
+function setReminder(name, date) {
+  showToast(`🔔 Reminder set for "${name.substring(0,30)}…"`);
+}
+
+function exportCal() { showToast('📅 Calendar export started — check your downloads'); }
+function showReminderModal() { showToast('📧 Enter your email in settings to receive deadline alerts'); }
+function downloadPDF() { showToast('⬇ PDF download starting — check your downloads'); }
+function showDetail(date, name) { /* would open a modal */ }
+
+function showToast(msg) {
+  const t = document.getElementById('toast');
+  t.textContent = msg;
+  t.classList.add('show');
+  setTimeout(() => t.classList.remove('show'), 3200);
+}
+
+function setView(v) {
+  document.getElementById('listVBtn').classList.toggle('on', v==='list');
+  document.getElementById('calVBtn').classList.toggle('on', v==='cal');
+}
+
+// Init
+renderMiniCal();
+renderUpcoming();
+renderDeadlines();
+</script>
+</body>
+</html>

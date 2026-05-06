@@ -1,0 +1,1299 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>TaxProHub — Tools for Tax Professionals & Individuals</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700;900&family=DM+Sans:wght@300;400;500;600&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --navy: #0a1628;
+    --navy-mid: #122040;
+    --slate: #1e3358;
+    --gold: #c8a84b;
+    --gold-light: #e8c96a;
+    --gold-pale: #f7edc8;
+    --cream: #faf8f3;
+    --white: #ffffff;
+    --muted: #8a9bb5;
+    --text: #e8edf5;
+    --border: rgba(200,168,75,0.18);
+    --card-bg: rgba(255,255,255,0.04);
+    --card-hover: rgba(200,168,75,0.07);
+  }
+
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    font-family: 'DM Sans', sans-serif;
+    background: var(--navy);
+    color: var(--text);
+    overflow-x: hidden;
+    line-height: 1.6;
+  }
+
+  /* ─── NOISE TEXTURE OVERLAY ─── */
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.04'/%3E%3C/svg%3E");
+    pointer-events: none;
+    z-index: 0;
+    opacity: 0.6;
+  }
+
+  /* ─── NAV ─── */
+  nav {
+    position: fixed;
+    top: 0; left: 0; right: 0;
+    z-index: 100;
+    padding: 20px 60px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background: rgba(10,22,40,0.85);
+    backdrop-filter: blur(16px);
+    border-bottom: 1px solid var(--border);
+  }
+
+  .logo {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    text-decoration: none;
+  }
+
+  .logo-icon {
+    width: 36px; height: 36px;
+    background: var(--gold);
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 18px;
+  }
+
+  .logo-text {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.3rem;
+    font-weight: 700;
+    color: var(--white);
+    letter-spacing: -0.02em;
+  }
+
+  .logo-text span { color: var(--gold); }
+
+  nav ul {
+    list-style: none;
+    display: flex;
+    gap: 36px;
+  }
+
+  nav ul a {
+    color: var(--muted);
+    text-decoration: none;
+    font-size: 0.875rem;
+    font-weight: 500;
+    letter-spacing: 0.02em;
+    transition: color 0.2s;
+  }
+
+  nav ul a:hover { color: var(--gold); }
+
+  .nav-cta {
+    background: var(--gold);
+    color: var(--navy) !important;
+    padding: 9px 22px;
+    border-radius: 6px;
+    font-weight: 600 !important;
+    transition: background 0.2s, transform 0.2s !important;
+  }
+
+  .nav-cta:hover {
+    background: var(--gold-light) !important;
+    color: var(--navy) !important;
+    transform: translateY(-1px);
+  }
+
+  /* ─── HERO ─── */
+  .hero {
+    position: relative;
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    padding: 120px 40px 80px;
+    overflow: hidden;
+  }
+
+  .hero-bg {
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(ellipse 80% 60% at 50% 30%, rgba(200,168,75,0.12) 0%, transparent 70%),
+                radial-gradient(ellipse 40% 40% at 80% 80%, rgba(30,51,88,0.6) 0%, transparent 60%);
+    z-index: 0;
+  }
+
+  .hero-grid {
+    position: absolute;
+    inset: 0;
+    background-image:
+      linear-gradient(rgba(200,168,75,0.04) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(200,168,75,0.04) 1px, transparent 1px);
+    background-size: 60px 60px;
+    z-index: 0;
+  }
+
+  .hero-content {
+    position: relative;
+    z-index: 1;
+    max-width: 860px;
+  }
+
+  .hero-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    background: rgba(200,168,75,0.12);
+    border: 1px solid rgba(200,168,75,0.3);
+    color: var(--gold);
+    padding: 6px 16px;
+    border-radius: 50px;
+    font-size: 0.78rem;
+    font-weight: 600;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    margin-bottom: 28px;
+    animation: fadeUp 0.6s ease both;
+  }
+
+  .hero-badge::before {
+    content: '';
+    width: 6px; height: 6px;
+    background: var(--gold);
+    border-radius: 50%;
+    animation: pulse 2s infinite;
+  }
+
+  h1 {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(2.6rem, 6vw, 5rem);
+    font-weight: 900;
+    line-height: 1.08;
+    letter-spacing: -0.03em;
+    color: var(--white);
+    margin-bottom: 24px;
+    animation: fadeUp 0.7s 0.1s ease both;
+  }
+
+  h1 em {
+    font-style: normal;
+    color: var(--gold);
+    position: relative;
+  }
+
+  h1 em::after {
+    content: '';
+    position: absolute;
+    bottom: -4px; left: 0; right: 0;
+    height: 3px;
+    background: var(--gold);
+    border-radius: 2px;
+    opacity: 0.4;
+  }
+
+  .hero-sub {
+    font-size: 1.15rem;
+    color: var(--muted);
+    max-width: 580px;
+    margin: 0 auto 44px;
+    font-weight: 400;
+    line-height: 1.7;
+    animation: fadeUp 0.7s 0.2s ease both;
+  }
+
+  .hero-actions {
+    display: flex;
+    gap: 16px;
+    justify-content: center;
+    flex-wrap: wrap;
+    animation: fadeUp 0.7s 0.3s ease both;
+  }
+
+  .btn-primary {
+    background: var(--gold);
+    color: var(--navy);
+    padding: 14px 32px;
+    border-radius: 8px;
+    font-weight: 700;
+    font-size: 0.95rem;
+    border: none;
+    cursor: pointer;
+    text-decoration: none;
+    transition: all 0.25s;
+    letter-spacing: -0.01em;
+  }
+
+  .btn-primary:hover {
+    background: var(--gold-light);
+    transform: translateY(-2px);
+    box-shadow: 0 12px 40px rgba(200,168,75,0.3);
+  }
+
+  .btn-outline {
+    background: transparent;
+    color: var(--text);
+    padding: 14px 32px;
+    border-radius: 8px;
+    font-weight: 600;
+    font-size: 0.95rem;
+    border: 1px solid rgba(255,255,255,0.15);
+    cursor: pointer;
+    text-decoration: none;
+    transition: all 0.25s;
+  }
+
+  .btn-outline:hover {
+    border-color: var(--gold);
+    color: var(--gold);
+    transform: translateY(-2px);
+  }
+
+  .hero-stats {
+    display: flex;
+    gap: 48px;
+    justify-content: center;
+    margin-top: 72px;
+    padding-top: 48px;
+    border-top: 1px solid var(--border);
+    animation: fadeUp 0.7s 0.4s ease both;
+    flex-wrap: wrap;
+  }
+
+  .stat-item { text-align: center; }
+
+  .stat-num {
+    font-family: 'Playfair Display', serif;
+    font-size: 2rem;
+    font-weight: 700;
+    color: var(--gold);
+    display: block;
+  }
+
+  .stat-label {
+    font-size: 0.8rem;
+    color: var(--muted);
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    font-weight: 500;
+  }
+
+  /* ─── SECTION BASE ─── */
+  section {
+    position: relative;
+    z-index: 1;
+  }
+
+  .section-header {
+    text-align: center;
+    margin-bottom: 60px;
+  }
+
+  .section-tag {
+    display: inline-block;
+    font-size: 0.72rem;
+    font-weight: 700;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--gold);
+    margin-bottom: 14px;
+    font-family: 'DM Mono', monospace;
+  }
+
+  h2 {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(1.8rem, 4vw, 3rem);
+    font-weight: 700;
+    color: var(--white);
+    letter-spacing: -0.03em;
+    line-height: 1.15;
+    margin-bottom: 16px;
+  }
+
+  .section-sub {
+    color: var(--muted);
+    font-size: 1rem;
+    max-width: 520px;
+    margin: 0 auto;
+    line-height: 1.7;
+  }
+
+  /* ─── WHO IT'S FOR ─── */
+  .who-section {
+    padding: 100px 60px;
+    background: var(--navy-mid);
+    border-top: 1px solid var(--border);
+    border-bottom: 1px solid var(--border);
+  }
+
+  .who-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 24px;
+    max-width: 1100px;
+    margin: 0 auto;
+  }
+
+  .who-card {
+    background: var(--card-bg);
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    padding: 36px 28px;
+    text-align: center;
+    transition: all 0.3s;
+    cursor: default;
+  }
+
+  .who-card:hover {
+    background: var(--card-hover);
+    border-color: rgba(200,168,75,0.4);
+    transform: translateY(-4px);
+    box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+  }
+
+  .who-icon {
+    font-size: 2.4rem;
+    margin-bottom: 18px;
+    display: block;
+  }
+
+  .who-title {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.15rem;
+    font-weight: 700;
+    color: var(--white);
+    margin-bottom: 10px;
+  }
+
+  .who-desc {
+    font-size: 0.85rem;
+    color: var(--muted);
+    line-height: 1.6;
+  }
+
+  /* ─── TOOLS SECTION ─── */
+  .tools-section {
+    padding: 110px 60px;
+    max-width: 1300px;
+    margin: 0 auto;
+  }
+
+  .tools-filter {
+    display: flex;
+    gap: 10px;
+    justify-content: center;
+    flex-wrap: wrap;
+    margin-bottom: 52px;
+  }
+
+  .filter-btn {
+    padding: 8px 20px;
+    border-radius: 50px;
+    border: 1px solid var(--border);
+    background: transparent;
+    color: var(--muted);
+    font-size: 0.82rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.2s;
+    font-family: 'DM Sans', sans-serif;
+    letter-spacing: 0.02em;
+  }
+
+  .filter-btn:hover, .filter-btn.active {
+    background: var(--gold);
+    border-color: var(--gold);
+    color: var(--navy);
+  }
+
+  .tools-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: 24px;
+  }
+
+  .tool-card {
+    background: var(--card-bg);
+    border: 1px solid var(--border);
+    border-radius: 18px;
+    padding: 32px;
+    transition: all 0.3s;
+    cursor: pointer;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .tool-card::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(135deg, rgba(200,168,75,0.06) 0%, transparent 60%);
+    opacity: 0;
+    transition: opacity 0.3s;
+  }
+
+  .tool-card:hover {
+    border-color: rgba(200,168,75,0.35);
+    transform: translateY(-5px);
+    box-shadow: 0 24px 64px rgba(0,0,0,0.35);
+  }
+
+  .tool-card:hover::before { opacity: 1; }
+
+  .tool-tag {
+    display: inline-block;
+    font-size: 0.7rem;
+    font-weight: 700;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    padding: 4px 12px;
+    border-radius: 50px;
+    margin-bottom: 20px;
+    font-family: 'DM Mono', monospace;
+  }
+
+  .tag-pro { background: rgba(200,168,75,0.15); color: var(--gold); }
+  .tag-calc { background: rgba(100,180,255,0.12); color: #7cc4fa; }
+  .tag-individual { background: rgba(120,220,150,0.12); color: #7de0a0; }
+  .tag-deadline { background: rgba(255,140,100,0.12); color: #ff9f7a; }
+  .tag-business { background: rgba(180,130,255,0.12); color: #c49bff; }
+
+  .tool-icon {
+    font-size: 2rem;
+    margin-bottom: 16px;
+    display: block;
+  }
+
+  .tool-name {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.2rem;
+    font-weight: 700;
+    color: var(--white);
+    margin-bottom: 10px;
+  }
+
+  .tool-desc {
+    font-size: 0.875rem;
+    color: var(--muted);
+    line-height: 1.65;
+    margin-bottom: 24px;
+  }
+
+  .tool-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 0.83rem;
+    font-weight: 700;
+    color: var(--gold);
+    text-decoration: none;
+    letter-spacing: 0.02em;
+    transition: gap 0.2s;
+  }
+
+  .tool-link:hover { gap: 10px; }
+
+  .tool-link::after { content: '→'; }
+
+  /* ─── FEATURED TOOL ─── */
+  .featured-section {
+    padding: 0 60px 110px;
+  }
+
+  .featured-inner {
+    max-width: 1100px;
+    margin: 0 auto;
+    background: linear-gradient(135deg, var(--slate) 0%, var(--navy-mid) 100%);
+    border: 1px solid rgba(200,168,75,0.25);
+    border-radius: 24px;
+    padding: 60px;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 60px;
+    align-items: center;
+  }
+
+  .featured-label {
+    font-size: 0.72rem;
+    font-weight: 700;
+    color: var(--gold);
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    font-family: 'DM Mono', monospace;
+    margin-bottom: 16px;
+  }
+
+  .featured-title {
+    font-family: 'Playfair Display', serif;
+    font-size: 2.2rem;
+    font-weight: 700;
+    color: var(--white);
+    letter-spacing: -0.02em;
+    line-height: 1.2;
+    margin-bottom: 18px;
+  }
+
+  .featured-desc {
+    color: var(--muted);
+    font-size: 0.95rem;
+    line-height: 1.75;
+    margin-bottom: 32px;
+  }
+
+  .feature-list {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+  }
+
+  .feature-list li {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    font-size: 0.88rem;
+    color: var(--text);
+  }
+
+  .feature-list li::before {
+    content: '✓';
+    width: 22px; height: 22px;
+    background: rgba(200,168,75,0.15);
+    color: var(--gold);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 0.75rem;
+    font-weight: 800;
+    flex-shrink: 0;
+  }
+
+  /* CALCULATOR WIDGET */
+  .calc-widget {
+    background: rgba(10,22,40,0.7);
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    padding: 32px;
+  }
+
+  .calc-title {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.1rem;
+    color: var(--white);
+    margin-bottom: 24px;
+    font-weight: 600;
+  }
+
+  .calc-field {
+    margin-bottom: 16px;
+  }
+
+  .calc-field label {
+    display: block;
+    font-size: 0.78rem;
+    color: var(--muted);
+    font-weight: 600;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+    margin-bottom: 8px;
+    font-family: 'DM Mono', monospace;
+  }
+
+  .calc-field input, .calc-field select {
+    width: 100%;
+    background: rgba(255,255,255,0.05);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    color: var(--white);
+    padding: 11px 14px;
+    font-size: 0.9rem;
+    font-family: 'DM Sans', sans-serif;
+    outline: none;
+    transition: border-color 0.2s;
+    appearance: none;
+  }
+
+  .calc-field input:focus, .calc-field select:focus {
+    border-color: var(--gold);
+  }
+
+  .calc-field select option { background: var(--navy); }
+
+  .calc-btn {
+    width: 100%;
+    background: var(--gold);
+    color: var(--navy);
+    border: none;
+    border-radius: 8px;
+    padding: 12px;
+    font-weight: 700;
+    font-size: 0.9rem;
+    cursor: pointer;
+    margin-top: 8px;
+    transition: all 0.2s;
+    font-family: 'DM Sans', sans-serif;
+  }
+
+  .calc-btn:hover {
+    background: var(--gold-light);
+    transform: translateY(-1px);
+  }
+
+  .calc-result {
+    margin-top: 20px;
+    background: rgba(200,168,75,0.08);
+    border: 1px solid rgba(200,168,75,0.2);
+    border-radius: 10px;
+    padding: 18px;
+    display: none;
+  }
+
+  .calc-result.visible { display: block; }
+
+  .calc-result-row {
+    display: flex;
+    justify-content: space-between;
+    font-size: 0.85rem;
+    color: var(--muted);
+    padding: 5px 0;
+  }
+
+  .calc-result-row.total {
+    color: var(--gold);
+    font-weight: 700;
+    font-size: 1rem;
+    border-top: 1px solid var(--border);
+    margin-top: 8px;
+    padding-top: 10px;
+  }
+
+  /* ─── DEADLINES ─── */
+  .deadlines-section {
+    padding: 110px 60px;
+    background: var(--navy-mid);
+    border-top: 1px solid var(--border);
+    border-bottom: 1px solid var(--border);
+  }
+
+  .deadlines-inner {
+    max-width: 1000px;
+    margin: 0 auto;
+  }
+
+  .deadline-list {
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+  }
+
+  .deadline-item {
+    display: grid;
+    grid-template-columns: 120px 1fr auto;
+    align-items: center;
+    gap: 24px;
+    padding: 22px 28px;
+    border-bottom: 1px solid var(--border);
+    transition: background 0.2s;
+  }
+
+  .deadline-item:first-child { border-top: 1px solid var(--border); }
+
+  .deadline-item:hover { background: var(--card-hover); border-radius: 8px; }
+
+  .deadline-date {
+    font-family: 'DM Mono', monospace;
+    font-size: 0.85rem;
+    color: var(--gold);
+    font-weight: 500;
+  }
+
+  .deadline-name {
+    font-size: 0.9rem;
+    font-weight: 600;
+    color: var(--text);
+  }
+
+  .deadline-who {
+    font-size: 0.78rem;
+    color: var(--muted);
+    margin-top: 3px;
+  }
+
+  .deadline-badge {
+    font-size: 0.7rem;
+    font-weight: 700;
+    padding: 4px 12px;
+    border-radius: 50px;
+    font-family: 'DM Mono', monospace;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+    white-space: nowrap;
+  }
+
+  .soon { background: rgba(255,140,100,0.15); color: #ff9f7a; }
+  .upcoming { background: rgba(200,168,75,0.12); color: var(--gold); }
+  .later { background: rgba(138,155,181,0.12); color: var(--muted); }
+
+  /* ─── RESOURCES ─── */
+  .resources-section {
+    padding: 110px 60px;
+    max-width: 1200px;
+    margin: 0 auto;
+  }
+
+  .resources-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+    gap: 20px;
+  }
+
+  .resource-card {
+    background: var(--card-bg);
+    border: 1px solid var(--border);
+    border-radius: 14px;
+    padding: 28px;
+    transition: all 0.3s;
+    text-decoration: none;
+  }
+
+  .resource-card:hover {
+    border-color: rgba(200,168,75,0.35);
+    background: var(--card-hover);
+    transform: translateY(-3px);
+  }
+
+  .resource-type {
+    font-size: 0.7rem;
+    font-family: 'DM Mono', monospace;
+    font-weight: 700;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--muted);
+    margin-bottom: 12px;
+  }
+
+  .resource-title {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.05rem;
+    font-weight: 700;
+    color: var(--white);
+    line-height: 1.3;
+    margin-bottom: 10px;
+  }
+
+  .resource-desc {
+    font-size: 0.82rem;
+    color: var(--muted);
+    line-height: 1.6;
+  }
+
+  /* ─── CTA ─── */
+  .cta-section {
+    padding: 110px 60px;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .cta-section::before {
+    content: '';
+    position: absolute;
+    top: 50%; left: 50%;
+    transform: translate(-50%, -50%);
+    width: 600px; height: 400px;
+    background: radial-gradient(ellipse, rgba(200,168,75,0.1) 0%, transparent 70%);
+    pointer-events: none;
+  }
+
+  .cta-inner {
+    position: relative;
+    z-index: 1;
+    max-width: 640px;
+    margin: 0 auto;
+  }
+
+  .cta-section h2 { margin-bottom: 16px; }
+
+  .cta-section .section-sub { margin-bottom: 40px; }
+
+  .input-group {
+    display: flex;
+    gap: 12px;
+    max-width: 420px;
+    margin: 0 auto;
+  }
+
+  .input-group input {
+    flex: 1;
+    background: rgba(255,255,255,0.06);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    color: var(--white);
+    padding: 13px 16px;
+    font-size: 0.9rem;
+    font-family: 'DM Sans', sans-serif;
+    outline: none;
+    transition: border-color 0.2s;
+  }
+
+  .input-group input:focus { border-color: var(--gold); }
+  .input-group input::placeholder { color: var(--muted); }
+
+  /* ─── FOOTER ─── */
+  footer {
+    border-top: 1px solid var(--border);
+    padding: 48px 60px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: gap;
+    gap: 24px;
+  }
+
+  .footer-copy {
+    font-size: 0.82rem;
+    color: var(--muted);
+  }
+
+  .footer-links {
+    display: flex;
+    gap: 28px;
+  }
+
+  .footer-links a {
+    font-size: 0.82rem;
+    color: var(--muted);
+    text-decoration: none;
+    transition: color 0.2s;
+  }
+
+  .footer-links a:hover { color: var(--gold); }
+
+  /* ─── ANIMATIONS ─── */
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(24px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  @keyframes pulse {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.4; }
+  }
+
+  /* ─── RESPONSIVE ─── */
+  @media (max-width: 900px) {
+    nav { padding: 16px 24px; }
+    nav ul { display: none; }
+    .who-section, .tools-section, .featured-section,
+    .deadlines-section, .resources-section, .cta-section { padding-left: 24px; padding-right: 24px; }
+    .featured-inner { grid-template-columns: 1fr; gap: 36px; }
+    .deadline-item { grid-template-columns: 100px 1fr; }
+    .deadline-badge { display: none; }
+    footer { flex-direction: column; text-align: center; }
+    .input-group { flex-direction: column; }
+  }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <a href="/" class="logo">
+    <div class="logo-icon">⚖</div>
+    <span class="logo-text">TaxPro<span>Hub</span></span>
+  </a>
+  <ul>
+    <li><a href="/tools">Tools</a></li>
+    <li><a href="/deadlines">Deadlines</a></li>
+    <li><a href="/resources">Resources</a></li>
+    <li><a href="#calculator">Calculator</a></li>
+    <li><a href="/signup" class="nav-cta">Get Started Free</a></li>
+  </ul>
+</nav>
+
+<!-- HERO -->
+<div class="hero">
+  <div class="hero-bg"></div>
+  <div class="hero-grid"></div>
+  <div class="hero-content">
+    <div class="hero-badge">Trusted by Tax Professionals</div>
+    <h1>Every Tool You Need to<br><em>Master Tax Season</em></h1>
+    <p class="hero-sub">Purpose-built tools for CPAs, Enrolled Agents, and Tax Preparers — plus simplified guides for individuals filing their own returns.</p>
+    <div class="hero-actions">
+      <a href="#tools" class="btn-primary">Explore Tools</a>
+      <a href="#calculator" class="btn-outline">Try Tax Calculator</a>
+    </div>
+    <div class="hero-stats">
+      <div class="stat-item">
+        <span class="stat-num">40+</span>
+        <span class="stat-label">Tax Tools</span>
+      </div>
+      <div class="stat-item">
+        <span class="stat-num">2026</span>
+        <span class="stat-label">Tax Year Ready</span>
+      </div>
+      <div class="stat-item">
+        <span class="stat-num">Free</span>
+        <span class="stat-label">Core Access</span>
+      </div>
+      <div class="stat-item">
+        <span class="stat-num">IRS</span>
+        <span class="stat-label">Forms Library</span>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- WHO IT'S FOR -->
+<section class="who-section">
+  <div class="section-header">
+    <div class="section-tag">Who It's For</div>
+    <h2>Built for Every Tax Professional</h2>
+    <p class="section-sub">From solo practitioners to large firms — and individuals navigating their own returns.</p>
+  </div>
+  <div class="who-grid">
+    <div class="who-card">
+      <span class="who-icon">🏛️</span>
+      <div class="who-title">CPAs</div>
+      <div class="who-desc">Advanced tools for complex returns, multi-state filings, business clients, and practice management.</div>
+    </div>
+    <div class="who-card">
+      <span class="who-icon">📋</span>
+      <div class="who-title">Enrolled Agents</div>
+      <div class="who-desc">IRS representation tools, audit defense calculators, and penalty abatement resources.</div>
+    </div>
+    <div class="who-card">
+      <span class="who-icon">💼</span>
+      <div class="who-title">Tax Preparers</div>
+      <div class="who-desc">Checklists, client organizers, e-filing guides, and quick-reference tax tables.</div>
+    </div>
+    <div class="who-card">
+      <span class="who-icon">🏠</span>
+      <div class="who-title">Individuals</div>
+      <div class="who-desc">Simple calculators, deduction finders, W-4 helpers, and plain-English tax explainers.</div>
+    </div>
+    <div class="who-card">
+      <span class="who-icon">🏢</span>
+      <div class="who-title">Small Businesses</div>
+      <div class="who-desc">Entity comparison, payroll tax estimators, quarterly payment tools, and depreciation calculators.</div>
+    </div>
+  </div>
+</section>
+
+<!-- TOOLS GRID -->
+<section class="tools-section" id="tools">
+  <div class="section-header">
+    <div class="section-tag">The Toolkit</div>
+    <h2>40+ Tax Tools, All in One Place</h2>
+    <p class="section-sub">From simple calculators to advanced professional utilities — always current, always free for core features.</p>
+  </div>
+
+  <div class="tools-filter">
+    <button class="filter-btn active" onclick="filterTools('all', this)">All Tools</button>
+    <button class="filter-btn" onclick="filterTools('pro', this)">CPA / EA Pro</button>
+    <button class="filter-btn" onclick="filterTools('calc', this)">Calculators</button>
+    <button class="filter-btn" onclick="filterTools('individual', this)">Individual</button>
+    <button class="filter-btn" onclick="filterTools('business', this)">Business</button>
+    <button class="filter-btn" onclick="filterTools('deadline', this)">Deadlines</button>
+  </div>
+
+  <div class="tools-grid" id="toolsGrid">
+    <!-- Cards injected by JS -->
+  </div>
+</section>
+
+<!-- FEATURED CALCULATOR -->
+<section class="featured-section" id="calculator">
+  <div class="featured-inner">
+    <div>
+      <div class="featured-label">⭐ Featured Tool</div>
+      <h2 class="featured-title">Federal Income Tax<br>Estimator 2025</h2>
+      <p class="featured-desc">Quickly estimate your federal tax liability using the latest 2025 tax brackets. Perfect for planning, paycheck adjustments, or client consultations.</p>
+      <ul class="feature-list">
+        <li>Updated 2025 tax brackets (all filing statuses)</li>
+        <li>Standard deduction auto-applied</li>
+        <li>Effective vs. marginal rate breakdown</li>
+        <li>Self-employment tax included</li>
+        <li>Quarterly estimated payment calculator</li>
+      </ul>
+    </div>
+    <div class="calc-widget">
+      <div class="calc-title">Quick Tax Estimate</div>
+      <div class="calc-field">
+        <label>Filing Status</label>
+        <select id="filingStatus">
+          <option value="single">Single</option>
+          <option value="mfj">Married Filing Jointly</option>
+          <option value="mfs">Married Filing Separately</option>
+          <option value="hoh">Head of Household</option>
+        </select>
+      </div>
+      <div class="calc-field">
+        <label>Gross Income ($)</label>
+        <input type="number" id="grossIncome" placeholder="e.g. 85000" />
+      </div>
+      <div class="calc-field">
+        <label>Additional Deductions ($)</label>
+        <input type="number" id="extraDeductions" placeholder="e.g. 5000" />
+      </div>
+      <button class="calc-btn" onclick="calculateTax()">Calculate Tax →</button>
+      <div class="calc-result" id="calcResult">
+        <div class="calc-result-row"><span>Standard Deduction</span><span id="stdDed">—</span></div>
+        <div class="calc-result-row"><span>Taxable Income</span><span id="taxableInc">—</span></div>
+        <div class="calc-result-row"><span>Marginal Rate</span><span id="margRate">—</span></div>
+        <div class="calc-result-row"><span>Effective Rate</span><span id="effRate">—</span></div>
+        <div class="calc-result-row total"><span>Est. Federal Tax</span><span id="totalTax">—</span></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- TAX DEADLINES -->
+<section class="deadlines-section" id="deadlines">
+  <div class="deadlines-inner">
+    <div class="section-header">
+      <div class="section-tag">2025 Calendar</div>
+      <h2>Key Tax Deadlines</h2>
+      <p class="section-sub">Never miss a filing deadline again. Updated for 2025 tax year.</p>
+    </div>
+    <div class="deadline-list">
+      <div class="deadline-item">
+        <div class="deadline-date">Jan 15, 2026</div>
+        <div>
+          <div class="deadline-name">Q4 2025 Estimated Tax Payment</div>
+          <div class="deadline-who">Self-employed, sole proprietors, high-income individuals</div>
+        </div>
+        <span class="deadline-badge later">2026</span>
+      </div>
+      <div class="deadline-item">
+        <div class="deadline-date">Jan 31, 2026</div>
+        <div>
+          <div class="deadline-name">W-2 & 1099 Deadline</div>
+          <div class="deadline-who">Employers must furnish to employees / contractors</div>
+        </div>
+        <span class="deadline-badge later">2026</span>
+      </div>
+      <div class="deadline-item">
+        <div class="deadline-date">Mar 17, 2026</div>
+        <div>
+          <div class="deadline-name">S-Corp & Partnership Returns (Form 1120-S / 1065)</div>
+          <div class="deadline-who">Business entities — 6-month extension available</div>
+        </div>
+        <span class="deadline-badge upcoming">Upcoming</span>
+      </div>
+      <div class="deadline-item">
+        <div class="deadline-date">Apr 15, 2026</div>
+        <div>
+          <div class="deadline-name">Individual Tax Return Deadline (Form 1040)</div>
+          <div class="deadline-who">All individuals — extension to Oct 15 available</div>
+        </div>
+        <span class="deadline-badge upcoming">Upcoming</span>
+      </div>
+      <div class="deadline-item">
+        <div class="deadline-date">Apr 15, 2026</div>
+        <div>
+          <div class="deadline-name">Q1 2026 Estimated Tax Payment</div>
+          <div class="deadline-who">Self-employed and individuals with non-wage income</div>
+        </div>
+        <span class="deadline-badge upcoming">Upcoming</span>
+      </div>
+      <div class="deadline-item">
+        <div class="deadline-date">Jun 16, 2026</div>
+        <div>
+          <div class="deadline-name">Q2 2026 Estimated Tax Payment</div>
+          <div class="deadline-who">Self-employed and individuals with non-wage income</div>
+        </div>
+        <span class="deadline-badge later">Later</span>
+      </div>
+      <div class="deadline-item">
+        <div class="deadline-date">Sep 15, 2026</div>
+        <div>
+          <div class="deadline-name">Q3 2026 Estimated Tax Payment</div>
+          <div class="deadline-who">Self-employed and individuals with non-wage income</div>
+        </div>
+        <span class="deadline-badge later">Later</span>
+      </div>
+      <div class="deadline-item">
+        <div class="deadline-date">Oct 15, 2026</div>
+        <div>
+          <div class="deadline-name">Extended Individual Return Deadline</div>
+          <div class="deadline-who">For those who filed a 6-month extension in April</div>
+        </div>
+        <span class="deadline-badge later">Later</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- RESOURCES -->
+<section class="resources-section" id="resources">
+  <div class="section-header">
+    <div class="section-tag">Library</div>
+    <h2>Reference Resources</h2>
+    <p class="section-sub">Quick-access guides, tables, and references for professionals and individuals.</p>
+  </div>
+  <div class="resources-grid">
+    <a href="/resources#tax-brackets" class="resource-card">
+      <div class="resource-type">📊 Reference Table</div>
+      <div class="resource-title">2025 Federal Tax Brackets</div>
+      <div class="resource-desc">Complete rate tables for all filing statuses, updated for inflation adjustments.</div>
+    </a>
+    <a href="/resources#client-intake" class="resource-card">
+      <div class="resource-type">📋 Checklist</div>
+      <div class="resource-title">New Client Intake Checklist</div>
+      <div class="resource-desc">Comprehensive document checklist to onboard individual and business clients efficiently.</div>
+    </a>
+    <a href="/resources#penalty-abatement" class="resource-card">
+      <div class="resource-type">📘 Guide</div>
+      <div class="resource-title">IRS Penalty Abatement Guide</div>
+      <div class="resource-desc">Step-by-step guide for requesting first-time penalty abatement and reasonable cause relief.</div>
+    </a>
+    <a href="/resources#mileage-rates" class="resource-card">
+      <div class="resource-type">🔢 Reference Table</div>
+      <div class="resource-title">Standard Mileage Rates 2025</div>
+      <div class="resource-desc">IRS standard mileage rates for business, medical, charity, and military use.</div>
+    </a>
+    <a href="/resources#w4-guide" class="resource-card">
+      <div class="resource-type">📄 Form Guide</div>
+      <div class="resource-title">Form W-4 Line-by-Line Guide</div>
+      <div class="resource-desc">Explain W-4 to clients with this plain-English walkthrough for the current form version.</div>
+    </a>
+    <a href="/resources#qbi-explainer" class="resource-card">
+      <div class="resource-type">💡 Explainer</div>
+      <div class="resource-title">QBI Deduction Simplified</div>
+      <div class="resource-desc">Qualified Business Income deduction explained — eligibility, limitations, and pass-through entity rules.</div>
+    </a>
+    <a href="/resources#entity-comparison" class="resource-card">
+      <div class="resource-type">🏢 Guide</div>
+      <div class="resource-title">S-Corp vs LLC Comparison</div>
+      <div class="resource-desc">Side-by-side entity comparison for tax planning purposes including self-employment tax savings analysis.</div>
+    </a>
+    <a href="/resources#depreciation-ref" class="resource-card">
+      <div class="resource-type">📊 Reference Table</div>
+      <div class="resource-title">Depreciation Quick Reference</div>
+      <div class="resource-desc">MACRS recovery periods, bonus depreciation rates, and Section 179 limits for 2025.</div>
+    </a>
+  </div>
+</section>
+
+<!-- CTA -->
+<section class="cta-section">
+  <div class="cta-inner">
+    <div class="section-tag">Get Started Today</div>
+    <h2>Stay Ahead of Tax Season</h2>
+    <p class="section-sub">Get deadline reminders, new tool alerts, and tax law updates delivered to your inbox.</p>
+    <div class="input-group">
+      <input type="email" placeholder="your@email.com" />
+      <a href="/signup" class="btn-primary">Subscribe</a>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-copy">© 2026 TaxProHub · Not affiliated with the IRS · For informational use only</div>
+  <div class="footer-links">
+    <a href="/privacy">Privacy</a>
+    <a href="/terms">Terms</a>
+    <a href="/contact">Contact</a>
+    <a href="https://irs.gov" target="_blank" rel="noopener">IRS.gov ↗</a>
+  </div>
+</footer>
+
+<script>
+const tools = [
+  { name: "Federal Tax Estimator", icon: "🧮", cat: "calc", tag: "tag-calc", label: "Calculator", desc: "Estimate 2025 federal income tax across all filing statuses with bracket breakdown.", url: "/tools/federal-tax-estimator" },
+  { name: "Self-Employment Tax Calc", icon: "💼", cat: "calc", tag: "tag-calc", label: "Calculator", desc: "Calculate SE tax (Social Security + Medicare) and the deductible portion on Schedule SE.", url: "/tools/se-tax-calculator" },
+  { name: "Quarterly Estimated Payments", icon: "📆", cat: "calc", tag: "tag-calc", label: "Calculator", desc: "Determine safe-harbor amounts and compute quarterly payment schedules automatically.", url: "/tools/quarterly-payments" },
+  { name: "W-4 Withholding Optimizer", icon: "📝", cat: "individual", tag: "tag-individual", label: "Individual", desc: "Help employees complete Form W-4 to withhold the right amount from each paycheck.", url: "/tools/w4-optimizer" },
+  { name: "Mileage Log & Tracker", icon: "🚗", cat: "individual", tag: "tag-individual", label: "Individual", desc: "Track business miles and calculate deductions using current IRS standard mileage rates.", url: "/tools/mileage" },
+  { name: "Depreciation Calculator", icon: "📉", cat: "business", tag: "tag-business", label: "Business", desc: "MACRS depreciation schedules, Section 179 election, and bonus depreciation for 2025.", url: "/tools/depreciation" },
+  { name: "S-Corp Payroll Optimizer", icon: "🏢", cat: "business", tag: "tag-business", label: "Business", desc: "Determine reasonable compensation and model S-Corp tax savings versus LLC/sole prop.", url: "/tools/se-tax-calculator" },
+  { name: "IRS Penalty Calculator", icon: "⚠️", cat: "pro", tag: "tag-pro", label: "CPA / EA Pro", desc: "Compute failure-to-file and failure-to-pay penalties with daily interest accruals.", url: "/tools/penalty-calculator" },
+  { name: "Installment Agreement Planner", icon: "🤝", cat: "pro", tag: "tag-pro", label: "CPA / EA Pro", desc: "Model IRS payment plan options including OIC eligibility and PPIA calculations.", url: "/tools/installment-agreement" },
+  { name: "Audit Risk Indicator", icon: "🔍", cat: "pro", tag: "tag-pro", label: "CPA / EA Pro", desc: "Assess return red flags based on income type, deduction ratios, and industry benchmarks.", url: "/tools/audit-risk" },
+  { name: "Deadline Calendar", icon: "📅", cat: "deadline", tag: "tag-deadline", label: "Deadlines", desc: "Full 2025–2026 tax deadline calendar with export to Google Calendar or iCal.", url: "/deadlines" },
+  { name: "Refund Tracker Guide", icon: "💰", cat: "individual", tag: "tag-individual", label: "Individual", desc: "Step-by-step guide to checking IRS Where's My Refund and understanding refund timelines.", url: "/tools/refund-tracker" },
+  { name: "State Tax Rate Lookup", icon: "🗺️", cat: "calc", tag: "tag-calc", label: "Calculator", desc: "Quick reference for state income, sales, and property tax rates across all 50 states.", url: "/tools/state-taxes" },
+  { name: "Child Tax Credit Estimator", icon: "👨‍👩‍👧", cat: "individual", tag: "tag-individual", label: "Individual", desc: "Calculate your CTC and ACTC based on number of qualifying children and income level.", url: "/tools/ctc" },
+  { name: "Business Entity Comparison", icon: "⚖️", cat: "business", tag: "tag-business", label: "Business", desc: "Side-by-side comparison of LLC, S-Corp, C-Corp, and Sole Prop for tax planning.", url: "/tools/entity-comparison" },
+  { name: "Extension Toolkit", icon: "🕐", cat: "deadline", tag: "tag-deadline", label: "Deadlines", desc: "File Form 4868 or 7004 properly — includes payment due with extension calculator.", url: "/deadlines" },
+];
+
+function renderTools(filter = 'all') {
+  const grid = document.getElementById('toolsGrid');
+  const filtered = filter === 'all' ? tools : tools.filter(t => t.cat === filter);
+  grid.innerHTML = filtered.map(t => `
+    <div class="tool-card">
+      <div class="tool-tag ${t.tag}">${t.label}</div>
+      <span class="tool-icon">${t.icon}</span>
+      <div class="tool-name">${t.name}</div>
+      <div class="tool-desc">${t.desc}</div>
+      <a href="${t.url}" class="tool-link">Open Tool</a>
+    </div>
+  `).join('');
+}
+
+function filterTools(cat, btn) {
+  document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+  renderTools(cat);
+}
+
+renderTools();
+
+// ─── TAX CALCULATOR ───
+function calculateTax() {
+  const gross = parseFloat(document.getElementById('grossIncome').value) || 0;
+  const extra = parseFloat(document.getElementById('extraDeductions').value) || 0;
+  const status = document.getElementById('filingStatus').value;
+
+  const stdDeds = { single: 15000, mfj: 30000, mfs: 15000, hoh: 22500 };
+  const stdDed = stdDeds[status];
+  const totalDed = stdDed + extra;
+  const taxable = Math.max(0, gross - totalDed);
+
+  // 2025 brackets (approximate)
+  const brackets = {
+    single: [[11925,0.10],[48475,0.12],[103350,0.22],[197300,0.24],[250525,0.32],[626350,0.35],[Infinity,0.37]],
+    mfj:    [[23850,0.10],[96950,0.12],[206700,0.22],[394600,0.24],[501050,0.32],[751600,0.35],[Infinity,0.37]],
+    mfs:    [[11925,0.10],[48475,0.12],[103350,0.22],[197300,0.24],[250525,0.32],[375800,0.35],[Infinity,0.37]],
+    hoh:    [[17000,0.10],[64850,0.12],[103350,0.22],[197300,0.24],[250500,0.32],[626350,0.35],[Infinity,0.37]],
+  };
+
+  let tax = 0, prev = 0, marginalRate = 0.10;
+  for (const [upper, rate] of brackets[status]) {
+    if (taxable <= prev) break;
+    const chunk = Math.min(taxable, upper) - prev;
+    tax += chunk * rate;
+    marginalRate = rate;
+    prev = upper;
+    if (taxable <= upper) break;
+  }
+
+  const fmt = n => '$' + Math.round(n).toLocaleString();
+  document.getElementById('stdDed').textContent = fmt(stdDed);
+  document.getElementById('taxableInc').textContent = fmt(taxable);
+  document.getElementById('margRate').textContent = (marginalRate * 100).toFixed(0) + '%';
+  document.getElementById('effRate').textContent = gross > 0 ? (tax / gross * 100).toFixed(1) + '%' : '0%';
+  document.getElementById('totalTax').textContent = fmt(tax);
+  document.getElementById('calcResult').classList.add('visible');
+}
+</script>
+</body>
+</html>

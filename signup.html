@@ -1,0 +1,485 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Create Account | TaxPreparerTools.com</title>
+<meta name="description" content="Join 12,000+ tax professionals. Free account gives access to 42+ tools, AI assistant, and 2025 deadline calendar.">
+<link rel="canonical" href="https://taxpreparertools.com/signup" />
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700;900&family=DM+Sans:wght@300;400;500;600&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --navy:#08152a; --navy-mid:#0f1f3d; --slate:#1a2f52;
+    --gold:#c8a84b; --gold-light:#e8c96a; --gold-dim:rgba(200,168,75,0.13);
+    --white:#fff; --muted:#7a8fac; --text:#dde4f0; --border:rgba(200,168,75,0.15);
+    --card:rgba(255,255,255,0.04); --green:#4ade80; --red:#f87171; --blue:#60a5fa;
+    --input-bg:rgba(255,255,255,0.05); --input-border:rgba(200,168,75,0.18);
+  }
+  *,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+  html{scroll-behavior:smooth;}
+  body{font-family:'DM Sans',sans-serif;background:var(--navy);color:var(--text);min-height:100vh;}
+  .bg-grid{position:fixed;inset:0;background-image:linear-gradient(rgba(200,168,75,0.028) 1px,transparent 1px),linear-gradient(90deg,rgba(200,168,75,0.028) 1px,transparent 1px);background-size:56px 56px;pointer-events:none;z-index:0;}
+  .bg-glow{position:fixed;top:-20%;left:50%;transform:translateX(-50%);width:800px;height:600px;background:radial-gradient(ellipse,rgba(200,168,75,0.08) 0%,transparent 70%);pointer-events:none;z-index:0;}
+
+  nav{position:relative;z-index:10;padding:18px 48px;display:flex;align-items:center;justify-content:space-between;border-bottom:1px solid var(--border);}
+  .logo{display:flex;align-items:center;gap:10px;text-decoration:none;}
+  .logo-mark{width:34px;height:34px;background:var(--gold);border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:17px;}
+  .logo-name{font-family:'Playfair Display',serif;font-size:1.18rem;font-weight:700;color:var(--white);}
+  .logo-name span{color:var(--gold);}
+  .logo-domain{font-size:0.63rem;color:var(--muted);font-family:'DM Mono',monospace;display:block;}
+  .nav-right{font-size:0.83rem;color:var(--muted);}
+  .nav-right a{color:var(--gold);text-decoration:none;font-weight:600;}
+
+  /* PLAN TOGGLE */
+  .plan-toggle-section{position:relative;z-index:1;text-align:center;padding:52px 20px 36px;}
+  .toggle-tag{font-size:0.68rem;font-family:'DM Mono',monospace;font-weight:700;text-transform:uppercase;letter-spacing:.12em;color:var(--gold);margin-bottom:14px;display:block;}
+  .toggle-title{font-family:'Playfair Display',serif;font-size:clamp(1.7rem,4vw,2.6rem);font-weight:900;color:var(--white);letter-spacing:-0.03em;margin-bottom:10px;}
+  .toggle-sub{color:var(--muted);font-size:0.9rem;max-width:480px;margin:0 auto 28px;line-height:1.65;}
+  .billing-toggle{display:inline-flex;align-items:center;gap:12px;background:rgba(255,255,255,.05);border:1px solid var(--border);border-radius:50px;padding:6px 8px;}
+  .toggle-opt{padding:7px 20px;border-radius:50px;font-size:0.8rem;font-weight:600;cursor:pointer;transition:all .2s;color:var(--muted);}
+  .toggle-opt.on{background:var(--gold);color:var(--navy);}
+  .save-badge{background:rgba(74,222,128,.15);color:var(--green);font-size:0.65rem;padding:3px 8px;border-radius:50px;font-family:'DM Mono',monospace;font-weight:700;}
+
+  /* PLAN CARDS */
+  .plans-section{position:relative;z-index:1;max-width:1100px;margin:0 auto;padding:0 24px 64px;}
+  .plans-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:20px;align-items:start;}
+
+  .plan-card{border-radius:20px;padding:32px;border:1px solid var(--border);background:var(--card);position:relative;transition:all .25s;}
+  .plan-card:hover{transform:translateY(-3px);box-shadow:0 20px 50px rgba(0,0,0,.3);}
+  .plan-card.popular{border-color:rgba(200,168,75,.4);background:linear-gradient(170deg,rgba(200,168,75,0.08) 0%,var(--card) 60%);transform:scale(1.03);}
+  .plan-card.popular:hover{transform:scale(1.03) translateY(-3px);}
+
+  .popular-badge{position:absolute;top:-14px;left:50%;transform:translateX(-50%);background:var(--gold);color:var(--navy);font-size:0.68rem;font-weight:800;font-family:'DM Mono',monospace;padding:5px 16px;border-radius:50px;text-transform:uppercase;letter-spacing:.08em;white-space:nowrap;}
+
+  .plan-name{font-family:'Playfair Display',serif;font-size:1.2rem;font-weight:700;color:var(--white);margin-bottom:8px;}
+  .plan-tagline{font-size:0.78rem;color:var(--muted);margin-bottom:22px;line-height:1.5;}
+  .plan-price-block{margin-bottom:24px;}
+  .plan-price{font-family:'Playfair Display',serif;font-size:2.4rem;font-weight:900;color:var(--white);letter-spacing:-0.03em;line-height:1;}
+  .plan-price.gold-price{color:var(--gold);}
+  .plan-per{font-size:0.78rem;color:var(--muted);margin-top:4px;font-family:'DM Mono',monospace;}
+  .plan-orig{font-size:0.75rem;color:var(--muted);text-decoration:line-through;font-family:'DM Mono',monospace;}
+
+  .plan-cta{display:block;width:100%;padding:13px;border-radius:10px;text-align:center;font-size:0.9rem;font-weight:700;cursor:pointer;text-decoration:none;transition:all .22s;border:none;font-family:'DM Sans',sans-serif;margin-bottom:24px;}
+  .cta-outline{background:transparent;color:var(--text);border:1px solid var(--border);}
+  .cta-outline:hover{border-color:var(--gold);color:var(--gold);}
+  .cta-gold{background:var(--gold);color:var(--navy);}
+  .cta-gold:hover{background:var(--gold-light);transform:translateY(-1px);box-shadow:0 8px 24px rgba(200,168,75,.25);}
+  .cta-slate{background:var(--slate);color:var(--white);}
+  .cta-slate:hover{background:#22396a;transform:translateY(-1px);}
+
+  .plan-divider{height:1px;background:var(--border);margin-bottom:20px;}
+  .plan-features-label{font-size:0.68rem;font-family:'DM Mono',monospace;font-weight:700;text-transform:uppercase;letter-spacing:.1em;color:var(--muted);margin-bottom:12px;}
+  .plan-feat-list{list-style:none;display:flex;flex-direction:column;gap:10px;}
+  .plan-feat-list li{display:flex;gap:10px;align-items:flex-start;font-size:0.82rem;color:var(--text);line-height:1.4;}
+  .feat-check{width:18px;height:18px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:0.65rem;font-weight:800;flex-shrink:0;margin-top:1px;}
+  .check-green{background:rgba(74,222,128,.15);color:var(--green);}
+  .check-gold{background:rgba(200,168,75,.15);color:var(--gold);}
+  .check-muted{background:rgba(255,255,255,.06);color:var(--muted);}
+
+  /* SIGNUP SECTION */
+  .signup-section{position:relative;z-index:1;max-width:560px;margin:0 auto;padding:0 24px 80px;}
+  .signup-card{background:var(--navy-mid);border:1px solid var(--border);border-radius:20px;padding:40px;}
+  .signup-header{text-align:center;margin-bottom:28px;}
+  .signup-plan-name{display:inline-block;font-size:0.7rem;font-family:'DM Mono',monospace;font-weight:700;text-transform:uppercase;letter-spacing:.1em;padding:4px 12px;border-radius:50px;background:var(--gold-dim);color:var(--gold);margin-bottom:12px;}
+  .signup-title{font-family:'Playfair Display',serif;font-size:1.6rem;font-weight:700;color:var(--white);margin-bottom:8px;}
+  .signup-sub{font-size:0.83rem;color:var(--muted);}
+
+  .social-btns{display:flex;gap:10px;margin-bottom:22px;}
+  .social-btn{flex:1;display:flex;align-items:center;justify-content:center;gap:8px;padding:11px;border-radius:9px;border:1px solid var(--border);background:var(--card);color:var(--text);font-size:0.82rem;font-weight:600;cursor:pointer;transition:all .2s;text-decoration:none;font-family:'DM Sans',sans-serif;}
+  .social-btn:hover{border-color:rgba(200,168,75,.35);background:var(--gold-dim);}
+
+  .divider{display:flex;align-items:center;gap:14px;margin-bottom:22px;}
+  .divider-line{flex:1;height:1px;background:var(--border);}
+  .divider-text{font-size:0.7rem;color:var(--muted);font-family:'DM Mono',monospace;font-weight:600;text-transform:uppercase;letter-spacing:.08em;white-space:nowrap;}
+
+  .form-row{display:grid;grid-template-columns:1fr 1fr;gap:14px;}
+  .field{display:flex;flex-direction:column;gap:7px;margin-bottom:14px;}
+  .field-label{font-size:0.72rem;font-weight:700;color:var(--muted);letter-spacing:.04em;text-transform:uppercase;font-family:'DM Mono',monospace;}
+  .field-input-wrap{position:relative;}
+  .field-icon{position:absolute;left:13px;top:50%;transform:translateY(-50%);font-size:14px;pointer-events:none;}
+  .field input,.field select{width:100%;background:var(--input-bg);border:1px solid var(--input-border);border-radius:9px;padding:11px 13px 11px 40px;color:var(--white);font-size:0.88rem;font-family:'DM Sans',sans-serif;outline:none;transition:all .2s;appearance:none;}
+  .field input:focus,.field select:focus{border-color:var(--gold);background:rgba(255,255,255,0.07);box-shadow:0 0 0 3px rgba(200,168,75,.08);}
+  .field input::placeholder{color:var(--muted);}
+  .field select option{background:var(--navy);}
+  .field input.error{border-color:var(--red);}
+  .field-err{font-size:0.7rem;color:var(--red);display:none;margin-top:3px;}
+  .field-err.show{display:block;}
+
+  .pw-toggle{position:absolute;right:12px;top:50%;transform:translateY(-50%);background:none;border:none;color:var(--muted);cursor:pointer;font-size:14px;padding:2px;}
+  .pw-toggle:hover{color:var(--gold);}
+
+  /* Password strength */
+  .pw-strength{margin-top:6px;}
+  .pw-bar-track{height:3px;background:rgba(255,255,255,.08);border-radius:3px;overflow:hidden;margin-bottom:4px;}
+  .pw-bar{height:100%;border-radius:3px;transition:all .3s;width:0%;}
+  .pw-label{font-size:0.67rem;font-family:'DM Mono',monospace;color:var(--muted);}
+
+  .terms-check{display:flex;gap:10px;align-items:flex-start;margin-bottom:20px;}
+  .terms-check input{margin-top:3px;accent-color:var(--gold);width:15px;height:15px;flex-shrink:0;}
+  .terms-check span{font-size:0.78rem;color:var(--muted);line-height:1.5;}
+  .terms-check a{color:var(--gold);text-decoration:none;}
+
+  .submit-btn{display:block;width:100%;background:var(--gold);color:var(--navy);border:none;border-radius:10px;padding:14px;font-size:0.95rem;font-weight:700;cursor:pointer;transition:all .25s;font-family:'DM Sans',sans-serif;text-align:center;text-decoration:none;}
+  .submit-btn:hover{background:var(--gold-light);transform:translateY(-1px);box-shadow:0 10px 30px rgba(200,168,75,.25);}
+
+  .secure-note{text-align:center;font-size:0.72rem;color:var(--muted);margin-top:14px;display:flex;align-items:center;justify-content:center;gap:6px;}
+
+  .auth-switch{text-align:center;font-size:0.83rem;color:var(--muted);margin-top:20px;}
+  .auth-switch a{color:var(--gold);text-decoration:none;font-weight:600;}
+
+  /* SUCCESS */
+  .success-overlay{display:none;text-align:center;padding:20px 0;}
+  .success-icon{font-size:3.5rem;margin-bottom:18px;display:block;animation:popIn .5s ease;}
+  .success-title{font-family:'Playfair Display',serif;font-size:1.6rem;font-weight:700;color:var(--white);margin-bottom:10px;}
+  .success-sub{font-size:0.85rem;color:var(--muted);line-height:1.7;margin-bottom:24px;}
+  .success-steps{display:flex;flex-direction:column;gap:10px;text-align:left;background:var(--card);border:1px solid var(--border);border-radius:12px;padding:18px;}
+  .success-step{display:flex;gap:10px;align-items:center;font-size:0.8rem;color:var(--text);}
+  .step-num{width:22px;height:22px;border-radius:50%;background:var(--gold-dim);color:var(--gold);display:flex;align-items:center;justify-content:center;font-size:0.7rem;font-weight:800;font-family:'DM Mono',monospace;flex-shrink:0;}
+
+  /* TRUST BAR */
+  .trust-bar{position:relative;z-index:1;border-top:1px solid var(--border);padding:28px 24px;text-align:center;}
+  .trust-items{display:flex;gap:32px;justify-content:center;flex-wrap:wrap;}
+  .trust-item{display:flex;align-items:center;gap:8px;font-size:0.78rem;color:var(--muted);}
+  .trust-icon{font-size:1.1rem;}
+
+  footer{position:relative;z-index:1;border-top:1px solid var(--border);padding:20px 48px;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:10px;}
+  .footer-left{font-size:0.72rem;color:var(--muted);}
+  .footer-links{display:flex;gap:18px;}
+  .footer-links a{font-size:0.72rem;color:var(--muted);text-decoration:none;transition:color .2s;}
+  .footer-links a:hover{color:var(--gold);}
+
+  @keyframes popIn{from{transform:scale(0.5);opacity:0}to{transform:scale(1);opacity:1}}
+  @media(max-width:900px){nav{padding:14px 20px;}.plans-grid{grid-template-columns:1fr;}.plan-card.popular{transform:none;}.plans-section{padding-bottom:32px;}footer{padding:16px 20px;flex-direction:column;}}
+</style>
+</head>
+<body>
+
+<div class="bg-grid"></div>
+<div class="bg-glow"></div>
+
+<nav>
+  <a href="/" class="logo">
+    <div class="logo-mark">⚖</div>
+    <div>
+      <span class="logo-name">TaxPreparer<span>Tools</span></span>
+      <span class="logo-domain">taxpreparertools.com</span>
+    </div>
+  </a>
+  <div class="nav-right">Already have an account? <a href="/login">Sign in →</a></div>
+</nav>
+
+<!-- PLAN TOGGLE -->
+<div class="plan-toggle-section">
+  <span class="toggle-tag">Pricing Plans</span>
+  <div class="toggle-title">Choose Your Plan</div>
+  <p class="toggle-sub">Start free forever. Upgrade when you need Pro tools, templates, and unlimited AI assistant access.</p>
+  <div class="billing-toggle">
+    <div class="toggle-opt on" onclick="setBilling('monthly',this)">Monthly</div>
+    <div class="toggle-opt" onclick="setBilling('annual',this)">Annual <span class="save-badge">Save 35%</span></div>
+  </div>
+</div>
+
+<!-- PLANS GRID -->
+<div class="plans-section">
+  <div class="plans-grid">
+
+    <!-- FREE -->
+    <div class="plan-card">
+      <div class="plan-name">Free</div>
+      <div class="plan-tagline">For individuals and occasional users.</div>
+      <div class="plan-price-block">
+        <div class="plan-price">$0</div>
+        <div class="plan-per">Free forever · No credit card</div>
+      </div>
+      <a href="#signup-form" class="plan-cta cta-outline" onclick="selectPlan('Free')">Get Started Free</a>
+      <div class="plan-divider"></div>
+      <div class="plan-features-label">What's included</div>
+      <ul class="plan-feat-list">
+        <li><span class="feat-check check-green">✓</span>Federal Tax Estimator & SE Tax Calc</li>
+        <li><span class="feat-check check-green">✓</span>2025–26 Deadline Calendar</li>
+        <li><span class="feat-check check-green">✓</span>20 core calculators</li>
+        <li><span class="feat-check check-green">✓</span>AI Tax Assistant (10 queries/day)</li>
+        <li><span class="feat-check check-green">✓</span>Free resource library access</li>
+        <li><span class="feat-check check-green">✓</span>IRS Publications index</li>
+        <li><span class="feat-check check-muted">—</span><span style="color:var(--muted)">Pro templates & engagement letters</span></li>
+        <li><span class="feat-check check-muted">—</span><span style="color:var(--muted)">Unlimited AI queries</span></li>
+        <li><span class="feat-check check-muted">—</span><span style="color:var(--muted)">Client organizer builder</span></li>
+      </ul>
+    </div>
+
+    <!-- PRO -->
+    <div class="plan-card popular">
+      <div class="popular-badge">Most Popular</div>
+      <div class="plan-name">Pro</div>
+      <div class="plan-tagline">For CPAs, EAs, and active tax preparers.</div>
+      <div class="plan-price-block">
+        <div class="plan-price gold-price" id="proPrice">$19</div>
+        <div class="plan-per" id="proPer">per month, billed monthly</div>
+        <div class="plan-orig" id="proOrig" style="display:none"></div>
+      </div>
+      <a href="#signup-form" class="plan-cta cta-gold" onclick="selectPlan('Pro')">Start Pro Free Trial →</a>
+      <div class="plan-divider"></div>
+      <div class="plan-features-label">Everything in Free, plus</div>
+      <ul class="plan-feat-list">
+        <li><span class="feat-check check-gold">✓</span>All 42 professional tax tools</li>
+        <li><span class="feat-check check-gold">✓</span>Unlimited AI Tax Assistant queries</li>
+        <li><span class="feat-check check-gold">✓</span>38 downloadable guides & templates</li>
+        <li><span class="feat-check check-gold">✓</span>Engagement letter templates</li>
+        <li><span class="feat-check check-gold">✓</span>Client organizer builder</li>
+        <li><span class="feat-check check-gold">✓</span>IRS notice decoder & response builder</li>
+        <li><span class="feat-check check-gold">✓</span>Audit risk indicator</li>
+        <li><span class="feat-check check-gold">✓</span>Email & SMS deadline reminders</li>
+        <li><span class="feat-check check-gold">✓</span>Priority email support</li>
+      </ul>
+    </div>
+
+    <!-- FIRM -->
+    <div class="plan-card">
+      <div class="plan-name">Firm</div>
+      <div class="plan-tagline">For multi-preparer offices and tax firms.</div>
+      <div class="plan-price-block">
+        <div class="plan-price" id="firmPrice">$49</div>
+        <div class="plan-per" id="firmPer">per month · up to 5 users</div>
+        <div class="plan-orig" id="firmOrig" style="display:none"></div>
+      </div>
+      <a href="mailto:firms@taxpreparertools.com" class="plan-cta cta-slate" onclick="selectPlan('Firm')">Contact for Firm Pricing</a>
+      <div class="plan-divider"></div>
+      <div class="plan-features-label">Everything in Pro, plus</div>
+      <ul class="plan-feat-list">
+        <li><span class="feat-check check-green">✓</span>Up to 5 team members</li>
+        <li><span class="feat-check check-green">✓</span>Shared client organizers</li>
+        <li><span class="feat-check check-green">✓</span>Team deadline dashboard</li>
+        <li><span class="feat-check check-green">✓</span>Firm branding on templates</li>
+        <li><span class="feat-check check-green">✓</span>Bulk client import (CSV)</li>
+        <li><span class="feat-check check-green">✓</span>Admin user management</li>
+        <li><span class="feat-check check-green">✓</span>Custom deadline categories</li>
+        <li><span class="feat-check check-green">✓</span>Dedicated onboarding call</li>
+        <li><span class="feat-check check-green">✓</span>Priority phone support</li>
+      </ul>
+    </div>
+  </div>
+</div>
+
+<!-- SIGNUP FORM -->
+<div class="signup-section" id="signup-form">
+  <div class="signup-card">
+    <div id="signupFormContent">
+      <div class="signup-header">
+        <div class="signup-plan-name" id="selectedPlanLabel">Free Plan</div>
+        <div class="signup-title">Create Your Account</div>
+        <p class="signup-sub">No credit card required for Free or Pro trial.</p>
+      </div>
+
+      <div class="social-btns">
+        <button class="social-btn" onclick="alert('Google SSO coming soon — please use email/password for now')">🔵 Google</button>
+        <button class="social-btn" onclick="alert('Microsoft SSO coming soon — please use email/password for now')">🔷 Microsoft</button>
+      </div>
+
+      <div class="divider">
+        <div class="divider-line"></div>
+        <div class="divider-text">or sign up with email</div>
+        <div class="divider-line"></div>
+      </div>
+
+      <div class="form-row">
+        <div class="field">
+          <div class="field-label">First Name</div>
+          <div class="field-input-wrap">
+            <span class="field-icon">👤</span>
+            <input type="text" id="firstName" placeholder="Jane" autocomplete="given-name"/>
+          </div>
+          <div class="field-err" id="firstErr">Required.</div>
+        </div>
+        <div class="field">
+          <div class="field-label">Last Name</div>
+          <div class="field-input-wrap">
+            <span class="field-icon">👤</span>
+            <input type="text" id="lastName" placeholder="Smith" autocomplete="family-name"/>
+          </div>
+          <div class="field-err" id="lastErr">Required.</div>
+        </div>
+      </div>
+
+      <div class="field">
+        <div class="field-label">Email Address</div>
+        <div class="field-input-wrap">
+          <span class="field-icon">✉️</span>
+          <input type="email" id="signupEmail" placeholder="jane@example.com" autocomplete="email"/>
+        </div>
+        <div class="field-err" id="signupEmailErr">Please enter a valid email.</div>
+      </div>
+
+      <div class="field">
+        <div class="field-label">Role</div>
+        <div class="field-input-wrap">
+          <span class="field-icon">💼</span>
+          <select id="userRole">
+            <option value="">Select your role…</option>
+            <option>CPA</option>
+            <option>Enrolled Agent (EA)</option>
+            <option>Tax Preparer / PTIN Holder</option>
+            <option>Tax Attorney</option>
+            <option>Bookkeeper / Accountant</option>
+            <option>Small Business Owner</option>
+            <option>Individual / Self-Filer</option>
+            <option>Other</option>
+          </select>
+        </div>
+      </div>
+
+      <div class="field">
+        <div class="field-label">Password</div>
+        <div class="field-input-wrap">
+          <span class="field-icon">🔒</span>
+          <input type="password" id="signupPassword" placeholder="Min. 8 characters" autocomplete="new-password" oninput="checkStrength(this.value)"/>
+          <button class="pw-toggle" onclick="togglePw('signupPassword',this)" tabindex="-1">👁</button>
+        </div>
+        <div class="pw-strength">
+          <div class="pw-bar-track"><div class="pw-bar" id="pwBar"></div></div>
+          <div class="pw-label" id="pwLabel">Enter a password</div>
+        </div>
+        <div class="field-err" id="signupPwErr">Password must be at least 8 characters.</div>
+      </div>
+
+      <div class="terms-check">
+        <input type="checkbox" id="termsCheck"/>
+        <span>I agree to the <a href="/terms">Terms of Service</a> and <a href="/privacy">Privacy Policy</a>. I understand that TaxPreparerTools.com provides tools for informational purposes and is not a substitute for professional tax advice.</span>
+      </div>
+      <div class="field-err" id="termsErr" style="margin-bottom:14px;">Please accept the terms to continue.</div>
+
+      <button class="submit-btn" onclick="handleSignup()">Create Free Account →</button>
+
+      <div class="secure-note">🔒 256-bit SSL · No spam · Unsubscribe anytime</div>
+      <div class="auth-switch" style="margin-top:16px;">Already have an account? <a href="/login">Sign in</a></div>
+    </div>
+
+    <!-- SUCCESS -->
+    <div class="success-overlay" id="signupSuccess">
+      <span class="success-icon">🎉</span>
+      <div class="success-title">Account Created!</div>
+      <p class="success-sub">Welcome to TaxPreparerTools.com. Check your email to verify your account, then you're all set.</p>
+      <div class="success-steps">
+        <div class="success-step"><div class="step-num">1</div>Check your inbox for a verification email</div>
+        <div class="success-step"><div class="step-num">2</div>Click the link to activate your account</div>
+        <div class="success-step"><div class="step-num">3</div>Sign in and start using your tools</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- TRUST BAR -->
+<div class="trust-bar">
+  <div class="trust-items">
+    <div class="trust-item"><span class="trust-icon">🔒</span> SSL Encrypted</div>
+    <div class="trust-item"><span class="trust-icon">🚫</span> No spam, ever</div>
+    <div class="trust-item"><span class="trust-icon">✅</span> Cancel anytime</div>
+    <div class="trust-item"><span class="trust-icon">🏛️</span> Trusted by 12,000+ tax pros</div>
+    <div class="trust-item"><span class="trust-icon">💳</span> No card for Free plan</div>
+  </div>
+</div>
+
+<footer>
+  <div class="footer-left">© 2026 TaxPreparerTools.com · Not affiliated with the IRS</div>
+  <div class="footer-links">
+    <a href="/privacy">Privacy</a><a href="/terms">Terms</a><a href="/contact">Contact</a>
+  </div>
+</footer>
+
+<script>
+let billing = 'monthly';
+let selectedPlan = 'Free';
+
+function setBilling(type, el) {
+  billing = type;
+  document.querySelectorAll('.toggle-opt').forEach(o => o.classList.remove('on'));
+  el.classList.add('on');
+
+  if (type === 'annual') {
+    document.getElementById('proPrice').textContent = '$12';
+    document.getElementById('proPer').textContent = 'per month, billed $149/yr';
+    document.getElementById('proOrig').textContent = '$19/mo';
+    document.getElementById('proOrig').style.display = 'block';
+    document.getElementById('firmPrice').textContent = '$32';
+    document.getElementById('firmPer').textContent = 'per month · billed $389/yr · 5 users';
+    document.getElementById('firmOrig').textContent = '$49/mo';
+    document.getElementById('firmOrig').style.display = 'block';
+  } else {
+    document.getElementById('proPrice').textContent = '$19';
+    document.getElementById('proPer').textContent = 'per month, billed monthly';
+    document.getElementById('proOrig').style.display = 'none';
+    document.getElementById('firmPrice').textContent = '$49';
+    document.getElementById('firmPer').textContent = 'per month · up to 5 users';
+    document.getElementById('firmOrig').style.display = 'none';
+  }
+}
+
+function selectPlan(plan) {
+  selectedPlan = plan;
+  document.getElementById('selectedPlanLabel').textContent = plan + ' Plan';
+  setTimeout(() => {
+    document.getElementById('signup-form').scrollIntoView({ behavior: 'smooth', block: 'start' });
+  }, 100);
+}
+
+function togglePw(id, btn) {
+  const input = document.getElementById(id);
+  input.type = input.type === 'password' ? 'text' : 'password';
+  btn.textContent = input.type === 'password' ? '👁' : '🙈';
+}
+
+function checkStrength(val) {
+  const bar = document.getElementById('pwBar');
+  const label = document.getElementById('pwLabel');
+  let score = 0;
+  if (val.length >= 8) score++;
+  if (val.length >= 12) score++;
+  if (/[A-Z]/.test(val)) score++;
+  if (/[0-9]/.test(val)) score++;
+  if (/[^A-Za-z0-9]/.test(val)) score++;
+
+  const levels = [
+    { pct: '0%', color: 'transparent', text: 'Enter a password' },
+    { pct: '25%', color: '#f87171', text: 'Weak' },
+    { pct: '50%', color: '#fb923c', text: 'Fair' },
+    { pct: '75%', color: '#facc15', text: 'Good' },
+    { pct: '100%', color: '#4ade80', text: 'Strong ✓' },
+  ];
+  const lvl = levels[Math.min(score, 4)];
+  bar.style.width = lvl.pct;
+  bar.style.background = lvl.color;
+  label.textContent = val.length ? lvl.text : levels[0].text;
+  label.style.color = val.length ? lvl.color : 'var(--muted)';
+}
+
+function handleSignup() {
+  const first = document.getElementById('firstName');
+  const last = document.getElementById('lastName');
+  const email = document.getElementById('signupEmail');
+  const pw = document.getElementById('signupPassword');
+  const terms = document.getElementById('termsCheck');
+
+  let valid = true;
+  ['firstErr','lastErr','signupEmailErr','signupPwErr','termsErr'].forEach(id => {
+    document.getElementById(id).classList.remove('show');
+  });
+  [first, last, email, pw].forEach(el => el.classList.remove('error'));
+
+  if (!first.value.trim()) { first.classList.add('error'); document.getElementById('firstErr').classList.add('show'); valid = false; }
+  if (!last.value.trim()) { last.classList.add('error'); document.getElementById('lastErr').classList.add('show'); valid = false; }
+  if (!email.value || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email.value)) { email.classList.add('error'); document.getElementById('signupEmailErr').classList.add('show'); valid = false; }
+  if (!pw.value || pw.value.length < 8) { pw.classList.add('error'); document.getElementById('signupPwErr').classList.add('show'); valid = false; }
+  if (!terms.checked) { document.getElementById('termsErr').classList.add('show'); valid = false; }
+  if (!valid) return;
+
+  const btn = document.querySelector('.submit-btn');
+  btn.textContent = 'Creating account…';
+  btn.disabled = true;
+
+  setTimeout(() => {
+    document.getElementById('signupFormContent').style.display = 'none';
+    document.getElementById('signupSuccess').style.display = 'block';
+  }, 1400);
+}
+</script>
+</body>
+</html>

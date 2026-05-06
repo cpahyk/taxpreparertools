@@ -1,0 +1,570 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>IRS Penalty Calculator 2025 | TaxPreparerTools.com</title>
+<meta name="description" content="Calculate IRS failure-to-file, failure-to-pay, and underpayment penalties with daily interest. For CPAs, EAs, and tax professionals.">
+<link rel="canonical" href="https://taxpreparertools.com/tools/penalty-calculator" />
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700;900&family=DM+Sans:wght@300;400;500;600&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root{--navy:#08152a;--navy-mid:#0f1f3d;--slate:#1a2f52;--gold:#c8a84b;--gold-light:#e8c96a;--gold-dim:rgba(200,168,75,0.13);--white:#fff;--muted:#7a8fac;--text:#dde4f0;--border:rgba(200,168,75,0.14);--card:rgba(255,255,255,0.04);--green:#4ade80;--blue:#60a5fa;--red:#f87171;--orange:#fb923c;--purple:#a78bfa;}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}html{scroll-behavior:smooth;}
+body{font-family:'DM Sans',sans-serif;background:var(--navy);color:var(--text);min-height:100vh;}
+nav{position:sticky;top:0;z-index:200;padding:14px 48px;display:flex;align-items:center;justify-content:space-between;background:rgba(8,21,42,0.95);backdrop-filter:blur(20px);border-bottom:1px solid var(--border);}
+.logo{display:flex;align-items:center;gap:10px;text-decoration:none;}
+.logo-mark{width:32px;height:32px;background:var(--gold);border-radius:7px;display:flex;align-items:center;justify-content:center;font-size:15px;}
+.logo-name{font-family:'Playfair Display',serif;font-size:1.1rem;font-weight:700;color:var(--white);}.logo-name span{color:var(--gold);}
+.logo-domain{font-size:0.62rem;color:var(--muted);font-family:'DM Mono',monospace;display:block;}
+.nav-links{display:flex;gap:24px;list-style:none;}
+.nav-links a{color:var(--muted);font-size:0.82rem;font-weight:500;text-decoration:none;transition:color .2s;}
+.nav-links a:hover,.nav-links a.active{color:var(--gold);}
+.btn-g{padding:7px 16px;border-radius:6px;font-size:.8rem;font-weight:700;cursor:pointer;text-decoration:none;transition:all .2s;border:none;font-family:'DM Sans',sans-serif;background:var(--gold);color:var(--navy);}
+.btn-g:hover{background:var(--gold-light);}
+.pw{max-width:1160px;margin:0 auto;padding:40px 48px 80px;}
+.bc{font-size:.73rem;font-family:'DM Mono',monospace;color:var(--muted);margin-bottom:20px;display:flex;gap:7px;flex-wrap:wrap;}
+.bc a{color:var(--gold);text-decoration:none;}
+.th{display:flex;gap:22px;align-items:flex-start;margin-bottom:32px;}
+.t-icon{width:58px;height:58px;background:linear-gradient(135deg,rgba(248,113,113,.1),rgba(248,113,113,.02));border:1px solid rgba(248,113,113,.25);border-radius:15px;display:flex;align-items:center;justify-content:center;font-size:26px;flex-shrink:0;}
+.badge{font-size:.63rem;font-family:'DM Mono',monospace;font-weight:700;text-transform:uppercase;letter-spacing:.08em;padding:3px 10px;border-radius:50px;}
+.bf{background:rgba(74,222,128,.12);color:var(--green);}
+.bu{background:rgba(96,165,250,.1);color:var(--blue);}
+.bp{background:rgba(167,139,250,.1);color:var(--purple);}
+h1{font-family:'Playfair Display',serif;font-size:clamp(1.5rem,3vw,2.2rem);font-weight:900;color:var(--white);letter-spacing:-0.03em;line-height:1.1;margin-bottom:8px;}
+.td{color:var(--muted);font-size:.88rem;line-height:1.7;max-width:600px;}
+.lay{display:grid;grid-template-columns:1fr 350px;gap:22px;align-items:start;}
+.card{background:var(--navy-mid);border:1px solid var(--border);border-radius:18px;overflow:hidden;}
+.ch{padding:20px 24px;border-bottom:1px solid var(--border);background:rgba(200,168,75,.04);}
+.ct{font-family:'Playfair Display',serif;font-size:1.05rem;font-weight:700;color:var(--white);}
+.cs{font-size:.74rem;color:var(--muted);margin-top:2px;}
+.cb{padding:24px;}
+.sec{font-size:.7rem;font-weight:700;color:var(--muted);text-transform:uppercase;letter-spacing:.1em;font-family:'DM Mono',monospace;margin-bottom:11px;padding-bottom:7px;border-bottom:1px solid var(--border);}
+.field{display:flex;flex-direction:column;gap:6px;margin-bottom:14px;}
+.lbl{font-size:.7rem;font-weight:700;color:var(--muted);text-transform:uppercase;letter-spacing:.06em;font-family:'DM Mono',monospace;display:flex;justify-content:space-between;align-items:center;}
+.hint{font-size:.64rem;color:var(--muted);font-weight:400;text-transform:none;letter-spacing:0;font-family:'DM Sans',sans-serif;opacity:.75;}
+.iw{position:relative;}
+.pfx{position:absolute;left:12px;top:50%;transform:translateY(-50%);color:var(--muted);font-size:.84rem;pointer-events:none;}
+input,select{width:100%;background:rgba(255,255,255,.05);border:1px solid rgba(200,168,75,.17);border-radius:8px;padding:10px 12px 10px 28px;color:var(--white);font-size:.87rem;font-family:'DM Sans',sans-serif;outline:none;transition:all .2s;appearance:none;}
+input[type="date"]{color-scheme:dark;}
+input.np,select.np{padding-left:12px;}
+input:focus,select:focus{border-color:var(--gold);background:rgba(255,255,255,.07);box-shadow:0 0 0 3px rgba(200,168,75,.06);}
+input::placeholder{color:var(--muted);}
+select option{background:var(--navy);}
+.frow{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:14px;}
+
+/* Penalty type tabs */
+.penalty-tabs{display:grid;grid-template-columns:1fr 1fr 1fr;gap:6px;margin-bottom:20px;}
+.pt{padding:12px 10px;border-radius:10px;border:1px solid var(--border);background:var(--card);cursor:pointer;transition:all .22s;text-align:center;}
+.pt:hover{border-color:rgba(200,168,75,.3);}
+.pt.on{border-color:rgba(248,113,113,.4);background:rgba(248,113,113,.08);}
+.pt-icon{font-size:1.3rem;margin-bottom:5px;display:block;}
+.pt-name{font-size:.75rem;font-weight:700;color:var(--text);}
+.pt-desc{font-size:.64rem;color:var(--muted);margin-top:2px;line-height:1.3;}
+
+.calc-btn{width:100%;background:var(--gold);color:var(--navy);border:none;border-radius:10px;padding:14px;font-size:.95rem;font-weight:800;cursor:pointer;transition:all .25s;font-family:'DM Sans',sans-serif;margin-top:6px;}
+.calc-btn:hover{background:var(--gold-light);transform:translateY(-2px);box-shadow:0 10px 30px rgba(200,168,75,.25);}
+
+/* Results */
+.results{display:none;margin-top:20px;animation:fu .4s ease;}
+.results.show{display:block;}
+@keyframes fu{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:translateY(0)}}
+
+.alert-bar{padding:14px 18px;border-radius:10px;margin-bottom:14px;display:flex;gap:12px;align-items:flex-start;}
+.alert-warn{background:rgba(251,146,60,.1);border:1px solid rgba(251,146,60,.25);}
+.alert-danger{background:rgba(248,113,113,.1);border:1px solid rgba(248,113,113,.25);}
+.alert-ok{background:rgba(74,222,128,.08);border:1px solid rgba(74,222,128,.2);}
+.alert-icon{font-size:1.2rem;flex-shrink:0;margin-top:1px;}
+.alert-title{font-size:.82rem;font-weight:700;margin-bottom:3px;}
+.alert-warn .alert-title{color:var(--orange);}
+.alert-danger .alert-title{color:var(--red);}
+.alert-ok .alert-title{color:var(--green);}
+.alert-sub{font-size:.74rem;color:var(--muted);line-height:1.5;}
+
+.rh{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-bottom:14px;}
+.rbox{background:var(--card);border:1px solid var(--border);border-radius:12px;padding:14px;text-align:center;}
+.rbox.feat{background:linear-gradient(135deg,rgba(248,113,113,.1),rgba(248,113,113,.02));border-color:rgba(248,113,113,.28);}
+.rl{font-size:.63rem;font-family:'DM Mono',monospace;font-weight:700;text-transform:uppercase;letter-spacing:.08em;color:var(--muted);margin-bottom:5px;}
+.rv{font-family:'Playfair Display',serif;font-size:1.45rem;font-weight:900;color:var(--white);line-height:1;}
+.rv.red{color:var(--red);}
+.rv.gold{color:var(--gold);}
+.rv.green{color:var(--green);}
+.rv.orange{color:var(--orange);}
+.rs{font-size:.64rem;color:var(--muted);margin-top:3px;}
+
+.bt{background:var(--card);border:1px solid var(--border);border-radius:12px;overflow:hidden;margin-bottom:12px;}
+.btr{display:flex;justify-content:space-between;align-items:center;padding:11px 16px;border-bottom:1px solid rgba(255,255,255,.04);font-size:.8rem;}
+.btr:last-child{border-bottom:none;}
+.btr.tot{background:rgba(248,113,113,.06);border-top:1px solid rgba(248,113,113,.15);}
+.btk{color:var(--muted);}
+.btk strong{color:var(--text);}
+.btv{font-family:'DM Mono',monospace;font-weight:600;}
+.btv.red{color:var(--red);}
+.btv.gold{color:var(--gold);}
+.btv.green{color:var(--green);}
+.btv.orange{color:var(--orange);}
+
+/* Timeline */
+.timeline{background:var(--card);border:1px solid var(--border);border-radius:12px;padding:16px;margin-bottom:12px;}
+.tl-title{font-size:.7rem;font-family:'DM Mono',monospace;font-weight:700;text-transform:uppercase;letter-spacing:.08em;color:var(--muted);margin-bottom:14px;}
+.tl-item{display:flex;gap:12px;margin-bottom:12px;padding-bottom:12px;border-bottom:1px solid rgba(255,255,255,.04);}
+.tl-item:last-child{border-bottom:none;margin-bottom:0;padding-bottom:0;}
+.tl-dot{width:10px;height:10px;border-radius:50%;flex-shrink:0;margin-top:4px;}
+.tl-dot.red{background:var(--red);}
+.tl-dot.orange{background:var(--orange);}
+.tl-dot.gold{background:var(--gold);}
+.tl-dot.green{background:var(--green);}
+.tl-date{font-family:'DM Mono',monospace;font-size:.7rem;color:var(--muted);white-space:nowrap;margin-top:1px;min-width:80px;}
+.tl-desc{font-size:.79rem;color:var(--text);line-height:1.4;}
+.tl-amount{margin-left:auto;font-family:'DM Mono',monospace;font-size:.78rem;font-weight:700;white-space:nowrap;padding-top:1px;}
+.tl-amount.red{color:var(--red);}
+.tl-amount.orange{color:var(--orange);}
+
+.abatement-box{background:linear-gradient(135deg,var(--slate),var(--navy-mid));border:1px solid rgba(74,222,128,.2);border-radius:12px;padding:16px;}
+.ab-title{font-size:.7rem;font-family:'DM Mono',monospace;font-weight:700;text-transform:uppercase;letter-spacing:.08em;color:var(--green);margin-bottom:12px;}
+.ab-row{display:flex;justify-content:space-between;padding:7px 0;border-bottom:1px solid rgba(255,255,255,.05);font-size:.79rem;}
+.ab-row:last-child{border-bottom:none;}
+.ab-k{color:var(--muted);}
+.ab-v{font-family:'DM Mono',monospace;font-weight:600;color:var(--text);}
+.ab-v.green{color:var(--green);}
+
+/* sidebar */
+.sc{background:var(--navy-mid);border:1px solid var(--border);border-radius:14px;padding:18px;margin-bottom:14px;}
+.sct{font-family:'Playfair Display',serif;font-size:.93rem;font-weight:700;color:var(--white);margin-bottom:11px;}
+.scr{display:flex;justify-content:space-between;padding:7px 0;border-bottom:1px solid rgba(255,255,255,.05);font-size:.76rem;}
+.scr:last-child{border-bottom:none;}
+.sck{color:var(--muted);}
+.scv{font-family:'DM Mono',monospace;font-weight:600;color:var(--text);}
+.scv.red{color:var(--red);}
+.scv.gold{color:var(--gold);}
+.scv.green{color:var(--green);}
+.tip-item{display:flex;gap:9px;padding:8px 0;border-bottom:1px solid rgba(255,255,255,.04);}
+.tip-item:last-child{border-bottom:none;}
+.ti{font-size:.9rem;flex-shrink:0;margin-top:1px;}
+.tt{font-size:.75rem;color:var(--muted);line-height:1.55;}
+.tt strong{color:var(--text);}
+.rl-item{display:flex;align-items:center;gap:10px;padding:8px 0;border-bottom:1px solid rgba(255,255,255,.05);text-decoration:none;transition:all .18s;}
+.rl-item:last-child{border-bottom:none;}
+.rl-item:hover .rln{color:var(--gold);}
+.rli{font-size:1rem;width:26px;text-align:center;}
+.rln{font-size:.78rem;font-weight:600;color:var(--text);transition:color .18s;}
+.rld{font-size:.65rem;color:var(--muted);}
+.rla{margin-left:auto;color:var(--muted);font-size:.8rem;transition:all .18s;}
+.rl-item:hover .rla{color:var(--gold);transform:translateX(3px);}
+.expl{background:var(--navy-mid);border:1px solid var(--border);border-radius:14px;padding:22px;margin-top:20px;}
+.expl-t{font-family:'Playfair Display',serif;font-size:1.05rem;font-weight:700;color:var(--white);margin-bottom:12px;}
+.es{margin-bottom:14px;}
+.eh{font-size:.77rem;font-weight:700;color:var(--gold);margin-bottom:5px;}
+.ep{font-size:.79rem;color:var(--muted);line-height:1.68;}
+.ep strong{color:var(--text);}
+footer{border-top:1px solid var(--border);padding:26px 48px;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:12px;background:var(--navy-mid);}
+.fl{font-size:.72rem;color:var(--muted);}.fl a{color:var(--gold);text-decoration:none;}
+.flk{display:flex;gap:18px;}.flk a{font-size:.72rem;color:var(--muted);text-decoration:none;transition:color .2s;}.flk a:hover{color:var(--gold);}
+@media(max-width:960px){nav{padding:13px 18px;}.nav-links{display:none;}.pw{padding:26px 18px 60px;}.lay{grid-template-columns:1fr;}.frow{grid-template-columns:1fr;}.rh{grid-template-columns:1fr 1fr;}footer{padding:18px;flex-direction:column;}.penalty-tabs{grid-template-columns:1fr;}}
+</style>
+</head>
+<body>
+<nav>
+  <a href="/" class="logo"><div class="logo-mark">⚖</div><div><span class="logo-name">TaxPreparer<span>Tools</span></span><span class="logo-domain">taxpreparertools.com</span></div></a>
+  <ul class="nav-links"><li><a href="/tools" class="active">Tools</a></li><li><a href="/deadlines">Deadlines</a></li><li><a href="/ai-assistant">AI Assistant</a></li><li><a href="/resources">Resources</a></li></ul>
+  <a href="/signup" class="btn-g">Get Pro Free</a>
+</nav>
+
+<div class="pw">
+  <div class="bc"><a href="/">Home</a><span>/</span><a href="/tools">Tools</a><span>/</span><a href="/tools?cat=pro">CPA / EA Pro</a><span>/</span>IRS Penalty Calculator</div>
+
+  <div class="th">
+    <div class="t-icon">⚠️</div>
+    <div>
+      <div style="display:flex;gap:7px;margin-bottom:9px;flex-wrap:wrap;"><span class="badge bf">Free</span><span class="badge bu">Updated Jan 2026</span><span class="badge bp">CPA / EA Pro</span></div>
+      <h1>IRS Penalty &amp; Interest<br>Calculator 2025</h1>
+      <p class="td">Compute failure-to-file (FTF), failure-to-pay (FTP), and underpayment penalties with daily compounded interest. Includes maximum penalty caps, abatement eligibility estimate, and payment strategy recommendations.</p>
+    </div>
+  </div>
+
+  <div class="lay">
+    <div>
+      <div class="card">
+        <div class="ch"><div class="ct">Select Penalty Type &amp; Enter Details</div><div class="cs">All calculations based on IRC §§ 6651, 6654, and current IRS interest rates</div></div>
+        <div class="cb">
+          <div class="sec">Penalty Type</div>
+          <div class="penalty-tabs" id="penaltyTabs">
+            <div class="pt on" data-type="ftf" onclick="setPenalty(this)">
+              <span class="pt-icon">📁</span>
+              <div class="pt-name">Failure to File</div>
+              <div class="pt-desc">IRC § 6651(a)(1) — Late return penalty</div>
+            </div>
+            <div class="pt" data-type="ftp" onclick="setPenalty(this)">
+              <span class="pt-icon">💳</span>
+              <div class="pt-name">Failure to Pay</div>
+              <div class="pt-desc">IRC § 6651(a)(2) — Late payment penalty</div>
+            </div>
+            <div class="pt" data-type="underpay" onclick="setPenalty(this)">
+              <span class="pt-icon">📉</span>
+              <div class="pt-name">Underpayment</div>
+              <div class="pt-desc">IRC § 6654 — Estimated tax penalty</div>
+            </div>
+          </div>
+
+          <!-- FTF FIELDS -->
+          <div id="ftf-fields">
+            <div class="sec">Tax Return Details</div>
+            <div class="field">
+              <div class="lbl">Tax Due on Return <span class="hint">Unpaid balance as of original due date</span></div>
+              <div class="iw"><span class="pfx">$</span><input type="number" id="ftf_taxDue" placeholder="0" min="0"/></div>
+            </div>
+            <div class="frow">
+              <div class="field" style="margin-bottom:0">
+                <div class="lbl">Original Due Date</div>
+                <input type="date" class="np" id="ftf_dueDate" value="2026-04-15"/>
+              </div>
+              <div class="field" style="margin-bottom:0">
+                <div class="lbl">Date Filed (or today)</div>
+                <input type="date" class="np" id="ftf_filedDate" value="2026-05-03"/>
+              </div>
+            </div>
+            <div class="field" style="margin-top:12px;">
+              <div class="lbl">Extension Filed? <span class="hint">Form 4868 filed by original due date</span></div>
+              <select class="np" id="ftf_extension">
+                <option value="no">No — No extension filed</option>
+                <option value="yes">Yes — Extension filed (6 months)</option>
+              </select>
+            </div>
+            <div class="field">
+              <div class="lbl">Prior Tax Compliance <span class="hint">For First-Time Abatement eligibility</span></div>
+              <select class="np" id="ftf_history">
+                <option value="clean">Clean — No penalties in prior 3 years</option>
+                <option value="prior">Prior penalties exist</option>
+              </select>
+            </div>
+          </div>
+
+          <!-- FTP FIELDS -->
+          <div id="ftp-fields" style="display:none">
+            <div class="sec">Payment Details</div>
+            <div class="field">
+              <div class="lbl">Tax Balance Unpaid <span class="hint">Amount still owed after withholding/credits</span></div>
+              <div class="iw"><span class="pfx">$</span><input type="number" id="ftp_balance" placeholder="0" min="0"/></div>
+            </div>
+            <div class="frow">
+              <div class="field" style="margin-bottom:0">
+                <div class="lbl">Tax Due Date</div>
+                <input type="date" class="np" id="ftp_dueDate" value="2026-04-15"/>
+              </div>
+              <div class="field" style="margin-bottom:0">
+                <div class="lbl">Payment Date (or today)</div>
+                <input type="date" class="np" id="ftp_payDate" value="2026-05-03"/>
+              </div>
+            </div>
+            <div class="field" style="margin-top:12px;">
+              <div class="lbl">Installment Agreement? <span class="hint">Reduces FTP to 0.25%/month if active</span></div>
+              <select class="np" id="ftp_ia">
+                <option value="no">No installment agreement</option>
+                <option value="yes">Active installment agreement</option>
+              </select>
+            </div>
+          </div>
+
+          <!-- UNDERPAY FIELDS -->
+          <div id="underpay-fields" style="display:none">
+            <div class="sec">Estimated Tax Details (2025)</div>
+            <div class="frow">
+              <div class="field" style="margin-bottom:0">
+                <div class="lbl">2025 Total Tax Liability <span class="hint">Form 1040, Line 24</span></div>
+                <div class="iw"><span class="pfx">$</span><input type="number" id="up_taxLiability" placeholder="0" min="0"/></div>
+              </div>
+              <div class="field" style="margin-bottom:0">
+                <div class="lbl">2024 Tax Liability <span class="hint">Prior year — for safe harbor</span></div>
+                <div class="iw"><span class="pfx">$</span><input type="number" id="up_priorTax" placeholder="0" min="0"/></div>
+              </div>
+            </div>
+            <div class="field" style="margin-top:12px;">
+              <div class="lbl">Total Withholding + Est. Payments Made</div>
+              <div class="iw"><span class="pfx">$</span><input type="number" id="up_paid" placeholder="0" min="0"/></div>
+            </div>
+            <div class="frow">
+              <div class="field" style="margin-bottom:0">
+                <div class="lbl">2024 AGI <span class="hint">For 110% safe harbor threshold</span></div>
+                <div class="iw"><span class="pfx">$</span><input type="number" id="up_priorAGI" placeholder="0" min="0"/></div>
+              </div>
+              <div class="field" style="margin-bottom:0">
+                <div class="lbl">Filing Status</div>
+                <select class="np" id="up_status">
+                  <option value="single">Single / MFS / HOH</option>
+                  <option value="mfj">Married Filing Jointly</option>
+                </select>
+              </div>
+            </div>
+          </div>
+
+          <button class="calc-btn" onclick="calculate()">Calculate Penalty &amp; Interest →</button>
+
+          <div class="results" id="resultsPanel">
+            <div id="alertBar"></div>
+
+            <div class="rh">
+              <div class="rbox feat">
+                <div class="rl">Total Owed</div>
+                <div class="rv red" id="r_total">—</div>
+                <div class="rs">Tax + Penalty + Interest</div>
+              </div>
+              <div class="rbox">
+                <div class="rl">Penalty Amount</div>
+                <div class="rv orange" id="r_penalty">—</div>
+                <div class="rs" id="r_penaltyPct">—</div>
+              </div>
+              <div class="rbox">
+                <div class="rl">Interest Accrued</div>
+                <div class="rv gold" id="r_interest">—</div>
+                <div class="rs" id="r_interestDays">—</div>
+              </div>
+            </div>
+
+            <div class="bt">
+              <div class="btr"><span class="btk">Original Tax Due</span><span class="btv" id="bt_taxDue">—</span></div>
+              <div class="btr"><span class="btk" id="bt_penaltyLabel">Penalty</span><span class="btv orange" id="bt_penalty">—</span></div>
+              <div class="btr"><span class="btk">IRS Interest (8% annual)</span><span class="btv gold" id="bt_interest">—</span></div>
+              <div class="btr tot"><span class="btk"><strong>Total Amount Owed</strong></span><span class="btv red" id="bt_total">—</span></div>
+              <div class="btr"><span class="btk">Days Late</span><span class="btv" id="bt_days">—</span></div>
+              <div class="btr"><span class="btk">Months Late (for penalty)</span><span class="btv" id="bt_months">—</span></div>
+            </div>
+
+            <div class="timeline" id="timelineBox">
+              <div class="tl-title">📅 Penalty Accrual Timeline</div>
+              <div id="timelineRows"></div>
+            </div>
+
+            <div class="abatement-box">
+              <div class="ab-title">🛡️ Penalty Abatement Analysis</div>
+              <div class="ab-row"><span class="ab-k">First-Time Abatement (FTA) Eligible?</span><span class="ab-v green" id="ab_fta">—</span></div>
+              <div class="ab-row"><span class="ab-k">FTA Would Eliminate</span><span class="ab-v green" id="ab_ftaAmt">—</span></div>
+              <div class="ab-row"><span class="ab-k">After Abatement Owed</span><span class="ab-v" id="ab_afterAmt">—</span></div>
+              <div class="ab-row"><span class="ab-k">Form to File</span><span class="ab-v">Form 843 or Phone (1-800-829-1040)</span></div>
+              <div class="ab-row"><span class="ab-k">Reasonable Cause?</span><span class="ab-v">See AI Assistant for evaluation →</span></div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="expl">
+        <div class="expl-t">IRS Penalty Rules Explained</div>
+        <div class="es"><div class="eh">Failure-to-File (FTF) Penalty — IRC § 6651(a)(1)</div><div class="ep"><strong>5% of unpaid tax per month</strong> (or fraction thereof), up to a maximum of <strong>25%</strong> (5 months). If both FTF and FTP apply in the same month, the FTF is reduced by the FTP rate, so the combined rate is still 5%/month. If the return is over 60 days late, the minimum penalty is the lesser of $485 (2025) or 100% of tax due.</div></div>
+        <div class="es"><div class="eh">Failure-to-Pay (FTP) Penalty — IRC § 6651(a)(2)</div><div class="ep"><strong>0.5% of unpaid tax per month</strong>, up to 25%. Reduced to <strong>0.25%/month</strong> during an active installment agreement. Note: filing an extension gives more time to file but <em>not</em> more time to pay — the FTP penalty still accrues from the original due date.</div></div>
+        <div class="es"><div class="eh">IRS Interest Rate (2026)</div><div class="ep">IRS interest compounds <strong>daily</strong> at the federal short-term rate + 3%. The 2025–2026 rate is approximately <strong>8% per year</strong> (subject to quarterly adjustment). Interest cannot be abated — only penalties can be reduced or eliminated.</div></div>
+        <div class="es"><div class="eh">First-Time Penalty Abatement (FTA)</div><div class="ep">Available if the taxpayer had <strong>no penalties in the prior 3 years</strong> and is otherwise compliant (filed returns and paid taxes). FTA eliminates the entire FTF or FTP penalty. Request by phone or via Form 843. This is the fastest and most commonly granted form of penalty relief.</div></div>
+      </div>
+    </div>
+
+    <div>
+      <div class="sc">
+        <div class="sct">📊 IRS Penalty Quick Reference</div>
+        <div class="scr"><span class="sck">FTF Rate (per month)</span><span class="scv red">5.0%</span></div>
+        <div class="scr"><span class="sck">FTF Maximum</span><span class="scv red">25%</span></div>
+        <div class="scr"><span class="sck">FTP Rate (per month)</span><span class="scv orange">0.5%</span></div>
+        <div class="scr"><span class="sck">FTP w/ Installment Agmt</span><span class="scv">0.25%</span></div>
+        <div class="scr"><span class="sck">FTP Maximum</span><span class="scv orange">25%</span></div>
+        <div class="scr"><span class="sck">Min Penalty (60+ days late)</span><span class="scv red">$485 or 100%</span></div>
+        <div class="scr"><span class="sck">IRS Interest Rate (2026)</span><span class="scv gold">~8%/yr</span></div>
+        <div class="scr"><span class="sck">Interest Compounding</span><span class="scv">Daily</span></div>
+        <div class="scr"><span class="sck">FTA Lookback Period</span><span class="scv">3 years</span></div>
+        <div class="scr"><span class="sck">Form 843 (Abatement)</span><span class="scv green">Available</span></div>
+      </div>
+
+      <div class="sc">
+        <div class="sct">💡 Penalty Reduction Strategies</div>
+        <div class="tip-item"><div class="ti">📞</div><div class="tt"><strong>Call the IRS first</strong> for FTA — it's often granted over the phone in minutes without filing Form 843.</div></div>
+        <div class="tip-item"><div class="ti">📝</div><div class="tt"><strong>File even if you can't pay</strong> — the FTF penalty (5%/mo) is 10× the FTP penalty (0.5%/mo). Always file on time.</div></div>
+        <div class="tip-item"><div class="ti">🤝</div><div class="tt"><strong>Set up an installment agreement</strong> promptly — it cuts the FTP rate in half from 0.5% to 0.25%/month.</div></div>
+        <div class="tip-item"><div class="ti">📋</div><div class="tt"><strong>Document reasonable cause</strong> — serious illness, natural disaster, or reliance on tax professional advice can support penalty waiver.</div></div>
+      </div>
+
+      <div class="sc">
+        <div class="sct">🔗 Related Pro Tools</div>
+        <a href="/tools" class="rl-item"><span class="rli">🤝</span><div><div class="rln">Installment Agreement Planner</div><div class="rld">Model IRS payment plans &amp; OIC</div></div><span class="rla">→</span></a>
+        <a href="/tools" class="rl-item"><span class="rli">🛡️</span><div><div class="rln">Abatement Request Builder</div><div class="rld">Generate Form 843 arguments</div></div><span class="rla">→</span></a>
+        <a href="/tools" class="rl-item"><span class="rli">📋</span><div><div class="rln">IRS Notice Decoder</div><div class="rld">Understand any IRS letter</div></div><span class="rla">→</span></a>
+        <a href="/tools/quarterly-payments" class="rl-item"><span class="rli">📆</span><div><div class="rln">Quarterly Payment Calc</div><div class="rld">Avoid underpayment penalties</div></div><span class="rla">→</span></a>
+      </div>
+    </div>
+  </div>
+</div>
+
+<footer>
+  <div class="fl">© 2026 <a href="/">TaxPreparerTools.com</a> · For informational use only · Penalty calculations based on IRC §§ 6651 &amp; 6654</div>
+  <div class="flk"><a href="/privacy">Privacy</a><a href="/terms">Terms</a><a href="https://irs.gov" target="_blank">IRS.gov ↗</a></div>
+</footer>
+
+<script>
+const IRS_DAILY_RATE = 0.08 / 365;
+let penaltyType = 'ftf';
+
+function setPenalty(el) {
+  document.querySelectorAll('.pt').forEach(p => p.classList.remove('on'));
+  el.classList.add('on');
+  penaltyType = el.dataset.type;
+  ['ftf','ftp','underpay'].forEach(t => {
+    document.getElementById(t+'-fields').style.display = t === penaltyType ? '' : 'none';
+  });
+}
+
+function fmt(n) { return '$' + Math.round(Math.max(0,n)).toLocaleString(); }
+function daysBetween(d1, d2) { return Math.max(0, Math.round((new Date(d2)-new Date(d1))/(1000*60*60*24))); }
+function monthsBetween(d1, d2) {
+  const days = daysBetween(d1, d2);
+  return Math.floor(days / 30); // approximate months (partial months count as full)
+}
+
+function calculate() {
+  let taxDue=0, penalty=0, interest=0, days=0, months=0;
+  let ftaEligible = false;
+  let penaltyLabel = 'Penalty';
+  let timelineItems = [];
+  let alertHTML = '';
+
+  if (penaltyType === 'ftf') {
+    taxDue = +document.getElementById('ftf_taxDue').value||0;
+    const dueDate = document.getElementById('ftf_dueDate').value;
+    const filedDate = document.getElementById('ftf_filedDate').value;
+    const extension = document.getElementById('ftf_extension').value;
+    const history = document.getElementById('ftf_history').value;
+    ftaEligible = history === 'clean';
+
+    days = daysBetween(dueDate, filedDate);
+    // Extension pushes deadline 6 months
+    const effectiveDue = extension === 'yes' ? addMonths(dueDate, 6) : dueDate;
+    const lateDays = daysBetween(effectiveDue, filedDate);
+    months = Math.min(Math.ceil(lateDays / 30), 5); // max 5 months at 5%
+    if (months < 0) months = 0;
+
+    // FTF = 5% per month, max 25%
+    const ftfRate = Math.min(months * 0.05, 0.25);
+    // FTP concurrent: 0.5% per month — combined cap stays at 5%/month
+    const ftpConcurrentMonths = Math.min(months, 5);
+    const ftpRate = ftpConcurrentMonths * 0.005;
+    penalty = taxDue * ftfRate;
+
+    // 60-day minimum
+    if (lateDays > 60 && taxDue > 0) {
+      const min60 = Math.min(485, taxDue);
+      penalty = Math.max(penalty, min60);
+    }
+
+    interest = taxDue * IRS_DAILY_RATE * days;
+    penaltyLabel = 'Failure-to-File Penalty (FTF)';
+
+    timelineItems = [
+      {dot:'red', date: dueDate, desc: 'Original filing deadline', amt: ''},
+      {dot:'orange', date: addDays(dueDate,1), desc: 'FTF begins accruing: 5%/month', amt: fmt(taxDue*0.05)},
+      {dot:'orange', date: addMonths(dueDate,1), desc: '1 month late — FTF: 5%', amt: fmt(taxDue*0.05)},
+      {dot:'orange', date: addMonths(dueDate,3), desc: '3 months late — FTF: 15%', amt: fmt(taxDue*0.15)},
+      {dot:'red', date: addMonths(dueDate,5), desc: 'Maximum FTF reached: 25%', amt: fmt(taxDue*0.25)},
+    ];
+
+    alertHTML = days === 0
+      ? `<div class="alert-bar alert-ok"><div class="alert-icon">✅</div><div><div class="alert-title">Filed On Time</div><div class="alert-sub">No failure-to-file penalty applies.</div></div></div>`
+      : `<div class="alert-bar alert-${months>=5?'danger':'warn'}"><div class="alert-icon">${months>=5?'🚨':'⚠️'}</div><div><div class="alert-title">${months>=5?'Maximum Penalty Reached':'Penalty Accruing'}</div><div class="alert-sub">Return is ${Math.ceil(daysBetween(effectiveDue,filedDate))} days late. ${ftaEligible?'First-Time Abatement may apply — this penalty could be eliminated.':'Prior compliance issues may limit abatement options.'}</div></div></div>`;
+
+  } else if (penaltyType === 'ftp') {
+    taxDue = +document.getElementById('ftp_balance').value||0;
+    const dueDate = document.getElementById('ftp_dueDate').value;
+    const payDate = document.getElementById('ftp_payDate').value;
+    const ia = document.getElementById('ftp_ia').value;
+
+    days = daysBetween(dueDate, payDate);
+    months = Math.min(Math.ceil(days / 30), 50); // FTP max 25% = 50 months at 0.5%
+    if (months < 0) months = 0;
+
+    const ftpRate = ia === 'yes' ? 0.0025 : 0.005;
+    penalty = Math.min(taxDue * ftpRate * months, taxDue * 0.25);
+    interest = taxDue * IRS_DAILY_RATE * days;
+    penaltyLabel = `Failure-to-Pay Penalty (${ia==='yes'?'0.25%':'0.5%'}/mo)`;
+    ftaEligible = true; // FTA applies to FTP too
+
+    timelineItems = [
+      {dot:'orange', date: dueDate, desc: 'Payment due — FTP begins', amt:''},
+      {dot:'orange', date: addMonths(dueDate,1), desc: `1 month: ${ia==='yes'?'0.25%':'0.5%'} penalty`, amt: fmt(taxDue*ftpRate)},
+      {dot:'orange', date: addMonths(dueDate,6), desc: '6 months accumulated penalty', amt: fmt(taxDue*ftpRate*6)},
+      {dot:'red', date: addMonths(dueDate,50), desc: 'Maximum FTP: 25% of tax', amt: fmt(taxDue*0.25)},
+    ];
+
+    alertHTML = days <= 0
+      ? `<div class="alert-bar alert-ok"><div class="alert-icon">✅</div><div><div class="alert-title">Paid On Time</div><div class="alert-sub">No failure-to-pay penalty applies.</div></div></div>`
+      : `<div class="alert-bar alert-warn"><div class="alert-icon">⚠️</div><div><div class="alert-title">FTP Penalty Accruing</div><div class="alert-sub">Payment is ${days} days late. ${ia==='yes'?'Installment agreement rate (0.25%/mo) applied.':'Consider setting up an installment agreement to halve the penalty rate.'}</div></div></div>`;
+
+  } else {
+    // UNDERPAYMENT
+    taxDue = +document.getElementById('up_taxLiability').value||0;
+    const priorTax = +document.getElementById('up_priorTax').value||0;
+    const paid = +document.getElementById('up_paid').value||0;
+    const priorAGI = +document.getElementById('up_priorAGI').value||0;
+
+    const shMultiplier = priorAGI > 150000 ? 1.10 : 1.00;
+    const safeHarborAmt = priorTax * shMultiplier;
+    const required = Math.min(taxDue * 0.90, safeHarborAmt);
+    const shortfall = Math.max(0, required - paid);
+
+    penalty = shortfall * 0.08; // ~8% annual on underpayment
+    interest = 0; // interest is built into underpayment penalty
+    days = 365;
+    taxDue = shortfall;
+    penaltyLabel = 'Underpayment Penalty (§ 6654)';
+
+    const isSafe = paid >= required;
+    alertHTML = isSafe
+      ? `<div class="alert-bar alert-ok"><div class="alert-icon">✅</div><div><div class="alert-title">Safe Harbor Met</div><div class="alert-sub">Payments of ${fmt(paid)} meet the ${shMultiplier===1.10?'110%':'100%'} safe harbor requirement of ${fmt(required)}. No underpayment penalty applies.</div></div></div>`
+      : `<div class="alert-bar alert-danger"><div class="alert-icon">🚨</div><div><div class="alert-title">Safe Harbor Not Met</div><div class="alert-sub">Required: ${fmt(required)} (${shMultiplier===1.10?'110%':'100%'} of prior year). Paid: ${fmt(paid)}. Shortfall: ${fmt(shortfall)}.</div></div></div>`;
+
+    timelineItems = [
+      {dot:'red', date:'2026-04-15', desc:'Q1 payment due', amt: fmt(required/4)},
+      {dot:'orange', date:'2026-06-16', desc:'Q2 payment due', amt: fmt(required/4)},
+      {dot:'orange', date:'2026-09-15', desc:'Q3 payment due', amt: fmt(required/4)},
+      {dot:'gold', date:'2027-01-15', desc:'Q4 payment due', amt: fmt(required/4)},
+    ];
+  }
+
+  const total = taxDue + penalty + interest;
+
+  document.getElementById('alertBar').innerHTML = alertHTML;
+  document.getElementById('r_total').textContent = fmt(total);
+  document.getElementById('r_penalty').textContent = fmt(penalty);
+  document.getElementById('r_penaltyPct').textContent = taxDue > 0 ? ((penalty/taxDue)*100).toFixed(1)+'% of tax due' : '—';
+  document.getElementById('r_interest').textContent = fmt(interest);
+  document.getElementById('r_interestDays').textContent = days + ' days × 8%/yr';
+  document.getElementById('bt_taxDue').textContent = fmt(taxDue);
+  document.getElementById('bt_penaltyLabel').textContent = penaltyLabel;
+  document.getElementById('bt_penalty').textContent = fmt(penalty);
+  document.getElementById('bt_interest').textContent = fmt(interest);
+  document.getElementById('bt_total').textContent = fmt(total);
+  document.getElementById('bt_days').textContent = days + (days===1?' day':' days');
+  document.getElementById('bt_months').textContent = (penaltyType!=='underpay') ? months + (months===1?' month':' months') : 'N/A';
+
+  // Timeline
+  document.getElementById('timelineRows').innerHTML = timelineItems.map(t=>`
+    <div class="tl-item">
+      <div class="tl-dot ${t.dot}"></div>
+      <div class="tl-date">${t.date}</div>
+      <div class="tl-desc">${t.desc}</div>
+      ${t.amt ? `<div class="tl-amount ${t.dot}">${t.amt}</div>` : ''}
+    </div>`).join('');
+
+  // Abatement
+  const ftaAmt = ftaEligible ? penalty : 0;
+  document.getElementById('ab_fta').textContent = ftaEligible ? '✅ Yes — Likely Eligible' : '❌ Prior penalties on record';
+  document.getElementById('ab_fta').className = 'ab-v '+(ftaEligible?'green':'');
+  document.getElementById('ab_ftaAmt').textContent = ftaEligible ? fmt(ftaAmt) + ' (full penalty)' : '—';
+  document.getElementById('ab_afterAmt').textContent = fmt(interest + (ftaEligible ? 0 : penalty));
+
+  document.getElementById('resultsPanel').classList.add('show');
+  setTimeout(()=>document.getElementById('resultsPanel').scrollIntoView({behavior:'smooth',block:'nearest'}),50);
+}
+
+function addDays(dateStr, d) {
+  const dt = new Date(dateStr); dt.setDate(dt.getDate()+d);
+  return dt.toISOString().split('T')[0];
+}
+function addMonths(dateStr, m) {
+  const dt = new Date(dateStr); dt.setMonth(dt.getMonth()+m);
+  return dt.toISOString().split('T')[0];
+}
+</script>
+</body>
+</html>

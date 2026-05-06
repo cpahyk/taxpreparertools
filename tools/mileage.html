@@ -1,0 +1,328 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Mileage Deduction Calculator 2025 | TaxPreparerTools.com</title>
+<meta name="description" content="Calculate 2025 IRS mileage deductions for business, medical, charity, and military use. Standard mileage rates: business 70¢, medical/military 21¢, charity 14¢.">
+<link rel="canonical" href="https://taxpreparertools.com/tools/mileage" />
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700;900&family=DM+Sans:wght@300;400;500;600&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root{--navy:#08152a;--navy-mid:#0f1f3d;--gold:#c8a84b;--gold-light:#e8c96a;--gold-dim:rgba(200,168,75,0.13);--white:#fff;--muted:#7a8fac;--text:#dde4f0;--border:rgba(200,168,75,0.14);--card:rgba(255,255,255,0.04);--green:#4ade80;--blue:#60a5fa;--orange:#fb923c;--purple:#a78bfa;}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+body{font-family:'DM Sans',sans-serif;background:var(--navy);color:var(--text);min-height:100vh;}
+nav{position:sticky;top:0;z-index:200;padding:14px 48px;display:flex;align-items:center;justify-content:space-between;background:rgba(8,21,42,0.95);backdrop-filter:blur(20px);border-bottom:1px solid var(--border);}
+.logo{display:flex;align-items:center;gap:10px;text-decoration:none;}
+.logo-mark{width:32px;height:32px;background:var(--gold);border-radius:7px;display:flex;align-items:center;justify-content:center;font-size:15px;}
+.logo-name{font-family:'Playfair Display',serif;font-size:1.1rem;font-weight:700;color:var(--white);}
+.logo-name span{color:var(--gold);}
+.logo-domain{font-size:0.62rem;color:var(--muted);font-family:'DM Mono',monospace;display:block;}
+.nav-links{display:flex;gap:24px;list-style:none;}
+.nav-links a{color:var(--muted);font-size:0.82rem;font-weight:500;text-decoration:none;transition:color .2s;}
+.nav-links a:hover,.nav-links a.active{color:var(--gold);}
+.btn-sm{padding:7px 16px;border-radius:6px;font-size:0.8rem;font-weight:700;text-decoration:none;background:var(--gold);color:var(--navy);}
+.page-wrap{max-width:1100px;margin:0 auto;padding:40px 48px 80px;}
+.breadcrumb{font-size:0.73rem;font-family:'DM Mono',monospace;color:var(--muted);margin-bottom:20px;display:flex;gap:7px;}
+.breadcrumb a{color:var(--gold);text-decoration:none;}
+.tool-header{display:flex;gap:22px;align-items:flex-start;margin-bottom:34px;}
+.tool-icon{width:58px;height:58px;background:linear-gradient(135deg,var(--gold-dim),rgba(200,168,75,0.04));border:1px solid rgba(200,168,75,0.28);border-radius:15px;display:flex;align-items:center;justify-content:center;font-size:26px;flex-shrink:0;}
+.tool-badges{display:flex;gap:7px;margin-bottom:9px;}
+.badge{font-size:0.63rem;font-family:'DM Mono',monospace;font-weight:700;text-transform:uppercase;letter-spacing:.08em;padding:3px 10px;border-radius:50px;}
+.badge-free{background:rgba(74,222,128,.12);color:var(--green);}
+.badge-upd{background:rgba(96,165,250,.1);color:var(--blue);}
+.badge-cat{background:var(--gold-dim);color:var(--gold);}
+h1{font-family:'Playfair Display',serif;font-size:clamp(1.5rem,3vw,2.2rem);font-weight:900;color:var(--white);letter-spacing:-0.03em;line-height:1.1;margin-bottom:8px;}
+.tool-desc-txt{color:var(--muted);font-size:0.88rem;line-height:1.7;max-width:600px;}
+.layout{display:grid;grid-template-columns:1fr 340px;gap:22px;align-items:start;}
+.calc-card{background:var(--navy-mid);border:1px solid var(--border);border-radius:20px;overflow:hidden;}
+.cc-head{padding:20px 26px;border-bottom:1px solid var(--border);background:rgba(200,168,75,0.04);}
+.cc-title{font-family:'Playfair Display',serif;font-size:1.05rem;font-weight:700;color:var(--white);}
+.cc-sub{font-size:0.75rem;color:var(--muted);margin-top:2px;}
+.cc-body{padding:26px;}
+.rate-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin-bottom:24px;}
+.rate-pill{background:var(--card);border:1px solid var(--border);border-radius:10px;padding:12px;text-align:center;}
+.rp-emoji{font-size:1.2rem;margin-bottom:4px;}
+.rp-label{font-size:0.62rem;font-family:'DM Mono',monospace;text-transform:uppercase;letter-spacing:.06em;color:var(--muted);margin-bottom:4px;}
+.rp-rate{font-family:'DM Mono',monospace;font-size:0.95rem;font-weight:700;color:var(--white);}
+.sec-title{font-size:0.7rem;font-weight:700;color:var(--muted);text-transform:uppercase;letter-spacing:.1em;font-family:'DM Mono',monospace;margin-bottom:12px;padding-bottom:7px;border-bottom:1px solid var(--border);}
+.miles-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-bottom:20px;}
+.field{display:flex;flex-direction:column;gap:6px;}
+.f-label{font-size:0.71rem;font-weight:700;color:var(--muted);text-transform:uppercase;letter-spacing:.06em;font-family:'DM Mono',monospace;}
+.input-wrap{position:relative;}
+.sfx{position:absolute;right:12px;top:50%;transform:translateY(-50%);color:var(--muted);font-size:0.78rem;font-family:'DM Mono',monospace;pointer-events:none;}
+input[type=number]{width:100%;background:rgba(255,255,255,0.05);border:1px solid rgba(200,168,75,0.2);border-radius:10px;padding:10px 50px 10px 14px;color:var(--white);font-size:0.9rem;font-family:'DM Mono',monospace;-moz-appearance:textfield;}
+input[type=number]:focus{outline:none;border-color:var(--gold);}
+input[type=number]::-webkit-outer-spin-button,input[type=number]::-webkit-inner-spin-button{-webkit-appearance:none;}
+.calc-btn{width:100%;padding:13px;background:var(--gold);border:none;border-radius:10px;color:var(--navy);font-size:0.92rem;font-weight:700;cursor:pointer;font-family:'DM Sans',sans-serif;transition:all .2s;margin-top:8px;}
+.calc-btn:hover{background:var(--gold-light);transform:translateY(-1px);}
+.results-panel{display:none;margin-top:24px;animation:fadeUp .3s ease;}
+.results-panel.show{display:block;}
+@keyframes fadeUp{from{opacity:0;transform:translateY(8px);}to{opacity:1;transform:translateY(0);}}
+.total-banner{background:linear-gradient(135deg,rgba(200,168,75,0.12),rgba(200,168,75,0.04));border:1px solid rgba(200,168,75,0.3);border-radius:16px;padding:22px;margin-bottom:18px;display:flex;justify-content:space-between;align-items:center;}
+.tb-label{font-size:0.75rem;font-family:'DM Mono',monospace;text-transform:uppercase;letter-spacing:.1em;color:var(--muted);}
+.tb-val{font-family:'Playfair Display',serif;font-size:2rem;font-weight:900;color:var(--white);margin-top:4px;}
+.tb-miles{font-size:0.78rem;color:var(--muted);margin-top:2px;}
+.breakdown{background:var(--card);border:1px solid var(--border);border-radius:12px;overflow:hidden;margin-bottom:14px;}
+.bk-head{padding:14px 18px;background:rgba(200,168,75,0.04);border-bottom:1px solid var(--border);font-size:0.7rem;font-family:'DM Mono',monospace;text-transform:uppercase;letter-spacing:.08em;color:var(--muted);}
+.bk-row{display:flex;justify-content:space-between;align-items:center;padding:10px 18px;border-bottom:1px solid rgba(200,168,75,0.06);font-size:0.85rem;}
+.bk-row:last-child{border-bottom:none;background:rgba(200,168,75,0.04);font-weight:700;}
+.bk-label{display:flex;align-items:center;gap:8px;color:var(--muted);}
+.bk-dot{width:8px;height:8px;border-radius:50%;flex-shrink:0;}
+.bk-val{font-family:'DM Mono',monospace;color:var(--text);}
+.bk-miles{font-size:0.72rem;color:var(--muted);margin-left:8px;}
+/* sidebar */
+.sidebar{display:flex;flex-direction:column;gap:18px;}
+.info-card{background:var(--card);border:1px solid var(--border);border-radius:16px;padding:22px;}
+.ic-title{font-family:'Playfair Display',serif;font-size:0.95rem;font-weight:700;color:var(--white);margin-bottom:12px;}
+.rule-item{display:flex;gap:10px;margin-bottom:10px;font-size:0.8rem;color:var(--muted);line-height:1.5;}
+.rule-dot{width:6px;height:6px;background:var(--gold);border-radius:50%;flex-shrink:0;margin-top:5px;}
+.rel-item{display:flex;align-items:center;gap:12px;padding:11px 0;border-bottom:1px solid var(--border);text-decoration:none;transition:opacity .2s;}
+.rel-item:last-child{border-bottom:none;}
+.rel-item:hover{opacity:.8;}
+.ri-icon{width:34px;height:34px;background:var(--gold-dim);border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:16px;flex-shrink:0;}
+.rn{font-size:0.82rem;font-weight:600;color:var(--white);}
+.rd{font-size:0.72rem;color:var(--muted);}
+.ra{color:var(--muted);margin-left:auto;font-size:0.8rem;}
+footer{border-top:1px solid var(--border);padding:20px 48px;display:flex;justify-content:space-between;font-size:0.73rem;color:var(--muted);}
+.fl a{color:var(--muted);text-decoration:none;margin-left:18px;}
+.fl a:hover{color:var(--gold);}
+</style>
+</head>
+<body>
+<nav>
+  <a href="/" class="logo">
+    <div class="logo-mark">🚗</div>
+    <div>
+      <div class="logo-name">TaxPreparer<span>Tools</span></div>
+      <div class="logo-domain">taxpreparertools.com</div>
+    </div>
+  </a>
+  <ul class="nav-links">
+    <li><a href="/tools" class="active">Tools</a></li>
+    <li><a href="/deadlines">Deadlines</a></li>
+    <li><a href="/ai-assistant">AI Assistant</a></li>
+    <li><a href="/resources">Resources</a></li>
+  </ul>
+  <a href="/signup" class="btn-sm">Get Pro Free</a>
+</nav>
+
+<div class="page-wrap">
+  <div class="breadcrumb">
+    <a href="/">Home</a> / <a href="/tools">Tools</a> / <a href="/tools?cat=calc">Calculators</a> / Mileage Deduction
+  </div>
+
+  <div class="tool-header">
+    <div class="tool-icon">🚗</div>
+    <div>
+      <div class="tool-badges">
+        <span class="badge badge-free">Free</span>
+        <span class="badge badge-upd">2025 Rates</span>
+        <span class="badge badge-cat">Calculator</span>
+      </div>
+      <h1>Mileage Deduction Calculator</h1>
+      <p class="tool-desc-txt">Calculate your 2025 IRS standard mileage deductions across all categories — business, medical, charity, and military. Enter your miles for each use type and see your total deduction instantly.</p>
+    </div>
+  </div>
+
+  <div class="layout">
+    <div>
+      <div class="calc-card">
+        <div class="cc-head">
+          <div class="cc-title">2025 IRS Standard Mileage Rates</div>
+          <div class="cc-sub">Rates effective January 1, 2025</div>
+        </div>
+        <div class="cc-body">
+          <div class="rate-grid">
+            <div class="rate-pill">
+              <div class="rp-emoji">💼</div>
+              <div class="rp-label">Business</div>
+              <div class="rp-rate">70¢/mi</div>
+            </div>
+            <div class="rate-pill">
+              <div class="rp-emoji">🏥</div>
+              <div class="rp-label">Medical</div>
+              <div class="rp-rate">21¢/mi</div>
+            </div>
+            <div class="rate-pill">
+              <div class="rp-emoji">❤️</div>
+              <div class="rp-label">Charity</div>
+              <div class="rp-rate">14¢/mi</div>
+            </div>
+            <div class="rate-pill">
+              <div class="rp-emoji">🎖️</div>
+              <div class="rp-label">Military</div>
+              <div class="rp-rate">21¢/mi</div>
+            </div>
+          </div>
+
+          <div class="sec-title">Enter Your Miles by Category</div>
+          <div class="miles-grid">
+            <div class="field">
+              <label class="f-label">💼 Business Miles</label>
+              <div class="input-wrap">
+                <input type="number" id="bizMiles" value="12000" min="0" oninput="calc()">
+                <span class="sfx">miles</span>
+              </div>
+            </div>
+            <div class="field">
+              <label class="f-label">🏥 Medical Miles</label>
+              <div class="input-wrap">
+                <input type="number" id="medMiles" value="0" min="0" oninput="calc()">
+                <span class="sfx">miles</span>
+              </div>
+            </div>
+            <div class="field">
+              <label class="f-label">❤️ Charity Miles</label>
+              <div class="input-wrap">
+                <input type="number" id="charMiles" value="0" min="0" oninput="calc()">
+                <span class="sfx">miles</span>
+              </div>
+            </div>
+            <div class="field">
+              <label class="f-label">🎖️ Military Miles</label>
+              <div class="input-wrap">
+                <input type="number" id="milMiles" value="0" min="0" oninput="calc()">
+                <span class="sfx">miles</span>
+              </div>
+            </div>
+          </div>
+
+          <button class="calc-btn" onclick="calc()">Calculate Deduction →</button>
+
+          <div class="results-panel" id="resultsPanel">
+            <div class="total-banner">
+              <div>
+                <div class="tb-label">Total Mileage Deduction</div>
+                <div class="tb-val" id="r_total"></div>
+                <div class="tb-miles" id="r_totalMiles"></div>
+              </div>
+              <div style="text-align:right;">
+                <div class="tb-label">Business Only</div>
+                <div style="font-family:'DM Mono',monospace;font-size:1.3rem;font-weight:700;color:var(--gold);margin-top:4px;" id="r_biz"></div>
+              </div>
+            </div>
+
+            <div class="breakdown">
+              <div class="bk-head">Deduction Breakdown by Category</div>
+              <div class="bk-row" id="row_biz" style="display:none">
+                <span class="bk-label"><span class="bk-dot" style="background:var(--gold)"></span>Business <span class="bk-miles" id="bk_bizMi"></span></span>
+                <span class="bk-val" id="bk_bizVal"></span>
+              </div>
+              <div class="bk-row" id="row_med" style="display:none">
+                <span class="bk-label"><span class="bk-dot" style="background:var(--blue)"></span>Medical <span class="bk-miles" id="bk_medMi"></span></span>
+                <span class="bk-val" id="bk_medVal"></span>
+              </div>
+              <div class="bk-row" id="row_char" style="display:none">
+                <span class="bk-label"><span class="bk-dot" style="background:var(--green)"></span>Charity <span class="bk-miles" id="bk_charMi"></span></span>
+                <span class="bk-val" id="bk_charVal"></span>
+              </div>
+              <div class="bk-row" id="row_mil" style="display:none">
+                <span class="bk-label"><span class="bk-dot" style="background:var(--purple)"></span>Military <span class="bk-miles" id="bk_milMi"></span></span>
+                <span class="bk-val" id="bk_milVal"></span>
+              </div>
+              <div class="bk-row">
+                <span class="bk-label" style="color:var(--text);">Total Deduction</span>
+                <span class="bk-val" id="bk_total"></span>
+              </div>
+            </div>
+
+            <div class="breakdown">
+              <div class="bk-head">Where Each Deduction Goes</div>
+              <div class="bk-row"><span class="bk-label">Business miles → Schedule C (or C-EZ)</span><span class="bk-val" id="fmt_biz"></span></div>
+              <div class="bk-row"><span class="bk-label">Medical miles → Schedule A (subject to 7.5% AGI floor)</span><span class="bk-val" id="fmt_med"></span></div>
+              <div class="bk-row"><span class="bk-label">Charity miles → Schedule A (no AGI floor)</span><span class="bk-val" id="fmt_char"></span></div>
+              <div class="bk-row"><span class="bk-label">Military moves → Form 3903 (above the line)</span><span class="bk-val" id="fmt_mil"></span></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="sidebar">
+      <div class="info-card">
+        <div class="ic-title">📋 Key Rules for 2025</div>
+        <div class="rule-item"><div class="rule-dot"></div><span><strong>Business miles:</strong> Must be for business purposes — commuting to a regular office does NOT count. Going between job sites or to client meetings does.</span></div>
+        <div class="rule-item"><div class="rule-dot"></div><span><strong>Recordkeeping required:</strong> Log date, destination, business purpose, and miles for each trip. Keep mileage logs; the IRS requires written records.</span></div>
+        <div class="rule-item"><div class="rule-dot"></div><span><strong>Actual expense method:</strong> Instead of the standard rate, you can deduct a percentage of all actual vehicle costs. Calculate both methods — actual can exceed standard for high-cost vehicles.</span></div>
+        <div class="rule-item"><div class="rule-dot"></div><span><strong>Medical miles:</strong> Only deductible if you itemize. Subject to the 7.5% AGI floor along with other medical expenses.</span></div>
+        <div class="rule-item"><div class="rule-dot"></div><span><strong>Charity miles:</strong> Fixed at 14¢/mile by statute — Congress has not indexed this rate for inflation since 1998.</span></div>
+      </div>
+      <div class="info-card">
+        <div class="ic-title">🔗 Related Tools</div>
+        <a href="/tools/home-office" class="rel-item">
+          <div class="ri-icon">🏠</div>
+          <div><div class="rn">Home Office Calculator</div><div class="rd">Simplified & actual methods</div></div>
+          <span class="ra">→</span>
+        </a>
+        <a href="/tools/se-tax-calculator" class="rel-item">
+          <div class="ri-icon">💼</div>
+          <div><div class="rn">SE Tax Calculator</div><div class="rd">Schedule SE computation</div></div>
+          <span class="ra">→</span>
+        </a>
+        <a href="/tools/federal-tax-estimator" class="rel-item">
+          <div class="ri-icon">🧮</div>
+          <div><div class="rn">Federal Tax Estimator</div><div class="rd">Full 1040 projection</div></div>
+          <span class="ra">→</span>
+        </a>
+      </div>
+    </div>
+  </div>
+</div>
+
+<footer>
+  <div class="fl">© 2026 <a href="/">TaxPreparerTools.com</a> · For informational use only · Verify with a qualified tax professional</div>
+  <div class="fl">
+    <a href="/privacy">Privacy</a>
+    <a href="/terms">Terms</a>
+    <a href="/contact">Contact</a>
+    <a href="https://irs.gov" target="_blank" rel="noopener">IRS.gov ↗</a>
+  </div>
+</footer>
+
+<script>
+const RATES = { biz: 0.70, med: 0.21, char: 0.14, mil: 0.21 };
+function fmt(n){ return '$' + n.toLocaleString('en-US',{minimumFractionDigits:2,maximumFractionDigits:2}); }
+function mi(n){ return n.toLocaleString() + ' mi'; }
+
+function calc() {
+  const biz  = parseFloat(document.getElementById('bizMiles').value)  || 0;
+  const med  = parseFloat(document.getElementById('medMiles').value)  || 0;
+  const ch   = parseFloat(document.getElementById('charMiles').value) || 0;
+  const mil  = parseFloat(document.getElementById('milMiles').value)  || 0;
+
+  const bizD  = biz  * RATES.biz;
+  const medD  = med  * RATES.med;
+  const charD = ch   * RATES.char;
+  const milD  = mil  * RATES.mil;
+  const total = bizD + medD + charD + milD;
+  const totalMiles = biz + med + ch + mil;
+
+  document.getElementById('r_total').textContent = fmt(total);
+  document.getElementById('r_totalMiles').textContent = mi(totalMiles) + ' total';
+  document.getElementById('r_biz').textContent = fmt(bizD);
+  document.getElementById('bk_total').textContent = fmt(total);
+
+  const showRow = (id, miEl, valEl, miles, deduction) => {
+    document.getElementById(id).style.display = miles > 0 ? 'flex' : 'none';
+    if (miles > 0) {
+      document.getElementById(miEl).textContent = '(' + mi(miles) + ')';
+      document.getElementById(valEl).textContent = fmt(deduction);
+    }
+  };
+  showRow('row_biz','bk_bizMi','bk_bizVal', biz,  bizD);
+  showRow('row_med','bk_medMi','bk_medVal', med,  medD);
+  showRow('row_char','bk_charMi','bk_charVal', ch, charD);
+  showRow('row_mil','bk_milMi','bk_milVal', mil,  milD);
+
+  document.getElementById('fmt_biz').textContent  = bizD  > 0 ? fmt(bizD)  : '—';
+  document.getElementById('fmt_med').textContent  = medD  > 0 ? fmt(medD)  : '—';
+  document.getElementById('fmt_char').textContent = charD > 0 ? fmt(charD) : '—';
+  document.getElementById('fmt_mil').textContent  = milD  > 0 ? fmt(milD)  : '—';
+
+  document.getElementById('resultsPanel').classList.add('show');
+}
+
+calc();
+</script>
+</body>
+</html>

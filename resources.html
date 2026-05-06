@@ -1,0 +1,380 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Tax Resources Library | TaxPreparerTools.com</title>
+<meta name="description" content="Free tax guides, checklists, reference tables, and IRS publications for CPAs, EAs, tax preparers and individuals.">
+<link rel="canonical" href="https://taxpreparertools.com/resources" />
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700;900&family=DM+Sans:wght@300;400;500;600&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --navy:#08152a;--navy-mid:#0f1f3d;--slate:#1a2f52;
+    --gold:#c8a84b;--gold-light:#e8c96a;--gold-dim:rgba(200,168,75,0.13);
+    --white:#fff;--muted:#7a8fac;--text:#dde4f0;--border:rgba(200,168,75,0.14);
+    --card:rgba(255,255,255,0.04);--green:#4ade80;--blue:#60a5fa;--purple:#a78bfa;--orange:#fb923c;--pink:#f472b6;
+  }
+  *,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+  html{scroll-behavior:smooth;}
+  body{font-family:'DM Sans',sans-serif;background:var(--navy);color:var(--text);min-height:100vh;}
+
+  nav{position:sticky;top:0;z-index:200;padding:15px 48px;display:flex;align-items:center;justify-content:space-between;background:rgba(8,21,42,0.94);backdrop-filter:blur(20px);border-bottom:1px solid var(--border);}
+  .logo{display:flex;align-items:center;gap:10px;text-decoration:none;}
+  .logo-mark{width:33px;height:33px;background:var(--gold);border-radius:7px;display:flex;align-items:center;justify-content:center;font-size:16px;}
+  .logo-name{font-family:'Playfair Display',serif;font-size:1.15rem;font-weight:700;color:var(--white);}
+  .logo-name span{color:var(--gold);}
+  .logo-domain{font-size:0.64rem;color:var(--muted);font-family:'DM Mono',monospace;display:block;}
+  .nav-links{display:flex;gap:26px;list-style:none;}
+  .nav-links a{color:var(--muted);font-size:0.83rem;font-weight:500;text-decoration:none;transition:color .2s;}
+  .nav-links a:hover{color:var(--text);}
+  .nav-links a.active{color:var(--gold);}
+  .nav-right{display:flex;gap:10px;}
+  .btn-sm{padding:7px 16px;border-radius:6px;font-size:0.8rem;font-weight:700;cursor:pointer;text-decoration:none;transition:all .2s;border:none;font-family:'DM Sans',sans-serif;}
+  .btn-ghost{background:transparent;color:var(--muted);border:1px solid var(--border);}
+  .btn-ghost:hover{color:var(--gold);border-color:var(--gold);}
+  .btn-gold{background:var(--gold);color:var(--navy);}
+  .btn-gold:hover{background:var(--gold-light);}
+
+  .page-hero{padding:64px 48px 52px;background:linear-gradient(180deg,rgba(200,168,75,0.07) 0%,transparent 100%);border-bottom:1px solid var(--border);position:relative;overflow:hidden;}
+  .page-hero::before{content:'';position:absolute;inset:0;background-image:linear-gradient(rgba(200,168,75,0.025) 1px,transparent 1px),linear-gradient(90deg,rgba(200,168,75,0.025) 1px,transparent 1px);background-size:52px 52px;}
+  .hero-inner{position:relative;max-width:1200px;margin:0 auto;}
+  .breadcrumb{font-size:0.74rem;font-family:'DM Mono',monospace;color:var(--muted);margin-bottom:16px;display:flex;gap:8px;}
+  .breadcrumb a{color:var(--gold);text-decoration:none;}
+  h1{font-family:'Playfair Display',serif;font-size:clamp(1.9rem,4vw,3rem);font-weight:900;color:var(--white);letter-spacing:-0.03em;margin-bottom:12px;line-height:1.1;}
+  .hero-sub{color:var(--muted);font-size:0.95rem;max-width:520px;line-height:1.7;margin-bottom:28px;}
+  .search-hero{position:relative;max-width:540px;}
+  .search-hero input{width:100%;background:rgba(255,255,255,0.07);border:1px solid rgba(200,168,75,0.25);border-radius:12px;padding:14px 50px 14px 18px;color:var(--white);font-size:0.95rem;font-family:'DM Sans',sans-serif;outline:none;transition:all .2s;}
+  .search-hero input:focus{border-color:var(--gold);box-shadow:0 0 0 3px rgba(200,168,75,0.08);}
+  .search-hero input::placeholder{color:var(--muted);}
+  .search-icon{position:absolute;right:16px;top:50%;transform:translateY(-50%);color:var(--muted);font-size:18px;pointer-events:none;}
+  .hero-stats{display:flex;gap:28px;margin-top:22px;flex-wrap:wrap;}
+  .hstat{font-size:0.78rem;color:var(--muted);font-family:'DM Mono',monospace;}
+  .hstat strong{color:var(--gold);}
+
+  .controls{position:sticky;top:63px;z-index:100;background:rgba(8,21,42,0.96);backdrop-filter:blur(16px);border-bottom:1px solid var(--border);padding:14px 48px;}
+  .controls-inner{max-width:1200px;margin:0 auto;display:flex;gap:12px;align-items:center;flex-wrap:wrap;}
+  .chip{padding:7px 16px;border-radius:50px;font-size:0.77rem;font-weight:600;cursor:pointer;border:1px solid var(--border);background:transparent;color:var(--muted);transition:all .18s;font-family:'DM Sans',sans-serif;white-space:nowrap;}
+  .chip:hover{color:var(--text);border-color:rgba(255,255,255,.2);}
+  .chip.on{background:var(--gold);color:var(--navy);border-color:var(--gold);}
+
+  .main{max-width:1200px;margin:0 auto;padding:44px 48px 80px;display:flex;gap:32px;}
+
+  .sidebar{width:220px;flex-shrink:0;}
+  .featured-res{background:linear-gradient(135deg,var(--slate),var(--navy-mid));border:1px solid rgba(200,168,75,.22);border-radius:14px;padding:20px;margin-bottom:22px;}
+  .fr-label{font-size:0.65rem;font-family:'DM Mono',monospace;font-weight:700;text-transform:uppercase;letter-spacing:.1em;color:var(--gold);margin-bottom:10px;}
+  .fr-title{font-family:'Playfair Display',serif;font-size:0.93rem;font-weight:700;color:var(--white);margin-bottom:8px;line-height:1.3;}
+  .fr-desc{font-size:0.74rem;color:var(--muted);line-height:1.5;margin-bottom:14px;}
+  .fr-btn{display:block;text-align:center;background:var(--gold);color:var(--navy);border-radius:7px;padding:8px;font-size:0.78rem;font-weight:700;text-decoration:none;transition:all .2s;}
+  .fr-btn:hover{background:var(--gold-light);}
+  .sb-section{margin-bottom:26px;}
+  .sb-label{font-size:0.67rem;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);font-family:'DM Mono',monospace;margin-bottom:10px;}
+  .sb-item{display:flex;align-items:center;justify-content:space-between;padding:8px 10px;border-radius:7px;cursor:pointer;font-size:0.82rem;color:var(--muted);transition:all .18s;margin-bottom:2px;}
+  .sb-item:hover{background:var(--card);color:var(--text);}
+  .sb-item.on{background:var(--gold-dim);color:var(--gold);font-weight:600;}
+  .sb-count{font-family:'DM Mono',monospace;font-size:0.68rem;background:rgba(255,255,255,.07);padding:2px 7px;border-radius:50px;}
+  .sb-item.on .sb-count{background:rgba(200,168,75,.2);}
+
+  .content{flex:1;min-width:0;}
+  .results-bar{display:flex;align-items:center;justify-content:space-between;margin-bottom:22px;gap:12px;flex-wrap:wrap;}
+  .results-count{font-size:0.8rem;color:var(--muted);font-family:'DM Mono',monospace;}
+  .results-count strong{color:var(--gold);}
+
+  .featured-strip{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-bottom:30px;}
+  .fc{background:linear-gradient(135deg,var(--slate) 0%,var(--navy-mid) 100%);border:1px solid rgba(200,168,75,.22);border-radius:14px;padding:22px;display:flex;gap:16px;align-items:flex-start;text-decoration:none;transition:all .22s;}
+  .fc:hover{border-color:rgba(200,168,75,.45);transform:translateY(-2px);box-shadow:0 16px 40px rgba(0,0,0,.3);}
+  .fc-icon{font-size:2rem;line-height:1;flex-shrink:0;}
+  .fc-badge{font-size:0.62rem;font-family:'DM Mono',monospace;font-weight:700;text-transform:uppercase;letter-spacing:.08em;padding:3px 9px;border-radius:50px;background:var(--gold-dim);color:var(--gold);display:inline-block;margin-bottom:7px;}
+  .fc-title{font-family:'Playfair Display',serif;font-size:0.97rem;font-weight:700;color:var(--white);margin-bottom:5px;line-height:1.25;}
+  .fc-desc{font-size:0.76rem;color:var(--muted);line-height:1.5;}
+
+  #resourceGrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(278px,1fr));gap:14px;}
+  .res-card{background:var(--card);border:1px solid var(--border);border-radius:13px;padding:20px;transition:all .22s;text-decoration:none;display:flex;flex-direction:column;position:relative;overflow:hidden;}
+  .res-card::after{content:'';position:absolute;inset:0;background:linear-gradient(135deg,rgba(200,168,75,0.05) 0%,transparent 60%);opacity:0;transition:opacity .22s;}
+  .res-card:hover{border-color:rgba(200,168,75,.32);transform:translateY(-3px);box-shadow:0 14px 36px rgba(0,0,0,.26);}
+  .res-card:hover::after{opacity:1;}
+  .res-top{display:flex;align-items:flex-start;justify-content:space-between;margin-bottom:12px;}
+  .res-icon{font-size:1.7rem;line-height:1;}
+  .res-type{font-size:0.62rem;font-family:'DM Mono',monospace;font-weight:700;text-transform:uppercase;letter-spacing:.08em;padding:3px 9px;border-radius:50px;}
+  .t-guide{background:rgba(74,222,128,.1);color:var(--green);}
+  .t-checklist{background:rgba(96,165,250,.1);color:var(--blue);}
+  .t-table{background:rgba(200,168,75,.1);color:var(--gold);}
+  .t-template{background:rgba(167,139,250,.1);color:var(--purple);}
+  .t-explainer{background:rgba(251,146,60,.1);color:var(--orange);}
+  .t-form{background:rgba(244,114,182,.1);color:var(--pink);}
+  .res-title{font-family:'Playfair Display',serif;font-size:0.93rem;font-weight:700;color:var(--white);margin-bottom:6px;line-height:1.25;}
+  .res-desc{font-size:0.76rem;color:var(--muted);line-height:1.6;flex:1;margin-bottom:14px;}
+  .res-foot{display:flex;align-items:center;justify-content:space-between;}
+  .res-meta{font-size:0.67rem;color:var(--muted);font-family:'DM Mono',monospace;}
+  .res-dl{display:inline-flex;align-items:center;gap:5px;font-size:0.73rem;font-weight:700;color:var(--gold);transition:gap .18s;}
+  .res-dl:hover{gap:9px;}
+  .res-dl::after{content:'↓';}
+  .badge-free{font-size:0.6rem;background:rgba(74,222,128,.1);color:var(--green);padding:2px 7px;border-radius:50px;font-family:'DM Mono',monospace;font-weight:700;}
+  .badge-pro{font-size:0.6rem;background:rgba(200,168,75,.1);color:var(--gold);padding:2px 7px;border-radius:50px;font-family:'DM Mono',monospace;font-weight:700;}
+
+  .cat-sep{grid-column:1/-1;display:flex;align-items:center;gap:12px;padding:6px 0 2px;margin-top:8px;border-bottom:1px solid var(--border);}
+  .cat-sep-icon{font-size:1rem;}
+  .cat-sep-name{font-family:'Playfair Display',serif;font-size:1rem;font-weight:700;color:var(--white);}
+  .cat-sep-count{font-size:0.7rem;font-family:'DM Mono',monospace;color:var(--muted);}
+
+  .pubs-section{margin-top:38px;}
+  .pubs-title{font-family:'Playfair Display',serif;font-size:1.25rem;font-weight:700;color:var(--white);margin-bottom:6px;}
+  .pubs-sub{font-size:0.8rem;color:var(--muted);margin-bottom:18px;}
+  .pubs-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(210px,1fr));gap:9px;}
+  .pub-card{background:var(--card);border:1px solid var(--border);border-radius:9px;padding:13px 15px;display:flex;gap:11px;align-items:center;text-decoration:none;transition:all .18s;}
+  .pub-card:hover{border-color:rgba(200,168,75,.3);background:var(--gold-dim);}
+  .pub-num{font-family:'DM Mono',monospace;font-size:0.72rem;font-weight:700;color:var(--gold);flex-shrink:0;}
+  .pub-name{font-size:0.76rem;color:var(--text);font-weight:500;line-height:1.35;}
+
+  .empty{grid-column:1/-1;text-align:center;padding:60px 20px;}
+  .empty-icon{font-size:2.6rem;opacity:.3;margin-bottom:12px;}
+  .empty-t{font-family:'Playfair Display',serif;font-size:1.25rem;color:var(--white);margin-bottom:8px;}
+  .empty-s{font-size:0.83rem;color:var(--muted);}
+
+  footer{border-top:1px solid var(--border);padding:30px 48px;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:14px;background:var(--navy-mid);}
+  .footer-left{font-size:0.75rem;color:var(--muted);}
+  .footer-left a{color:var(--gold);text-decoration:none;}
+  .footer-links{display:flex;gap:20px;}
+  .footer-links a{font-size:0.75rem;color:var(--muted);text-decoration:none;transition:color .2s;}
+  .footer-links a:hover{color:var(--gold);}
+
+  @media(max-width:900px){nav{padding:13px 18px;}.nav-links{display:none;}.page-hero,.controls,.main{padding-left:18px;padding-right:18px;}.main{flex-direction:column;}.sidebar{width:100%;}.featured-strip{grid-template-columns:1fr;}footer{padding:20px 18px;flex-direction:column;}}
+</style>
+</head>
+<body>
+
+<nav>
+  <a href="/" class="logo">
+    <div class="logo-mark">⚖</div>
+    <div>
+      <span class="logo-name">TaxPreparer<span>Tools</span></span>
+      <span class="logo-domain">taxpreparertools.com</span>
+    </div>
+  </a>
+  <ul class="nav-links">
+    <li><a href="/tools">Tools</a></li>
+    <li><a href="/calculator">Calculator</a></li>
+    <li><a href="/deadlines">Deadlines</a></li>
+    <li><a href="/ai-assistant">AI Assistant</a></li>
+    <li><a href="/resources" class="active">Resources</a></li>
+  </ul>
+  <div class="nav-right">
+    <a href="/login" class="btn-sm btn-ghost">Log In</a>
+    <a href="/signup" class="btn-sm btn-gold">Get Pro Free</a>
+  </div>
+</nav>
+
+<div class="page-hero">
+  <div class="hero-inner">
+    <div class="breadcrumb"><a href="/">taxpreparertools.com</a> <span>/</span> resources</div>
+    <h1>Tax Resources<br>&amp; Reference Library</h1>
+    <p class="hero-sub">Free guides, checklists, templates, and reference tables for tax professionals and individuals — updated for 2025.</p>
+    <div class="search-hero">
+      <input type="text" id="searchInput" placeholder="Search guides, forms, checklists…" oninput="applyFilters()"/>
+      <span class="search-icon">🔍</span>
+    </div>
+    <div class="hero-stats">
+      <div class="hstat"><strong>38</strong> Resources</div>
+      <div class="hstat"><strong>Free</strong> Downloads</div>
+      <div class="hstat"><strong>Updated</strong> May 2026</div>
+      <div class="hstat"><strong>2025</strong> Tax Year</div>
+    </div>
+  </div>
+</div>
+
+<div class="controls">
+  <div class="controls-inner">
+    <div style="display:flex;gap:8px;flex-wrap:wrap;" id="chipRow">
+      <button class="chip on" data-cat="all" onclick="setChip(this)">All</button>
+      <button class="chip" data-cat="guide" onclick="setChip(this)">📘 Guides</button>
+      <button class="chip" data-cat="checklist" onclick="setChip(this)">✅ Checklists</button>
+      <button class="chip" data-cat="table" onclick="setChip(this)">📊 Tables</button>
+      <button class="chip" data-cat="template" onclick="setChip(this)">📄 Templates</button>
+      <button class="chip" data-cat="explainer" onclick="setChip(this)">💡 Explainers</button>
+      <button class="chip" data-cat="form" onclick="setChip(this)">📋 Form Guides</button>
+    </div>
+  </div>
+</div>
+
+<div class="main">
+  <aside class="sidebar">
+    <div class="featured-res">
+      <div class="fr-label">⭐ Pro Resource</div>
+      <div class="fr-title">2025 Complete Tax Planning Guide for CPAs</div>
+      <div class="fr-desc">55-page guide covering TCJA provisions, planning strategies, and 2025 law changes.</div>
+      <a href="https://irs.gov/pub/irs-pdf/p17.pdf" target="_blank" rel="noopener" class="fr-btn">Download PDF →</a>
+    </div>
+    <div class="sb-section">
+      <div class="sb-label">Type</div>
+      <div class="sb-item on" data-cat="all" onclick="sbFilter(this)">All <span class="sb-count">38</span></div>
+      <div class="sb-item" data-cat="guide" onclick="sbFilter(this)">Guides <span class="sb-count">10</span></div>
+      <div class="sb-item" data-cat="checklist" onclick="sbFilter(this)">Checklists <span class="sb-count">8</span></div>
+      <div class="sb-item" data-cat="table" onclick="sbFilter(this)">Tables <span class="sb-count">8</span></div>
+      <div class="sb-item" data-cat="template" onclick="sbFilter(this)">Templates <span class="sb-count">5</span></div>
+      <div class="sb-item" data-cat="explainer" onclick="sbFilter(this)">Explainers <span class="sb-count">3</span></div>
+      <div class="sb-item" data-cat="form" onclick="sbFilter(this)">Form Guides <span class="sb-count">4</span></div>
+    </div>
+    <div class="sb-section">
+      <div class="sb-label">Audience</div>
+      <div class="sb-item on" data-aud="all" onclick="audFilter(this)">Everyone <span class="sb-count">38</span></div>
+      <div class="sb-item" data-aud="pro" onclick="audFilter(this)">CPA / EA Pro <span class="sb-count">18</span></div>
+      <div class="sb-item" data-aud="ind" onclick="audFilter(this)">Individual <span class="sb-count">14</span></div>
+      <div class="sb-item" data-aud="biz" onclick="audFilter(this)">Business <span class="sb-count">6</span></div>
+    </div>
+    <div class="sb-section">
+      <div class="sb-label">Access</div>
+      <div class="sb-item on" data-access="all" onclick="accessFilter(this)">All <span class="sb-count">38</span></div>
+      <div class="sb-item" data-access="free" onclick="accessFilter(this)">Free <span class="sb-count">26</span></div>
+      <div class="sb-item" data-access="pro" onclick="accessFilter(this)">Pro Only <span class="sb-count">12</span></div>
+    </div>
+  </aside>
+
+  <div class="content">
+    <div class="featured-strip" id="featuredStrip">
+      <a href="/resources#tax-brackets" class="fc">
+        <div class="fc-icon">📊</div>
+        <div>
+          <div class="fc-badge">Most Downloaded</div>
+          <div class="fc-title">2025 Federal Tax Brackets — All Filing Statuses</div>
+          <div class="fc-desc">Complete rate tables with inflation-adjusted brackets and standard deductions.</div>
+        </div>
+      </a>
+      <a href="/resources#client-intake" class="fc">
+        <div class="fc-icon">✅</div>
+        <div>
+          <div class="fc-badge">New for 2025</div>
+          <div class="fc-title">Ultimate Client Onboarding Checklist for Tax Pros</div>
+          <div class="fc-desc">72-item checklist covering all documents for individual and business clients.</div>
+        </div>
+      </a>
+    </div>
+
+    <div class="results-bar">
+      <div class="results-count">Showing <strong id="resultCount">0</strong> resources</div>
+    </div>
+
+    <div id="resourceGrid"></div>
+
+    <div class="pubs-section" id="pubsSection">
+      <div class="pubs-title">Key IRS Publications</div>
+      <div class="pubs-sub">Direct links to the most-referenced IRS publications for the 2025 tax year.</div>
+      <div class="pubs-grid">
+        <a href="https://irs.gov/pub/irs-pdf/p17.pdf" class="pub-card" target="_blank"><span class="pub-num">Pub 17</span><span class="pub-name">Your Federal Income Tax (Individual)</span></a>
+        <a href="https://irs.gov/pub/irs-pdf/p15.pdf" class="pub-card" target="_blank"><span class="pub-num">Pub 15</span><span class="pub-name">Employer's Tax Guide (Circular E)</span></a>
+        <a href="https://irs.gov/pub/irs-pdf/p334.pdf" class="pub-card" target="_blank"><span class="pub-num">Pub 334</span><span class="pub-name">Tax Guide for Small Businesses</span></a>
+        <a href="https://irs.gov/pub/irs-pdf/p535.pdf" class="pub-card" target="_blank"><span class="pub-num">Pub 535</span><span class="pub-name">Business Expenses</span></a>
+        <a href="https://irs.gov/pub/irs-pdf/p587.pdf" class="pub-card" target="_blank"><span class="pub-num">Pub 587</span><span class="pub-name">Business Use of Your Home</span></a>
+        <a href="https://irs.gov/pub/irs-pdf/p946.pdf" class="pub-card" target="_blank"><span class="pub-num">Pub 946</span><span class="pub-name">How to Depreciate Property</span></a>
+        <a href="https://irs.gov/pub/irs-pdf/p463.pdf" class="pub-card" target="_blank"><span class="pub-num">Pub 463</span><span class="pub-name">Travel, Gift &amp; Car Expenses</span></a>
+        <a href="https://irs.gov/pub/irs-pdf/p523.pdf" class="pub-card" target="_blank"><span class="pub-num">Pub 523</span><span class="pub-name">Selling Your Home</span></a>
+        <a href="https://irs.gov/pub/irs-pdf/p590a.pdf" class="pub-card" target="_blank"><span class="pub-num">Pub 590-A</span><span class="pub-name">Contributions to IRAs</span></a>
+        <a href="https://irs.gov/pub/irs-pdf/p970.pdf" class="pub-card" target="_blank"><span class="pub-num">Pub 970</span><span class="pub-name">Tax Benefits for Education</span></a>
+        <a href="https://irs.gov/pub/irs-pdf/p225.pdf" class="pub-card" target="_blank"><span class="pub-num">Pub 225</span><span class="pub-name">Farmer's Tax Guide</span></a>
+        <a href="https://irs.gov/pub/irs-pdf/p556.pdf" class="pub-card" target="_blank"><span class="pub-num">Pub 556</span><span class="pub-name">Examination of Returns &amp; Appeals</span></a>
+      </div>
+    </div>
+  </div>
+</div>
+
+<footer>
+  <div class="footer-left">© 2026 <a href="https://taxpreparertools.com">TaxPreparerTools.com</a> · Resources for informational use only. Verify with <a href="https://irs.gov">IRS.gov</a>.</div>
+  <div class="footer-links">
+    <a href="/privacy">Privacy</a><a href="/terms">Terms</a><a href="/contact">Contact</a><a href="https://irs.gov" target="_blank">IRS.gov ↗</a>
+  </div>
+</footer>
+
+<script>
+const RESOURCES = [
+  {id:1,icon:'📘',title:'2025 Complete Tax Planning Guide for CPAs',desc:'55-page guide covering all major 2025 tax law changes, TCJA sunset provisions, and planning strategies.',cat:'guide',aud:'pro',access:'pro',updated:'May 2026',downloads:'4.2k',tags:['planning','TCJA','2025','CPA','strategies']},
+  {id:2,icon:'📘',title:'Self-Employed Tax Guide 2025',desc:'SE tax, quarterly payments, deductions, home office, and retirement planning for 1099 and freelance workers.',cat:'guide',aud:'ind',access:'free',updated:'Apr 2026',downloads:'8.1k',tags:['self employed','1099','freelance','schedule C','quarterly']},
+  {id:3,icon:'📘',title:'S-Corporation Tax Planning Guide',desc:'S-Corp elections, reasonable compensation, distributions, and exit strategies explained in depth.',cat:'guide',aud:'biz',access:'pro',updated:'Jan 2026',downloads:'3.4k',tags:['S-Corp','1120-S','reasonable compensation','distributions']},
+  {id:4,icon:'📘',title:'IRS Penalty Abatement Playbook',desc:'Step-by-step guide for requesting first-time abatement and reasonable cause relief. Includes sample letters.',cat:'guide',aud:'pro',access:'pro',updated:'Mar 2026',downloads:'2.8k',tags:['penalty','abatement','FTA','reasonable cause','843']},
+  {id:5,icon:'📘',title:'Real Estate Investor Tax Guide',desc:'Depreciation, cost segregation, 1031 exchanges, passive activity rules, and REIT tax implications.',cat:'guide',aud:'biz',access:'free',updated:'Feb 2026',downloads:'5.6k',tags:['real estate','depreciation','1031','passive activity','rental']},
+  {id:6,icon:'📘',title:'International Tax Guide for Expats',desc:'FEIE, Foreign Tax Credit, FBAR, FATCA, and streamlined procedures for US citizens abroad.',cat:'guide',aud:'ind',access:'free',updated:'Mar 2026',downloads:'3.1k',tags:['expat','FEIE','FBAR','FATCA','foreign','2555']},
+  {id:7,icon:'📘',title:'QBI Deduction Deep Dive',desc:'Full analysis of Section 199A: eligibility, SSTB rules, W-2 wage limitations, and aggregation elections.',cat:'guide',aud:'pro',access:'free',updated:'Feb 2026',downloads:'4.7k',tags:['QBI','199A','pass-through','SSTB','W-2 wages']},
+  {id:8,icon:'📘',title:'Gig Economy Tax Guide',desc:'For Uber, DoorDash, Airbnb, and freelancer income — track earnings, deductions, and quarterly payments.',cat:'guide',aud:'ind',access:'free',updated:'Apr 2026',downloads:'9.3k',tags:['gig','Uber','DoorDash','Airbnb','freelance','1099']},
+  {id:9,icon:'📘',title:'Estate & Gift Tax Planning 2025',desc:'Lifetime exemption planning, annual exclusion strategies, GRATs, SLATs, and portability elections.',cat:'guide',aud:'pro',access:'pro',updated:'Jan 2026',downloads:'1.9k',tags:['estate','gift','709','706','portability']},
+  {id:10,icon:'📘',title:'Retirement Plans for Business Owners',desc:'SEP-IRA, SIMPLE IRA, Solo 401k, defined benefit — contribution limits, deductions, and setup timelines.',cat:'guide',aud:'biz',access:'free',updated:'Jan 2026',downloads:'3.8k',tags:['retirement','SEP','SIMPLE','401k','defined benefit']},
+  {id:11,icon:'✅',title:'Individual Tax Return Checklist (1040)',desc:'72-item checklist covering all income types, deductions, credits, and supporting documents.',cat:'checklist',aud:'pro',access:'free',updated:'Jan 2026',downloads:'12.4k',tags:['1040','checklist','individual','documents']},
+  {id:12,icon:'✅',title:'Business Return Checklist (1120-S / 1065)',desc:'Complete document checklist for S-Corp and partnership returns including K-1 preparation.',cat:'checklist',aud:'pro',access:'free',updated:'Jan 2026',downloads:'6.8k',tags:['1120-S','1065','K-1','S-Corp','partnership']},
+  {id:13,icon:'✅',title:'New Client Intake Checklist',desc:'Professional intake form covering identity verification, prior returns, life events, and document collection.',cat:'checklist',aud:'pro',access:'pro',updated:'Mar 2026',downloads:'5.2k',tags:['intake','onboarding','new client','CPA']},
+  {id:14,icon:'✅',title:'IRS Audit Preparation Checklist',desc:'Organize documents and responses for IRS correspondence audits, office exams, and field audits.',cat:'checklist',aud:'pro',access:'pro',updated:'Feb 2026',downloads:'3.1k',tags:['audit','examination','IRS','documentation']},
+  {id:15,icon:'✅',title:'Schedule C Deduction Checklist',desc:'Every allowable business deduction for sole proprietors — advertising, home office, vehicle, and more.',cat:'checklist',aud:'ind',access:'free',updated:'Jan 2026',downloads:'11.2k',tags:['Schedule C','deductions','sole proprietor','business']},
+  {id:16,icon:'✅',title:'Year-End Tax Planning Checklist',desc:'Actions to take before December 31 to minimize your tax bill for individuals and business owners.',cat:'checklist',aud:'pro',access:'free',updated:'Nov 2025',downloads:'7.4k',tags:['year end','planning','December','strategies']},
+  {id:17,icon:'✅',title:'Rental Property Tax Checklist',desc:'Income, expenses, depreciation, and passive activity items for Schedule E rental property.',cat:'checklist',aud:'ind',access:'free',updated:'Jan 2026',downloads:'5.9k',tags:['rental','Schedule E','real estate','depreciation']},
+  {id:18,icon:'✅',title:'IRS Response Letter Checklist',desc:'22-item verification list before sending any response to the IRS to ensure completeness.',cat:'checklist',aud:'pro',access:'pro',updated:'Apr 2026',downloads:'2.6k',tags:['IRS','letter','response','correspondence']},
+  {id:19,icon:'📊',title:'2025 Federal Income Tax Brackets',desc:'Complete tax rate tables for Single, MFJ, MFS, and HOH filing statuses.',cat:'table',aud:'pro',access:'free',updated:'Jan 2026',downloads:'18.7k',tags:['brackets','rates','2025','filing status']},
+  {id:20,icon:'📊',title:'2025 Standard Deduction Amounts',desc:'Standard deductions for all filing statuses plus additional amounts for age 65+ and blindness.',cat:'table',aud:'ind',access:'free',updated:'Jan 2026',downloads:'14.2k',tags:['standard deduction','2025','filing status']},
+  {id:21,icon:'📊',title:'2025 Retirement Contribution Limits',desc:'401k, IRA, Roth IRA, SEP-IRA, SIMPLE IRA, and HSA limits and income phase-outs.',cat:'table',aud:'ind',access:'free',updated:'Jan 2026',downloads:'9.8k',tags:['contribution limits','401k','IRA','Roth','SEP','HSA']},
+  {id:22,icon:'📊',title:'IRS Standard Mileage Rates 2025',desc:'Business, medical/military, and charitable mileage rates with historical comparison.',cat:'table',aud:'ind',access:'free',updated:'Jan 2026',downloads:'8.3k',tags:['mileage','rate','2025','business','medical']},
+  {id:23,icon:'📊',title:'MACRS Depreciation Tables',desc:'Recovery periods, depreciation methods, and applicable percentages for all MACRS asset classes.',cat:'table',aud:'pro',access:'free',updated:'Jan 2026',downloads:'4.4k',tags:['MACRS','depreciation','recovery period','asset class']},
+  {id:24,icon:'📊',title:'2025 Capital Gains Tax Rates',desc:'Short-term and long-term rates by filing status, with NIIT thresholds and qualified dividend rates.',cat:'table',aud:'ind',access:'free',updated:'Jan 2026',downloads:'6.1k',tags:['capital gains','rates','NIIT','dividends']},
+  {id:25,icon:'📊',title:'State Income Tax Rate Reference',desc:'All 50 states + DC — income tax rates, brackets, deductions, and no-income-tax states.',cat:'table',aud:'pro',access:'free',updated:'Mar 2026',downloads:'5.7k',tags:['state','income tax','50 states','rates']},
+  {id:26,icon:'📊',title:'2025 Social Security & Medicare Limits',desc:'Wage base limits, FICA rates, SE tax rates, and Medicare surtax thresholds.',cat:'table',aud:'pro',access:'free',updated:'Jan 2026',downloads:'4.9k',tags:['Social Security','Medicare','FICA','wage base']},
+  {id:27,icon:'📄',title:'Engagement Letter — Individual Returns',desc:'Customizable engagement letter for individual tax preparation clients covering scope, fees, and limitations.',cat:'template',aud:'pro',access:'pro',updated:'Jan 2026',downloads:'3.6k',tags:['engagement letter','individual','template','CPA']},
+  {id:28,icon:'📄',title:'Engagement Letter — Business Returns',desc:'Professional engagement letter for S-Corp, partnership, and C-Corp tax return preparation.',cat:'template',aud:'pro',access:'pro',updated:'Jan 2026',downloads:'2.9k',tags:['engagement letter','business','S-Corp','template']},
+  {id:29,icon:'📄',title:'Penalty Abatement Letter Template',desc:'First-time abatement (FTA) and reasonable cause request templates for Form 843 submissions.',cat:'template',aud:'pro',access:'pro',updated:'Feb 2026',downloads:'4.1k',tags:['abatement','FTA','843','template','penalty']},
+  {id:30,icon:'📄',title:'CP2000 Response Letter Template',desc:'Structured response for IRS CP2000 automated underreporter notices — agree or disagree versions.',cat:'template',aud:'pro',access:'pro',updated:'Mar 2026',downloads:'3.8k',tags:['CP2000','response','letter','template','IRS']},
+  {id:31,icon:'📄',title:'Client Tax Organizer — Individual (Fillable PDF)',desc:'Fillable PDF organizer to collect all necessary information from individual tax clients.',cat:'template',aud:'pro',access:'pro',updated:'Jan 2026',downloads:'5.5k',tags:['organizer','client','individual','fillable','PDF']},
+  {id:32,icon:'💡',title:'How the US Tax System Works',desc:'Plain-English guide to progressive taxation, marginal vs effective rates, and how your tax bill is calculated.',cat:'explainer',aud:'ind',access:'free',updated:'Jan 2026',downloads:'7.2k',tags:['basics','progressive','marginal','effective']},
+  {id:33,icon:'💡',title:'TCJA Sunset: What Expires After 2025',desc:'Which Tax Cuts and Jobs Act provisions expire and what that means for your planning now.',cat:'explainer',aud:'pro',access:'free',updated:'Jan 2026',downloads:'6.4k',tags:['TCJA','sunset','2025','expiration','law changes']},
+  {id:34,icon:'💡',title:'Passive Activity Rules Explained',desc:'Material participation tests, passive loss limitations, and real estate professional status — jargon-free.',cat:'explainer',aud:'pro',access:'free',updated:'Feb 2026',downloads:'3.2k',tags:['passive activity','PAL','material participation','losses']},
+  {id:35,icon:'📋',title:'Form 1040 Line-by-Line Guide 2025',desc:'Walk through every line of the 2025 Form 1040 with explanations and common errors to avoid.',cat:'form',aud:'ind',access:'free',updated:'Jan 2026',downloads:'10.1k',tags:['1040','form','guide','line by line']},
+  {id:36,icon:'📋',title:'Schedule C Complete Guide',desc:'Every line of Schedule C explained — income, COGS, expenses, and home office with examples.',cat:'form',aud:'ind',access:'free',updated:'Jan 2026',downloads:'8.8k',tags:['Schedule C','sole proprietor','business','guide']},
+  {id:37,icon:'📋',title:'W-4 Completion Guide for Employees',desc:'Step-by-step walkthrough of the current W-4 form with worksheets for multiple jobs.',cat:'form',aud:'ind',access:'free',updated:'Jan 2026',downloads:'6.3k',tags:['W-4','withholding','employee','form']},
+  {id:38,icon:'📋',title:'Form 2553 S-Corp Election Guide',desc:'How to complete and file Form 2553, including late election relief procedures.',cat:'form',aud:'biz',access:'free',updated:'Feb 2026',downloads:'3.4k',tags:['2553','S-Corp','election','form','late election']},
+];
+
+let currentCat='all', currentAud='all', currentAccess='all';
+
+function setChip(el){document.querySelectorAll('#chipRow .chip').forEach(c=>c.classList.remove('on'));el.classList.add('on');currentCat=el.dataset.cat;syncSb();applyFilters();}
+function sbFilter(el){document.querySelectorAll('.sb-item[data-cat]').forEach(s=>s.classList.remove('on'));el.classList.add('on');currentCat=el.dataset.cat;document.querySelectorAll('#chipRow .chip').forEach(c=>c.classList.toggle('on',c.dataset.cat===currentCat));applyFilters();}
+function audFilter(el){document.querySelectorAll('.sb-item[data-aud]').forEach(s=>s.classList.remove('on'));el.classList.add('on');currentAud=el.dataset.aud;applyFilters();}
+function accessFilter(el){document.querySelectorAll('.sb-item[data-access]').forEach(s=>s.classList.remove('on'));el.classList.add('on');currentAccess=el.dataset.access;applyFilters();}
+function syncSb(){document.querySelectorAll('.sb-item[data-cat]').forEach(s=>s.classList.toggle('on',s.dataset.cat===currentCat));}
+
+function applyFilters(){
+  const q=document.getElementById('searchInput').value.toLowerCase().trim();
+  let list=RESOURCES.filter(r=>{
+    if(currentCat!=='all'&&r.cat!==currentCat)return false;
+    if(currentAud!=='all'&&r.aud!==currentAud)return false;
+    if(currentAccess!=='all'&&r.access!==currentAccess)return false;
+    if(q){const hay=[r.title,r.desc,...r.tags].join(' ').toLowerCase();return q.split(' ').every(w=>hay.includes(w));}
+    return true;
+  });
+  document.getElementById('resultCount').textContent=list.length;
+  const showFeatured=currentCat==='all'&&currentAud==='all'&&currentAccess==='all'&&!q;
+  document.getElementById('featuredStrip').style.display=showFeatured?'':'none';
+  document.getElementById('pubsSection').style.display=(currentCat==='all'||currentCat==='form')&&!q?'':'none';
+  renderResources(list);
+}
+
+function renderResources(list){
+  const grid=document.getElementById('resourceGrid');
+  if(!list.length){grid.innerHTML='<div class="empty"><div class="empty-icon">📂</div><div class="empty-t">No resources found</div><div class="empty-s">Try adjusting your search or filters.</div></div>';return;}
+  const catMeta={guide:{icon:'📘',name:'Guides'},checklist:{icon:'✅',name:'Checklists'},table:{icon:'📊',name:'Reference Tables'},template:{icon:'📄',name:'Templates'},explainer:{icon:'💡',name:'Explainers'},form:{icon:'📋',name:'Form Guides'}};
+  const cats=['guide','checklist','table','template','explainer','form'];
+  const active=currentCat==='all'?cats:[currentCat];
+  let html='';
+  active.forEach(cat=>{
+    const group=list.filter(r=>r.cat===cat);
+    if(!group.length)return;
+    if(currentCat==='all')html+=`<div class="cat-sep"><span class="cat-sep-icon">${catMeta[cat].icon}</span><span class="cat-sep-name">${catMeta[cat].name}</span><span class="cat-sep-count">${group.length} items</span></div>`;
+    group.forEach(r=>{
+      html+=`<a href="/resources#${r.id}" class="res-card">
+        <div class="res-top"><span class="res-icon">${r.icon}</span><span class="res-type t-${r.cat}">${r.cat.charAt(0).toUpperCase()+r.cat.slice(1)}</span></div>
+        <div class="res-title">${r.title}</div>
+        <div class="res-desc">${r.desc}</div>
+        <div class="res-foot">
+          <div><div class="res-meta">Updated ${r.updated} · ${r.downloads} downloads</div><span class="${r.access==='free'?'badge-free':'badge-pro'}">${r.access==='free'?'Free':'Pro'}</span></div>
+          <span class="res-dl">Download</span>
+        </div>
+      </a>`;
+    });
+  });
+  grid.innerHTML=html;
+}
+
+applyFilters();
+</script>
+</body>
+</html>
