@@ -143,7 +143,7 @@
 <body>
 
 <nav>
-  <a href="/" class="logo">
+  <a href="index.html" class="logo">
     <div class="logo-mark">⚖</div>
     <div>
       <span class="logo-name">TaxPreparer<span>Tools</span></span>
@@ -151,21 +151,21 @@
     </div>
   </a>
   <ul class="nav-links">
-    <li><a href="/tools">Tools</a></li>
-    <li><a href="/calculator">Calculator</a></li>
-    <li><a href="/deadlines">Deadlines</a></li>
-    <li><a href="/ai-assistant">AI Assistant</a></li>
-    <li><a href="/resources" class="active">Resources</a></li>
+    <li><a href="tools.html">Tools</a></li>
+    <li><a href="tools.html">Calculator</a></li>
+    <li><a href="deadlines.html">Deadlines</a></li>
+    <li><a href="ai-assistant.html">AI Assistant</a></li>
+    <li><a href="resources.html" class="active">Resources</a></li>
   </ul>
   <div class="nav-right">
-    <a href="/login" class="btn-sm btn-ghost">Log In</a>
-    <a href="/signup" class="btn-sm btn-gold">Get Pro Free</a>
+    <a href="login.html" class="btn-sm btn-ghost">Log In</a>
+    <a href="signup.html" class="btn-sm btn-gold">Get Pro Free</a>
   </div>
 </nav>
 
 <div class="page-hero">
   <div class="hero-inner">
-    <div class="breadcrumb"><a href="/">taxpreparertools.com</a> <span>/</span> resources</div>
+    <div class="breadcrumb"><a href="index.html">taxpreparertools.com</a> <span>/</span> resources</div>
     <h1>Tax Resources<br>&amp; Reference Library</h1>
     <p class="hero-sub">Free guides, checklists, templates, and reference tables for tax professionals and individuals — updated for 2025.</p>
     <div class="search-hero">
@@ -230,7 +230,7 @@
 
   <div class="content">
     <div class="featured-strip" id="featuredStrip">
-      <a href="/resources#tax-brackets" class="fc">
+      <a href="resources.html#tax-brackets" class="fc">
         <div class="fc-icon">📊</div>
         <div>
           <div class="fc-badge">Most Downloaded</div>
@@ -238,7 +238,7 @@
           <div class="fc-desc">Complete rate tables with inflation-adjusted brackets and standard deductions.</div>
         </div>
       </a>
-      <a href="/resources#client-intake" class="fc">
+      <a href="resources.html#client-intake" class="fc">
         <div class="fc-icon">✅</div>
         <div>
           <div class="fc-badge">New for 2025</div>
@@ -278,7 +278,7 @@
 <footer>
   <div class="footer-left">© 2026 <a href="https://taxpreparertools.com">TaxPreparerTools.com</a> · Resources for informational use only. Verify with <a href="https://irs.gov">IRS.gov</a>.</div>
   <div class="footer-links">
-    <a href="/privacy">Privacy</a><a href="/terms">Terms</a><a href="/contact">Contact</a><a href="https://irs.gov" target="_blank">IRS.gov ↗</a>
+    <a href="privacy.html">Privacy</a><a href="terms.html">Terms</a><a href="contact.html">Contact</a><a href="https://irs.gov" target="_blank">IRS.gov ↗</a>
   </div>
 </footer>
 
@@ -360,7 +360,7 @@ function renderResources(list){
     if(!group.length)return;
     if(currentCat==='all')html+=`<div class="cat-sep"><span class="cat-sep-icon">${catMeta[cat].icon}</span><span class="cat-sep-name">${catMeta[cat].name}</span><span class="cat-sep-count">${group.length} items</span></div>`;
     group.forEach(r=>{
-      html+=`<a href="/resources#${r.id}" class="res-card">
+      html+=`<a href="resources.html#${r.id}" class="res-card">
         <div class="res-top"><span class="res-icon">${r.icon}</span><span class="res-type t-${r.cat}">${r.cat.charAt(0).toUpperCase()+r.cat.slice(1)}</span></div>
         <div class="res-title">${r.title}</div>
         <div class="res-desc">${r.desc}</div>
