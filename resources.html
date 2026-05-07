@@ -149,6 +149,39 @@
   <meta name="twitter:title" content="Tax Resources & References | TaxPreparerTools.com" />
   <meta name="twitter:description" content="IRS publications, tax forms, rate tables, and professional resources for CPAs and enrolled agents." />
   <meta name="twitter:image" content="https://taxpreparertools.com/assets/og-image.png" />
+
+<script>
+// Hash-to-search: allows direct links like resources.html#tax-brackets to pre-filter
+(function() {
+  const HASH_MAP = {
+    'tax-brackets':      'tax brackets 2025',
+    'client-intake':     'client intake checklist',
+    'penalty-abatement': 'penalty abatement',
+    'mileage-rates':     'mileage rates',
+    'w4-guide':          'W-4 completion guide',
+    'qbi-explainer':     'QBI deduction',
+    'entity-comparison': 'entity comparison',
+    'depreciation-ref':  'MACRS depreciation',
+  };
+  const hash = window.location.hash.replace('#','');
+  if (hash && HASH_MAP[hash]) {
+    window.addEventListener('DOMContentLoaded', function() {
+      const input = document.getElementById('searchInput');
+      if (input) {
+        input.value = HASH_MAP[hash];
+        // Trigger filter
+        input.dispatchEvent(new Event('input'));
+        // Scroll to results
+        setTimeout(function() {
+          const grid = document.getElementById('resourceGrid');
+          if (grid) grid.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        }, 300);
+      }
+    });
+  }
+})();
+</script>
+
 </head>
 <body>
 
