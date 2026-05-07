@@ -163,6 +163,16 @@
 
   @media(max-width:900px){ nav{padding:13px 18px;} .nav-links{display:none;} .page-header,.controls,.main{padding-left:18px;padding-right:18px;} .main{flex-direction:column;} .mini-cal-section{width:100%;} footer{padding:22px 18px;flex-direction:column;} .dl-card{grid-template-columns:60px 1fr; } .dl-right{display:none;} }
 </style>
+  <!-- Open Graph / Social Sharing -->
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="https://taxpreparertools.com/deadlines" />
+  <meta property="og:title" content="2025–2026 Tax Deadline Calendar | TaxPreparerTools.com" />
+  <meta property="og:description" content="Every IRS tax filing deadline for individuals, businesses, payroll, and estimated payments — updated for 2025 and 2026." />
+  <meta property="og:image" content="https://taxpreparertools.com/assets/og-image.png" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="2025–2026 Tax Deadline Calendar | TaxPreparerTools.com" />
+  <meta name="twitter:description" content="Every IRS tax filing deadline for individuals, businesses, payroll, and estimated payments — updated for 2025 and 2026." />
+  <meta name="twitter:image" content="https://taxpreparertools.com/assets/og-image.png" />
 </head>
 <body>
 
@@ -261,7 +271,7 @@
 <div class="toast" id="toast"></div>
 
 <script>
-const TODAY = new Date(2026, 4, 2); // May 2, 2026
+const TODAY = new Date(); // Always today
 
 const DEADLINES = [
   // 2025
