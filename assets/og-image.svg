@@ -1,0 +1,102 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="630" viewBox="0 0 1200 630">
+  <defs>
+    <!-- Dark navy background gradient -->
+    <linearGradient id="bg" x1="0" y1="0" x2="1200" y2="630" gradientUnits="userSpaceOnUse">
+      <stop offset="0%" stop-color="#04102080"/>
+      <stop offset="100%" stop-color="#08152a"/>
+    </linearGradient>
+    <!-- Gold accent gradient -->
+    <linearGradient id="goldGrad" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0%" stop-color="#c8a84b"/>
+      <stop offset="100%" stop-color="#e8c96a"/>
+    </linearGradient>
+    <!-- Subtle radial glow -->
+    <radialGradient id="glow" cx="30%" cy="50%" r="55%">
+      <stop offset="0%" stop-color="#c8a84b" stop-opacity="0.07"/>
+      <stop offset="100%" stop-color="#08152a" stop-opacity="0"/>
+    </radialGradient>
+    <!-- Grid pattern -->
+    <pattern id="grid" width="60" height="60" patternUnits="userSpaceOnUse">
+      <path d="M 60 0 L 0 0 0 60" fill="none" stroke="#c8a84b" stroke-width="0.3" opacity="0.12"/>
+    </pattern>
+  </defs>
+
+  <!-- Background -->
+  <rect width="1200" height="630" fill="#08152a"/>
+  <rect width="1200" height="630" fill="url(#glow)"/>
+  <rect width="1200" height="630" fill="url(#grid)"/>
+
+  <!-- Gold accent bar top -->
+  <rect x="0" y="0" width="1200" height="3" fill="url(#goldGrad)"/>
+
+  <!-- Decorative right panel -->
+  <rect x="820" y="0" width="380" height="630" fill="#0b1c36" opacity="0.5"/>
+  <line x1="820" y1="0" x2="820" y2="630" stroke="#c8a84b" stroke-width="1" opacity="0.2"/>
+
+  <!-- Tool preview cards (right side) -->
+  <!-- Card 1 -->
+  <rect x="852" y="80" width="306" height="72" rx="8" fill="#0f2444" stroke="#c8a84b" stroke-width="0.8" stroke-opacity="0.3"/>
+  <text x="872" y="108" font-family="Georgia, serif" font-size="13" fill="#c8a84b" opacity="0.9">🧮  Federal Tax Estimator</text>
+  <text x="872" y="130" font-family="Georgia, serif" font-size="11" fill="#7a8fac">2025 brackets · all filing statuses</text>
+
+  <!-- Card 2 -->
+  <rect x="852" y="168" width="306" height="72" rx="8" fill="#0f2444" stroke="#c8a84b" stroke-width="0.8" stroke-opacity="0.3"/>
+  <text x="872" y="196" font-family="Georgia, serif" font-size="13" fill="#c8a84b" opacity="0.9">⚠️  Penalty Calculator</text>
+  <text x="872" y="218" font-family="Georgia, serif" font-size="11" fill="#7a8fac">FTF · FTP · underpayment interest</text>
+
+  <!-- Card 3 -->
+  <rect x="852" y="256" width="306" height="72" rx="8" fill="#0f2444" stroke="#c8a84b" stroke-width="0.8" stroke-opacity="0.3"/>
+  <text x="872" y="284" font-family="Georgia, serif" font-size="13" fill="#c8a84b" opacity="0.9">💼  SE Tax Calculator</text>
+  <text x="872" y="306" font-family="Georgia, serif" font-size="11" fill="#7a8fac">SS · Medicare · deductible half</text>
+
+  <!-- Card 4 -->
+  <rect x="852" y="344" width="306" height="72" rx="8" fill="#0f2444" stroke="#c8a84b" stroke-width="0.8" stroke-opacity="0.3"/>
+  <text x="872" y="372" font-family="Georgia, serif" font-size="13" fill="#c8a84b" opacity="0.9">📊  QBI Deduction</text>
+  <text x="872" y="394" font-family="Georgia, serif" font-size="11" fill="#7a8fac">§199A · SSTB · W-2 wage limits</text>
+
+  <!-- Card 5 -->
+  <rect x="852" y="432" width="306" height="72" rx="8" fill="#0f2444" stroke="#c8a84b" stroke-width="0.8" stroke-opacity="0.3"/>
+  <text x="872" y="460" font-family="Georgia, serif" font-size="13" fill="#c8a84b" opacity="0.9">🤖  AI Tax Assistant</text>
+  <text x="872" y="482" font-family="Georgia, serif" font-size="11" fill="#7a8fac">IRC citations · instant answers</text>
+
+  <!-- More dots indicator -->
+  <text x="990" y="540" font-family="Georgia, serif" font-size="11" fill="#7a8fac" text-anchor="middle">+ 9 more tools</text>
+
+  <!-- LEFT SIDE — main content -->
+  <!-- Logo mark -->
+  <rect x="64" y="76" width="36" height="36" rx="6" fill="#c8a84b" opacity="0.15" stroke="#c8a84b" stroke-width="1" stroke-opacity="0.4"/>
+  <text x="82" y="101" font-family="Georgia, serif" font-size="20" fill="#c8a84b" text-anchor="middle">⚡</text>
+
+  <!-- Brand name -->
+  <text x="112" y="101" font-family="Georgia, serif" font-size="16" font-weight="bold" fill="#dde4f0" letter-spacing="0.5">TaxPreparerTools.com</text>
+
+  <!-- Divider line -->
+  <line x1="64" y1="134" x2="750" y2="134" stroke="#c8a84b" stroke-width="0.6" stroke-opacity="0.25"/>
+
+  <!-- Main headline -->
+  <text x="64" y="220" font-family="Georgia, serif" font-size="52" font-weight="bold" fill="#dde4f0" letter-spacing="-0.5">Free Tax Tools</text>
+  <text x="64" y="282" font-family="Georgia, serif" font-size="52" font-weight="bold" fill="url(#goldGrad)" letter-spacing="-0.5">for CPAs &amp; EAs</text>
+
+  <!-- Subheadline -->
+  <text x="64" y="340" font-family="Georgia, serif" font-size="20" fill="#7a8fac">Calculators · AI Assistant · Deadline Calendar</text>
+  <text x="64" y="368" font-family="Georgia, serif" font-size="20" fill="#7a8fac">Built for tax professionals. Free to use.</text>
+
+  <!-- Divider -->
+  <line x1="64" y1="408" x2="420" y2="408" stroke="#c8a84b" stroke-width="0.6" stroke-opacity="0.25"/>
+
+  <!-- Feature pills -->
+  <rect x="64" y="428" width="130" height="34" rx="17" fill="#0f2444" stroke="#c8a84b" stroke-width="0.8" stroke-opacity="0.4"/>
+  <text x="129" y="451" font-family="Georgia, serif" font-size="13" fill="#c8a84b" text-anchor="middle">✓ 2025 Rates</text>
+
+  <rect x="208" y="428" width="144" height="34" rx="17" fill="#0f2444" stroke="#c8a84b" stroke-width="0.8" stroke-opacity="0.4"/>
+  <text x="280" y="451" font-family="Georgia, serif" font-size="13" fill="#c8a84b" text-anchor="middle">✓ IRC Citations</text>
+
+  <rect x="366" y="428" width="150" height="34" rx="17" fill="#0f2444" stroke="#c8a84b" stroke-width="0.8" stroke-opacity="0.4"/>
+  <text x="441" y="451" font-family="Georgia, serif" font-size="13" fill="#c8a84b" text-anchor="middle">✓ Always Free</text>
+
+  <!-- URL at bottom -->
+  <text x="64" y="560" font-family="Georgia, serif" font-size="16" fill="#7a8fac" opacity="0.7">taxpreparertools.com</text>
+
+  <!-- Gold bottom bar -->
+  <rect x="0" y="627" width="1200" height="3" fill="url(#goldGrad)"/>
+</svg>
