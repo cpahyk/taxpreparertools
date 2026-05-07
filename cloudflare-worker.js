@@ -12,6 +12,7 @@
 
 const ALLOWED_ORIGINS = [
   'https://taxpreparertools.com',
+  'http://taxpreparertools.com',
   'https://www.taxpreparertools.com',
   // 'http://localhost:3000',  // uncomment for local dev
 ];
