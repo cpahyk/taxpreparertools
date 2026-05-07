@@ -314,7 +314,6 @@
   </a>
   <ul class="nav-links">
     <li><a href="tools.html" class="active">Tools</a></li>
-    <li><a href="tools.html">Calculator</a></li>
     <li><a href="deadlines.html">Deadlines</a></li>
     <li><a href="ai-assistant.html">AI Assistant</a></li>
     <li><a href="resources.html">Resources</a></li>
@@ -593,8 +592,10 @@ function renderTools(list) {
       </div>`;
     }
     group.forEach(t => {
+      const tag = t.comingSoon ? 'div' : 'a';
+      const hrefAttr = t.comingSoon ? '' : `href="${t.url}"`;
       html += `
-      <a href="${t.url}" class="tool-card">
+      <${tag} ${hrefAttr} class="tool-card${t.comingSoon?' coming-soon-card':''}">
         <div class="card-top">
           <span class="tool-emoji">${t.emoji}</span>
           <div class="card-badges">
@@ -606,9 +607,9 @@ function renderTools(list) {
         <div class="card-desc">${t.desc}</div>
         <div class="card-footer">
           <span class="card-cat cat-${t.cat}">${t.catLabel}</span>
-          <span class="card-arrow">→</span>
+          <span class="card-arrow">${t.comingSoon?'⏳':'→'}</span>
         </div>
-      </a>`;
+      </${tag}>`;
     });
   });
 
