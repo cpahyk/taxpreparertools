@@ -224,7 +224,7 @@
   <!-- TOPBAR -->
   <div class="topbar">
     <div class="topbar-left">
-      <h2>Good morning, Jane 👋</h2>
+      <h2 id="dashGreeting">Welcome back 👋</h2>
       <p>Sunday, May 3, 2026 · Tax Season 2025</p>
     </div>
     <div class="topbar-right">
@@ -303,7 +303,7 @@
             </a>
             <a href="tools/penalty-calculator.html" class="tool-item">
               <div class="tool-item-icon">⚠️</div>
-              <div><div class="tool-item-name">IRS Penalty Calculator</div><div class="tool-item-used">Used Apr 30</div></div>
+              <div><div class="tool-item-name">IRS Penalty Calculator</div><div class="tool-item-used">Sample · connect Supabase activity log</div></div>
               <span class="tool-item-arr">→</span>
             </a>
             <a href="tools.html" class="tool-item">
@@ -494,6 +494,12 @@ const _supabase = supabase.createClient(SUPABASE_URL, SUPABASE_ANON);
 
   document.getElementById('sbAvatar').textContent    = initials;
   document.getElementById('sbUserName').textContent  = firstName + (lastName ? ' ' + lastName : '');
+
+  // Dynamic time-based greeting
+  const hour = new Date().getHours();
+  const greet = hour < 12 ? 'Good morning' : hour < 17 ? 'Good afternoon' : 'Good evening';
+  const greetEl = document.getElementById('dashGreeting');
+  if (greetEl) greetEl.textContent = greet + ', ' + firstName + ' 👋';
   document.getElementById('sbUserRole').textContent  = roleLabel;
   document.getElementById('sbPlanBadge').textContent = plan;
   document.getElementById('sbUserBlock').style.opacity = '1';
