@@ -616,14 +616,7 @@ The deduction can't exceed <strong>20% of (taxable income minus net capital gain
 let conversationStarted = false;
 let isTyping = false;
 
-function getAIResponse(question) {
-  const q = question.toLowerCase();
-  if (q.includes('s-corp') || q.includes('scorp') || q.includes('pay myself')) return AI_RESPONSES.scorp;
-  if (q.includes('home office') || q.includes('remote') || q.includes('work from home')) return AI_RESPONSES.homeoffice;
-  if (q.includes('cp2000') || q.includes('notice') || q.includes('cp 2000')) return AI_RESPONSES.cp2000;
-  if (q.includes('qbi') || q.includes('qualified business') || q.includes('199a') || q.includes('199-a')) return AI_RESPONSES.qbi;
-  return AI_RESPONSES.default;
-}
+// getAIResponse() removed — using real Claude API via Cloudflare Worker
 
 function askStarter(el) {
   const q = el.querySelector('.starter-q').textContent;
@@ -638,7 +631,29 @@ function loadChat(id) {
   console.log('Load chat:', id);
 }
 
-function sendMessage() {
+// ── Conversation history for multi-turn context ──
+const conversationHistory = [];
+
+// ── Tax-focused system prompt ──
+const TAX_SYSTEM_PROMPT = `You are an expert US tax assistant for CPAs, Enrolled Agents, and tax preparers on TaxPreparerTools.com.
+
+SCOPE: US federal and state tax law only. Cite specific IRC sections, IRS publications, Rev. Procs., or court cases wherever applicable.
+
+STYLE RULES:
+- Lead with the direct answer, then explain the authority.
+- Use plain language — no unnecessary jargon.
+- Use <strong> tags for key amounts, deadlines, or code sections.
+- Use <ul>/<li> for multi-step instructions or lists.
+- End with a short disclaimer if the answer involves a gray area or depends on facts.
+
+DISCLAIMER (always include at end): "⚠️ This is for informational use only. Confirm with current IRS guidance or qualified counsel for client-specific situations."`;
+
+// ── Cloudflare Worker URL — set after deploying your Worker ──
+// Replace with your actual Worker URL, e.g.:
+// const WORKER_URL = 'https://taxprep-ai.YOUR_SUBDOMAIN.workers.dev';
+const WORKER_URL = 'YOUR_CLOUDFLARE_WORKER_URL';
+
+async function sendMessage() {
   const input = document.getElementById('chatInput');
   const text = input.value.trim();
   if (!text || isTyping) return;
@@ -648,26 +663,44 @@ function sendMessage() {
     conversationStarted = true;
   }
 
-  // Add user message
   addMessage('user', text);
+  conversationHistory.push({ role: 'user', content: text });
   input.value = '';
   autoResize(input);
 
-  // Show typing
   const typingEl = addTyping();
   isTyping = true;
   document.getElementById('sendBtn').disabled = true;
 
-  // Simulate AI response
-  const delay = 900 + Math.random() * 800;
-  setTimeout(() => {
+  try {
+    const res = await fetch(WORKER_URL, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        system: TAX_SYSTEM_PROMPT,
+        messages: conversationHistory
+      })
+    });
+
+    if (!res.ok) throw new Error('Worker error ' + res.status);
+
+    const data = await res.json();
+    const replyText = data.content?.[0]?.text || 'Sorry, no response received.';
+
+    conversationHistory.push({ role: 'assistant', content: replyText });
+
     typingEl.remove();
     isTyping = false;
     document.getElementById('sendBtn').disabled = false;
+    addMessage('ai', replyText);
 
-    const resp = getAIResponse(text);
-    addMessage('ai', resp.text, resp.sources);
-  }, delay);
+  } catch (err) {
+    typingEl.remove();
+    isTyping = false;
+    document.getElementById('sendBtn').disabled = false;
+    console.error('AI error:', err);
+    addMessage('ai', '<p>⚠️ Could not reach the AI service. Please try again in a moment.</p>');
+  }
 }
 
 function addMessage(role, text, sources) {
@@ -780,6 +813,17 @@ function updateContext() {
     }
   });
 }
+
+// ── Auto-fire query if launched from dashboard ──
+(function () {
+  const params = new URLSearchParams(window.location.search);
+  const q = params.get('q');
+  if (q) {
+    document.getElementById('chatInput').value = decodeURIComponent(q);
+    // Small delay so page JS is fully ready
+    setTimeout(() => sendMessage(), 400);
+  }
+})();
 </script>
 </body>
 </html>

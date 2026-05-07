@@ -143,17 +143,40 @@ footer a:hover{color:var(--gold);}
 </footer>
 
 <script>
-function submitForm() {
-  const name = document.getElementById('name').value.trim();
-  const email = document.getElementById('email').value.trim();
-  const topic = document.getElementById('topic').value;
+async function submitForm() {
+  const name    = document.getElementById('name').value.trim();
+  const email   = document.getElementById('email').value.trim();
+  const topic   = document.getElementById('topic').value;
   const message = document.getElementById('message').value.trim();
+
   if (!name || !email || !topic || !message) {
     alert('Please fill in all fields before sending.');
     return;
   }
-  document.getElementById('successMsg').style.display = 'block';
-  document.querySelectorAll('.f-input').forEach(i => i.value = '');
+
+  const btn = document.querySelector('.submit-btn');
+  btn.textContent = 'Sending…';
+  btn.disabled = true;
+
+  try {
+    // ── FORMSPREE: replace YOUR_FORM_ID with your Formspree endpoint ID ──
+    const res = await fetch('https://formspree.io/f/YOUR_FORM_ID', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
+      body: JSON.stringify({ name, email, topic, message, _subject: 'TaxPreparerTools — ' + topic })
+    });
+
+    if (!res.ok) throw new Error('Server error ' + res.status);
+
+    document.getElementById('successMsg').style.display = 'block';
+    document.querySelectorAll('.f-input').forEach(i => i.value = '');
+    btn.textContent = 'Sent ✓';
+  } catch (err) {
+    btn.textContent = 'Send Message →';
+    btn.disabled = false;
+    alert('There was a problem sending your message. Please email us directly at hello@taxpreparertools.com');
+    console.error('Contact form error:', err);
+  }
 }
 </script>
 </body>

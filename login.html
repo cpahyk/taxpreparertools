@@ -133,6 +133,7 @@
     footer{padding:16px 20px;flex-direction:column;}
   }
 </style>
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.js"></script>
 </head>
 <body>
 
@@ -275,15 +276,19 @@ function togglePw(id, btn) {
   else { input.type = 'password'; btn.textContent = '👁'; }
 }
 
-function handleLogin() {
-  const email = document.getElementById('loginEmail');
-  const pw = document.getElementById('loginPassword');
+// ── Supabase client (same credentials as signup.html) ──
+const SUPABASE_URL  = 'YOUR_SUPABASE_PROJECT_URL';
+const SUPABASE_ANON = 'YOUR_SUPABASE_ANON_KEY';
+const _supabase = supabase.createClient(SUPABASE_URL, SUPABASE_ANON);
+async function handleLogin() {
+  const email    = document.getElementById('loginEmail');
+  const pw       = document.getElementById('loginPassword');
   const emailErr = document.getElementById('emailErr');
-  const pwErr = document.getElementById('pwErr');
+  const pwErr    = document.getElementById('pwErr');
   let valid = true;
 
   email.classList.remove('error'); emailErr.classList.remove('show');
-  pw.classList.remove('error'); pwErr.classList.remove('show');
+  pw.classList.remove('error');    pwErr.classList.remove('show');
 
   if (!email.value || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email.value)) {
     email.classList.add('error'); emailErr.classList.add('show'); valid = false;
@@ -297,13 +302,34 @@ function handleLogin() {
   btn.textContent = 'Signing in…';
   btn.disabled = true;
 
-  setTimeout(() => {
-    document.getElementById('loginForm').style.opacity = '0';
-    setTimeout(() => {
-      document.getElementById('loginForm').style.display = 'none';
-      document.getElementById('loginSuccess').style.display = 'block';
-    }, 300);
-  }, 1200);
+  try {
+    const { data, error } = await _supabase.auth.signInWithPassword({
+      email: email.value.trim(),
+      password: pw.value
+    });
+
+    if (error) throw error;
+
+    // Redirect to dashboard on success
+    window.location.href = 'dashboard.html';
+
+  } catch (err) {
+    btn.textContent = 'Sign In →';
+    btn.disabled = false;
+
+    const msg = err.message || '';
+    if (msg.toLowerCase().includes('invalid') || msg.toLowerCase().includes('credentials')) {
+      email.classList.add('error'); emailErr.classList.add('show');
+      pw.classList.add('error');    pwErr.classList.add('show');
+      pwErr.textContent = 'Incorrect email or password.';
+    } else if (msg.toLowerCase().includes('confirm') || msg.toLowerCase().includes('verified')) {
+      emailErr.textContent = 'Please verify your email first — check your inbox.';
+      email.classList.add('error'); emailErr.classList.add('show');
+    } else {
+      alert('Login failed: ' + msg);
+    }
+    console.error('Login error:', err);
+  }
 }
 </script>
 </body>

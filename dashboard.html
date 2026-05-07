@@ -168,6 +168,7 @@
 
   @media(max-width:900px){.sidebar{display:none;}.main-content{margin-left:0;}.stats-row{grid-template-columns:1fr 1fr;}.dash-grid{grid-template-columns:1fr;}.topbar{padding:14px 18px;}.page-content{padding:20px 18px;}}
 </style>
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.js"></script>
 </head>
 <body>
 
@@ -178,13 +179,13 @@
     <div class="sb-logo-name">TaxPreparer<span>Tools</span></div>
   </a>
 
-  <div class="sb-user">
-    <div class="sb-avatar">JR</div>
+  <div class="sb-user" id="sbUserBlock" style="opacity:0">
+    <div class="sb-avatar" id="sbAvatar">--</div>
     <div>
-      <div class="sb-user-name">Jane Rodriguez</div>
-      <div class="sb-user-role">CPA · Denver, CO</div>
+      <div class="sb-user-name" id="sbUserName">Loading…</div>
+      <div class="sb-user-role" id="sbUserRole">—</div>
     </div>
-    <span class="sb-plan-badge">PRO</span>
+    <span class="sb-plan-badge" id="sbPlanBadge">FREE</span>
   </div>
 
   <nav class="sb-nav">
@@ -457,8 +458,53 @@ function goAI(q) {
   const input = document.getElementById('aiInput');
   const query = q || input.value.trim();
   if (!query) return;
-  window.location.href = '/ai-assistant?q=' + encodeURIComponent(query);
+  window.location.href = 'ai-assistant.html?q=' + encodeURIComponent(query);
 }
 </script>
+
+<script>
+// ── Supabase client ──
+const SUPABASE_URL  = 'YOUR_SUPABASE_PROJECT_URL';
+const SUPABASE_ANON = 'YOUR_SUPABASE_ANON_KEY';
+const _supabase = supabase.createClient(SUPABASE_URL, SUPABASE_ANON);
+
+(async () => {
+  // Auth guard — redirect to login if no session
+  const { data: { session } } = await _supabase.auth.getSession();
+  if (!session) {
+    window.location.href = 'login.html';
+    return;
+  }
+
+  const user = session.user;
+  const meta = user.user_metadata || {};
+
+  // Try to get profile row
+  const { data: profile } = await _supabase
+    .from('profiles')
+    .select('first_name, last_name, role, plan')
+    .eq('id', user.id)
+    .single();
+
+  const firstName = profile?.first_name || meta.first_name || user.email.split('@')[0];
+  const lastName  = profile?.last_name  || meta.last_name  || '';
+  const roleLabel = profile?.role || meta.role || 'Tax Professional';
+  const plan      = (profile?.plan || meta.plan || 'Free').toUpperCase();
+  const initials  = (firstName[0] + (lastName[0] || '')).toUpperCase();
+
+  document.getElementById('sbAvatar').textContent    = initials;
+  document.getElementById('sbUserName').textContent  = firstName + (lastName ? ' ' + lastName : '');
+  document.getElementById('sbUserRole').textContent  = roleLabel;
+  document.getElementById('sbPlanBadge').textContent = plan;
+  document.getElementById('sbUserBlock').style.opacity = '1';
+})();
+
+// Logout handler — add to any logout button
+async function handleLogout() {
+  await _supabase.auth.signOut();
+  window.location.href = 'login.html';
+}
+</script>
+
 </body>
 </html>
