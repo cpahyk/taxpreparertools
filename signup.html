@@ -151,6 +151,8 @@
   @keyframes popIn{from{transform:scale(0.5);opacity:0}to{transform:scale(1);opacity:1}}
   @media(max-width:900px){nav{padding:14px 20px;}.plans-grid{grid-template-columns:1fr;}.plan-card.popular{transform:none;}.plans-section{padding-bottom:32px;}footer{padding:16px 20px;flex-direction:column;}}
 </style>
+  <!-- Supabase JS v2 -->
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.js"></script>
 </head>
 <body>
 
@@ -451,13 +453,24 @@ function checkStrength(val) {
   label.style.color = val.length ? lvl.color : 'var(--muted)';
 }
 
-function handleSignup() {
+// ── Supabase client — replace with your project URL and anon key ──
+// Find these in: Supabase Dashboard → Project Settings → API
+const SUPABASE_URL  = 'YOUR_SUPABASE_PROJECT_URL';   // e.g. https://abcxyz.supabase.co
+const SUPABASE_ANON = 'YOUR_SUPABASE_ANON_KEY';
+
+const _supabase = (typeof supabase !== 'undefined')
+  ? supabase.createClient(SUPABASE_URL, SUPABASE_ANON)
+  : null;
+
+async function handleSignup() {
   const first = document.getElementById('firstName');
-  const last = document.getElementById('lastName');
+  const last  = document.getElementById('lastName');
   const email = document.getElementById('signupEmail');
-  const pw = document.getElementById('signupPassword');
+  const pw    = document.getElementById('signupPassword');
+  const role  = document.getElementById('userRole');
   const terms = document.getElementById('termsCheck');
 
+  // — Validation —
   let valid = true;
   ['firstErr','lastErr','signupEmailErr','signupPwErr','termsErr'].forEach(id => {
     document.getElementById(id).classList.remove('show');
@@ -465,8 +478,10 @@ function handleSignup() {
   [first, last, email, pw].forEach(el => el.classList.remove('error'));
 
   if (!first.value.trim()) { first.classList.add('error'); document.getElementById('firstErr').classList.add('show'); valid = false; }
-  if (!last.value.trim()) { last.classList.add('error'); document.getElementById('lastErr').classList.add('show'); valid = false; }
-  if (!email.value || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email.value)) { email.classList.add('error'); document.getElementById('signupEmailErr').classList.add('show'); valid = false; }
+  if (!last.value.trim())  { last.classList.add('error');  document.getElementById('lastErr').classList.add('show');  valid = false; }
+  if (!email.value || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email.value)) {
+    email.classList.add('error'); document.getElementById('signupEmailErr').classList.add('show'); valid = false;
+  }
   if (!pw.value || pw.value.length < 8) { pw.classList.add('error'); document.getElementById('signupPwErr').classList.add('show'); valid = false; }
   if (!terms.checked) { document.getElementById('termsErr').classList.add('show'); valid = false; }
   if (!valid) return;
@@ -475,10 +490,58 @@ function handleSignup() {
   btn.textContent = 'Creating account…';
   btn.disabled = true;
 
-  setTimeout(() => {
+  try {
+    if (!_supabase) throw new Error('Supabase not initialised — check your URL and anon key.');
+
+    // — Create the auth user —
+    const { data, error } = await _supabase.auth.signUp({
+      email: email.value.trim(),
+      password: pw.value,
+      options: {
+        data: {
+          first_name: first.value.trim(),
+          last_name:  last.value.trim(),
+          role:       role.value,
+          plan:       selectedPlan
+        },
+        emailRedirectTo: 'https://taxpreparertools.com/dashboard.html'
+      }
+    });
+
+    if (error) throw error;
+
+    // — Also insert into a profiles table for easy querying (optional) —
+    if (data?.user) {
+      await _supabase.from('profiles').upsert({
+        id:         data.user.id,
+        first_name: first.value.trim(),
+        last_name:  last.value.trim(),
+        email:      email.value.trim(),
+        role:       role.value,
+        plan:       selectedPlan,
+        created_at: new Date().toISOString()
+      });
+    }
+
+    // — Show success screen —
     document.getElementById('signupFormContent').style.display = 'none';
     document.getElementById('signupSuccess').style.display = 'block';
-  }, 1400);
+
+  } catch (err) {
+    btn.textContent = 'Create Free Account →';
+    btn.disabled = false;
+
+    // Surface user-friendly Supabase errors
+    const msg = err.message || '';
+    if (msg.includes('already registered') || msg.includes('User already')) {
+      document.getElementById('signupEmailErr').classList.add('show');
+      document.getElementById('signupEmailErr').textContent = 'This email is already registered. Try logging in.';
+      email.classList.add('error');
+    } else {
+      alert('Sign-up failed: ' + msg + '\nPlease try again or contact support.');
+    }
+    console.error('Signup error:', err);
+  }
 }
 </script>
 </body>
