@@ -366,7 +366,8 @@ function setEntity(btn) {
 function fmt(n) { return '$' + Math.round(n).toLocaleString(); }
 function pct(n, decimals=1) { return (n*100).toFixed(decimals)+'%'; }
 
-function liveCalc() {} // placeholder for real-time updates
+// Live calculation fires on every input change
+function liveCalc() { calculate(); }
 
 function calculate() {
   const revenue = +document.getElementById('revenue').value||0;

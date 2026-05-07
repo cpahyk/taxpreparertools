@@ -322,7 +322,7 @@ footer{border-top:1px solid var(--border);padding:26px 48px;display:flex;align-i
             <div class="bt">
               <div class="btr"><span class="btk">Original Tax Due</span><span class="btv" id="bt_taxDue">—</span></div>
               <div class="btr"><span class="btk" id="bt_penaltyLabel">Penalty</span><span class="btv orange" id="bt_penalty">—</span></div>
-              <div class="btr"><span class="btk">IRS Interest (8% annual)</span><span class="btv gold" id="bt_interest">—</span></div>
+              <div class="btr"><span class="btk">IRS Interest (~7% Q1 / 6% Q2 2026)</span><span class="btv gold" id="bt_interest">—</span></div>
               <div class="btr tot"><span class="btk"><strong>Total Amount Owed</strong></span><span class="btv red" id="bt_total">—</span></div>
               <div class="btr"><span class="btk">Days Late</span><span class="btv" id="bt_days">—</span></div>
               <div class="btr"><span class="btk">Months Late (for penalty)</span><span class="btv" id="bt_months">—</span></div>
@@ -347,9 +347,9 @@ footer{border-top:1px solid var(--border);padding:26px 48px;display:flex;align-i
 
       <div class="expl">
         <div class="expl-t">IRS Penalty Rules Explained</div>
-        <div class="es"><div class="eh">Failure-to-File (FTF) Penalty — IRC § 6651(a)(1)</div><div class="ep"><strong>5% of unpaid tax per month</strong> (or fraction thereof), up to a maximum of <strong>25%</strong> (5 months). If both FTF and FTP apply in the same month, the FTF is reduced by the FTP rate, so the combined rate is still 5%/month. If the return is over 60 days late, the minimum penalty is the lesser of $485 (2025) or 100% of tax due.</div></div>
+        <div class="es"><div class="eh">Failure-to-File (FTF) Penalty — IRC § 6651(a)(1)</div><div class="ep"><strong>5% of unpaid tax per month</strong> (or fraction thereof), up to a maximum of <strong>25%</strong> (5 months). If both FTF and FTP apply in the same month, the FTF is reduced by the FTP rate, so the combined rate is still 5%/month. If the return is over 60 days late, the minimum penalty is the lesser of $525 (2025, filed 2026) or 100% of tax due.</div></div>
         <div class="es"><div class="eh">Failure-to-Pay (FTP) Penalty — IRC § 6651(a)(2)</div><div class="ep"><strong>0.5% of unpaid tax per month</strong>, up to 25%. Reduced to <strong>0.25%/month</strong> during an active installment agreement. Note: filing an extension gives more time to file but <em>not</em> more time to pay — the FTP penalty still accrues from the original due date.</div></div>
-        <div class="es"><div class="eh">IRS Interest Rate (2026)</div><div class="ep">IRS interest compounds <strong>daily</strong> at the federal short-term rate + 3%. The 2025–2026 rate is approximately <strong>8% per year</strong> (subject to quarterly adjustment). Interest cannot be abated — only penalties can be reduced or eliminated.</div></div>
+        <div class="es"><div class="eh">IRS Interest Rate (2026)</div><div class="ep">IRS interest compounds <strong>daily</strong> at the federal short-term rate + 3%. The Q1 2026 rate is <strong>7% per year</strong>; Q2 2026 dropped to <strong>6%</strong> (subject to quarterly adjustment). Interest cannot be abated — only penalties can be reduced or eliminated.</div></div>
         <div class="es"><div class="eh">First-Time Penalty Abatement (FTA)</div><div class="ep">Available if the taxpayer had <strong>no penalties in the prior 3 years</strong> and is otherwise compliant (filed returns and paid taxes). FTA eliminates the entire FTF or FTP penalty. Request by phone or via Form 843. This is the fastest and most commonly granted form of penalty relief.</div></div>
       </div>
     </div>
@@ -362,8 +362,8 @@ footer{border-top:1px solid var(--border);padding:26px 48px;display:flex;align-i
         <div class="scr"><span class="sck">FTP Rate (per month)</span><span class="scv orange">0.5%</span></div>
         <div class="scr"><span class="sck">FTP w/ Installment Agmt</span><span class="scv">0.25%</span></div>
         <div class="scr"><span class="sck">FTP Maximum</span><span class="scv orange">25%</span></div>
-        <div class="scr"><span class="sck">Min Penalty (60+ days late)</span><span class="scv red">$485 or 100%</span></div>
-        <div class="scr"><span class="sck">IRS Interest Rate (2026)</span><span class="scv gold">~8%/yr</span></div>
+        <div class="scr"><span class="sck">Min Penalty (60+ days late)</span><span class="scv red">$525 or 100%</span></div>
+        <div class="scr"><span class="sck">IRS Interest Rate (2026)</span><span class="scv gold">7% Q1 · 6% Q2+</span></div>
         <div class="scr"><span class="sck">Interest Compounding</span><span class="scv">Daily</span></div>
         <div class="scr"><span class="sck">FTA Lookback Period</span><span class="scv">3 years</span></div>
         <div class="scr"><span class="sck">Form 843 (Abatement)</span><span class="scv green">Available</span></div>
@@ -394,7 +394,8 @@ footer{border-top:1px solid var(--border);padding:26px 48px;display:flex;align-i
 </footer>
 
 <script>
-const IRS_DAILY_RATE = 0.08 / 365;
+// IRS underpayment rate: 7% Q1 2026, 6% Q2+ 2026 — using 7% as conservative default
+const IRS_DAILY_RATE = 0.07 / 365;
 let penaltyType = 'ftf';
 
 function setPenalty(el) {
@@ -444,7 +445,7 @@ function calculate() {
 
     // 60-day minimum
     if (lateDays > 60 && taxDue > 0) {
-      const min60 = Math.min(485, taxDue);
+      const min60 = Math.min(525, taxDue); // 2025 tax year returns filed in 2026
       penalty = Math.max(penalty, min60);
     }
 
@@ -502,7 +503,7 @@ function calculate() {
     const required = Math.min(taxDue * 0.90, safeHarborAmt);
     const shortfall = Math.max(0, required - paid);
 
-    penalty = shortfall * 0.08; // ~8% annual on underpayment
+    penalty = shortfall * 0.07; // 7% Q1 2026 (IRC §6621); 6% from Q2 2026
     interest = 0; // interest is built into underpayment penalty
     days = 365;
     taxDue = shortfall;
@@ -528,7 +529,7 @@ function calculate() {
   document.getElementById('r_penalty').textContent = fmt(penalty);
   document.getElementById('r_penaltyPct').textContent = taxDue > 0 ? ((penalty/taxDue)*100).toFixed(1)+'% of tax due' : '—';
   document.getElementById('r_interest').textContent = fmt(interest);
-  document.getElementById('r_interestDays').textContent = days + ' days × 8%/yr';
+  document.getElementById('r_interestDays').textContent = days + ' days × 7%/yr (Q1 2026)';
   document.getElementById('bt_taxDue').textContent = fmt(taxDue);
   document.getElementById('bt_penaltyLabel').textContent = penaltyLabel;
   document.getElementById('bt_penalty').textContent = fmt(penalty);
