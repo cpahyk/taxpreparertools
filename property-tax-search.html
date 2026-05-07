@@ -240,6 +240,55 @@ h1 { font-family:'Playfair Display',serif; font-size:clamp(2rem,4vw,3.2rem); fon
 .btn-secondary { background:transparent; color:var(--text); border:1px solid var(--border); }
 .btn-secondary:hover { border-color:var(--gold); color:var(--gold); }
 
+/* Tertiary alt-route button (NETR Online) */
+.btn-tertiary {
+  background:transparent; color:var(--muted);
+  border:1px dashed rgba(200,168,75,.25);
+  padding:11px 18px; border-radius:10px;
+  font-size:0.85rem; font-weight:600;
+  cursor:pointer; text-decoration:none;
+  transition:all .2s;
+  display:flex; align-items:center; justify-content:center; gap:8px;
+  margin-top:8px; font-family:'DM Sans',sans-serif;
+}
+.btn-tertiary:hover { color:var(--gold); border-color:var(--gold); border-style:solid; }
+
+/* Access-help collapsible (international / 403 / blank-page guidance) */
+.access-help {
+  margin-top:14px;
+  background:rgba(96,165,250,.06);
+  border:1px solid rgba(96,165,250,.2);
+  border-radius:10px;
+  overflow:hidden;
+}
+.access-help summary {
+  padding:11px 16px; cursor:pointer;
+  font-size:0.8rem; font-weight:600;
+  color:#7cc4fa; list-style:none;
+  display:flex; align-items:center; gap:8px;
+  user-select:none;
+}
+.access-help summary::-webkit-details-marker { display:none; }
+.access-help summary::marker { content:''; }
+.access-help summary:hover { background:rgba(96,165,250,.08); }
+.access-help summary::after {
+  content:'+'; margin-left:auto;
+  font-size:1.15rem; font-weight:700;
+  transition:transform .2s;
+}
+.access-help[open] summary::after { content:'−'; }
+.access-help-body {
+  padding:4px 16px 14px;
+  font-size:0.78rem; color:var(--muted); line-height:1.65;
+  border-top:1px solid rgba(96,165,250,.15);
+}
+.access-help-body p:first-child { margin-top:8px; }
+.access-help-body strong { color:var(--text); }
+.access-help-body ul { margin:8px 0 4px 18px; padding:0; }
+.access-help-body li { margin-bottom:7px; }
+.access-help-body a { color:#7cc4fa; text-decoration:none; font-weight:600; }
+.access-help-body a:hover { text-decoration:underline; }
+
 .result-tip {
   margin-top:18px; padding-top:18px;
   border-top:1px dashed var(--border);
@@ -455,6 +504,23 @@ footer { border-top:1px solid var(--border); padding:36px 48px; display:flex; al
         <a class="btn-secondary" id="btnGoogle" href="#" target="_blank" rel="noopener">
           <span>🔎</span><span>Or Search via Google</span>
         </a>
+        <a class="btn-tertiary" id="btnNetr" href="#" target="_blank" rel="noopener">
+          <span>🗂️</span><span>NETR Online directory (alternative path)</span>
+        </a>
+
+        <details class="access-help">
+          <summary>⚠️ Portal not loading? (403 error, blank page, geo-block)</summary>
+          <div class="access-help-body">
+            <p>Some county portals block traffic from outside the US, redirect to blank pages, or return CloudFront 403 errors. If you hit any of these, try in this order:</p>
+            <ul>
+              <li><strong>Use a US VPN.</strong> Most county sites are CDN-protected and geo-fence non-US traffic. A US East node clears it ~95% of the time.</li>
+              <li><strong>Click "NETR Online directory" above.</strong> Different IP path, different CDN — often loads when the direct portal won't, and you can navigate to the same record from there.</li>
+              <li><strong>Click "Search via Google" above.</strong> Frequently surfaces a working alternative URL or sub-page that bypasses the WAF rule.</li>
+              <li><strong>Blank page after click?</strong> The portal may need JS challenges to clear. Try opening in a fresh incognito window with no extensions, or disable aggressive ad-blockers for that domain.</li>
+              <li><strong>URL stale?</strong> County portals get rebuilt periodically. <a href="contact.html">Report a broken link</a> and we'll patch it.</li>
+            </ul>
+          </div>
+        </details>
 
         <div class="result-tip">
           <strong>Pro tip:</strong> If the portal asks for a parcel number, you can usually find it by first searching the address; the parcel/PIN will appear on the result page.
@@ -1123,6 +1189,14 @@ function buildGoogleFallback(stateName, countyName) {
   return `https://www.google.com/search?q=${q}`;
 }
 
+/* Build a NETR Online directory URL — alternative path that often loads
+   when direct county portals are geo-blocked or behind aggressive WAF rules.
+   We link to the state-level NETR page (most reliable URL pattern); user
+   clicks through to county from there. */
+function buildNetrFallback(stateCode) {
+  return `https://publicrecords.netronline.com/state/${stateCode}`;
+}
+
 /* Get all county data for a state (curated list only). */
 function getCounties(stateCode) {
   return COUNTY_PORTALS[stateCode] || [];
@@ -1133,6 +1207,7 @@ window.PROPERTY_TAX_DATA = {
   states: US_STATES,
   getCounties,
   buildGoogleFallback,
+  buildNetrFallback,
   totalCounties: Object.values(COUNTY_PORTALS).reduce((n, arr) => n + arr.length, 0)
 };
 
@@ -1165,6 +1240,7 @@ window.PROPERTY_TAX_DATA = {
   var resultNotes     = document.getElementById('resultNotes');
   var btnPrimary      = document.getElementById('btnPrimary');
   var btnGoogle       = document.getElementById('btnGoogle');
+  var btnNetr         = document.getElementById('btnNetr');
 
   // Meta header
   document.getElementById('metaCounties').textContent = DATA.totalCounties + '+ Direct Portal Links';
@@ -1340,6 +1416,7 @@ window.PROPERTY_TAX_DATA = {
 
     btnPrimary.href = currentCounty.portal;
     btnGoogle.href = DATA.buildGoogleFallback(currentState.name, currentCounty.name);
+    btnNetr.href = DATA.buildNetrFallback(currentState.code);
 
     resultEmpty.style.display = 'none';
     resultContent.classList.add('show');
