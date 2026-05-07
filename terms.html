@@ -36,6 +36,22 @@ a:hover{color:var(--gold-light);}
 footer{border-top:1px solid var(--border);padding:24px 48px;display:flex;justify-content:space-between;align-items:center;font-size:0.75rem;color:var(--muted);}
 footer a{color:var(--muted);text-decoration:none;margin-left:20px;}
 footer a:hover{color:var(--gold);}
+
+  /* ── Mobile hamburger nav ── */
+  .nav-hamburger{display:none;flex-direction:column;gap:5px;cursor:pointer;padding:6px;border:none;background:transparent;z-index:300;}
+  .nav-hamburger span{display:block;width:22px;height:2px;background:var(--gold,#c8a84b);border-radius:2px;transition:all .25s;}
+  .nav-hamburger.open span:nth-child(1){transform:translateY(7px) rotate(45deg);}
+  .nav-hamburger.open span:nth-child(2){opacity:0;}
+  .nav-hamburger.open span:nth-child(3){transform:translateY(-7px) rotate(-45deg);}
+  @media(max-width:768px){
+    .nav-hamburger{display:flex;}
+    nav ul,.nav-links{display:none!important;position:fixed;top:60px;left:0;right:0;background:rgba(8,21,42,0.98);backdrop-filter:blur(20px);flex-direction:column!important;padding:16px 0;z-index:200;border-bottom:1px solid rgba(200,168,75,.18);}
+    nav ul.mobile-open,.nav-links.mobile-open{display:flex!important;}
+    nav ul li,.nav-links li{width:100%;text-align:center;}
+    nav ul li a,.nav-links li a{display:block;padding:12px 24px;font-size:1rem;}
+    .nav-right,.nav-cta-wrap{display:none!important;}
+  }
+
 </style>
 </head>
 <body>
@@ -44,6 +60,7 @@ footer a:hover{color:var(--gold);}
     <div class="logo-mark">⚖️</div>
     <div><div class="logo-name">TaxPreparer<span>Tools</span></div></div>
   </a>
+  <button id="navHamburger" class="nav-hamburger" aria-label="Menu"><span></span><span></span><span></span></button>
   <ul class="nav-links">
     <li><a href="tools.html">Tools</a></li>
     <li><a href="deadlines.html">Deadlines</a></li>
@@ -137,5 +154,23 @@ footer a:hover{color:var(--gold);}
     <a href="https://irs.gov" target="_blank" rel="noopener">IRS.gov ↗</a>
   </div>
 </footer>
+<script>
+(function(){
+  var btn = document.getElementById('navHamburger');
+  var ul  = document.querySelector('nav ul, nav .nav-links');
+  if(!btn || !ul) return;
+  btn.addEventListener('click', function(){
+    btn.classList.toggle('open');
+    ul.classList.toggle('mobile-open');
+  });
+  // Close on outside click
+  document.addEventListener('click', function(e){
+    if(!e.target.closest('nav')){
+      btn.classList.remove('open');
+      ul && ul.classList.remove('mobile-open');
+    }
+  });
+})();
+</script>
 </body>
 </html>

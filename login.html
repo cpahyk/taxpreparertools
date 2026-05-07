@@ -132,6 +132,22 @@
     .auth-layout{flex-direction:column;}
     footer{padding:16px 20px;flex-direction:column;}
   }
+
+  /* ── Mobile hamburger nav ── */
+  .nav-hamburger{display:none;flex-direction:column;gap:5px;cursor:pointer;padding:6px;border:none;background:transparent;z-index:300;}
+  .nav-hamburger span{display:block;width:22px;height:2px;background:var(--gold,#c8a84b);border-radius:2px;transition:all .25s;}
+  .nav-hamburger.open span:nth-child(1){transform:translateY(7px) rotate(45deg);}
+  .nav-hamburger.open span:nth-child(2){opacity:0;}
+  .nav-hamburger.open span:nth-child(3){transform:translateY(-7px) rotate(-45deg);}
+  @media(max-width:768px){
+    .nav-hamburger{display:flex;}
+    nav ul,.nav-links{display:none!important;position:fixed;top:60px;left:0;right:0;background:rgba(8,21,42,0.98);backdrop-filter:blur(20px);flex-direction:column!important;padding:16px 0;z-index:200;border-bottom:1px solid rgba(200,168,75,.18);}
+    nav ul.mobile-open,.nav-links.mobile-open{display:flex!important;}
+    nav ul li,.nav-links li{width:100%;text-align:center;}
+    nav ul li a,.nav-links li a{display:block;padding:12px 24px;font-size:1rem;}
+    .nav-right,.nav-cta-wrap{display:none!important;}
+  }
+
 </style>
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.js"></script>
 </head>

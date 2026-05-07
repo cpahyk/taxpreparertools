@@ -1,0 +1,626 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Federal Income Tax Estimator 2025 | TaxPreparerTools.com</title>
+<meta name="description" content="Free 2025 federal income tax calculator. Estimate your tax liability across all filing statuses with full bracket breakdown, effective rate, and quarterly payment amounts.">
+<link rel="canonical" href="https://taxpreparertools.com/federal-tax-estimator" />
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700;900&family=DM+Sans:wght@300;400;500;600&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root{
+  --navy:#08152a;--navy-mid:#0f1f3d;--slate:#1a2f52;
+  --gold:#c8a84b;--gold-light:#e8c96a;--gold-dim:rgba(200,168,75,0.13);
+  --white:#fff;--muted:#7a8fac;--text:#dde4f0;--border:rgba(200,168,75,0.14);
+  --card:rgba(255,255,255,0.04);--green:#4ade80;--blue:#60a5fa;--red:#f87171;--orange:#fb923c;
+}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+html{scroll-behavior:smooth;}
+body{font-family:'DM Sans',sans-serif;background:var(--navy);color:var(--text);min-height:100vh;}
+
+/* NAV */
+nav{position:sticky;top:0;z-index:200;padding:14px 48px;display:flex;align-items:center;justify-content:space-between;background:rgba(8,21,42,0.95);backdrop-filter:blur(20px);border-bottom:1px solid var(--border);}
+.logo{display:flex;align-items:center;gap:10px;text-decoration:none;}
+.logo-mark{width:32px;height:32px;background:var(--gold);border-radius:7px;display:flex;align-items:center;justify-content:center;font-size:15px;}
+.logo-name{font-family:'Playfair Display',serif;font-size:1.1rem;font-weight:700;color:var(--white);}
+.logo-name span{color:var(--gold);}
+.logo-domain{font-size:0.62rem;color:var(--muted);font-family:'DM Mono',monospace;display:block;}
+.nav-links{display:flex;gap:24px;list-style:none;}
+.nav-links a{color:var(--muted);font-size:0.82rem;font-weight:500;text-decoration:none;transition:color .2s;}
+.nav-links a:hover,.nav-links a.active{color:var(--gold);}
+.btn-sm{padding:7px 16px;border-radius:6px;font-size:0.8rem;font-weight:700;cursor:pointer;text-decoration:none;transition:all .2s;border:none;font-family:'DM Sans',sans-serif;}
+.btn-gold{background:var(--gold);color:var(--navy);}
+.btn-gold:hover{background:var(--gold-light);}
+
+/* PAGE */
+.page-wrap{max-width:1160px;margin:0 auto;padding:40px 48px 80px;}
+
+/* BREADCRUMB */
+.breadcrumb{font-size:0.73rem;font-family:'DM Mono',monospace;color:var(--muted);margin-bottom:20px;display:flex;gap:7px;align-items:center;flex-wrap:wrap;}
+.breadcrumb a{color:var(--gold);text-decoration:none;}
+.breadcrumb a:hover{text-decoration:underline;}
+
+/* TOOL HEADER */
+.tool-header{display:flex;gap:24px;align-items:flex-start;margin-bottom:36px;}
+.tool-header-icon{width:60px;height:60px;background:linear-gradient(135deg,var(--gold-dim),rgba(200,168,75,0.05));border:1px solid rgba(200,168,75,0.3);border-radius:16px;display:flex;align-items:center;justify-content:center;font-size:28px;flex-shrink:0;}
+.tool-header-meta{}
+.tool-badges{display:flex;gap:7px;margin-bottom:10px;flex-wrap:wrap;}
+.badge{font-size:0.63rem;font-family:'DM Mono',monospace;font-weight:700;text-transform:uppercase;letter-spacing:.08em;padding:3px 10px;border-radius:50px;}
+.badge-free{background:rgba(74,222,128,.12);color:var(--green);}
+.badge-updated{background:rgba(96,165,250,.1);color:var(--blue);}
+.badge-cat{background:var(--gold-dim);color:var(--gold);}
+h1{font-family:'Playfair Display',serif;font-size:clamp(1.6rem,3.5vw,2.4rem);font-weight:900;color:var(--white);letter-spacing:-0.03em;line-height:1.1;margin-bottom:8px;}
+.tool-desc{color:var(--muted);font-size:0.9rem;line-height:1.7;max-width:620px;}
+
+/* MAIN LAYOUT */
+.calc-layout{display:grid;grid-template-columns:1fr 380px;gap:24px;align-items:start;}
+
+/* CALCULATOR CARD */
+.calc-card{background:var(--navy-mid);border:1px solid var(--border);border-radius:20px;overflow:hidden;}
+.calc-card-header{padding:22px 28px;border-bottom:1px solid var(--border);background:rgba(200,168,75,0.04);}
+.calc-card-title{font-family:'Playfair Display',serif;font-size:1.1rem;font-weight:700;color:var(--white);}
+.calc-card-sub{font-size:0.77rem;color:var(--muted);margin-top:3px;}
+.calc-body{padding:28px;}
+
+/* TABS */
+.tabs{display:flex;gap:4px;background:rgba(255,255,255,.04);border-radius:10px;padding:4px;margin-bottom:28px;}
+.tab{flex:1;padding:8px 12px;border-radius:7px;font-size:0.8rem;font-weight:600;cursor:pointer;text-align:center;transition:all .2s;color:var(--muted);border:none;font-family:'DM Sans',sans-serif;background:transparent;}
+.tab.on{background:var(--gold);color:var(--navy);}
+
+/* FIELDS */
+.field-group{margin-bottom:20px;}
+.field-row{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-bottom:20px;}
+.field{display:flex;flex-direction:column;gap:7px;}
+.label{font-size:0.72rem;font-weight:700;color:var(--muted);text-transform:uppercase;letter-spacing:.06em;font-family:'DM Mono',monospace;display:flex;justify-content:space-between;align-items:center;}
+.label-hint{font-size:0.65rem;color:var(--muted);text-transform:none;letter-spacing:0;font-family:'DM Sans',sans-serif;font-weight:400;opacity:.7;}
+.input-wrap{position:relative;}
+.input-prefix{position:absolute;left:13px;top:50%;transform:translateY(-50%);color:var(--muted);font-size:0.88rem;font-family:'DM Mono',monospace;pointer-events:none;}
+.field input,.field select{width:100%;background:rgba(255,255,255,.05);border:1px solid rgba(200,168,75,.18);border-radius:9px;padding:11px 13px 11px 30px;color:var(--white);font-size:0.9rem;font-family:'DM Sans',sans-serif;outline:none;transition:all .2s;appearance:none;}
+.field input.no-prefix,.field select.no-prefix{padding-left:13px;}
+.field input:focus,.field select:focus{border-color:var(--gold);background:rgba(255,255,255,.07);box-shadow:0 0 0 3px rgba(200,168,75,.07);}
+.field input::placeholder{color:var(--muted);}
+.field select option{background:var(--navy);}
+.field-note{font-size:0.68rem;color:var(--muted);margin-top:4px;line-height:1.4;}
+
+/* SLIDER */
+.slider-wrap{padding:4px 0;}
+.slider{width:100%;appearance:none;height:4px;border-radius:4px;background:rgba(255,255,255,.1);outline:none;cursor:pointer;}
+.slider::-webkit-slider-thumb{appearance:none;width:18px;height:18px;border-radius:50%;background:var(--gold);cursor:pointer;border:2px solid var(--navy-mid);box-shadow:0 2px 8px rgba(200,168,75,.4);transition:transform .15s;}
+.slider::-webkit-slider-thumb:hover{transform:scale(1.15);}
+.slider-labels{display:flex;justify-content:space-between;font-size:0.65rem;color:var(--muted);font-family:'DM Mono',monospace;margin-top:5px;}
+
+/* SECTION TITLE */
+.section-title{font-size:0.72rem;font-weight:700;color:var(--muted);text-transform:uppercase;letter-spacing:.1em;font-family:'DM Mono',monospace;margin-bottom:14px;padding-bottom:8px;border-bottom:1px solid var(--border);}
+
+/* CALCULATE BTN */
+.calc-btn{width:100%;background:var(--gold);color:var(--navy);border:none;border-radius:12px;padding:15px;font-size:1rem;font-weight:800;cursor:pointer;transition:all .25s;font-family:'DM Sans',sans-serif;letter-spacing:-0.01em;margin-top:4px;}
+.calc-btn:hover{background:var(--gold-light);transform:translateY(-2px);box-shadow:0 12px 36px rgba(200,168,75,.28);}
+.calc-btn:active{transform:translateY(0);}
+
+/* RESULTS */
+.results-panel{display:none;margin-top:24px;animation:fadeUp .4s ease;}
+.results-panel.show{display:block;}
+@keyframes fadeUp{from{opacity:0;transform:translateY(12px)}to{opacity:1;transform:translateY(0)}}
+
+.result-summary{background:linear-gradient(135deg,rgba(200,168,75,0.1) 0%,rgba(200,168,75,0.03) 100%);border:1px solid rgba(200,168,75,0.25);border-radius:14px;padding:24px;margin-bottom:16px;text-align:center;}
+.result-label{font-size:0.72rem;font-family:'DM Mono',monospace;font-weight:700;text-transform:uppercase;letter-spacing:.1em;color:var(--gold);margin-bottom:6px;}
+.result-big{font-family:'Playfair Display',serif;font-size:3rem;font-weight:900;color:var(--white);letter-spacing:-0.04em;line-height:1;}
+.result-sub{font-size:0.8rem;color:var(--muted);margin-top:6px;}
+
+.result-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:16px;}
+.result-box{background:var(--card);border:1px solid var(--border);border-radius:10px;padding:14px;}
+.rb-label{font-size:0.66rem;font-family:'DM Mono',monospace;font-weight:700;text-transform:uppercase;letter-spacing:.08em;color:var(--muted);margin-bottom:5px;}
+.rb-value{font-family:'Playfair Display',serif;font-size:1.3rem;font-weight:700;color:var(--white);}
+.rb-value.gold{color:var(--gold);}
+.rb-value.green{color:var(--green);}
+.rb-sub{font-size:0.67rem;color:var(--muted);margin-top:2px;}
+
+/* BRACKET TABLE */
+.bracket-section{background:var(--card);border:1px solid var(--border);border-radius:12px;overflow:hidden;}
+.bracket-header{padding:12px 16px;border-bottom:1px solid var(--border);font-size:0.72rem;font-family:'DM Mono',monospace;font-weight:700;text-transform:uppercase;letter-spacing:.08em;color:var(--muted);display:grid;grid-template-columns:70px 1fr 1fr 1fr;gap:8px;}
+.bracket-row{padding:11px 16px;border-bottom:1px solid rgba(255,255,255,.04);display:grid;grid-template-columns:70px 1fr 1fr 1fr;gap:8px;align-items:center;transition:background .15s;}
+.bracket-row:last-child{border-bottom:none;}
+.bracket-row:hover{background:rgba(255,255,255,.03);}
+.bracket-row.active{background:rgba(200,168,75,.07);border-left:3px solid var(--gold);}
+.br-rate{font-family:'DM Mono',monospace;font-size:0.9rem;font-weight:700;color:var(--gold);}
+.br-range{font-size:0.76rem;color:var(--muted);}
+.br-income{font-size:0.76rem;color:var(--text);}
+.br-tax{font-size:0.76rem;color:var(--white);font-weight:600;text-align:right;}
+
+/* QUARTERLY BREAKDOWN */
+.quarterly-box{background:var(--card);border:1px solid var(--border);border-radius:12px;padding:16px;margin-top:12px;}
+.qb-title{font-size:0.72rem;font-family:'DM Mono',monospace;font-weight:700;text-transform:uppercase;letter-spacing:.08em;color:var(--muted);margin-bottom:12px;}
+.qb-row{display:flex;justify-content:space-between;align-items:center;padding:8px 0;border-bottom:1px solid rgba(255,255,255,.04);}
+.qb-row:last-child{border-bottom:none;}
+.qb-q{font-size:0.8rem;color:var(--text);font-weight:500;}
+.qb-due{font-size:0.68rem;color:var(--muted);font-family:'DM Mono',monospace;}
+.qb-amt{font-family:'DM Mono',monospace;font-size:0.88rem;font-weight:700;color:var(--gold);}
+
+/* RIGHT SIDEBAR */
+.right-col{display:flex;flex-direction:column;gap:18px;}
+
+.info-card{background:var(--navy-mid);border:1px solid var(--border);border-radius:16px;padding:22px;}
+.ic-title{font-family:'Playfair Display',serif;font-size:0.97rem;font-weight:700;color:var(--white);margin-bottom:14px;}
+.ic-row{display:flex;justify-content:space-between;padding:8px 0;border-bottom:1px solid rgba(255,255,255,.05);font-size:0.8rem;}
+.ic-row:last-child{border-bottom:none;}
+.ic-k{color:var(--muted);}
+.ic-v{color:var(--text);font-weight:600;font-family:'DM Mono',monospace;}
+.ic-v.gold{color:var(--gold);}
+
+.tips-card{background:var(--navy-mid);border:1px solid var(--border);border-radius:16px;padding:22px;}
+.tip-item{display:flex;gap:10px;padding:9px 0;border-bottom:1px solid rgba(255,255,255,.04);}
+.tip-item:last-child{border-bottom:none;}
+.tip-icon{font-size:1rem;flex-shrink:0;margin-top:1px;}
+.tip-text{font-size:0.78rem;color:var(--muted);line-height:1.55;}
+.tip-text strong{color:var(--text);}
+
+.related-card{background:var(--navy-mid);border:1px solid var(--border);border-radius:16px;padding:22px;}
+.rel-item{display:flex;align-items:center;gap:12px;padding:9px 0;border-bottom:1px solid rgba(255,255,255,.05);text-decoration:none;transition:all .18s;}
+.rel-item:last-child{border-bottom:none;}
+.rel-item:hover .rel-name{color:var(--gold);}
+.rel-icon{font-size:1.2rem;width:32px;text-align:center;}
+.rel-name{font-size:0.82rem;font-weight:600;color:var(--text);transition:color .18s;}
+.rel-desc{font-size:0.68rem;color:var(--muted);}
+.rel-arr{margin-left:auto;color:var(--muted);transition:all .18s;}
+.rel-item:hover .rel-arr{color:var(--gold);transform:translateX(3px);}
+
+/* EXPLAINER */
+.explainer{background:var(--navy-mid);border:1px solid var(--border);border-radius:16px;padding:26px;margin-top:24px;}
+.exp-title{font-family:'Playfair Display',serif;font-size:1.15rem;font-weight:700;color:var(--white);margin-bottom:16px;}
+.exp-section{margin-bottom:18px;}
+.exp-h{font-size:0.8rem;font-weight:700;color:var(--gold);margin-bottom:7px;}
+.exp-p{font-size:0.82rem;color:var(--muted);line-height:1.7;}
+.exp-p strong{color:var(--text);}
+
+footer{border-top:1px solid var(--border);padding:28px 48px;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:12px;background:var(--navy-mid);}
+.footer-left{font-size:0.73rem;color:var(--muted);}
+.footer-left a{color:var(--gold);text-decoration:none;}
+.footer-links{display:flex;gap:20px;}
+.footer-links a{font-size:0.73rem;color:var(--muted);text-decoration:none;transition:color .2s;}
+.footer-links a:hover{color:var(--gold);}
+
+@media(max-width:960px){nav{padding:13px 18px;}.nav-links{display:none;}.page-wrap{padding:28px 18px 60px;}.calc-layout{grid-template-columns:1fr;}.field-row{grid-template-columns:1fr;}footer{padding:20px 18px;flex-direction:column;}}
+
+  /* ── Mobile hamburger nav ── */
+  .nav-hamburger{display:none;flex-direction:column;gap:5px;cursor:pointer;padding:6px;border:none;background:transparent;z-index:300;}
+  .nav-hamburger span{display:block;width:22px;height:2px;background:var(--gold,#c8a84b);border-radius:2px;transition:all .25s;}
+  .nav-hamburger.open span:nth-child(1){transform:translateY(7px) rotate(45deg);}
+  .nav-hamburger.open span:nth-child(2){opacity:0;}
+  .nav-hamburger.open span:nth-child(3){transform:translateY(-7px) rotate(-45deg);}
+  @media(max-width:768px){
+    .nav-hamburger{display:flex;}
+    nav ul,.nav-links{display:none!important;position:fixed;top:60px;left:0;right:0;background:rgba(8,21,42,0.98);backdrop-filter:blur(20px);flex-direction:column!important;padding:16px 0;z-index:200;border-bottom:1px solid rgba(200,168,75,.18);}
+    nav ul.mobile-open,.nav-links.mobile-open{display:flex!important;}
+    nav ul li,.nav-links li{width:100%;text-align:center;}
+    nav ul li a,.nav-links li a{display:block;padding:12px 24px;font-size:1rem;}
+    .nav-right,.nav-cta-wrap{display:none!important;}
+  }
+
+</style>
+  <!-- Open Graph / Social Sharing -->
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="https://taxpreparertools.com/federal-tax-estimator" />
+  <meta property="og:title" content="Federal Income Tax Estimator 2025" />
+  <meta property="og:description" content="Estimate 2025 federal income tax with full bracket breakdown, effective rate, and quarterly payment amounts." />
+  <meta property="og:image" content="https://taxpreparertools.com/assets/og-image.png" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="Federal Income Tax Estimator 2025" />
+  <meta name="twitter:description" content="Estimate 2025 federal income tax with full bracket breakdown, effective rate, and quarterly payment amounts." />
+  <meta name="twitter:image" content="https://taxpreparertools.com/assets/og-image.png" />
+</head>
+<body>
+
+<nav>
+  <a href="index.html" class="logo">
+    <div class="logo-mark">⚖</div>
+    <div><span class="logo-name">TaxPreparer<span>Tools</span></span><span class="logo-domain">taxpreparertools.com</span></div>
+  </a>
+  <button id="navHamburger" class="nav-hamburger" aria-label="Menu"><span></span><span></span><span></span></button>
+  <ul class="nav-links">
+    <li><a href="tools.html" class="active">Tools</a></li>
+    <li><a href="tools.html">Calculator</a></li>
+    <li><a href="deadlines.html">Deadlines</a></li>
+    <li><a href="ai-assistant.html">AI Assistant</a></li>
+    <li><a href="resources.html">Resources</a></li>
+  </ul>
+  <a href="signup.html" class="btn-sm btn-gold">Get Pro Free</a>
+</nav>
+
+<div class="page-wrap">
+  <div class="breadcrumb">
+    <a href="index.html">Home</a> <span>/</span>
+    <a href="tools.html">Tools</a> <span>/</span>
+    <a href="tools.html?cat=calc">Calculators</a> <span>/</span>
+    Federal Income Tax Estimator
+  </div>
+
+  <div class="tool-header">
+    <div class="tool-header-icon">🧮</div>
+    <div class="tool-header-meta">
+      <div class="tool-badges">
+        <span class="badge badge-free">Free</span>
+        <span class="badge badge-updated">Updated Jan 2026</span>
+        <span class="badge badge-cat">Calculator</span>
+      </div>
+      <h1>Federal Income Tax<br>Estimator 2025</h1>
+      <p class="tool-desc">Estimate your 2025 federal income tax liability with full bracket-by-bracket breakdown, effective rate, marginal rate, and quarterly estimated payment amounts. Works for all four filing statuses.</p>
+    </div>
+  </div>
+
+  <div class="calc-layout">
+    <!-- CALCULATOR -->
+    <div>
+      <div class="calc-card">
+        <div class="calc-card-header">
+          <div class="calc-card-title">Enter Your Information</div>
+          <div class="calc-card-sub">All figures are for the 2025 tax year (filed in 2026)</div>
+        </div>
+        <div class="calc-body">
+          <div class="tabs">
+            <button class="tab on" onclick="setTab('basic',this)">Basic</button>
+            <button class="tab" onclick="setTab('detailed',this)">Detailed</button>
+            <button class="tab" onclick="setTab('selfemployed',this)">Self-Employed</button>
+          </div>
+
+          <!-- BASIC TAB -->
+          <div id="tab-basic">
+            <div class="section-title">Filing Information</div>
+            <div class="field-row">
+              <div class="field">
+                <div class="label">Filing Status</div>
+                <div class="input-wrap">
+                  <select class="no-prefix" id="filingStatus" onchange="updateCalc()">
+                    <option value="single">Single</option>
+                    <option value="mfj">Married Filing Jointly</option>
+                    <option value="mfs">Married Filing Separately</option>
+                    <option value="hoh">Head of Household</option>
+                  </select>
+                </div>
+              </div>
+              <div class="field">
+                <div class="label">Tax Year</div>
+                <select class="no-prefix" disabled style="opacity:.6;padding:11px 13px;background:rgba(255,255,255,.05);border:1px solid rgba(200,168,75,.18);border-radius:9px;color:var(--muted);font-size:.9rem;font-family:'DM Sans',sans-serif;">
+                  <option>2025</option>
+                </select>
+              </div>
+            </div>
+
+            <div class="section-title">Income</div>
+            <div class="field" style="margin-bottom:16px;">
+              <div class="label">W-2 / Wages & Salary <span class="label-hint">From employer(s)</span></div>
+              <div class="input-wrap"><span class="input-prefix">$</span><input type="number" id="wages" placeholder="0" oninput="updateCalc()" min="0"/></div>
+            </div>
+            <div class="field" style="margin-bottom:16px;">
+              <div class="label">Business / Self-Employment Income <span class="label-hint">Net profit</span></div>
+              <div class="input-wrap"><span class="input-prefix">$</span><input type="number" id="businessIncome" placeholder="0" oninput="updateCalc()" min="0"/></div>
+            </div>
+            <div class="field" style="margin-bottom:24px;">
+              <div class="label">Other Income <span class="label-hint">Interest, dividends, rental, etc.</span></div>
+              <div class="input-wrap"><span class="input-prefix">$</span><input type="number" id="otherIncome" placeholder="0" oninput="updateCalc()" min="0"/></div>
+            </div>
+
+            <div class="section-title">Deductions & Adjustments</div>
+            <div class="field-row">
+              <div class="field">
+                <div class="label">Deduction Method</div>
+                <select class="no-prefix" id="deductionMethod" onchange="toggleItemized(); updateCalc()">
+                  <option value="standard">Standard (Auto)</option>
+                  <option value="itemized">Itemized</option>
+                </select>
+              </div>
+              <div class="field" id="itemizedField" style="display:none">
+                <div class="label">Itemized Total</div>
+                <div class="input-wrap"><span class="input-prefix">$</span><input type="number" id="itemizedAmt" placeholder="0" oninput="updateCalc()" min="0"/></div>
+              </div>
+            </div>
+            <div class="field" style="margin-bottom:24px;">
+              <div class="label">Other Adjustments / Above-Line Deductions <span class="label-hint">IRA, student loan interest, etc.</span></div>
+              <div class="input-wrap"><span class="input-prefix">$</span><input type="number" id="adjustments" placeholder="0" oninput="updateCalc()" min="0"/></div>
+            </div>
+
+            <div class="section-title">Credits</div>
+            <div class="field" style="margin-bottom:24px;">
+              <div class="label">Total Tax Credits <span class="label-hint">CTC, education, child care, etc.</span></div>
+              <div class="input-wrap"><span class="input-prefix">$</span><input type="number" id="credits" placeholder="0" oninput="updateCalc()" min="0"/></div>
+            </div>
+          </div>
+
+          <!-- DETAILED TAB (hidden by default) -->
+          <div id="tab-detailed" style="display:none">
+            <div class="section-title">Detailed Income Breakdown</div>
+            <div class="field" style="margin-bottom:14px;"><div class="label">W-2 Wages</div><div class="input-wrap"><span class="input-prefix">$</span><input type="number" id="d_wages" placeholder="0" oninput="updateCalc()" min="0"/></div></div>
+            <div class="field" style="margin-bottom:14px;"><div class="label">Interest Income (taxable)</div><div class="input-wrap"><span class="input-prefix">$</span><input type="number" id="d_interest" placeholder="0" oninput="updateCalc()" min="0"/></div></div>
+            <div class="field" style="margin-bottom:14px;"><div class="label">Qualified Dividends</div><div class="input-wrap"><span class="input-prefix">$</span><input type="number" id="d_qdiv" placeholder="0" oninput="updateCalc()" min="0"/></div></div>
+            <div class="field" style="margin-bottom:14px;"><div class="label">Ordinary Dividends</div><div class="input-wrap"><span class="input-prefix">$</span><input type="number" id="d_odiv" placeholder="0" oninput="updateCalc()" min="0"/></div></div>
+            <div class="field" style="margin-bottom:14px;"><div class="label">Capital Gains (LT)</div><div class="input-wrap"><span class="input-prefix">$</span><input type="number" id="d_capgain" placeholder="0" oninput="updateCalc()" min="0"/></div></div>
+            <div class="field" style="margin-bottom:24px;"><div class="label">Rental / Passive Income</div><div class="input-wrap"><span class="input-prefix">$</span><input type="number" id="d_rental" placeholder="0" oninput="updateCalc()" min="0"/></div></div>
+            <div class="section-title">Itemized Deductions</div>
+            <div class="field" style="margin-bottom:14px;"><div class="label">Mortgage Interest</div><div class="input-wrap"><span class="input-prefix">$</span><input type="number" id="d_mort" placeholder="0" oninput="updateCalc()" min="0"/></div></div>
+            <div class="field" style="margin-bottom:14px;"><div class="label">State & Local Taxes (SALT — max $10k)</div><div class="input-wrap"><span class="input-prefix">$</span><input type="number" id="d_salt" placeholder="0" oninput="updateCalc()" min="0"/></div></div>
+            <div class="field" style="margin-bottom:24px;"><div class="label">Charitable Contributions</div><div class="input-wrap"><span class="input-prefix">$</span><input type="number" id="d_charity" placeholder="0" oninput="updateCalc()" min="0"/></div></div>
+          </div>
+
+          <!-- SELF-EMPLOYED TAB (hidden by default) -->
+          <div id="tab-selfemployed" style="display:none">
+            <div class="section-title">Self-Employment Income</div>
+            <div class="field" style="margin-bottom:14px;"><div class="label">Gross Business Revenue</div><div class="input-wrap"><span class="input-prefix">$</span><input type="number" id="se_revenue" placeholder="0" oninput="updateCalc()" min="0"/></div></div>
+            <div class="field" style="margin-bottom:14px;"><div class="label">Business Expenses</div><div class="input-wrap"><span class="input-prefix">$</span><input type="number" id="se_expenses" placeholder="0" oninput="updateCalc()" min="0"/></div></div>
+            <div class="field" style="margin-bottom:14px;"><div class="label">Home Office Deduction</div><div class="input-wrap"><span class="input-prefix">$</span><input type="number" id="se_homeoffice" placeholder="0" oninput="updateCalc()" min="0"/></div></div>
+            <div class="field" style="margin-bottom:14px;"><div class="label">Vehicle Deduction (mileage or actual)</div><div class="input-wrap"><span class="input-prefix">$</span><input type="number" id="se_vehicle" placeholder="0" oninput="updateCalc()" min="0"/></div></div>
+            <div class="field" style="margin-bottom:24px;"><div class="label">Other W-2 Income (if any)</div><div class="input-wrap"><span class="input-prefix">$</span><input type="number" id="se_wages" placeholder="0" oninput="updateCalc()" min="0"/></div></div>
+            <div class="field" style="margin-bottom:14px;"><div class="label">Filing Status</div><select class="no-prefix" id="se_status" onchange="updateCalc()"><option value="single">Single</option><option value="mfj">Married Filing Jointly</option><option value="hoh">Head of Household</option></select></div>
+          </div>
+
+          <button class="calc-btn" onclick="calculate()">Calculate My 2025 Tax →</button>
+
+          <!-- RESULTS -->
+          <div class="results-panel" id="resultsPanel">
+            <div class="result-summary">
+              <div class="result-label">Estimated 2025 Federal Tax</div>
+              <div class="result-big" id="r_totalTax">$0</div>
+              <div class="result-sub" id="r_summary">Based on your inputs above</div>
+            </div>
+            <div class="result-grid">
+              <div class="result-box"><div class="rb-label">Gross Income</div><div class="rb-value" id="r_gross">—</div></div>
+              <div class="result-box"><div class="rb-label">Taxable Income</div><div class="rb-value" id="r_taxable">—</div></div>
+              <div class="result-box"><div class="rb-label">Effective Rate</div><div class="rb-value gold" id="r_effRate">—</div><div class="rb-sub">of gross income</div></div>
+              <div class="result-box"><div class="rb-label">Marginal Rate</div><div class="rb-value" id="r_margRate">—</div><div class="rb-sub">top bracket</div></div>
+              <div class="result-box"><div class="rb-label">SE Tax (if any)</div><div class="rb-value" id="r_seTax">—</div></div>
+              <div class="result-box"><div class="rb-label">After Credits</div><div class="rb-value green" id="r_afterCredits">—</div></div>
+            </div>
+
+            <div style="margin-bottom:12px;">
+              <div class="section-title" style="margin-bottom:10px;">Bracket Breakdown</div>
+              <div class="bracket-section">
+                <div class="bracket-header">
+                  <span>Rate</span><span>Income Range</span><span>Your Income</span><span style="text-align:right">Tax in Bracket</span>
+                </div>
+                <div id="bracketRows"></div>
+              </div>
+            </div>
+
+            <div class="quarterly-box">
+              <div class="qb-title">📆 Quarterly Estimated Payments (Safe Harbor)</div>
+              <div class="qb-row"><span class="qb-q">Q1 2026</span><span class="qb-due">Due Apr 15, 2026</span><span class="qb-amt" id="q1">$0</span></div>
+              <div class="qb-row"><span class="qb-q">Q2 2026</span><span class="qb-due">Due Jun 16, 2026</span><span class="qb-amt" id="q2">$0</span></div>
+              <div class="qb-row"><span class="qb-q">Q3 2026</span><span class="qb-due">Due Sep 15, 2026</span><span class="qb-amt" id="q3">$0</span></div>
+              <div class="qb-row"><span class="qb-q">Q4 2026</span><span class="qb-due">Due Jan 15, 2027</span><span class="qb-amt" id="q4">$0</span></div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- EXPLAINER -->
+      <div class="explainer">
+        <div class="exp-title">How Federal Income Tax Is Calculated</div>
+        <div class="exp-section">
+          <div class="exp-h">Progressive Tax Brackets</div>
+          <div class="exp-p">The US uses a <strong>progressive tax system</strong>, meaning only the income within each bracket is taxed at that bracket's rate. If you're in the 22% bracket, you don't pay 22% on all your income — only on the portion that falls within that range. The lower portions are taxed at 10% and 12% respectively.</div>
+        </div>
+        <div class="exp-section">
+          <div class="exp-h">Marginal vs. Effective Rate</div>
+          <div class="exp-p">Your <strong>marginal rate</strong> is the rate applied to your last dollar of taxable income (your "top bracket"). Your <strong>effective rate</strong> is your total tax divided by your gross income — this is what you actually pay as a percentage of earnings, and is always lower than your marginal rate.</div>
+        </div>
+        <div class="exp-section">
+          <div class="exp-h">Standard vs. Itemized Deductions</div>
+          <div class="exp-p">The <strong>standard deduction</strong> for 2025 is $15,000 (Single), $30,000 (MFJ), $22,500 (HOH). You should itemize only if your allowable deductions — mortgage interest, SALT (capped at $10k), charitable contributions — exceed the standard deduction.</div>
+        </div>
+        <div class="exp-section">
+          <div class="exp-h">Self-Employment Tax</div>
+          <div class="exp-p">Self-employed individuals pay <strong>15.3% SE tax</strong> (12.4% Social Security + 2.9% Medicare) on net self-employment income up to the SS wage base ($176,100 for 2025). Half of the SE tax is deductible as an above-the-line adjustment.</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- RIGHT COLUMN -->
+    <div class="right-col">
+      <div class="info-card">
+        <div class="ic-title">📊 2025 Tax Reference</div>
+        <div class="ic-row"><span class="ic-k">Standard Ded. (Single)</span><span class="ic-v gold">$15,000</span></div>
+        <div class="ic-row"><span class="ic-k">Standard Ded. (MFJ)</span><span class="ic-v gold">$30,000</span></div>
+        <div class="ic-row"><span class="ic-k">Standard Ded. (HOH)</span><span class="ic-v gold">$22,500</span></div>
+        <div class="ic-row"><span class="ic-k">Top Bracket Rate</span><span class="ic-v">37%</span></div>
+        <div class="ic-row"><span class="ic-k">SS Wage Base (2025)</span><span class="ic-v">$176,100</span></div>
+        <div class="ic-row"><span class="ic-k">Medicare Add'l (>$200k)</span><span class="ic-v">+0.9%</span></div>
+        <div class="ic-row"><span class="ic-k">SALT Deduction Cap</span><span class="ic-v">$10,000</span></div>
+        <div class="ic-row"><span class="ic-k">AMT Exemption (Single)</span><span class="ic-v">$88,100</span></div>
+      </div>
+
+      <div class="tips-card">
+        <div class="ic-title">💡 Tax-Saving Tips</div>
+        <div class="tip-item"><div class="tip-icon">🏦</div><div class="tip-text"><strong>Max your 401(k):</strong> Contributing $23,500 (2025 limit) reduces taxable income dollar-for-dollar.</div></div>
+        <div class="tip-item"><div class="tip-icon">📈</div><div class="tip-text"><strong>HSA contributions:</strong> Up to $4,300 (self) or $8,550 (family) — triple tax advantage.</div></div>
+        <div class="tip-item"><div class="tip-icon">💼</div><div class="tip-text"><strong>Self-employed?</strong> Consider an S-Corp election to reduce SE tax on net profit above ~$50k.</div></div>
+        <div class="tip-item"><div class="tip-icon">🎁</div><div class="tip-text"><strong>Bunch charitable gifts</strong> in alternating years to exceed the standard deduction threshold.</div></div>
+        <div class="tip-item"><div class="tip-icon">📉</div><div class="tip-text"><strong>Harvest capital losses</strong> before Dec 31 to offset capital gains and up to $3,000 of ordinary income.</div></div>
+      </div>
+
+      <div class="related-card">
+        <div class="ic-title">🔗 Related Tools</div>
+        <a href="se-tax-calculator.html" class="rel-item">
+          <span class="rel-icon">💼</span>
+          <div><div class="rel-name">SE Tax Calculator</div><div class="rel-desc">Self-employment tax & deductions</div></div>
+          <span class="rel-arr">→</span>
+        </a>
+        <a href="quarterly-payments.html" class="rel-item">
+          <span class="rel-icon">📆</span>
+          <div><div class="rel-name">Quarterly Payment Planner</div><div class="rel-desc">Safe harbor &amp; payment schedule</div></div>
+          <span class="rel-arr">→</span>
+        </a>
+        <a href="tools.html" class="rel-item">
+          <span class="rel-icon">📝</span>
+          <div><div class="rel-name">W-4 Optimizer</div><div class="rel-desc">Adjust paycheck withholding</div></div>
+          <span class="rel-arr">→</span>
+        </a>
+        <a href="tools.html" class="rel-item">
+          <span class="rel-icon">🔖</span>
+          <div><div class="rel-name">Itemized vs Standard</div><div class="rel-desc">Which deduction method wins?</div></div>
+          <span class="rel-arr">→</span>
+        </a>
+        <a href="capital-gains.html" class="rel-item">
+          <span class="rel-icon">💰</span>
+          <div><div class="rel-name">Capital Gains Calculator</div><div class="rel-desc">Short &amp; long-term rates + NIIT</div></div>
+          <span class="rel-arr">→</span>
+        </a>
+      </div>
+    </div>
+  </div>
+</div>
+
+<footer>
+  <div class="footer-left">© 2026 <a href="index.html">TaxPreparerTools.com</a> · Estimates based on 2025 IRS published rates. Not tax advice. Verify with a qualified professional.</div>
+  <div class="footer-links"><a href="privacy.html">Privacy</a><a href="terms.html">Terms</a><a href="https://irs.gov" target="_blank">IRS.gov ↗</a></div>
+</footer>
+
+<script>
+// 2025 Tax Brackets
+const BRACKETS = {
+  single: [[11925,.10],[48475,.12],[103350,.22],[197300,.24],[250525,.32],[626350,.35],[Infinity,.37]],
+  mfj:    [[23850,.10],[96950,.12],[206700,.22],[394600,.24],[501050,.32],[751600,.35],[Infinity,.37]],
+  mfs:    [[11925,.10],[48475,.12],[103350,.22],[197300,.24],[250525,.32],[375800,.35],[Infinity,.37]],
+  hoh:    [[17000,.10],[64850,.12],[103350,.22],[197300,.24],[250500,.32],[626350,.35],[Infinity,.37]],
+};
+const STD_DED = {single:15000, mfj:30000, mfs:15000, hoh:22500};
+const SE_WAGE_BASE = 176100;
+
+let activeTab = 'basic';
+
+function setTab(tab, el) {
+  document.querySelectorAll('.tab').forEach(t => t.classList.remove('on'));
+  el.classList.add('on');
+  ['basic','detailed','selfemployed'].forEach(t => {
+    document.getElementById('tab-'+t).style.display = t === tab ? '' : 'none';
+  });
+  activeTab = tab;
+}
+
+function toggleItemized() {
+  const method = document.getElementById('deductionMethod').value;
+  document.getElementById('itemizedField').style.display = method === 'itemized' ? '' : 'none';
+}
+
+function fmt(n) { return '$' + Math.round(n).toLocaleString(); }
+function pct(n) { return (n*100).toFixed(1)+'%'; }
+
+function getInputs() {
+  if (activeTab === 'selfemployed') {
+    const rev = +document.getElementById('se_revenue').value||0;
+    const exp = +document.getElementById('se_expenses').value||0;
+    const ho = +document.getElementById('se_homeoffice').value||0;
+    const veh = +document.getElementById('se_vehicle').value||0;
+    const w2 = +document.getElementById('se_wages').value||0;
+    const status = document.getElementById('se_status').value;
+    const netSE = Math.max(0, rev - exp - ho - veh);
+    return { gross: w2 + netSE, wages: w2, business: netSE, other: 0, status, deductionAmt: STD_DED[status], credits: 0, adjustments: 0 };
+  }
+  if (activeTab === 'detailed') {
+    const wages = +document.getElementById('d_wages').value||0;
+    const interest = +document.getElementById('d_interest').value||0;
+    const qdiv = +document.getElementById('d_qdiv').value||0;
+    const odiv = +document.getElementById('d_odiv').value||0;
+    const capgain = +document.getElementById('d_capgain').value||0;
+    const rental = +document.getElementById('d_rental').value||0;
+    const mort = +document.getElementById('d_mort').value||0;
+    const salt = Math.min(+document.getElementById('d_salt').value||0, 10000);
+    const charity = +document.getElementById('d_charity').value||0;
+    const status = document.getElementById('filingStatus').value;
+    const itemized = mort + salt + charity;
+    const std = STD_DED[status];
+    return { gross: wages+interest+qdiv+odiv+capgain+rental, wages, business: 0, other: interest+qdiv+odiv+capgain+rental, status, deductionAmt: Math.max(itemized, std), credits: 0, adjustments: 0 };
+  }
+  const wages = +document.getElementById('wages').value||0;
+  const business = +document.getElementById('businessIncome').value||0;
+  const other = +document.getElementById('otherIncome').value||0;
+  const status = document.getElementById('filingStatus').value;
+  const method = document.getElementById('deductionMethod').value;
+  const itemized = +document.getElementById('itemizedAmt').value||0;
+  const std = STD_DED[status];
+  const deductionAmt = method === 'itemized' ? Math.max(itemized, std) : std;
+  const credits = +document.getElementById('credits').value||0;
+  const adjustments = +document.getElementById('adjustments').value||0;
+  return { gross: wages+business+other, wages, business, other, status, deductionAmt, credits, adjustments };
+}
+
+function calcTax(taxable, status) {
+  const brackets = BRACKETS[status];
+  let tax = 0, prev = 0, marginalRate = .10;
+  const rows = [];
+  for (const [upper, rate] of brackets) {
+    if (taxable <= prev) { rows.push({rate, lower:prev, upper, income:0, tax:0, active:false}); continue; }
+    const chunk = Math.min(taxable, upper) - prev;
+    const rowTax = chunk * rate;
+    tax += rowTax;
+    marginalRate = rate;
+    rows.push({rate, lower:prev, upper, income:chunk, tax:rowTax, active:chunk>0});
+    prev = upper;
+    if (taxable <= upper) break;
+  }
+  return {tax, marginalRate, rows};
+}
+
+function calculate() {
+  const inp = getInputs();
+  const { gross, business, status, deductionAmt, credits, adjustments } = inp;
+
+  // SE Tax
+  const netSE = business;
+  const seSub = Math.min(netSE, SE_WAGE_BASE) * 0.9235;
+  const seTax = seSub * 0.153 + Math.max(0, netSE*0.9235 - SE_WAGE_BASE) * 0.029;
+  const seDeduction = seTax / 2;
+
+  const agi = Math.max(0, gross - adjustments - seDeduction);
+  const taxable = Math.max(0, agi - deductionAmt);
+  const { tax: incomeTax, marginalRate, rows } = calcTax(taxable, status);
+  const totalBeforeCredits = incomeTax + seTax;
+  const afterCredits = Math.max(0, totalBeforeCredits - credits);
+
+  // Render summary
+  document.getElementById('r_totalTax').textContent = fmt(afterCredits);
+  document.getElementById('r_summary').textContent = `${document.getElementById('filingStatus')?.value === status ? '' : ''}${status.toUpperCase()} filer · Taxable income ${fmt(taxable)}`;
+  document.getElementById('r_gross').textContent = fmt(gross);
+  document.getElementById('r_taxable').textContent = fmt(taxable);
+  document.getElementById('r_effRate').textContent = gross > 0 ? pct(afterCredits/gross) : '0.0%';
+  document.getElementById('r_margRate').textContent = pct(marginalRate);
+  document.getElementById('r_seTax').textContent = netSE > 0 ? fmt(seTax) : 'N/A';
+  document.getElementById('r_afterCredits').textContent = fmt(afterCredits);
+
+  // Bracket rows
+  const bracketHTML = rows.map(r => `
+    <div class="bracket-row${r.active?' active':''}">
+      <span class="br-rate">${(r.rate*100).toFixed(0)}%</span>
+      <span class="br-range">${fmt(r.lower)} – ${r.upper===Infinity?'∞':fmt(r.upper)}</span>
+      <span class="br-income">${r.income>0?fmt(r.income):'—'}</span>
+      <span class="br-tax">${r.tax>0?fmt(r.tax):'—'}</span>
+    </div>`).join('');
+  document.getElementById('bracketRows').innerHTML = bracketHTML;
+
+  // Quarterly payments
+  const qAmt = fmt(afterCredits / 4);
+  ['q1','q2','q3','q4'].forEach(id => document.getElementById(id).textContent = qAmt);
+
+  document.getElementById('resultsPanel').classList.add('show');
+  document.getElementById('resultsPanel').scrollIntoView({behavior:'smooth', block:'nearest'});
+}
+
+function updateCalc() {}
+</script>
+<script>
+(function(){
+  var btn = document.getElementById('navHamburger');
+  var ul  = document.querySelector('nav ul, nav .nav-links');
+  if(!btn || !ul) return;
+  btn.addEventListener('click', function(){
+    btn.classList.toggle('open');
+    ul.classList.toggle('mobile-open');
+  });
+  // Close on outside click
+  document.addEventListener('click', function(e){
+    if(!e.target.closest('nav')){
+      btn.classList.remove('open');
+      ul && ul.classList.remove('mobile-open');
+    }
+  });
+})();
+</script>
+</body>
+</html>
