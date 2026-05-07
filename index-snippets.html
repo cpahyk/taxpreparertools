@@ -1,0 +1,103 @@
+<!--
+=========================================================================
+  SNIPPETS FOR index.html — add the new Property Tax Search tool
+=========================================================================
+  Three options below. Pick whichever placement(s) you want.
+  Each snippet uses the existing classes — paste in and the styling
+  inherits automatically.
+=========================================================================
+-->
+
+
+<!-- ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ -->
+<!-- OPTION 1 (RECOMMENDED) — Tool card in "The Toolkit" section          -->
+<!-- ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ -->
+<!--
+  WHERE: Inside the <div class="tools-grid"> element, paste this as the
+  FIRST child so it shows up as the new highlighted tool. Search index.html
+  for `class="tools-grid"` to find the right block.
+
+  TAG: Using `tag-pro` because it's primarily a CPA/EA tool. If you have
+  a `tag-lookup` or want to add one, change accordingly. Other existing
+  tags: tag-calc, tag-individual, tag-deadline, tag-business.
+-->
+
+<div class="tool-card" data-cat="pro">
+  <span class="tool-tag tag-pro">New · Pro Tool</span>
+  <span class="tool-icon">🏛️</span>
+  <h3 class="tool-name">US Property Tax Search</h3>
+  <p class="tool-desc">Look up property tax records across 50 states + 200+ US counties. Search by address, parcel ID/PIN, or owner name and route directly to the official county portal — universal NETR Online fallback for the rest.</p>
+  <a href="property-tax-search.html" class="tool-link">Launch Tool</a>
+</div>
+
+
+<!-- ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ -->
+<!-- OPTION 2 — Resource card in "Library / Reference Resources"          -->
+<!-- ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ -->
+<!--
+  WHERE: Inside the <div class="resources-grid"> element. Paste as the
+  FIRST child so the new tool gets pride of place above the existing
+  reference cards.
+-->
+
+<a href="property-tax-search.html" class="resource-card">
+  <div class="resource-type">🏛️ Lookup Tool · New</div>
+  <h3 class="resource-title">US Property Tax Search</h3>
+  <p class="resource-desc">Direct access to 200+ county tax assessor portals across all 50 states. Search by address, parcel/PIN, or owner name. Essential for verifying Schedule A SALT, Schedule E rentals, and Form 8829 home office claims.</p>
+</a>
+
+
+<!-- ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ -->
+<!-- OPTION 3 (HIGHEST IMPACT) — Featured-launch callout banner           -->
+<!-- ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ -->
+<!--
+  WHERE: Place this BEFORE the existing `<section class="who-section">`
+  block so it shows up right after the hero. This is a one-time launch
+  banner — remove or move once the tool is no longer "new".
+
+  Self-contained: pulls colors from the existing CSS variables, no extra
+  styles needed. Safe to drop in.
+-->
+
+<section style="padding:60px 60px 0;position:relative;z-index:1;">
+  <div style="max-width:1100px;margin:0 auto;background:linear-gradient(135deg,rgba(200,168,75,0.12) 0%,rgba(200,168,75,0.03) 100%);border:1px solid rgba(200,168,75,0.3);border-radius:20px;padding:32px 40px;display:grid;grid-template-columns:auto 1fr auto;gap:28px;align-items:center;">
+    <div style="font-size:3rem;line-height:1;">🏛️</div>
+    <div>
+      <div style="font-size:0.72rem;font-weight:700;color:var(--gold);letter-spacing:0.15em;text-transform:uppercase;font-family:'DM Mono',monospace;margin-bottom:8px;">Just Launched</div>
+      <h3 style="font-family:'Playfair Display',serif;font-size:1.4rem;font-weight:700;color:var(--white);margin-bottom:6px;letter-spacing:-0.02em;">US Property Tax Search Tool</h3>
+      <p style="color:var(--muted);font-size:0.92rem;line-height:1.6;margin:0;">Look up any US property tax record across 50 states + 200+ counties. By address, parcel/PIN, or owner name — direct links to official county assessor portals.</p>
+    </div>
+    <a href="property-tax-search.html" style="background:var(--gold);color:var(--navy);padding:12px 24px;border-radius:8px;font-weight:700;font-size:0.9rem;text-decoration:none;white-space:nowrap;transition:all 0.2s;">Try It Now →</a>
+  </div>
+</section>
+
+
+<!-- ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ -->
+<!-- BONUS: Filter button (optional)                                      -->
+<!-- ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ -->
+<!--
+  If you want to add a "Lookup" filter to the tools-filter row in
+  index.html so users can filter to just lookup tools, paste this inside
+  the <div class="tools-filter"> block. The exact onclick wiring depends
+  on how your existing filter buttons work — match the pattern of the
+  surrounding buttons.
+-->
+
+<button class="filter-btn" data-filter="lookup">Lookups</button>
+
+
+<!-- ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ -->
+<!-- BONUS: Update hero stat                                              -->
+<!-- ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ -->
+<!--
+  In your hero stats, "40+ Tax Tools" still works — but if you want to
+  bump it for the new tool, change the stat-num to "41+" or just keep it.
+  The other stat blocks reference 50 states / 200+ counties which would
+  pair nicely with the property tax tool launch — consider swapping one
+  of the stat boxes once for the launch month, e.g.:
+-->
+
+<div class="stat-item">
+  <span class="stat-num">200+</span>
+  <span class="stat-label">US Counties</span>
+</div>

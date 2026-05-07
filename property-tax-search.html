@@ -1,0 +1,789 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>US Property Tax Search Tool — All 50 States &amp; 300+ Counties | TaxPreparerTools.com</title>
+<meta name="description" content="Free property tax record lookup for all 50 US states and 300+ counties. Direct deep-links to official assessor portals — search by address, parcel/PIN, or owner name.">
+<link rel="canonical" href="https://taxpreparertools.com/property-tax-search" />
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700;900&family=DM+Sans:wght@300;400;500;600&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root {
+  --navy: #08152a;
+  --navy-mid: #0f1f3d;
+  --slate: #1a2f52;
+  --gold: #c8a84b;
+  --gold-light: #e8c96a;
+  --gold-dim: rgba(200,168,75,0.15);
+  --cream: #faf7ef;
+  --white: #ffffff;
+  --muted: #7a8fac;
+  --text: #dde4f0;
+  --border: rgba(200,168,75,0.14);
+  --card: rgba(255,255,255,0.035);
+  --card-h: rgba(200,168,75,0.06);
+  --green: #4ade80;
+  --blue: #60a5fa;
+  --purple: #a78bfa;
+  --orange: #fb923c;
+  --red: #f87171;
+}
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; }
+body { font-family: 'DM Sans', sans-serif; background: var(--navy); color: var(--text); min-height: 100vh; }
+
+/* ── NAV ── */
+nav {
+  position: sticky; top: 0; z-index: 200;
+  padding: 16px 48px;
+  display: flex; align-items: center; justify-content: space-between;
+  background: rgba(8,21,42,0.92);
+  backdrop-filter: blur(20px);
+  border-bottom: 1px solid var(--border);
+}
+.logo { display:flex; align-items:center; gap:10px; text-decoration:none; }
+.logo-mark { width:34px; height:34px; background:var(--gold); border-radius:7px; display:flex; align-items:center; justify-content:center; font-size:17px; }
+.logo-name { font-family:'Playfair Display',serif; font-size:1.2rem; font-weight:700; color:var(--white); }
+.logo-name span { color:var(--gold); }
+.logo-domain { font-size:0.68rem; color:var(--muted); font-family:'DM Mono',monospace; letter-spacing:0.05em; margin-left:2px; display:block; line-height:1; }
+.nav-links { display:flex; gap:28px; list-style:none; }
+.nav-links a { color:var(--muted); font-size:0.85rem; font-weight:500; text-decoration:none; transition:color .2s; }
+.nav-links a:hover, .nav-links a.active { color:var(--gold); }
+.nav-right { display:flex; gap:12px; align-items:center; }
+.btn-sm { padding:8px 18px; border-radius:6px; font-size:0.82rem; font-weight:700; cursor:pointer; text-decoration:none; transition:all .2s; border:none; font-family:'DM Sans',sans-serif; }
+.btn-ghost { background:transparent; color:var(--muted); border:1px solid var(--border); }
+.btn-ghost:hover { color:var(--gold); border-color:var(--gold); }
+.btn-gold { background:var(--gold); color:var(--navy); }
+.btn-gold:hover { background:var(--gold-light); transform:translateY(-1px); }
+
+/* ── PAGE HEADER ── */
+.page-header { padding: 72px 48px 56px; background: linear-gradient(180deg, rgba(200,168,75,0.07) 0%, transparent 100%); border-bottom: 1px solid var(--border); position: relative; overflow: hidden; }
+.page-header::before { content:''; position:absolute; inset:0; background-image: linear-gradient(rgba(200,168,75,0.03) 1px, transparent 1px), linear-gradient(90deg, rgba(200,168,75,0.03) 1px, transparent 1px); background-size: 48px 48px; }
+.header-inner { position:relative; max-width:1200px; margin:0 auto; }
+.breadcrumb { font-size:0.75rem; font-family:'DM Mono',monospace; color:var(--muted); margin-bottom:16px; display:flex; gap:8px; align-items:center; }
+.breadcrumb a { color:var(--gold); text-decoration:none; }
+.breadcrumb span { opacity:.4; }
+h1 { font-family:'Playfair Display',serif; font-size:clamp(2rem,4vw,3.2rem); font-weight:900; color:var(--white); letter-spacing:-0.03em; margin-bottom:14px; line-height:1.1; }
+.header-sub { color:var(--muted); font-size:1rem; max-width:680px; line-height:1.7; margin-bottom:28px; }
+.header-meta { display:flex; gap:28px; flex-wrap:wrap; }
+.meta-pill { display:flex; align-items:center; gap:7px; font-size:0.78rem; color:var(--muted); font-family:'DM Mono',monospace; }
+.meta-pill .dot { width:7px; height:7px; border-radius:50%; }
+.dot-green { background:var(--green); box-shadow:0 0 6px var(--green); }
+.dot-gold { background:var(--gold); }
+.dot-blue { background:var(--blue); }
+
+/* ── MAIN ── */
+.main-wrap { max-width:1200px; margin:0 auto; padding:48px 48px 80px; }
+.tool-grid {
+  display:grid;
+  grid-template-columns: 1.05fr 1fr;
+  gap:36px;
+  align-items:start;
+}
+
+/* ── SEARCH PANEL ── */
+.search-panel {
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: 16px;
+  padding: 32px;
+}
+.panel-title { font-family:'Playfair Display',serif; font-size:1.3rem; font-weight:700; color:var(--white); margin-bottom:6px; }
+.panel-sub { font-size:0.82rem; color:var(--muted); margin-bottom:28px; line-height:1.6; }
+
+.step { margin-bottom:24px; opacity:0.45; transition:opacity .25s; pointer-events:none; }
+.step.active { opacity:1; pointer-events:auto; }
+.step.completed { opacity:0.85; pointer-events:auto; }
+.step-header { display:flex; align-items:center; gap:12px; margin-bottom:12px; }
+.step-num {
+  width:30px; height:30px; border-radius:8px;
+  background:var(--gold-dim); color:var(--gold);
+  font-family:'DM Mono',monospace; font-size:0.8rem; font-weight:700;
+  display:flex; align-items:center; justify-content:center;
+}
+.step.completed .step-num { background:var(--gold); color:var(--navy); }
+.step-label { font-family:'Playfair Display',serif; font-size:1.05rem; font-weight:600; color:var(--white); }
+.step-hint { font-size:0.72rem; font-family:'DM Mono',monospace; color:var(--muted); margin-left:auto; }
+
+.big-select, .big-input {
+  width:100%;
+  background: rgba(255,255,255,0.04);
+  border: 1px solid var(--border);
+  border-radius: 9px;
+  padding: 13px 16px;
+  color: var(--white);
+  font-family:'DM Sans',sans-serif;
+  font-size:0.95rem;
+  outline:none;
+  transition: border-color .18s, background .18s;
+}
+.big-select:focus, .big-input:focus { border-color:var(--gold); background:rgba(255,255,255,0.06); }
+.big-select { appearance:none; background-image:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'><path fill='%237a8fac' d='M6 8L0 0h12z'/></svg>"); background-repeat:no-repeat; background-position:right 16px center; padding-right:42px; cursor:pointer; }
+.big-select:disabled, .big-input:disabled { opacity:0.5; cursor:not-allowed; }
+.big-input::placeholder { color:var(--muted); }
+
+.county-list {
+  margin-top: 10px;
+  max-height: 240px;
+  overflow-y: auto;
+  border: 1px solid var(--border);
+  border-radius: 9px;
+  background: rgba(0,0,0,0.18);
+  display:none;
+}
+.county-list.show { display:block; }
+.county-list::-webkit-scrollbar { width:6px; }
+.county-list::-webkit-scrollbar-track { background:transparent; }
+.county-list::-webkit-scrollbar-thumb { background:rgba(200,168,75,0.25); border-radius:3px; }
+.county-item {
+  padding: 10px 16px;
+  cursor:pointer;
+  font-size:0.88rem;
+  color:var(--text);
+  border-bottom: 1px solid rgba(200,168,75,0.06);
+  transition: background .15s;
+  display:flex; align-items:center; justify-content:space-between;
+}
+.county-item:last-child { border-bottom:none; }
+.county-item:hover, .county-item.kbd-focus { background:var(--card-h); color:var(--gold); }
+.county-item.selected { background: var(--gold-dim); color:var(--gold); }
+.county-item .county-meta { font-family:'DM Mono',monospace; font-size:0.7rem; color:var(--muted); }
+
+.fallback-row {
+  margin-top:12px;
+  display:flex; gap:8px; align-items:center;
+  font-size:0.78rem; color:var(--muted);
+}
+.fallback-row a { color:var(--gold); text-decoration:none; font-weight:600; }
+.fallback-row a:hover { text-decoration:underline; }
+
+.method-tabs { display:grid; grid-template-columns: repeat(3, 1fr); gap:8px; }
+.method-btn {
+  background: rgba(255,255,255,0.04);
+  border: 1px solid var(--border);
+  border-radius: 9px;
+  padding: 12px 8px;
+  color: var(--muted);
+  font-family:'DM Sans',sans-serif;
+  font-size: 0.82rem;
+  font-weight:600;
+  cursor:pointer;
+  transition: all .18s;
+  display:flex; flex-direction:column; align-items:center; gap:4px;
+}
+.method-btn:hover:not(.active):not(:disabled) { color:var(--text); border-color:rgba(255,255,255,0.2); }
+.method-btn.active { background: var(--gold-dim); border-color:var(--gold); color:var(--gold); }
+.method-btn:disabled { opacity:0.5; cursor:not-allowed; }
+.method-btn .method-emoji { font-size:1.1rem; line-height:1; }
+
+/* ── RESULT PANEL ── */
+.result-panel {
+  background: linear-gradient(180deg, rgba(200,168,75,0.04) 0%, var(--card) 100%);
+  border: 1px solid var(--border);
+  border-radius: 16px;
+  padding: 32px;
+  position: sticky;
+  top: 90px;
+  min-height: 460px;
+  display:flex;
+  flex-direction:column;
+}
+.result-empty {
+  flex:1;
+  display:flex; flex-direction:column; align-items:center; justify-content:center;
+  text-align:center;
+  color:var(--muted);
+}
+.result-empty-icon { font-size:3rem; margin-bottom:18px; opacity:0.5; }
+.result-empty-title { font-family:'Playfair Display',serif; font-size:1.2rem; color:var(--text); margin-bottom:8px; }
+.result-empty-sub { font-size:0.85rem; max-width:280px; line-height:1.6; }
+
+.result-content { display:none; }
+.result-content.show { display:flex; flex-direction:column; gap:0; }
+.result-tag { font-size:0.7rem; font-family:'DM Mono',monospace; font-weight:700; color:var(--gold); letter-spacing:0.15em; text-transform:uppercase; margin-bottom:10px; }
+.result-county-name { font-family:'Playfair Display',serif; font-size:2rem; font-weight:900; color:var(--white); line-height:1.1; margin-bottom:6px; letter-spacing:-0.02em; }
+.result-state-name { font-size:0.95rem; color:var(--muted); margin-bottom:24px; }
+
+.result-info-grid { display:grid; grid-template-columns:1fr 1fr; gap:14px; margin-bottom:22px; }
+.result-info {
+  background: rgba(0,0,0,0.18);
+  border: 1px solid var(--border);
+  border-radius: 9px;
+  padding: 12px 14px;
+}
+.result-info-label { font-size:0.66rem; font-family:'DM Mono',monospace; color:var(--muted); letter-spacing:0.1em; text-transform:uppercase; margin-bottom:4px; }
+.result-info-value { font-size:0.92rem; color:var(--white); font-weight:500; }
+.result-info-value .check { color:var(--green); margin-right:5px; }
+.result-info-value .x { color:var(--red); margin-right:5px; }
+
+.result-notes {
+  background: rgba(96,165,250,0.06);
+  border: 1px solid rgba(96,165,250,0.18);
+  border-radius: 9px;
+  padding: 12px 14px;
+  font-size:0.83rem; color:var(--text); line-height:1.6;
+  margin-bottom:24px;
+  display:flex; gap:10px; align-items:flex-start;
+}
+.result-notes .info-icon { color:var(--blue); flex-shrink:0; font-weight:700; }
+
+.btn-primary, .btn-secondary {
+  display:flex; align-items:center; justify-content:center; gap:8px;
+  width:100%; padding:14px; border-radius:9px;
+  text-decoration:none; font-weight:700; font-size:0.92rem;
+  font-family:'DM Sans',sans-serif; cursor:pointer; border:none;
+  transition:all .2s;
+  font-family:'DM Sans',sans-serif;
+}
+.btn-primary { background:var(--gold); color:var(--navy); margin-bottom:10px; }
+.btn-primary:hover { background:var(--gold-light); transform:translateY(-1px); box-shadow:0 8px 24px rgba(200,168,75,0.28); }
+.btn-secondary { background:transparent; color:var(--text); border:1px solid var(--border); }
+.btn-secondary:hover { border-color:var(--gold); color:var(--gold); }
+
+.result-tip {
+  margin-top:18px; padding-top:18px;
+  border-top:1px dashed var(--border);
+  font-size:0.78rem; color:var(--muted); line-height:1.6;
+}
+.result-tip strong { color:var(--gold); }
+
+/* ── HOW IT WORKS ── */
+.how-section { max-width:1200px; margin:24px auto 0; padding:60px 48px; border-top:1px solid var(--border); }
+.how-title { font-family:'Playfair Display',serif; font-size:2rem; font-weight:900; color:var(--white); margin-bottom:8px; letter-spacing:-0.02em; }
+.how-sub { color:var(--muted); margin-bottom:36px; max-width:600px; }
+.how-grid { display:grid; grid-template-columns: repeat(3, 1fr); gap:20px; }
+.how-card { background:var(--card); border:1px solid var(--border); border-radius:14px; padding:24px; transition:all .25s; }
+.how-card:hover { border-color:rgba(200,168,75,0.3); transform:translateY(-3px); }
+.how-card-num { font-family:'DM Mono',monospace; font-size:0.72rem; color:var(--gold); letter-spacing:0.15em; margin-bottom:10px; }
+.how-card-title { font-family:'Playfair Display',serif; font-size:1.1rem; font-weight:700; color:var(--white); margin-bottom:8px; }
+.how-card-desc { font-size:0.85rem; color:var(--muted); line-height:1.7; }
+
+/* ── WHY THIS APPROACH ── */
+.why-section { background:var(--navy-mid); padding:60px 48px; border-top:1px solid var(--border); }
+.why-inner { max-width:1200px; margin:0 auto; display:grid; grid-template-columns: 1fr 1fr; gap:48px; align-items:center; }
+.why-title { font-family:'Playfair Display',serif; font-size:1.7rem; font-weight:900; color:var(--white); letter-spacing:-0.02em; margin-bottom:16px; }
+.why-prose { color:var(--muted); font-size:0.95rem; line-height:1.8; margin-bottom:14px; }
+.why-prose strong { color:var(--gold); }
+.why-stats { display:grid; grid-template-columns: repeat(2,1fr); gap:14px; }
+.why-stat { background:var(--card); border:1px solid var(--border); border-radius:12px; padding:20px; text-align:center; }
+.why-stat-num { font-family:'Playfair Display',serif; font-size:2.2rem; font-weight:900; color:var(--gold); line-height:1; margin-bottom:6px; }
+.why-stat-label { font-size:0.75rem; color:var(--muted); font-family:'DM Mono',monospace; letter-spacing:0.08em; text-transform:uppercase; }
+
+/* ── DISCLAIMER ── */
+.disclaimer { max-width:1200px; margin:0 auto; padding:32px 48px; font-size:0.78rem; color:var(--muted); line-height:1.7; border-top:1px solid var(--border); }
+.disclaimer strong { color:var(--text); }
+
+/* ── FOOTER ── */
+footer { border-top:1px solid var(--border); padding:36px 48px; display:flex; align-items:center; justify-content:space-between; flex-wrap:wrap; gap:16px; background:var(--navy-mid); }
+.footer-left { font-size:0.78rem; color:var(--muted); }
+.footer-left a { color:var(--gold); text-decoration:none; }
+.footer-links { display:flex; gap:24px; }
+.footer-links a { font-size:0.78rem; color:var(--muted); text-decoration:none; transition:color .2s; }
+.footer-links a:hover { color:var(--gold); }
+
+/* ── Mobile hamburger ── */
+.nav-hamburger{display:none;flex-direction:column;gap:5px;cursor:pointer;padding:6px;border:none;background:transparent;z-index:300;}
+.nav-hamburger span{display:block;width:22px;height:2px;background:var(--gold);border-radius:2px;transition:all .25s;}
+.nav-hamburger.open span:nth-child(1){transform:translateY(7px) rotate(45deg);}
+.nav-hamburger.open span:nth-child(2){opacity:0;}
+.nav-hamburger.open span:nth-child(3){transform:translateY(-7px) rotate(-45deg);}
+
+/* ── RESPONSIVE ── */
+@media(max-width:980px){
+  .tool-grid { grid-template-columns: 1fr; }
+  .result-panel { position: static; }
+  .how-grid { grid-template-columns: 1fr; }
+  .why-inner { grid-template-columns: 1fr; gap:32px; }
+}
+@media(max-width:768px){
+  .nav-hamburger{display:flex;}
+  nav .nav-links{display:none!important;position:fixed;top:60px;left:0;right:0;background:rgba(8,21,42,0.98);backdrop-filter:blur(20px);flex-direction:column!important;padding:16px 0;z-index:200;border-bottom:1px solid rgba(200,168,75,.18);}
+  nav .nav-links.mobile-open{display:flex!important;}
+  nav .nav-links li{width:100%;text-align:center;}
+  nav .nav-links li a{display:block;padding:12px 24px;font-size:1rem;}
+  .nav-right{display:none;}
+  nav { padding:14px 20px; }
+  .page-header { padding:48px 20px 36px; }
+  .main-wrap { padding:32px 20px 60px; }
+  .search-panel, .result-panel { padding:24px; }
+  .how-section, .why-section, .disclaimer { padding-left:20px; padding-right:20px; }
+  .result-county-name { font-size:1.6rem; }
+  .result-info-grid { grid-template-columns:1fr; }
+  .method-tabs { grid-template-columns: 1fr; }
+  footer { padding:24px 20px; flex-direction:column; }
+}
+
+/* ── OG / SEO ── */
+</style>
+<meta property="og:type" content="website" />
+<meta property="og:url" content="https://taxpreparertools.com/property-tax-search" />
+<meta property="og:title" content="US Property Tax Search — All 50 States &amp; 300+ Counties" />
+<meta property="og:description" content="Direct deep-links to every official county property tax portal in the US. Search by address, parcel/PIN, or owner name. Free, no signup." />
+<meta property="og:image" content="https://taxpreparertools.com/assets/og-image.png" />
+<meta name="twitter:card" content="summary_large_image" />
+<meta name="twitter:title" content="US Property Tax Search Tool | TaxPreparerTools.com" />
+<meta name="twitter:description" content="The fastest way for tax preparers to find property tax records from any US state and county." />
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <a href="index.html" class="logo">
+    <div class="logo-mark">⚖</div>
+    <div>
+      <span class="logo-name">TaxPreparer<span>Tools</span></span>
+      <span class="logo-domain">taxpreparertools.com</span>
+    </div>
+  </a>
+  <button id="navHamburger" class="nav-hamburger" aria-label="Menu"><span></span><span></span><span></span></button>
+  <ul class="nav-links">
+    <li><a href="tools.html" class="active">Tools</a></li>
+    <li><a href="deadlines.html">Deadlines</a></li>
+    <li><a href="ai-assistant.html">AI Assistant</a></li>
+    <li><a href="resources.html">Resources</a></li>
+  </ul>
+  <div class="nav-right">
+    <a href="login.html" class="btn-sm btn-ghost">Log In</a>
+    <a href="signup.html" class="btn-sm btn-gold">Get Pro Free</a>
+  </div>
+</nav>
+
+<!-- PAGE HEADER -->
+<div class="page-header">
+  <div class="header-inner">
+    <div class="breadcrumb">
+      <a href="index.html">taxpreparertools.com</a>
+      <span>/</span>
+      <a href="tools.html">tools</a>
+      <span>/</span>
+      property tax search
+    </div>
+    <h1>US Property Tax<br>Lookup Tool</h1>
+    <p class="header-sub">Find property tax records, parcel data, and owner info from any US state and county. We deep-link directly to <strong style="color:var(--text)">official assessor portals</strong> &mdash; no API costs, no signups, no scraping. The fastest way to get to the right county search page.</p>
+    <div class="header-meta">
+      <div class="meta-pill"><span class="dot dot-green"></span><span id="metaStates">50 States &amp; DC Covered</span></div>
+      <div class="meta-pill"><span class="dot dot-gold"></span><span id="metaCounties">300+ Direct Portal Links</span></div>
+      <div class="meta-pill"><span class="dot dot-blue"></span>3 Search Methods</div>
+    </div>
+  </div>
+</div>
+
+<!-- MAIN TOOL -->
+<div class="main-wrap">
+  <div class="tool-grid">
+
+    <!-- LEFT: Search Panel -->
+    <div class="search-panel">
+      <div class="panel-title">Property Tax Search</div>
+      <p class="panel-sub">Pick a state, then a county, then how you'd like to search. We'll hand you off to the official county portal &mdash; same data your local CPA would access, just faster to reach.</p>
+
+      <!-- Step 1: State -->
+      <div class="step active" id="step1">
+        <div class="step-header">
+          <div class="step-num">01</div>
+          <div class="step-label">Select State</div>
+        </div>
+        <select class="big-select" id="stateSelect">
+          <option value="">— Choose a state —</option>
+        </select>
+      </div>
+
+      <!-- Step 2: County -->
+      <div class="step" id="step2">
+        <div class="step-header">
+          <div class="step-num">02</div>
+          <div class="step-label">Select County</div>
+          <div class="step-hint" id="countyCount"></div>
+        </div>
+        <input class="big-input" id="countyInput" type="text" placeholder="Type to filter counties…" autocomplete="off" disabled />
+        <div class="county-list" id="countyList"></div>
+        <div class="fallback-row">
+          County not listed?
+          <a href="#" id="customCountyLink">Search any county via Google →</a>
+        </div>
+      </div>
+
+      <!-- Step 3: Search Method -->
+      <div class="step" id="step3">
+        <div class="step-header">
+          <div class="step-num">03</div>
+          <div class="step-label">Search Method</div>
+        </div>
+        <div class="method-tabs">
+          <button class="method-btn active" data-method="address" disabled><span class="method-emoji">📍</span>By Address</button>
+          <button class="method-btn"        data-method="parcel"  disabled><span class="method-emoji">🔢</span>By Parcel / PIN</button>
+          <button class="method-btn"        data-method="owner"   disabled><span class="method-emoji">👤</span>By Owner Name</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- RIGHT: Result Panel -->
+    <div class="result-panel">
+      <!-- Empty state -->
+      <div class="result-empty" id="resultEmpty">
+        <div class="result-empty-icon">🏛️</div>
+        <div class="result-empty-title">Pick a state to begin</div>
+        <div class="result-empty-sub">We'll show you the official property tax portal, what search methods it supports, and any quirks to watch for.</div>
+      </div>
+
+      <!-- Result content (filled dynamically) -->
+      <div class="result-content" id="resultContent">
+        <div class="result-tag" id="resultTag">PROPERTY TAX PORTAL</div>
+        <div class="result-county-name" id="resultCountyName">—</div>
+        <div class="result-state-name" id="resultStateName">—</div>
+
+        <div class="result-info-grid">
+          <div class="result-info">
+            <div class="result-info-label">Selected Method</div>
+            <div class="result-info-value" id="resultMethod">By Address</div>
+          </div>
+          <div class="result-info">
+            <div class="result-info-label">Methods Supported</div>
+            <div class="result-info-value" id="resultMethods">—</div>
+          </div>
+        </div>
+
+        <div class="result-notes" id="resultNotesBox">
+          <span class="info-icon">ⓘ</span>
+          <span id="resultNotes">—</span>
+        </div>
+
+        <a class="btn-primary" id="btnPrimary" href="#" target="_blank" rel="noopener">
+          <span>Open Official Portal</span>
+          <span>→</span>
+        </a>
+        <a class="btn-secondary" id="btnGoogle" href="#" target="_blank" rel="noopener">
+          <span>🔎</span><span>Or Search via Google</span>
+        </a>
+
+        <div class="result-tip">
+          <strong>Pro tip:</strong> If the portal asks for a parcel number, you can usually find it by first searching the address; the parcel/PIN will appear on the result page.
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<!-- HOW IT WORKS -->
+<div class="how-section">
+  <div class="how-title">How this tool works</div>
+  <p class="how-sub">There's no national property tax database in the US &mdash; every county runs its own portal. This tool is a smart router: it gets you to the right one in three clicks.</p>
+  <div class="how-grid">
+    <div class="how-card">
+      <div class="how-card-num">STEP 01</div>
+      <div class="how-card-title">Pick the state</div>
+      <div class="how-card-desc">All 50 states plus DC are covered. Some states like Connecticut, Massachusetts, and Maine assess property at the city/town level, not county &mdash; we flag that in the notes.</div>
+    </div>
+    <div class="how-card">
+      <div class="how-card-num">STEP 02</div>
+      <div class="how-card-title">Pick the county</div>
+      <div class="how-card-desc">300+ counties have direct links to their assessor or tax-collector portal. If a county isn't listed, the Google fallback gets you there in one click.</div>
+    </div>
+    <div class="how-card">
+      <div class="how-card-num">STEP 03</div>
+      <div class="how-card-title">Search the records</div>
+      <div class="how-card-desc">Most portals support address, parcel/PIN, or owner-name searches. We tell you which the county supports and any access fees, then send you straight to the search page.</div>
+    </div>
+  </div>
+</div>
+
+<!-- WHY THIS APPROACH -->
+<div class="why-section">
+  <div class="why-inner">
+    <div>
+      <div class="why-title">Why we don't pull data ourselves</div>
+      <p class="why-prose">There is no single API or database that covers all <strong>3,000+ US counties</strong>. Commercial aggregators like ATTOM and CoreLogic charge hundreds of dollars per month and still miss small counties.</p>
+      <p class="why-prose">Instead, we maintain a curated directory of <strong>official county portals</strong>. The data you see is the same data your CPA or attorney accesses &mdash; pulled live from the source of truth, with no middleman fees and no stale records.</p>
+      <p class="why-prose">For your privacy: we never see your search query. The handoff happens in your browser.</p>
+    </div>
+    <div class="why-stats">
+      <div class="why-stat">
+        <div class="why-stat-num">50+</div>
+        <div class="why-stat-label">States &amp; DC</div>
+      </div>
+      <div class="why-stat">
+        <div class="why-stat-num" id="statCounties">300+</div>
+        <div class="why-stat-label">Counties</div>
+      </div>
+      <div class="why-stat">
+        <div class="why-stat-num">$0</div>
+        <div class="why-stat-label">API Fees</div>
+      </div>
+      <div class="why-stat">
+        <div class="why-stat-num">100%</div>
+        <div class="why-stat-label">Coverage via Fallback</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- DISCLAIMER -->
+<div class="disclaimer">
+  <strong>Disclaimer:</strong> TaxPreparerTools.com is not affiliated with the IRS, any state revenue department, or any county assessor's office. Portal links are provided for navigational convenience only; the destination websites are owned and maintained by the respective county or municipal authorities. Always verify property tax data with the official source before relying on it for filings, transactions, or legal matters. Found a broken link? <a href="contact.html" style="color:var(--gold);">Let us know</a>.
+</div>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-left">
+    © 2026 <a href="https://taxpreparertools.com">TaxPreparerTools.com</a> · For informational purposes only · Not affiliated with the IRS
+  </div>
+  <div class="footer-links">
+    <a href="privacy.html">Privacy</a>
+    <a href="terms.html">Terms</a>
+    <a href="contact.html">Contact</a>
+    <a href="https://irs.gov" target="_blank">IRS.gov ↗</a>
+  </div>
+</footer>
+
+<!-- DATA -->
+<script src="assets/js/property-tax-data.js"></script>
+
+<!-- LOGIC -->
+<script>
+(function(){
+  var DATA = window.PROPERTY_TAX_DATA;
+
+  // Element refs
+  var stateSelect    = document.getElementById('stateSelect');
+  var countyInput    = document.getElementById('countyInput');
+  var countyList     = document.getElementById('countyList');
+  var countyCountEl  = document.getElementById('countyCount');
+  var methodBtns     = document.querySelectorAll('.method-btn');
+  var step2          = document.getElementById('step2');
+  var step3          = document.getElementById('step3');
+  var step1          = document.getElementById('step1');
+  var customLink     = document.getElementById('customCountyLink');
+
+  // Result panel refs
+  var resultEmpty     = document.getElementById('resultEmpty');
+  var resultContent   = document.getElementById('resultContent');
+  var resultCountyName= document.getElementById('resultCountyName');
+  var resultStateName = document.getElementById('resultStateName');
+  var resultMethod    = document.getElementById('resultMethod');
+  var resultMethods   = document.getElementById('resultMethods');
+  var resultNotes     = document.getElementById('resultNotes');
+  var btnPrimary      = document.getElementById('btnPrimary');
+  var btnGoogle       = document.getElementById('btnGoogle');
+
+  // Meta header
+  document.getElementById('metaCounties').textContent = DATA.totalCounties + '+ Direct Portal Links';
+  document.getElementById('statCounties').textContent = DATA.totalCounties + '+';
+
+  // ── Populate state dropdown
+  DATA.states.forEach(function(s){
+    var opt = document.createElement('option');
+    opt.value = s.code;
+    opt.textContent = s.name;
+    stateSelect.appendChild(opt);
+  });
+
+  // ── State of selection
+  var currentState   = null;
+  var currentCounty  = null;
+  var currentMethod  = 'address';
+
+  var METHOD_LABEL = { address:'By Property Address', parcel:'By Parcel / PIN', owner:'By Owner Name' };
+  var METHOD_TIP = {
+    address: "Enter the full street address. Most portals tolerate variations like 'Street' vs 'St'.",
+    parcel:  "Parcel/PIN/APN format varies by county. If you don't have it, search by address first.",
+    owner:   "Use last name first when possible (e.g., 'Smith John'). Partial matches usually work."
+  };
+
+  // ── State change
+  stateSelect.addEventListener('change', function(){
+    var code = stateSelect.value;
+    currentState  = DATA.states.find(function(s){ return s.code === code; }) || null;
+    currentCounty = null;
+
+    if (!currentState) {
+      step2.classList.remove('active','completed');
+      step3.classList.remove('active','completed');
+      countyInput.disabled = true;
+      countyInput.value = '';
+      countyList.classList.remove('show');
+      countyCountEl.textContent = '';
+      methodBtns.forEach(function(b){ b.disabled = true; });
+      showEmpty();
+      return;
+    }
+
+    step1.classList.add('completed');
+    step2.classList.add('active');
+    step3.classList.remove('active','completed');
+    countyInput.disabled = false;
+    countyInput.value = '';
+
+    var counties = DATA.getCounties(currentState.code);
+    countyCountEl.textContent = counties.length + ' counties listed';
+    renderCountyList(counties);
+    countyList.classList.add('show');
+    methodBtns.forEach(function(b){ b.disabled = true; });
+
+    showStateOnly();
+  });
+
+  // ── County filter typing
+  countyInput.addEventListener('input', function(){
+    if (!currentState) return;
+    var q = countyInput.value.trim().toLowerCase();
+    var counties = DATA.getCounties(currentState.code);
+    var filtered = q ? counties.filter(function(c){ return c.name.toLowerCase().indexOf(q) >= 0; }) : counties;
+    renderCountyList(filtered);
+    countyList.classList.add('show');
+  });
+
+  countyInput.addEventListener('focus', function(){
+    if (currentState) countyList.classList.add('show');
+  });
+
+  // ── Render county list
+  function renderCountyList(counties) {
+    countyList.innerHTML = '';
+    if (!counties.length) {
+      var empty = document.createElement('div');
+      empty.className = 'county-item';
+      empty.style.color = 'var(--muted)';
+      empty.style.cursor = 'default';
+      empty.innerHTML = '<span>No matches. Try the Google fallback below.</span>';
+      countyList.appendChild(empty);
+      return;
+    }
+    counties.forEach(function(county){
+      var div = document.createElement('div');
+      div.className = 'county-item';
+      div.dataset.name = county.name;
+      div.innerHTML = '<span>' + escapeHTML(county.name) + ' County</span>'
+                    + '<span class="county-meta">' + county.methods.length + ' methods</span>';
+      div.addEventListener('click', function(){
+        selectCounty(county);
+      });
+      countyList.appendChild(div);
+    });
+  }
+
+  // ── Select a county
+  function selectCounty(county) {
+    currentCounty = county;
+    countyInput.value = county.name + ' County';
+    countyList.classList.remove('show');
+
+    step2.classList.add('completed');
+    step3.classList.add('active');
+
+    methodBtns.forEach(function(b){
+      var m = b.dataset.method;
+      b.disabled = county.methods.indexOf(m) === -1;
+      if (b.disabled && b.classList.contains('active')) {
+        b.classList.remove('active');
+      }
+    });
+
+    // If current method isn't supported by this county, fall back to first supported
+    if (county.methods.indexOf(currentMethod) === -1 && county.methods.length) {
+      currentMethod = county.methods[0];
+      methodBtns.forEach(function(b){
+        b.classList.toggle('active', b.dataset.method === currentMethod);
+      });
+    }
+
+    renderResult();
+  }
+
+  // ── Method change
+  methodBtns.forEach(function(btn){
+    btn.addEventListener('click', function(){
+      if (btn.disabled) return;
+      methodBtns.forEach(function(b){ b.classList.remove('active'); });
+      btn.classList.add('active');
+      currentMethod = btn.dataset.method;
+      if (currentCounty) renderResult();
+    });
+  });
+
+  // ── Custom (Google) fallback
+  customLink.addEventListener('click', function(e){
+    e.preventDefault();
+    if (!currentState) {
+      alert('Pick a state first.');
+      return;
+    }
+    var q = prompt('Enter the county name (e.g., "Travis"):');
+    if (!q) return;
+    var stub = { name:q, portal: DATA.buildGoogleFallback(currentState.name, q), methods:["address","parcel","owner"], notes:"County not in our curated list. Using Google search to locate the official portal." };
+    selectCounty(stub);
+  });
+
+  // ── Render result panel
+  function renderResult() {
+    if (!currentState || !currentCounty) { showEmpty(); return; }
+
+    resultCountyName.textContent = currentCounty.name + ' County';
+    resultStateName.textContent  = currentState.name;
+    resultMethod.textContent     = METHOD_LABEL[currentMethod] || '—';
+
+    // Methods list
+    var allMethods = ['address','parcel','owner'];
+    resultMethods.innerHTML = allMethods.map(function(m){
+      var supported = currentCounty.methods.indexOf(m) >= 0;
+      var label = m === 'address' ? 'Address' : m === 'parcel' ? 'Parcel' : 'Owner';
+      return '<span style="margin-right:10px;font-size:0.82rem;">'
+             + '<span class="' + (supported ? 'check' : 'x') + '">' + (supported ? '✓' : '✕') + '</span>'
+             + label + '</span>';
+    }).join('');
+
+    // Notes: county notes + method tip
+    var notesParts = [];
+    if (currentCounty.notes) notesParts.push(currentCounty.notes);
+    if (METHOD_TIP[currentMethod]) notesParts.push(METHOD_TIP[currentMethod]);
+    resultNotes.textContent = notesParts.join(' ');
+
+    btnPrimary.href = currentCounty.portal;
+    btnGoogle.href = DATA.buildGoogleFallback(currentState.name, currentCounty.name);
+
+    resultEmpty.style.display = 'none';
+    resultContent.classList.add('show');
+  }
+
+  function showStateOnly() {
+    resultEmpty.style.display = 'flex';
+    resultContent.classList.remove('show');
+    resultEmpty.querySelector('.result-empty-title').textContent = 'Pick a county in ' + currentState.name;
+    resultEmpty.querySelector('.result-empty-sub').textContent  = currentState.name + ' has ' + DATA.getCounties(currentState.code).length + ' counties in our directory. Pick one to see its portal.';
+  }
+
+  function showEmpty() {
+    resultEmpty.style.display = 'flex';
+    resultContent.classList.remove('show');
+    resultEmpty.querySelector('.result-empty-title').textContent = 'Pick a state to begin';
+    resultEmpty.querySelector('.result-empty-sub').textContent  = "We'll show you the official property tax portal, what search methods it supports, and any quirks to watch for.";
+  }
+
+  // ── Click outside county list closes it
+  document.addEventListener('click', function(e){
+    if (!step2.contains(e.target)) countyList.classList.remove('show');
+  });
+
+  // ── Helpers
+  function escapeHTML(s){ return String(s).replace(/[&<>"']/g, function(c){ return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]; }); }
+})();
+
+// Mobile nav toggle (matches existing site)
+(function(){
+  var btn = document.getElementById('navHamburger');
+  var ul = document.querySelector('nav .nav-links');
+  if(!btn || !ul) return;
+  btn.addEventListener('click', function(){
+    btn.classList.toggle('open');
+    ul.classList.toggle('mobile-open');
+  });
+  document.addEventListener('click', function(e){
+    if(!e.target.closest('nav')){
+      btn.classList.remove('open');
+      ul && ul.classList.remove('mobile-open');
+    }
+  });
+})();
+</script>
+</body>
+</html>
