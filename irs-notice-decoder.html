@@ -1,0 +1,1379 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>IRS Notice Decoder — Plain-English Lookup for All IRS Notices &amp; Letters | TaxPreparerTools.com</title>
+<meta name="description" content="Decode any IRS notice or letter (CP2000, CP14, CP504, LT11, Letter 226-J, etc.) in plain English. See what it means, deadline, recommended response, and downloadable response letter templates. Free tool for tax preparers and taxpayers.">
+<link rel="canonical" href="https://taxpreparertools.com/irs-notice-decoder" />
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700;900&family=DM+Sans:wght@300;400;500;600&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root{
+--navy:#08152a;--navy-mid:#0f1f3d;--slate:#1a2f52;
+--gold:#c8a84b;--gold-light:#e8c96a;--gold-dim:rgba(200,168,75,0.13);
+--white:#fff;--muted:#7a8fac;--text:#dde4f0;--border:rgba(200,168,75,0.14);
+--card:rgba(255,255,255,0.04);
+--green:#4ade80;--blue:#60a5fa;--red:#f87171;--orange:#fb923c;--purple:#a78bfa;
+--sev-info:rgba(96,165,250,.15);--sev-info-text:#93c5fd;
+--sev-action:rgba(251,191,36,.15);--sev-action-text:#fcd34d;
+--sev-serious:rgba(251,146,60,.15);--sev-serious-text:#fdba74;
+--sev-critical:rgba(248,113,113,.15);--sev-critical-text:#fca5a5;
+}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+html{scroll-behavior:smooth;}
+body{font-family:'DM Sans',sans-serif;background:var(--navy);color:var(--text);min-height:100vh;}
+nav{position:sticky;top:0;z-index:200;padding:14px 48px;display:flex;align-items:center;justify-content:space-between;background:rgba(8,21,42,0.95);backdrop-filter:blur(20px);border-bottom:1px solid var(--border);}
+.logo{display:flex;align-items:center;gap:10px;text-decoration:none;}
+.logo-mark{width:32px;height:32px;background:var(--gold);border-radius:7px;display:flex;align-items:center;justify-content:center;font-size:15px;}
+.logo-name{font-family:'Playfair Display',serif;font-size:1.1rem;font-weight:700;color:var(--white);}
+.logo-name span{color:var(--gold);}
+.logo-domain{font-size:0.62rem;color:var(--muted);font-family:'DM Mono',monospace;display:block;}
+.nav-links{display:flex;gap:24px;list-style:none;}
+.nav-links a{color:var(--muted);font-size:0.82rem;font-weight:500;text-decoration:none;transition:color .2s;}
+.nav-links a:hover,.nav-links a.active{color:var(--gold);}
+.btn-sm{padding:7px 16px;border-radius:6px;font-size:0.8rem;font-weight:700;cursor:pointer;text-decoration:none;transition:all .2s;border:none;font-family:'DM Sans',sans-serif;}
+.btn-gold{background:var(--gold);color:var(--navy);}
+.btn-gold:hover{background:var(--gold-light);}
+.page-wrap{max-width:1160px;margin:0 auto;padding:40px 48px 80px;}
+.breadcrumb{font-size:0.73rem;font-family:'DM Mono',monospace;color:var(--muted);margin-bottom:20px;display:flex;gap:7px;align-items:center;flex-wrap:wrap;}
+.breadcrumb a{color:var(--gold);text-decoration:none;}
+.breadcrumb a:hover{text-decoration:underline;}
+.tool-header{display:flex;gap:24px;align-items:flex-start;margin-bottom:36px;}
+.tool-header-icon{width:60px;height:60px;background:linear-gradient(135deg,var(--gold-dim),rgba(200,168,75,0.05));border:1px solid rgba(200,168,75,0.3);border-radius:16px;display:flex;align-items:center;justify-content:center;font-size:28px;flex-shrink:0;}
+.tool-badges{display:flex;gap:7px;margin-bottom:10px;flex-wrap:wrap;}
+.badge{font-size:0.63rem;font-family:'DM Mono',monospace;font-weight:700;text-transform:uppercase;letter-spacing:.08em;padding:3px 10px;border-radius:50px;}
+.badge-free{background:rgba(74,222,128,.12);color:var(--green);}
+.badge-new{background:rgba(251,146,60,.12);color:var(--orange);}
+.badge-cat{background:var(--gold-dim);color:var(--gold);}
+.badge-count{background:rgba(96,165,250,.1);color:var(--blue);}
+h1{font-family:'Playfair Display',serif;font-size:clamp(1.6rem,3.5vw,2.4rem);font-weight:900;color:var(--white);letter-spacing:-0.03em;line-height:1.1;margin-bottom:8px;}
+.tool-desc{color:var(--muted);font-size:0.9rem;line-height:1.7;max-width:680px;}
+.search-card{background:var(--navy-mid);border:1px solid var(--border);border-radius:20px;padding:24px;margin-bottom:24px;}
+.search-row{display:flex;gap:12px;align-items:center;}
+.search-input-wrap{flex:1;position:relative;}
+.search-icon{position:absolute;left:16px;top:50%;transform:translateY(-50%);color:var(--gold);font-size:1.1rem;}
+#noticeSearch{width:100%;background:rgba(255,255,255,.05);border:1.5px solid rgba(200,168,75,.2);border-radius:12px;padding:14px 18px 14px 46px;color:var(--white);font-size:1rem;font-family:'DM Sans',sans-serif;outline:none;transition:all .2s;}
+#noticeSearch:focus{border-color:var(--gold);background:rgba(255,255,255,.07);box-shadow:0 0 0 3px rgba(200,168,75,.08);}
+#noticeSearch::placeholder{color:var(--muted);}
+.search-clear{padding:11px 18px;background:transparent;border:1px solid var(--border);color:var(--muted);border-radius:10px;cursor:pointer;font-family:'DM Sans',sans-serif;font-size:0.85rem;transition:all .2s;}
+.search-clear:hover{color:var(--gold);border-color:var(--gold);}
+.filter-row{display:flex;gap:8px;flex-wrap:wrap;margin-top:16px;}
+.filter-chip{padding:7px 14px;background:rgba(255,255,255,.04);border:1px solid var(--border);border-radius:50px;font-size:0.78rem;color:var(--muted);cursor:pointer;font-family:'DM Sans',sans-serif;transition:all .18s;}
+.filter-chip:hover{color:var(--text);border-color:rgba(200,168,75,.3);}
+.filter-chip.on{background:rgba(200,168,75,.1);color:var(--gold);border-color:var(--gold);}
+.results-meta{font-size:0.78rem;color:var(--muted);margin-top:14px;font-family:'DM Mono',monospace;}
+.results-meta span{color:var(--gold);font-weight:600;}
+.layout{display:grid;grid-template-columns:380px 1fr;gap:24px;align-items:start;}
+.results-panel{background:var(--navy-mid);border:1px solid var(--border);border-radius:16px;overflow:hidden;max-height:calc(100vh - 120px);overflow-y:auto;position:sticky;top:90px;}
+.results-panel::-webkit-scrollbar{width:6px;}
+.results-panel::-webkit-scrollbar-track{background:rgba(255,255,255,.02);}
+.results-panel::-webkit-scrollbar-thumb{background:rgba(200,168,75,.2);border-radius:3px;}
+.results-list{padding:8px;}
+.result-item{padding:12px 14px;border-radius:10px;cursor:pointer;transition:background .15s;border:1px solid transparent;margin-bottom:4px;}
+.result-item:hover{background:rgba(255,255,255,.04);}
+.result-item.active{background:rgba(200,168,75,.08);border-color:rgba(200,168,75,.3);}
+.result-code{font-family:'DM Mono',monospace;font-size:0.78rem;font-weight:700;color:var(--gold);margin-bottom:3px;display:flex;align-items:center;gap:8px;}
+.result-title{font-size:0.85rem;color:var(--text);line-height:1.35;font-weight:500;}
+.result-empty{padding:40px 20px;text-align:center;color:var(--muted);font-size:0.85rem;}
+.sev-pill{font-size:0.58rem;font-family:'DM Mono',monospace;font-weight:700;text-transform:uppercase;letter-spacing:.08em;padding:2px 7px;border-radius:4px;}
+.sev-pill.informational{background:var(--sev-info);color:var(--sev-info-text);}
+.sev-pill.action_required{background:var(--sev-action);color:var(--sev-action-text);}
+.sev-pill.serious{background:var(--sev-serious);color:var(--sev-serious-text);}
+.sev-pill.critical{background:var(--sev-critical);color:var(--sev-critical-text);}
+.detail-panel{background:var(--navy-mid);border:1px solid var(--border);border-radius:20px;padding:32px;min-height:500px;}
+.detail-empty{padding:60px 20px;text-align:center;color:var(--muted);}
+.detail-empty-icon{font-size:3.5rem;margin-bottom:12px;opacity:.4;}
+.detail-empty h3{font-family:'Playfair Display',serif;font-size:1.2rem;color:var(--text);margin-bottom:8px;font-weight:600;}
+.detail-empty p{font-size:0.88rem;line-height:1.6;max-width:380px;margin:0 auto;}
+.detail-header{display:flex;justify-content:space-between;align-items:flex-start;gap:16px;margin-bottom:18px;padding-bottom:18px;border-bottom:1px solid var(--border);}
+.detail-code-block{display:flex;flex-direction:column;gap:6px;}
+.detail-code{font-family:'DM Mono',monospace;font-size:1.6rem;font-weight:700;color:var(--gold);letter-spacing:-0.02em;line-height:1;}
+.detail-pills{display:flex;gap:6px;align-items:center;flex-wrap:wrap;margin-top:6px;}
+.detail-cat-pill{font-size:0.65rem;font-family:'DM Mono',monospace;font-weight:600;text-transform:uppercase;letter-spacing:.06em;padding:3px 9px;border-radius:50px;background:rgba(255,255,255,.05);color:var(--muted);}
+.detail-title{font-family:'Playfair Display',serif;font-size:1.3rem;font-weight:700;color:var(--white);line-height:1.25;margin-bottom:14px;}
+.detail-summary{font-size:0.95rem;line-height:1.7;color:var(--text);margin-bottom:24px;padding:16px 18px;background:rgba(200,168,75,.05);border-left:3px solid var(--gold);border-radius:0 8px 8px 0;}
+.detail-section{margin-bottom:24px;}
+.detail-section-title{font-family:'DM Mono',monospace;font-size:0.7rem;font-weight:700;color:var(--muted);text-transform:uppercase;letter-spacing:.1em;margin-bottom:10px;display:flex;align-items:center;gap:8px;}
+.detail-section-title::before{content:"";width:14px;height:1px;background:var(--gold);}
+.detail-text{font-size:0.88rem;line-height:1.7;color:var(--text);}
+.detail-text strong{color:var(--white);}
+.deadline-card{background:rgba(248,113,113,.06);border:1px solid rgba(248,113,113,.2);border-radius:12px;padding:16px 18px;margin-bottom:24px;}
+.deadline-card.warn{background:rgba(251,191,36,.06);border-color:rgba(251,191,36,.2);}
+.deadline-card.info{background:rgba(96,165,250,.06);border-color:rgba(96,165,250,.2);}
+.deadline-row{display:flex;justify-content:space-between;align-items:center;gap:12px;}
+.deadline-label{font-size:0.7rem;font-family:'DM Mono',monospace;font-weight:700;text-transform:uppercase;letter-spacing:.08em;color:#fca5a5;}
+.deadline-card.warn .deadline-label{color:#fcd34d;}
+.deadline-card.info .deadline-label{color:#93c5fd;}
+.deadline-counter{font-family:'DM Mono',monospace;font-size:1.4rem;font-weight:700;color:var(--white);letter-spacing:-0.01em;}
+.deadline-input-row{display:flex;gap:8px;align-items:center;margin-top:10px;font-size:0.8rem;color:var(--muted);}
+.deadline-input-row input{background:rgba(255,255,255,.05);border:1px solid var(--border);border-radius:6px;padding:5px 9px;color:var(--white);font-family:'DM Mono',monospace;font-size:0.8rem;}
+.deadline-desc{font-size:0.82rem;color:var(--text);line-height:1.6;margin-top:8px;}
+.action-list{list-style:none;display:flex;flex-direction:column;gap:9px;}
+.action-list li{padding-left:26px;position:relative;font-size:0.88rem;line-height:1.65;color:var(--text);}
+.action-list li::before{content:"→";position:absolute;left:0;color:var(--gold);font-weight:700;}
+.forms-list{display:flex;gap:8px;flex-wrap:wrap;}
+.form-pill{padding:6px 12px;background:rgba(255,255,255,.04);border:1px solid var(--border);border-radius:8px;font-family:'DM Mono',monospace;font-size:0.78rem;color:var(--text);transition:all .18s;text-decoration:none;}
+.form-pill:hover{background:rgba(200,168,75,.08);border-color:rgba(200,168,75,.3);color:var(--gold);}
+.detail-actions{display:flex;gap:10px;flex-wrap:wrap;margin-top:8px;padding-top:20px;border-top:1px solid var(--border);}
+.btn{padding:11px 20px;border-radius:10px;font-size:0.88rem;font-weight:700;cursor:pointer;border:none;font-family:'DM Sans',sans-serif;text-decoration:none;display:inline-flex;align-items:center;gap:8px;transition:all .2s;}
+.btn-primary{background:var(--gold);color:var(--navy);}
+.btn-primary:hover{background:var(--gold-light);transform:translateY(-1px);}
+.btn-secondary{background:transparent;color:var(--text);border:1px solid var(--border);}
+.btn-secondary:hover{border-color:var(--gold);color:var(--gold);}
+.preparer-note{background:rgba(167,139,250,.06);border:1px solid rgba(167,139,250,.2);border-radius:10px;padding:14px 16px;margin-top:16px;font-size:0.83rem;line-height:1.6;color:var(--text);}
+.preparer-note-label{font-size:0.65rem;font-family:'DM Mono',monospace;font-weight:700;text-transform:uppercase;letter-spacing:.08em;color:#c4b5fd;margin-bottom:6px;}
+/* Modal for templates */
+.modal-overlay{display:none;position:fixed;inset:0;background:rgba(8,21,42,0.85);backdrop-filter:blur(8px);z-index:300;align-items:center;justify-content:center;padding:20px;}
+.modal-overlay.show{display:flex;}
+.modal{background:var(--navy-mid);border:1px solid var(--border);border-radius:16px;max-width:760px;width:100%;max-height:90vh;overflow:hidden;display:flex;flex-direction:column;}
+.modal-header{padding:18px 24px;border-bottom:1px solid var(--border);display:flex;justify-content:space-between;align-items:center;}
+.modal-title{font-family:'Playfair Display',serif;font-size:1.05rem;font-weight:700;color:var(--white);}
+.modal-close{background:transparent;border:none;color:var(--muted);font-size:1.4rem;cursor:pointer;padding:0 4px;}
+.modal-close:hover{color:var(--white);}
+.modal-body{padding:24px;overflow-y:auto;flex:1;}
+.template-text{background:rgba(0,0,0,0.25);border:1px solid var(--border);border-radius:10px;padding:18px;font-family:'DM Mono',monospace;font-size:0.78rem;line-height:1.7;color:var(--text);white-space:pre-wrap;word-wrap:break-word;}
+.template-placeholder{background:rgba(200,168,75,.18);color:var(--gold);padding:1px 4px;border-radius:3px;}
+.modal-footer{padding:16px 24px;border-top:1px solid var(--border);display:flex;justify-content:space-between;align-items:center;gap:10px;}
+.modal-note{font-size:0.74rem;color:var(--muted);line-height:1.5;flex:1;}
+.disclaimer{margin-top:32px;padding:18px 22px;background:rgba(96,165,250,.04);border:1px solid rgba(96,165,250,.15);border-radius:12px;}
+.disclaimer-title{font-size:0.72rem;font-family:'DM Mono',monospace;font-weight:700;color:#93c5fd;text-transform:uppercase;letter-spacing:.08em;margin-bottom:8px;}
+.disclaimer-text{font-size:0.8rem;color:var(--muted);line-height:1.65;}
+footer{border-top:1px solid var(--border);padding:28px 48px;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:12px;background:var(--navy-mid);}
+.footer-left{font-size:0.73rem;color:var(--muted);}
+.footer-left a{color:var(--gold);text-decoration:none;}
+.footer-links{display:flex;gap:20px;}
+.footer-links a{font-size:0.73rem;color:var(--muted);text-decoration:none;transition:color .2s;}
+.footer-links a:hover{color:var(--gold);}
+@media(max-width:960px){
+nav{padding:13px 18px;}.nav-links{display:none;}
+.page-wrap{padding:28px 18px 60px;}
+.layout{grid-template-columns:1fr;}
+.results-panel{position:static;max-height:380px;}
+footer{padding:20px 18px;flex-direction:column;}
+}
+.nav-hamburger{display:none;flex-direction:column;gap:5px;cursor:pointer;padding:6px;border:none;background:transparent;z-index:300;}
+.nav-hamburger span{display:block;width:22px;height:2px;background:var(--gold);border-radius:2px;transition:all .25s;}
+.nav-hamburger.open span:nth-child(1){transform:translateY(7px) rotate(45deg);}
+.nav-hamburger.open span:nth-child(2){opacity:0;}
+.nav-hamburger.open span:nth-child(3){transform:translateY(-7px) rotate(-45deg);}
+@media(max-width:768px){
+.nav-hamburger{display:flex;}
+nav .nav-links{display:none;position:fixed;top:60px;left:0;right:0;background:rgba(8,21,42,0.98);backdrop-filter:blur(20px);flex-direction:column;padding:16px 0;z-index:200;border-bottom:1px solid rgba(200,168,75,.18);}
+nav .nav-links.mobile-open{display:flex;}
+nav .nav-links li{width:100%;text-align:center;}
+nav .nav-links li a{display:block;padding:12px 24px;font-size:1rem;}
+}
+</style>
+<meta property="og:type" content="website" />
+<meta property="og:url" content="https://taxpreparertools.com/irs-notice-decoder" />
+<meta property="og:title" content="IRS Notice Decoder — Plain-English Lookup for All IRS Notices &amp; Letters" />
+<meta property="og:description" content="Decode any IRS notice or letter (CP2000, CP14, CP504, LT11, Letter 226-J) in plain English. See what it means, deadline, recommended response, and download response letter templates." />
+</head>
+<body>
+<nav>
+<a href="index.html" class="logo">
+<div class="logo-mark">⚖</div>
+<div><span class="logo-name">TaxPreparer<span>Tools</span></span><span class="logo-domain">taxpreparertools.com</span></div>
+</a>
+<button id="navHamburger" class="nav-hamburger" aria-label="Menu"><span></span><span></span><span></span></button>
+<ul class="nav-links">
+<li><a href="tools.html" class="active">Tools</a></li>
+<li><a href="deadlines.html">Deadlines</a></li>
+<li><a href="ai-assistant.html">AI Assistant</a></li>
+<li><a href="resources.html">Resources</a></li>
+</ul>
+<a href="signup.html" class="btn-sm btn-gold">Get Pro Free</a>
+</nav>
+
+<div class="page-wrap">
+<div class="breadcrumb">
+<a href="index.html">Home</a> <span>/</span>
+<a href="tools.html">Tools</a> <span>/</span>
+<a href="tools.html?cat=lookup">Lookups</a> <span>/</span>
+IRS Notice Decoder
+</div>
+
+<div class="tool-header">
+<div class="tool-header-icon">📋</div>
+<div class="tool-header-meta">
+<div class="tool-badges">
+<span class="badge badge-free">Free</span>
+<span class="badge badge-new">New</span>
+<span class="badge badge-count" id="badgeCount">35+ Notices</span>
+<span class="badge badge-cat">Lookup Tool</span>
+</div>
+<h1>IRS Notice &amp; Letter<br>Decoder</h1>
+<p class="tool-desc">Type any IRS notice code (CP2000, CP14, LT11, Letter 226-J, etc.) and get a plain-English explanation, what triggered it, deadline countdown, recommended response, and downloadable response letter templates. Built for tax preparers handling client notices and for taxpayers trying to understand what they received.</p>
+</div>
+</div>
+
+<div class="search-card">
+  <div class="search-row">
+    <div class="search-input-wrap">
+      <span class="search-icon">🔎</span>
+      <input type="text" id="noticeSearch" placeholder="Type a notice code (e.g. CP2000) or keyword (e.g. underreporter, levy, audit)..." autocomplete="off" autofocus />
+    </div>
+    <button class="search-clear" id="searchClear">Clear</button>
+  </div>
+  <div class="filter-row" id="filterRow">
+    <button class="filter-chip on" data-filter="all">All</button>
+    <button class="filter-chip" data-filter="balance_due">Balance Due / Collections</button>
+    <button class="filter-chip" data-filter="underreporter">Underreporter / Audit</button>
+    <button class="filter-chip" data-filter="math_error">Math Errors / Adjustments</button>
+    <button class="filter-chip" data-filter="refund">Refund Issues</button>
+    <button class="filter-chip" data-filter="identity">Identity / Filing</button>
+    <button class="filter-chip" data-filter="levy">Levy / Lien</button>
+    <button class="filter-chip" data-filter="penalty">Penalties</button>
+  </div>
+  <div class="results-meta" id="resultsMeta">Showing all notices</div>
+</div>
+
+<div class="layout">
+  <div class="results-panel">
+    <div class="results-list" id="resultsList"></div>
+  </div>
+
+  <div class="detail-panel" id="detailPanel">
+    <div class="detail-empty">
+      <div class="detail-empty-icon">📨</div>
+      <h3>Pick a notice on the left</h3>
+      <p>Or search by code (CP2000, CP14, LT11, Letter 226-J) or keyword (audit, levy, underreporter, refund hold, identity verification, penalty).</p>
+    </div>
+  </div>
+</div>
+
+<div class="disclaimer">
+  <div class="disclaimer-title">⚠️ Important Disclaimer</div>
+  <div class="disclaimer-text">This tool is a reference aid, not legal or tax advice. Notice content, deadlines, and recommended responses can vary by tax year and individual circumstances. Always read the actual notice carefully and verify against the latest IRS guidance at <a href="https://www.irs.gov" style="color:var(--gold);">irs.gov</a> before responding. Response letter templates are starting points to be customized by a qualified tax professional. If the deadline on a notice is approaching and you're unsure how to respond, seek help from a CPA, EA, or tax attorney immediately — missing deadlines can result in liens, levies, or loss of appeal rights.</div>
+</div>
+</div>
+
+<!-- Template Modal -->
+<div class="modal-overlay" id="modal">
+  <div class="modal">
+    <div class="modal-header">
+      <div class="modal-title" id="modalTitle">Response Letter Template</div>
+      <button class="modal-close" id="modalClose">×</button>
+    </div>
+    <div class="modal-body">
+      <div class="template-text" id="modalBody"></div>
+    </div>
+    <div class="modal-footer">
+      <div class="modal-note"><strong>Replace placeholders</strong> in [BRACKETS] with the client's specifics. Have a qualified preparer review before sending.</div>
+      <button class="btn btn-primary" id="modalCopy">📋 Copy to Clipboard</button>
+    </div>
+  </div>
+</div>
+
+<footer>
+<div class="footer-left">© 2026 <a href="index.html">TaxPreparerTools.com</a> · IRS notice information sourced from official IRS.gov publications. Not affiliated with the Internal Revenue Service.</div>
+<div class="footer-links"><a href="privacy.html">Privacy</a><a href="terms.html">Terms</a><a href="https://www.irs.gov" target="_blank" rel="noopener">IRS.gov ↗</a></div>
+</footer>
+
+<script>
+/* =========================================================================
+   IRS NOTICE DECODER — Data + UI Logic
+   ========================================================================= */
+
+/* Severity legend:
+   - informational: FYI only, no action required
+   - action_required: Must respond by a deadline, but not urgent/critical
+   - serious: Time-sensitive, missed deadline = significant consequences (penalties, loss of appeal rights)
+   - critical: Imminent enforcement (levy, lien, deficiency) — act IMMEDIATELY
+*/
+
+const NOTICES = [
+  // ─── BALANCE DUE / COLLECTIONS ───
+  {
+    code: "CP14",
+    title: "Balance Due — First Notice",
+    summary: "The IRS believes your client owes additional tax. This is the first formal notice of the balance and the start of collection action.",
+    category: "balance_due",
+    severity: "action_required",
+    triggered_by: "An assessed balance on the account — either from the original return, an amendment, audit adjustment, or math error correction. Often follows a return that was filed with tax due but not paid.",
+    deadline_days: 21,
+    deadline_desc: "21 days to pay the balance in full to avoid additional penalties and interest, or 10 days for amounts ≥ $100,000. If unable to pay, set up an installment agreement before the next notice (CP501).",
+    actions: [
+      "Verify the balance against your records — check for missing payments, estimated tax credits, or withholding the IRS may not have recorded",
+      "If the balance is correct and payable, pay online at irs.gov/payments or by check with the notice voucher",
+      "If unpayable in full, apply for an installment agreement (Form 9465 or Online Payment Agreement)",
+      "If you disagree with the balance, call the number on the notice and request an account transcript to identify the source"
+    ],
+    forms: ["Form 9465", "Form 433-D", "Form 1040-X (if return was wrong)"],
+    irs_url: "https://www.irs.gov/individuals/understanding-your-cp14-notice",
+    preparer_note: "Always pull an account transcript via TDS or e-Services first to verify the balance and identify which year/items are at issue. Many CP14s are caused by withholding or estimated payments not being credited correctly — this is fixable with documentation, not payment.",
+    template_id: "balance_due_dispute"
+  },
+  {
+    code: "CP501",
+    title: "Reminder of Balance Due (1st Reminder)",
+    summary: "First reminder following CP14. The balance remains unpaid and additional penalties and interest are accruing.",
+    category: "balance_due",
+    severity: "action_required",
+    triggered_by: "No response or payment received after CP14. Issued approximately 5 weeks after CP14 if balance is still owed.",
+    deadline_days: 21,
+    deadline_desc: "21 days from the notice date to pay or establish a payment plan before the next collection notice (CP503) is issued.",
+    actions: [
+      "Pay the full balance, or",
+      "Set up an Online Payment Agreement at irs.gov/opa, or",
+      "Submit an Offer in Compromise (Form 656) if eligible, or",
+      "Request Currently Not Collectible (CNC) status if hardship applies"
+    ],
+    forms: ["Form 9465", "Form 656", "Form 433-A or 433-F"],
+    irs_url: "https://www.irs.gov/individuals/understanding-your-cp501-notice",
+    preparer_note: "If the client is dragging their feet, this is the right moment to push hard for either payment or an installment agreement. CP501 → CP503 → CP504 → LT11 escalates fast and gets serious within a few months.",
+    template_id: null
+  },
+  {
+    code: "CP503",
+    title: "Second Reminder — Balance Still Due",
+    summary: "Second reminder. The IRS is now seriously preparing to escalate to enforced collections. This is the warning shot before CP504.",
+    category: "balance_due",
+    severity: "action_required",
+    triggered_by: "No response to CP14 and CP501. Typically issued ~5 weeks after CP501.",
+    deadline_days: 14,
+    deadline_desc: "Approximately 2-4 weeks before CP504 (final notice before levy authorization). Resolve before CP504 or risk levy action.",
+    actions: [
+      "Pay in full immediately, or",
+      "Establish an installment agreement TODAY",
+      "If the balance is wrong, request an account transcript and dispute via Form 843 or 12203",
+      "Consider a written request to halt collections if you can document hardship or pending dispute"
+    ],
+    forms: ["Form 9465", "Form 843", "Form 12203"],
+    irs_url: "https://www.irs.gov/individuals/understanding-your-cp503-notice",
+    preparer_note: "The escalation curve gets steeper after this notice. CP504 follows within 30-60 days and grants the IRS levy authority on state tax refunds and prepares for asset levy. Resolve now.",
+    template_id: null
+  },
+  {
+    code: "CP504",
+    title: "Final Notice — Intent to Seize State Tax Refund",
+    summary: "Final notice before the IRS levies your client's state tax refund and begins searching for other assets to seize. The clock is now genuinely running.",
+    category: "balance_due",
+    severity: "serious",
+    triggered_by: "No payment or installment agreement after CP14, CP501, and CP503. Final pre-levy demand.",
+    deadline_days: 30,
+    deadline_desc: "30 days from the notice date. After that, the IRS WILL levy the client's state income tax refund and may begin enforcement against bank accounts, wages, and other assets via subsequent LT11/Letter 1058.",
+    actions: [
+      "Pay in full or set up an installment agreement IMMEDIATELY",
+      "If unable to pay: file Form 9423 (Collection Appeal Request) for CDP rights",
+      "Request a Collection Due Process (CDP) hearing within 30 days if you want to dispute or negotiate",
+      "Consider Currently Not Collectible status (CNC) with Form 433-F and proof of hardship"
+    ],
+    forms: ["Form 9423", "Form 12153 (CDP request)", "Form 433-F", "Form 9465"],
+    irs_url: "https://www.irs.gov/individuals/understanding-your-cp504-notice",
+    preparer_note: "CP504 is technically NOT a Final Notice of Intent to Levy under IRC §6330 (that's LT11/Letter 1058) — but it's not far behind. CDP hearing rights aren't fully established until LT11 arrives. If state tax refunds are at stake, file Form 12153 to preserve appeal rights early.",
+    template_id: null
+  },
+  {
+    code: "LT11",
+    title: "Final Notice of Intent to Levy and Notice of Right to a Hearing",
+    summary: "Critical: The IRS now has authority to levy bank accounts, wages, retirement accounts, and other property. This triggers the 30-day Collection Due Process (CDP) hearing window.",
+    category: "levy",
+    severity: "critical",
+    triggered_by: "Continued non-payment after CP504, or in some collection paths, issued directly when an account is unresolved. Statutory notice required under IRC §6330.",
+    deadline_days: 30,
+    deadline_desc: "30 days from the notice date to request a Collection Due Process (CDP) hearing using Form 12153. Missing this deadline forfeits the right to Tax Court review of the collection action.",
+    actions: [
+      "FILE FORM 12153 IMMEDIATELY for CDP hearing — this stops enforcement during the appeal",
+      "Within the same 30 days: pay in full, set up installment agreement, or submit Offer in Compromise",
+      "Gather financial documentation (Form 433-A or 433-F) to negotiate during CDP",
+      "Engage a tax pro (CPA/EA/tax attorney) — DIY at this stage is high-risk"
+    ],
+    forms: ["Form 12153", "Form 9465", "Form 656", "Form 433-A", "Form 433-F"],
+    irs_url: "https://www.irs.gov/individuals/understanding-your-lt11-letter-1058",
+    preparer_note: "Letter 1058 is functionally identical to LT11 — same statutory notice, just issued by a different IRS function. The 30-day CDP window is jurisdictional: if missed, the client gets only an Equivalent Hearing (no Tax Court rights). Send Form 12153 by certified mail with return receipt to preserve the date.",
+    template_id: null
+  },
+  {
+    code: "Letter 1058",
+    title: "Final Notice of Intent to Levy (Revenue Officer-Issued)",
+    summary: "Same statutory notice as LT11 but issued by a Revenue Officer rather than the Automated Collection System. Indicates a person is now assigned to the case.",
+    category: "levy",
+    severity: "critical",
+    triggered_by: "Account assigned to a Revenue Officer for in-person collection, typically when the balance is large or an installment agreement has defaulted.",
+    deadline_days: 30,
+    deadline_desc: "30 days from the notice date for CDP hearing rights via Form 12153.",
+    actions: [
+      "Same as LT11: file Form 12153 within 30 days to preserve CDP rights",
+      "Contact the Revenue Officer named on the letter — they want resolution and have authority to negotiate",
+      "Be prepared with full financial disclosure (Form 433-A) if requesting an installment agreement above $50K"
+    ],
+    forms: ["Form 12153", "Form 9465", "Form 433-A"],
+    irs_url: "https://www.irs.gov/individuals/understanding-your-lt11-letter-1058",
+    preparer_note: "An RO-assigned case is more urgent than ACS. ROs do field collection and can show up at the client's home or business. They also have more flexibility to approve installment agreements. Engage cooperatively but represent the client through Form 2848.",
+    template_id: null
+  },
+  {
+    code: "CP523",
+    title: "Installment Agreement Default — Intent to Terminate",
+    summary: "The client's existing installment agreement is in default and the IRS intends to terminate it, restoring the full balance due plus penalties.",
+    category: "balance_due",
+    severity: "serious",
+    triggered_by: "Missed payment, missed return filing during agreement period, or unpaid current-year tax balance while on a prior IA.",
+    deadline_days: 30,
+    deadline_desc: "30 days to cure the default before the agreement is terminated and full collection action resumes.",
+    actions: [
+      "Pay the missed installment payment(s) AND any current-year balance",
+      "If all current-year returns aren't filed, file them now",
+      "Call the number on the notice to request reinstatement after curing the default",
+      "If a payment couldn't be made due to hardship, request a modification of payment terms"
+    ],
+    forms: ["Form 9465 (modification)", "Form 433-F (if requesting lower payment)"],
+    irs_url: "https://www.irs.gov/individuals/understanding-your-cp523-notice",
+    preparer_note: "Most CP523 defaults are curable in one phone call IF caught quickly. If client missed it and the IA terminated, requesting reinstatement requires a new Form 433-F and may incur a new $89 setup fee. Worth it vs. starting over.",
+    template_id: null
+  },
+  {
+    code: "CP71",
+    title: "Annual Reminder of Balance Due",
+    summary: "A yearly reminder of an outstanding tax debt the IRS hasn't actively pursued recently — typically because of CNC status, OIC pending, or simply low priority.",
+    category: "balance_due",
+    severity: "informational",
+    triggered_by: "Existing tax debt that has remained on the account for 12+ months without resolution. Not an enforcement notice.",
+    deadline_days: null,
+    deadline_desc: "No specific response deadline — but the underlying debt is still owed and accruing interest. The 10-year Collection Statute Expiration Date (CSED) continues to run.",
+    actions: [
+      "Verify the balance and CSED on an account transcript",
+      "If balance is wrong, dispute via Form 843 or amended return",
+      "If client can now pay or partially pay, consider Offer in Compromise (Form 656)",
+      "If client is in CNC status, no action needed — but consider whether CNC still applies"
+    ],
+    forms: ["Form 656", "Form 843"],
+    irs_url: "https://www.irs.gov/individuals/understanding-your-cp71-notice",
+    preparer_note: "CP71A, CP71C, CP71D are variants — they all mean the same thing. Best opportunity to revisit OIC eligibility if client's financial situation has changed since the original assessment. Pull CSED data to assess strategy.",
+    template_id: null
+  },
+  {
+    code: "CP161",
+    title: "Balance Due — Business Return",
+    summary: "Business equivalent of CP14. The IRS believes the entity owes additional tax on a business return (Form 940, 941, 1120, 1065, etc.).",
+    category: "balance_due",
+    severity: "action_required",
+    triggered_by: "Underpayment on a business return, often payroll tax (941) or corporate income tax (1120). Could be from estimated tax shortfall, reporting error, or audit adjustment.",
+    deadline_days: 21,
+    deadline_desc: "21 days to pay or set up an installment agreement before further collection notices.",
+    actions: [
+      "If payroll tax (941): URGENT — Trust Fund Recovery Penalty (TFRP) liability for responsible persons",
+      "Verify the balance against payroll records, Form 941 deposits, and EFTPS confirmations",
+      "Request an EFTPS payment trace if deposits were made but not credited",
+      "For 941 balances, payment priority should be: trust fund portion first to limit TFRP exposure"
+    ],
+    forms: ["Form 941-X", "Form 9465", "Form 2848"],
+    irs_url: "https://www.irs.gov/businesses/small-businesses-self-employed/understanding-your-cp161-notice",
+    preparer_note: "On 941 balances, the TFRP issue is huge. If the entity won't pay, the IRS will assess the trust fund portion personally against responsible persons (officers, signatories on bank accounts). Designate payments to trust fund FIRST in writing if making partial payment.",
+    template_id: null
+  },
+
+  // ─── UNDERREPORTER / EXAMINATION ───
+  {
+    code: "CP2000",
+    title: "Proposed Changes to Your Tax Return (Underreporter Notice)",
+    summary: "IRS computers found a mismatch between income reported on your client's return and information returns (W-2, 1099, K-1, 1098-T, etc.) sent by third parties. This is NOT a final assessment — it's a proposal.",
+    category: "underreporter",
+    severity: "action_required",
+    triggered_by: "Automated Underreporter (AUR) program detected income or withholding reported by a third party that doesn't match the return. Common causes: missed 1099-MISC/NEC, brokerage 1099-B (cost basis missing), HSA distributions reported as income, missed K-1, etc.",
+    deadline_days: 30,
+    deadline_desc: "30 days from the notice date to respond. If no response, the IRS issues a Notice of Deficiency (CP3219A) and the proposed assessment becomes binding unless petitioned to Tax Court.",
+    actions: [
+      "Pull a Wage & Income transcript and reconcile every income item the IRS lists against the return",
+      "If the IRS is right (income was missed): sign the response form, agree to changes, pay the balance or set up installment",
+      "If partially right: respond with the corrected items — explain in writing what's correct, what isn't, and why",
+      "If wholly wrong: respond with documentation (basis records for stock sales, 1099 corrections, proof of inclusion on the return)",
+      "If you need more time: request 30-day extension by phone before deadline"
+    ],
+    forms: ["Form 1040-X (NOT for CP2000 response)", "Response form attached to notice", "Form 2848"],
+    irs_url: "https://www.irs.gov/individuals/understanding-your-cp2000-notice",
+    preparer_note: "DO NOT file Form 1040-X for a CP2000 response — the IRS will reject it because the changes belong in the AUR pipeline. Use the response form attached to the notice. Common winning argument: stock sale 1099-B shows gross proceeds without basis; respond with Schedule D showing correct basis. Saves clients thousands routinely.",
+    template_id: "cp2000_disagree"
+  },
+  {
+    code: "CP2501",
+    title: "Initial Notice of Underreporter Issue (Pre-CP2000)",
+    summary: "Earlier-stage underreporter notice — flagged as a potential mismatch but giving the taxpayer a chance to clarify before the formal CP2000 proposal.",
+    category: "underreporter",
+    severity: "action_required",
+    triggered_by: "AUR system flagged a return for review. Less serious than CP2000 because no proposed assessment yet — you can resolve it before the IRS even calculates the change.",
+    deadline_days: 30,
+    deadline_desc: "30 days to respond with documentation. If unresolved, the IRS issues CP2000 with a proposed assessment.",
+    actions: [
+      "Same as CP2000: reconcile against Wage & Income transcript",
+      "Respond proactively with documentation showing why the income IS correctly reported (or why the third-party return is wrong)",
+      "If a 1099 was wrong, get a corrected 1099 from the issuer ASAP"
+    ],
+    forms: ["Response form attached to notice"],
+    irs_url: "https://www.irs.gov/individuals/understanding-your-cp2501-notice",
+    preparer_note: "CP2501 is the better venue to push back than CP2000 because no assessment is pending yet. Worth responding promptly with full documentation; resolution at this stage avoids the formal AUR pipeline entirely.",
+    template_id: null
+  },
+  {
+    code: "Letter 525",
+    title: "30-Day Letter — Examination Report",
+    summary: "The IRS has completed an audit and is proposing changes. This is the formal exam report giving 30 days to agree, disagree, or appeal.",
+    category: "underreporter",
+    severity: "serious",
+    triggered_by: "Office or correspondence audit complete. The auditor has determined the proposed adjustments and issued the report (Form 4549).",
+    deadline_days: 30,
+    deadline_desc: "30 days to respond with agreement (sign Form 4549), disagreement with documentation, or formal appeal request to IRS Appeals.",
+    actions: [
+      "Review Form 4549 line-by-line — verify every adjustment against records",
+      "If you agree: sign Form 4549 and pay or set up installment",
+      "If you disagree: respond with a Protest Letter (formal written protest, required if proposed changes > $25K)",
+      "Request a conference with the examiner before going to Appeals if there's room to negotiate",
+      "If you don't respond, the case moves to Statutory Notice of Deficiency (CP3219A / Letter 531)"
+    ],
+    forms: ["Form 4549", "Form 12203 (small case)", "Form 870 (waiver)"],
+    irs_url: "https://www.irs.gov/individuals/understanding-your-letter-525",
+    preparer_note: "Always request the exam workpapers via FOIA before responding — you need to know what the examiner relied on. For amounts ≥ $25K, Appeals requires a formal written protest with specific elements (perjury statement, list of disputed items, legal authority, etc.). For under $25K, a simple Form 12203 works.",
+    template_id: null
+  },
+  {
+    code: "Letter 4464C",
+    title: "Return Selected for Review — Refund Hold",
+    summary: "Your client's return is being held for review (typically 60+ days). No specific issue identified — just additional verification.",
+    category: "refund",
+    severity: "informational",
+    triggered_by: "Return selected by IRS Integrity & Verification Operations for further review. Common triggers: large EITC, large refundable credits, identity flags, prior-year discrepancies.",
+    deadline_days: 60,
+    deadline_desc: "Up to 60 days for the IRS to complete the review. Refund is held during this period. No action required unless they request additional documents.",
+    actions: [
+      "No immediate action — wait for IRS to complete the review",
+      "If 60 days pass with no resolution, call the Taxpayer Advocate Service (TAS) — refund holds beyond 60 days qualify for TAS assistance if there's hardship",
+      "Be ready to provide documentation if the IRS escalates to CP05A or asks for verification",
+      "Check 'Where's My Refund' periodically for status updates"
+    ],
+    forms: ["Form 911 (TAS request)"],
+    irs_url: "https://www.irs.gov/individuals/understanding-your-letter-4464c",
+    preparer_note: "Most 4464Cs resolve without action and the refund is released. If the client has hardship (eviction, utility shutoff, medical) and the refund is critical, file Form 911 with TAS — they have authority to release a held refund within 30 days. Document hardship clearly.",
+    template_id: null
+  },
+  {
+    code: "CP05",
+    title: "We're Holding Your Refund Pending Review",
+    summary: "The IRS is holding the refund while it verifies items on the return. Similar to Letter 4464C but more specific — typically wages/withholding or refundable credits being verified.",
+    category: "refund",
+    severity: "informational",
+    triggered_by: "Wages reported on the return don't match W-2s on file, or refundable credits (EITC, ACTC, AOTC) need verification before release.",
+    deadline_days: 60,
+    deadline_desc: "60 days for IRS review. May extend if additional documentation is needed (escalates to CP05A).",
+    actions: [
+      "No immediate action unless IRS sends CP05A requesting documents",
+      "Be prepared to substantiate income and credits if requested",
+      "If 60+ days pass, contact TAS for hardship cases"
+    ],
+    forms: ["Form 911 (TAS request if hardship)"],
+    irs_url: "https://www.irs.gov/individuals/understanding-your-cp05-notice",
+    preparer_note: "CP05 often resolves on its own when the IRS finishes matching W-2 data. If the client's W-2 was issued late or with errors, contact the employer for a corrected W-2 to head off any escalation.",
+    template_id: null
+  },
+  {
+    code: "CP05A",
+    title: "We Need More Information to Verify Your Return",
+    summary: "Follow-up to CP05 — the IRS needs specific documentation to verify income, withholding, or credits on the return.",
+    category: "refund",
+    severity: "action_required",
+    triggered_by: "CP05 review couldn't auto-verify items, so the IRS is now requesting paper documentation from the taxpayer.",
+    deadline_days: 30,
+    deadline_desc: "30 days to send the requested documentation. Failure to respond results in disallowance of the items in question and an adjusted refund (or balance due).",
+    actions: [
+      "Read the notice carefully — it lists specifically what documents are needed",
+      "Common requests: pay stubs to verify wages, copies of W-2s/1099s, proof of EITC qualifying child residency",
+      "Send copies (NEVER originals) by certified mail with return receipt",
+      "Include the notice number on the cover sheet and reference the tax year"
+    ],
+    forms: ["Form 886-H-EIC (for EITC qualifying child documentation)"],
+    irs_url: "https://www.irs.gov/individuals/understanding-your-cp05a-notice",
+    preparer_note: "EITC verification is the most common CP05A trigger. Be specific: school records, medical records, lease, social services records — anything that shows the qualifying child lived with the client more than half the year. Inadequate response leads to multi-year EITC ban under IRC §32(k).",
+    template_id: null
+  },
+
+  // ─── MATH ERRORS / ADJUSTMENTS ───
+  {
+    code: "CP12",
+    title: "Math Error — Refund Increased or Balance Reduced",
+    summary: "The IRS made a math correction that increased the refund or reduced the balance due. Generally good news.",
+    category: "math_error",
+    severity: "informational",
+    triggered_by: "Computational error on the original return that, when corrected, favored the taxpayer.",
+    deadline_days: 60,
+    deadline_desc: "60 days to dispute the change if you disagree. After 60 days, the change becomes binding and the only remedy is amending or claiming refund of overpayment.",
+    actions: [
+      "Verify the corrected amount and items the IRS adjusted",
+      "If you agree: no action needed; refund will be issued",
+      "If you disagree: respond within 60 days with explanation",
+      "If you don't respond, the change is permanent under IRC §6213(b)"
+    ],
+    forms: ["None initially — if disagreeing, write to address on notice"],
+    irs_url: "https://www.irs.gov/individuals/understanding-your-cp12-notice",
+    preparer_note: "Even a 'good' CP12 can be wrong — sometimes the IRS adjusts based on a misapplied withholding or credit. Always verify against the return. The 60-day window for §6213(b) abatement is critical to preserve.",
+    template_id: null
+  },
+  {
+    code: "CP13",
+    title: "Math Error — Now You Owe Tax",
+    summary: "The IRS made a math correction that resulted in a balance due (or eliminated a refund). You have 60 days to dispute or accept.",
+    category: "math_error",
+    severity: "action_required",
+    triggered_by: "Computational error on the original return — wrong dependents, miscalculated EITC, withholding mistake, etc.",
+    deadline_days: 60,
+    deadline_desc: "60 days to dispute under IRC §6213(b)(2) for math error abatement. After 60 days, the assessment is binding and only an amended return or refund claim can change it.",
+    actions: [
+      "Identify EXACTLY what the IRS changed (compare notice to your client's records)",
+      "If they're right: pay or set up installment",
+      "If they're wrong: respond within 60 days requesting math error abatement under §6213(b)(2)",
+      "Math error abatement is automatic if requested within 60 days — IRS reverses the change and re-issues a Statutory Notice of Deficiency, restarting the dispute clock"
+    ],
+    forms: ["No specific form — written request to address on notice"],
+    irs_url: "https://www.irs.gov/individuals/understanding-your-cp13-notice",
+    preparer_note: "Math error procedures are tricky — the IRS uses them to assess without the formal 90-day deficiency procedures, but the 60-day abatement window restores deficiency procedures. ALWAYS request abatement if there's any doubt about the change.",
+    template_id: "math_error_abatement"
+  },
+  {
+    code: "CP21",
+    title: "We Adjusted Your Account",
+    summary: "The IRS made an adjustment to a previously-filed return based on amended return, audit, or correspondence — this notice explains the change.",
+    category: "math_error",
+    severity: "informational",
+    triggered_by: "Processing of an amended return (1040-X), audit adjustment closure, or response to correspondence.",
+    deadline_days: null,
+    deadline_desc: "No specific deadline — informational. If a balance is due, normal collection deadlines apply (CP14 follows).",
+    actions: [
+      "Verify the change matches what was expected from the amendment or audit",
+      "If wrong: file another 1040-X or contest the audit adjustment",
+      "If a refund is owed, expect it within 4-6 weeks"
+    ],
+    forms: ["Form 1040-X (if challenging)"],
+    irs_url: "https://www.irs.gov/individuals/understanding-your-cp21-notice",
+    preparer_note: "CP21A through CP21E are subtype variants — all are post-adjustment notifications. Always pull a transcript after to verify the adjustment posted correctly to the account.",
+    template_id: null
+  },
+  {
+    code: "CP22",
+    title: "We Changed Your Return — Adjustment Made",
+    summary: "The IRS changed something on a return based on third-party information or examiner action. Similar to CP21 but typically for proactive IRS-initiated changes.",
+    category: "math_error",
+    severity: "action_required",
+    triggered_by: "IRS-initiated adjustment, often from data matching or audit closure. May result in refund, balance due, or neither.",
+    deadline_days: null,
+    deadline_desc: "If balance due is now owed, payment deadline per the notice (typically 21 days). For refund situations, no action needed.",
+    actions: [
+      "Verify the change against records",
+      "If correct and balance owed: pay or set up installment",
+      "If incorrect: respond with documentation supporting the original return"
+    ],
+    forms: ["Form 9465 (if installment needed)"],
+    irs_url: "https://www.irs.gov/individuals/understanding-your-cp22a-notice",
+    preparer_note: "CP22A and CP22E are common variants. Always pull an account transcript before responding to confirm what specifically was changed at the line level.",
+    template_id: null
+  },
+
+  // ─── REFUND ISSUES ───
+  {
+    code: "CP49",
+    title: "We Applied Your Refund to a Past-Due Tax Balance",
+    summary: "Your client's expected refund was used to offset another tax debt instead of being paid out.",
+    category: "refund",
+    severity: "informational",
+    triggered_by: "Outstanding federal tax debt on another year (or from another spouse on joint return) that took priority over the refund.",
+    deadline_days: null,
+    deadline_desc: "No deadline — informational notice. If you believe the offset was wrong, dispute applies to the underlying balance, not the offset itself.",
+    actions: [
+      "Verify the offset amount and the year it was applied to",
+      "If the underlying debt is wrong, dispute that debt (may require Form 843 or amended return)",
+      "If joint return refund offset to one spouse's separate debt: file Form 8379 (Injured Spouse) within 3 years"
+    ],
+    forms: ["Form 8379", "Form 843"],
+    irs_url: "https://www.irs.gov/individuals/understanding-your-cp49-notice",
+    preparer_note: "Form 8379 Injured Spouse is often the right move when one spouse has pre-marriage tax debt or student loans causing the offset. Can be filed proactively with the joint return or after-the-fact for offset reversal."
+  },
+  {
+    code: "CP63",
+    title: "Refund Held Pending Other Issues",
+    summary: "The IRS is holding the refund because of unfiled prior-year returns. Refund won't be released until those returns are filed.",
+    category: "refund",
+    severity: "action_required",
+    triggered_by: "Unfiled returns for prior years where the IRS believes the client had a filing requirement.",
+    deadline_days: null,
+    deadline_desc: "No deadline — but the refund stays held until prior-year returns are filed. Refund claims are subject to the 3-year statute (IRC §6511).",
+    actions: [
+      "Identify the missing years (notice typically lists them)",
+      "Pull a Wage & Income transcript for each missing year to recreate the return",
+      "File the missing returns ASAP — even if no tax is owed, filing releases the held refund",
+      "If a prior-year return shows refund and is more than 3 years old, that refund is forfeit (IRC §6511)"
+    ],
+    forms: ["Form 1040 for missing years", "Form 4506-T or transcripts via TDS"],
+    irs_url: "https://www.irs.gov/individuals/understanding-your-cp63-notice",
+    preparer_note: "Always check IRS account transcripts for any open Substitute for Return (SFR) assessments on the missing years. SFR almost always overstates tax — the original return when filed will reduce the balance dramatically."
+  },
+  {
+    code: "CP31",
+    title: "Refund Check Returned — We Need a New Address",
+    summary: "The IRS mailed a refund check but it was returned undeliverable. They need a current address to reissue.",
+    category: "refund",
+    severity: "action_required",
+    triggered_by: "USPS returned the refund check as undeliverable. Usually because the client moved without filing change of address.",
+    deadline_days: null,
+    deadline_desc: "No specific deadline, but refund won't be released until the address is updated.",
+    actions: [
+      "File Form 8822 (Change of Address) ASAP",
+      "Or use 'Where's My Refund' to update address (limited cases)",
+      "Or call the number on the notice to update by phone"
+    ],
+    forms: ["Form 8822"],
+    irs_url: "https://www.irs.gov/individuals/understanding-your-cp31-notice",
+    preparer_note: "Always recommend direct deposit for clients to avoid this issue. If the client has moved multiple times, consider also filing a change of address with the SSA so future W-2s/1099s also flow correctly."
+  },
+
+  // ─── IDENTITY / FILING ───
+  {
+    code: "CP59",
+    title: "We Have No Record of Your Tax Return",
+    summary: "The IRS believes the client had a filing requirement but has no record of receiving a return for the year listed.",
+    category: "identity",
+    severity: "action_required",
+    triggered_by: "Income reported by third parties (W-2s, 1099s) but no return was filed and processed for that year.",
+    deadline_days: 30,
+    deadline_desc: "30 days to file the return or explain why one wasn't required. Failure to respond can lead to a Substitute for Return (SFR) being filed by the IRS — which never includes deductions or credits.",
+    actions: [
+      "Determine if a return was actually filed (check transcripts, e-file confirmations, certified mail receipts)",
+      "If not filed and one was required: prepare and file the missing return immediately",
+      "If filing wasn't required (income below filing threshold): respond explaining why",
+      "If a return was filed but not processed: send proof of filing (certified receipt, e-file acknowledgment)"
+    ],
+    forms: ["Form 1040 for the year in question", "Form 8275 if non-filing position needs explanation"],
+    irs_url: "https://www.irs.gov/individuals/understanding-your-cp59-notice",
+    preparer_note: "If SFR has already been processed, the original return when filed will be treated as an audit reconsideration. Still file — SFR is almost always wrong (no deductions, MFS rate, no exemptions). Reduces tax dramatically vs. SFR balance."
+  },
+  {
+    code: "Letter 4883C",
+    title: "Identity Verification Required",
+    summary: "The IRS suspects identity theft on a recently filed return and needs to verify the taxpayer's identity before processing.",
+    category: "identity",
+    severity: "action_required",
+    triggered_by: "IRS Identity Theft filters flagged the return for review. Often triggered by SSN appearing on multiple returns, mismatched filing patterns, or anti-fraud screening.",
+    deadline_days: 30,
+    deadline_desc: "30 days to verify identity by phone (1-800-830-5084) or in person at a Taxpayer Assistance Center.",
+    actions: [
+      "Call 1-800-830-5084 to verify by phone (have the notice, last year's return, and current year return ready)",
+      "If phone verification fails or isn't available, schedule a Taxpayer Assistance Center appointment",
+      "If identity theft is confirmed: file Form 14039 (Identity Theft Affidavit) and request an IP PIN for future filings",
+      "Refund won't release until verification completes"
+    ],
+    forms: ["Form 14039 if identity theft confirmed"],
+    irs_url: "https://www.irs.gov/individuals/understanding-your-letter-4883c",
+    preparer_note: "Verification calls take 30-90 minutes — schedule client time accordingly. Recommend client get an IP PIN going forward via irs.gov/ippin to prevent recurrence."
+  },
+  {
+    code: "Letter 5071C",
+    title: "Online Identity Verification (idverify.irs.gov)",
+    summary: "Same purpose as 4883C but verification can be done online at idverify.irs.gov in addition to phone.",
+    category: "identity",
+    severity: "action_required",
+    triggered_by: "Same identity-theft anti-fraud screening as 4883C.",
+    deadline_days: 30,
+    deadline_desc: "30 days to verify online (preferred) or by phone.",
+    actions: [
+      "Go to idverify.irs.gov and follow the verification steps",
+      "Have available: SSN, last year's return, current year return, financial account number for verification",
+      "If online fails, fall back to phone verification (1-800-830-5084)"
+    ],
+    forms: ["Form 14039 if identity theft confirmed"],
+    irs_url: "https://www.irs.gov/individuals/understanding-your-letter-5071c",
+    preparer_note: "Online verification is much faster than phone. ID.me account creation is required, which itself can be a hurdle for some clients (requires government ID + selfie + financial verification). Have backup phone option ready."
+  },
+
+  // ─── STATUTORY / DEFICIENCY ───
+  {
+    code: "CP3219A",
+    title: "Statutory Notice of Deficiency (90-Day Letter)",
+    summary: "Critical: This is the statutory 'ticket to Tax Court' notice. The IRS is formally proposing additional tax. You have 90 days to file a Tax Court petition or the assessment becomes final.",
+    category: "underreporter",
+    severity: "critical",
+    triggered_by: "Following an unresolved CP2000 or audit, the IRS issues this final pre-assessment notice giving Tax Court jurisdiction.",
+    deadline_days: 90,
+    deadline_desc: "90 days from the notice date to file a Tax Court petition (150 days if outside the US). This deadline is JURISDICTIONAL — Tax Court has no authority to extend it.",
+    actions: [
+      "If you DISAGREE: file Tax Court petition within 90 days at ustaxcourt.gov (Form 2)",
+      "Tax Court petition is the ONLY way to challenge the assessment without first paying",
+      "If you can't or won't go to Tax Court: pay the proposed amount, then file refund claim (Form 843), then sue in District Court if denied",
+      "If you AGREE: sign Form 4089 and pay or set up installment",
+      "Engage a tax pro IMMEDIATELY — DIY at this stage is high-risk; Tax Court has formal procedures"
+    ],
+    forms: ["Tax Court Form 2 (petition)", "Form 4089 (if agreeing)", "Form 2848 (POA)"],
+    irs_url: "https://www.irs.gov/individuals/understanding-your-cp3219a-notice",
+    preparer_note: "Tax Court small case procedures (under $50K) are accessible — petition can be filed pro se. Above $50K, formal procedures apply and counsel is strongly recommended. The 90-day petition window is one of the few hard jurisdictional deadlines in tax law — DO NOT MISS IT.",
+    template_id: null
+  },
+  {
+    code: "Letter 531",
+    title: "Statutory Notice of Deficiency (Audit-Issued Variant)",
+    summary: "Functionally identical to CP3219A — same 90-day Tax Court window — but issued from an audit closure rather than the underreporter program.",
+    category: "underreporter",
+    severity: "critical",
+    triggered_by: "Failure to agree or appeal from an audit (Letter 525 → Letter 531 if no response).",
+    deadline_days: 90,
+    deadline_desc: "90 days to petition Tax Court (150 days if outside the US).",
+    actions: [
+      "Same as CP3219A: file Tax Court petition within 90 days, OR pay and pursue refund claim",
+      "Engage a tax pro IMMEDIATELY"
+    ],
+    forms: ["Tax Court Form 2", "Form 4089", "Form 2848"],
+    irs_url: "https://www.irs.gov/individuals/understanding-your-letter-531",
+    preparer_note: "Letter 531 cases are often more complex than CP3219A because they came through formal audit. Get the audit workpapers via FOIA. If procedural irregularities exist (e.g., the auditor didn't follow required procedures), those become Tax Court arguments."
+  },
+
+  // ─── PENALTIES ───
+  {
+    code: "CP15",
+    title: "Civil Penalty Notice",
+    summary: "The IRS has assessed a civil penalty (often a foreign reporting penalty under IRC §6038, §6038A, §6677, etc.) and is demanding payment.",
+    category: "penalty",
+    severity: "serious",
+    triggered_by: "Late or missing information return — often FBAR, Form 5471, Form 5472, Form 8938, Form 3520, or similar foreign reporting requirements. Penalties typically start at $10,000 per form per year.",
+    deadline_days: 30,
+    deadline_desc: "30 days to pay or contest. CP15 penalties are assessable — meaning the IRS doesn't need to issue a deficiency notice. Appeal rights are limited and time-sensitive.",
+    actions: [
+      "If first-time penalty and reasonable cause exists: request abatement under reasonable cause (written letter with documentation)",
+      "If due to first-time non-compliance: request First-Time Penalty Abatement (FTPA) — but FTPA generally doesn't apply to international information return penalties",
+      "For international penalties: file Form 843 with detailed reasonable cause letter",
+      "Consider voluntary disclosure or streamlined procedures if there are unfiled foreign returns"
+    ],
+    forms: ["Form 843", "Form 9423 (collection appeal)"],
+    irs_url: "https://www.irs.gov/businesses/small-businesses-self-employed/understanding-your-cp15-notice",
+    preparer_note: "International information return penalties (5471, 8938, 3520, etc.) are the most common CP15 driver and the most painful. Reasonable cause letters need to address EACH year separately and document why the failure wasn't willful. A poorly-written letter loses winnable cases.",
+    template_id: "penalty_abatement_request"
+  },
+  {
+    code: "Letter 226-J",
+    title: "ACA Employer Mandate Penalty (Section 4980H)",
+    summary: "An Applicable Large Employer (ALE) is being assessed a shared responsibility penalty under IRC §4980H for failure to offer minimum essential coverage to full-time employees.",
+    category: "penalty",
+    severity: "serious",
+    triggered_by: "IRS data matching of Forms 1095-C against employee Premium Tax Credit (PTC) claims. If a full-time employee got a PTC and the employer is an ALE, §4980H penalty triggers.",
+    deadline_days: 30,
+    deadline_desc: "30 days to respond using Form 14764 (response form). Failing to respond results in immediate assessment.",
+    actions: [
+      "Review the ETT (Employee PTC Listing) attached — verify each listed employee was offered coverage and how much",
+      "Use Form 14764 to respond — agree, partially agree, or disagree",
+      "Common defenses: employee was actually offered coverage but didn't enroll, employee wasn't full-time, coverage was affordable safe harbor (W-2 box 1, rate of pay, FPL)",
+      "Correcting 1095-C codes is often the resolution — file corrected 1095-Cs to fix the data mismatch"
+    ],
+    forms: ["Form 14764", "Form 1095-C (corrected)"],
+    irs_url: "https://www.irs.gov/affordable-care-act/employers/understanding-your-letter-226-j",
+    preparer_note: "226-J penalties can be massive ($2K-$3K per FT employee per year). Most are caused by 1095-C coding errors, not actual coverage failures. Review employer's HRIS/payroll system carefully. The 4980H(a) penalty (no offer to 95%+) is far worse than 4980H(b) (unaffordable offer). Determine which is being assessed."
+  },
+  {
+    code: "Notice 1450",
+    title: "Federal Tax Lien Filed (NFTL)",
+    summary: "The IRS has filed a Notice of Federal Tax Lien against the taxpayer, encumbering all current and after-acquired property until the debt is satisfied.",
+    category: "levy",
+    severity: "critical",
+    triggered_by: "Unpaid tax balance after demand. Lien is automatic under IRC §6321; the NFTL filing makes it public and gives notice to creditors.",
+    deadline_days: 30,
+    deadline_desc: "30 days to request a Collection Due Process (CDP) hearing under §6320 to contest the lien filing.",
+    actions: [
+      "File Form 12153 within 30 days for CDP hearing",
+      "Pay the balance to obtain lien withdrawal/release (Form 12277 for withdrawal)",
+      "Consider a lien subordination if needed for refinance/sale (Form 14134)",
+      "Discharge a specific property from lien if needed (Form 14135)"
+    ],
+    forms: ["Form 12153", "Form 12277 (withdrawal)", "Form 14134 (subordination)", "Form 14135 (discharge)"],
+    irs_url: "https://www.irs.gov/businesses/small-businesses-self-employed/notice-of-federal-tax-lien",
+    preparer_note: "NFTL devastates credit and disqualifies clients from many financial transactions. Withdrawal under §6323(j) is available after balance is paid in full and other criteria are met — push for this, not just release. Withdrawal removes the lien from credit record retroactively."
+  },
+
+  // ─── BUSINESS / SPECIAL ───
+  {
+    code: "Letter 6173",
+    title: "Crypto Compliance Letter — Likely Owes Tax",
+    summary: "The IRS has information indicating the recipient had cryptocurrency transactions but didn't report them properly. They believe tax is owed.",
+    category: "underreporter",
+    severity: "serious",
+    triggered_by: "John Doe summons data from Coinbase and other exchanges, third-party reporting (1099-B, 1099-MISC), or other indicators of crypto activity not reported.",
+    deadline_days: 30,
+    deadline_desc: "30 days to respond by filing amended returns showing crypto income/gains, or face audit and potential penalties.",
+    actions: [
+      "Pull all crypto transaction history from exchanges and wallets",
+      "Compute capital gains/losses for each year crypto was sold/traded",
+      "File amended returns (Form 1040-X) for each year with corrected Schedule D and Form 8949",
+      "Pay tax + interest with amended return; request penalty abatement separately if first-time"
+    ],
+    forms: ["Form 1040-X", "Form 8949", "Schedule D"],
+    irs_url: "https://www.irs.gov/individuals/international-taxpayers/frequently-asked-questions-on-virtual-currency-transactions",
+    preparer_note: "Letter 6173 is action-required — respond in writing. Letter 6174/6174-A are educational only (no required response). 6173 is the serious one. Use Form 8275 to disclose method/rate used for FIFO/LIFO/specific identification on basis."
+  },
+  {
+    code: "Letter 6174",
+    title: "Crypto Compliance Letter — Educational",
+    summary: "Educational reminder about crypto reporting requirements. No specific issue identified — the IRS is just letting you know the rules.",
+    category: "underreporter",
+    severity: "informational",
+    triggered_by: "IRS data shows possible crypto activity. Less serious than 6173 — no specific underreporting alleged.",
+    deadline_days: null,
+    deadline_desc: "No required response, but use this as a prompt to verify reporting accuracy on past returns.",
+    actions: [
+      "Review prior returns to verify all crypto activity was reported",
+      "If any year was missed: file 1040-X to correct (better to amend voluntarily than wait for 6173)",
+      "Going forward: keep complete crypto transaction records with cost basis tracking"
+    ],
+    forms: ["Form 1040-X if amending"],
+    irs_url: "https://www.irs.gov/individuals/international-taxpayers/frequently-asked-questions-on-virtual-currency-transactions",
+    preparer_note: "Letter 6174 is the IRS's polite warning. Better to address proactively before the next round of letters becomes 6173. Crypto enforcement is an ongoing IRS priority."
+  },
+  {
+    code: "CP75",
+    title: "EITC Audit — Documentation Required",
+    summary: "The IRS is auditing the Earned Income Tax Credit claim and needs documentation to verify the qualifying child(ren).",
+    category: "underreporter",
+    severity: "action_required",
+    triggered_by: "EITC claim flagged for audit, often due to address mismatch with another taxpayer claiming same child, prior-year EITC denial, or random selection.",
+    deadline_days: 30,
+    deadline_desc: "30 days to respond with documentation. Failure to respond results in EITC disallowance, potential 2-year or 10-year EITC ban under IRC §32(k), and balance due.",
+    actions: [
+      "Use Form 886-H-EIC as the response checklist — it lists exactly what documents are needed",
+      "Document residency: school records, medical records, social services records, lease, daycare records",
+      "Document relationship: birth certificates, adoption papers, court orders",
+      "Send copies (NEVER originals) by certified mail with return receipt",
+      "Multi-year exposure: if EITC is disallowed and IRS finds 'reckless or intentional disregard,' 2-year ban applies; 'fraud' = 10-year ban"
+    ],
+    forms: ["Form 886-H-EIC", "Form 8862 (if previously banned)"],
+    irs_url: "https://www.irs.gov/individuals/understanding-your-cp75-notice",
+    preparer_note: "EITC audits have a high taxpayer loss rate because documentation is often inadequate. Build the case with multiple independent sources of evidence — school + medical + lease beats just school records alone. If the client is divorced/separated and claiming child, the custody documentation is critical."
+  }
+];
+
+const RESPONSE_TEMPLATES = {
+  cp2000_disagree: {
+    title: "CP2000 Disagreement Response Letter",
+    body: `[DATE]
+
+Internal Revenue Service
+[ADDRESS FROM NOTICE - upper-left corner of CP2000]
+
+RE: CP2000 Notice for Tax Year [TAX_YEAR]
+Taxpayer: [CLIENT NAME]
+SSN: [LAST 4 DIGITS XXX-XX-####]
+Notice Date: [NOTICE DATE]
+AUR Control Number: [FROM NOTICE]
+
+Dear Sir or Madam:
+
+This letter is in response to the CP2000 notice dated [NOTICE DATE] for tax year [TAX_YEAR].
+
+I/We have reviewed the proposed changes and respectfully DISAGREE with the following items:
+
+1. [ITEM 1 — e.g., "1099-B from Charles Schwab in the amount of $XX,XXX shown as gross proceeds"]
+   Reason for disagreement: [EXPLANATION — e.g., "The cost basis of $YY,YYY was not reported by the broker. Attached is Schedule D and Form 8949 showing the corrected calculation, resulting in a capital gain of $ZZ,ZZZ rather than the proposed $XX,XXX."]
+
+2. [ITEM 2, if applicable]
+   Reason for disagreement: [EXPLANATION]
+
+Supporting documentation enclosed:
+  • [DOCUMENT 1 — e.g., "Form 8949 with corrected basis calculation"]
+  • [DOCUMENT 2 — e.g., "Brokerage transaction history"]
+  • [DOCUMENT 3 — e.g., "Original purchase confirmations"]
+
+Based on the above, I/we believe the correct adjustment to tax for [TAX_YEAR] is $[CORRECT_AMOUNT] rather than the $[PROPOSED_AMOUNT] proposed in the notice.
+
+Please reconsider the proposed assessment and notify me/us in writing of the corrected determination. If you have any questions or need additional documentation, please contact me at [PHONE] or [EMAIL].
+
+If you agree with this position, please send a corrected notice or written confirmation that the proposed adjustment has been withdrawn.
+
+If you disagree, please advise of my/our appeal rights and the procedure for taking the matter to IRS Appeals.
+
+Thank you for your attention to this matter.
+
+Sincerely,
+
+[CLIENT NAME]
+[ADDRESS]
+[PHONE]
+
+Enclosures: [list each enclosure]
+
+cc: [Tax Preparer Name, EA/CPA, if represented]
+    [Form 2848 attached if represented]`
+  },
+  math_error_abatement: {
+    title: "Math Error Abatement Request (CP13/CP12 — IRC §6213(b)(2))",
+    body: `[DATE]
+
+Internal Revenue Service
+[ADDRESS FROM NOTICE]
+
+RE: Request for Math Error Abatement under IRC §6213(b)(2)
+Taxpayer: [CLIENT NAME]
+SSN: [LAST 4 DIGITS XXX-XX-####]
+Tax Year: [TAX_YEAR]
+Notice Number: CP[12 or 13]
+Notice Date: [NOTICE DATE]
+
+Dear Sir or Madam:
+
+Pursuant to Internal Revenue Code Section 6213(b)(2), I/we hereby REQUEST ABATEMENT of the math error adjustment shown in the above-referenced notice.
+
+The notice asserts the following adjustment: [DESCRIBE THE IRS ADJUSTMENT — e.g., "EITC reduced from $X to $Y due to dependent qualification mismatch"]
+
+I/we believe this adjustment is INCORRECT for the following reasons:
+
+[EXPLANATION — provide specific facts and computations supporting the original return position]
+
+This request is filed within 60 days of the notice date as required by IRC §6213(b)(2). Upon receipt of this request, the math error assessment must be abated and any subsequent deficiency determination must follow normal deficiency procedures under IRC §6213(a), including issuance of a Statutory Notice of Deficiency with full Tax Court rights.
+
+Please confirm in writing that the math error assessment has been abated.
+
+Sincerely,
+
+[CLIENT NAME]
+[ADDRESS]
+[PHONE]
+
+cc: [Tax Preparer Name, EA/CPA, if represented]`
+  },
+  penalty_abatement_request: {
+    title: "First-Time Penalty Abatement Request (FTA)",
+    body: `[DATE]
+
+Internal Revenue Service
+[ADDRESS FROM NOTICE]
+
+RE: Request for First-Time Penalty Abatement
+Taxpayer: [CLIENT NAME]
+SSN/EIN: [NUMBER]
+Tax Year(s): [YEAR]
+Penalty Type: [e.g., "Failure to File", "Failure to Pay", "Failure to Deposit"]
+Penalty Amount: $[AMOUNT]
+
+Dear Sir or Madam:
+
+I/we hereby request First-Time Penalty Abatement (FTA) for the [YEAR] [TAX FORM, e.g., Form 1040] [PENALTY TYPE] penalty assessed in the amount of $[AMOUNT].
+
+The taxpayer qualifies for FTA based on the following:
+
+1. CLEAN COMPLIANCE HISTORY: The taxpayer has not had any penalties assessed in the three years immediately preceding [TAX YEAR]. Specifically:
+   • [YEAR-3]: No penalties assessed
+   • [YEAR-2]: No penalties assessed
+   • [YEAR-1]: No penalties assessed
+
+2. CURRENT FILING COMPLIANCE: All required returns have been filed.
+
+3. CURRENT PAYMENT COMPLIANCE: The taxpayer has paid (or arranged to pay through an installment agreement) all currently owed taxes.
+
+The First-Time Penalty Abatement is administrative relief authorized by IRM 20.1.1.3.3.2.1 and is available without a showing of reasonable cause when these criteria are met.
+
+If FTA is denied, I/we alternatively request reasonable cause penalty abatement based on the following:
+
+[OPTIONAL: Reasonable cause facts — e.g., serious illness, death in family, natural disaster, reliance on professional advice, records destroyed, etc.]
+
+Supporting documentation enclosed:
+  • [DOCUMENT 1, if applicable]
+  • [DOCUMENT 2, if applicable]
+
+Please process this abatement request and confirm the result in writing. If denied, please provide the reasons in writing along with a description of available appeal rights.
+
+Sincerely,
+
+[CLIENT NAME]
+[ADDRESS]
+[PHONE]
+
+cc: [Tax Preparer Name, EA/CPA, if represented]`
+  }
+};
+
+/* ============================================================
+   UI LOGIC
+============================================================ */
+
+const $ = (id) => document.getElementById(id);
+const searchInput = $('noticeSearch');
+const searchClear = $('searchClear');
+const filterRow = $('filterRow');
+const resultsList = $('resultsList');
+const resultsMeta = $('resultsMeta');
+const detailPanel = $('detailPanel');
+const badgeCount = $('badgeCount');
+
+let activeFilter = 'all';
+let activeNoticeCode = null;
+
+badgeCount.textContent = NOTICES.length + ' Notices';
+
+function escapeHtml(s) {
+  return String(s || '').replace(/[&<>"']/g, ch => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[ch]));
+}
+
+function categoryLabel(cat) {
+  return {
+    balance_due: 'Balance Due',
+    underreporter: 'Underreporter',
+    math_error: 'Math Error',
+    refund: 'Refund',
+    identity: 'Identity',
+    levy: 'Levy/Lien',
+    penalty: 'Penalty',
+    misc: 'Other'
+  }[cat] || cat;
+}
+
+function severityLabel(sev) {
+  return {
+    informational: 'Info',
+    action_required: 'Action Required',
+    serious: 'Serious',
+    critical: 'Critical'
+  }[sev] || sev;
+}
+
+function filterAndSearch() {
+  const q = searchInput.value.toLowerCase().trim();
+  let filtered = NOTICES.slice();
+
+  if (activeFilter !== 'all') {
+    filtered = filtered.filter(n => n.category === activeFilter);
+  }
+  if (q) {
+    filtered = filtered.filter(n => {
+      const hay = (n.code + ' ' + n.title + ' ' + n.summary + ' ' + (n.triggered_by || '') + ' ' + n.category).toLowerCase();
+      return hay.includes(q);
+    });
+  }
+
+  // Sort: by severity first (critical -> serious -> action -> info), then alphabetical by code
+  const sevOrder = {critical:0, serious:1, action_required:2, informational:3};
+  filtered.sort((a, b) => {
+    const s = (sevOrder[a.severity] ?? 9) - (sevOrder[b.severity] ?? 9);
+    if (s !== 0) return s;
+    return a.code.localeCompare(b.code);
+  });
+
+  renderList(filtered);
+  renderMeta(filtered.length, q, activeFilter);
+}
+
+function renderList(items) {
+  if (items.length === 0) {
+    resultsList.innerHTML = '<div class="result-empty">No notices match your search. Try a different keyword or clear filters.</div>';
+    return;
+  }
+  resultsList.innerHTML = items.map(n => `
+    <div class="result-item ${activeNoticeCode === n.code ? 'active' : ''}" data-code="${escapeHtml(n.code)}">
+      <div class="result-code">
+        <span>${escapeHtml(n.code)}</span>
+        <span class="sev-pill ${n.severity}">${severityLabel(n.severity)}</span>
+      </div>
+      <div class="result-title">${escapeHtml(n.title)}</div>
+    </div>
+  `).join('');
+  resultsList.querySelectorAll('.result-item').forEach(el => {
+    el.addEventListener('click', () => showDetail(el.dataset.code));
+  });
+}
+
+function renderMeta(count, q, filter) {
+  const filterLabel = filter === 'all' ? '' : ' in ' + categoryLabel(filter);
+  if (q) {
+    resultsMeta.innerHTML = `Showing <span>${count}</span> notice${count === 1 ? '' : 's'} matching "<strong>${escapeHtml(q)}</strong>"${filterLabel}`;
+  } else {
+    resultsMeta.innerHTML = `Showing <span>${count}</span> notice${count === 1 ? '' : 's'}${filterLabel}`;
+  }
+}
+
+function showDetail(code) {
+  const n = NOTICES.find(x => x.code === code);
+  if (!n) return;
+  activeNoticeCode = code;
+
+  // Re-render list to update active state
+  resultsList.querySelectorAll('.result-item').forEach(el => {
+    el.classList.toggle('active', el.dataset.code === code);
+  });
+
+  const today = new Date().toISOString().slice(0, 10);
+  const deadlineSection = n.deadline_days
+    ? renderDeadlineCard(n, today)
+    : '';
+
+  const actionsHtml = n.actions.map(a => `<li>${escapeHtml(a)}</li>`).join('');
+  const formsHtml = n.forms.length
+    ? n.forms.map(f => `<a class="form-pill" href="https://www.irs.gov/forms-pubs/about-form-${f.toLowerCase().replace(/^form\s+/, '').replace(/\s+/g, '-').replace(/[()]/g, '')}" target="_blank" rel="noopener">${escapeHtml(f)}</a>`).join('')
+    : '<span style="color:var(--muted);font-size:0.85rem;">None</span>';
+
+  const templateBtn = n.template_id && RESPONSE_TEMPLATES[n.template_id]
+    ? `<button class="btn btn-primary" onclick="showTemplate('${n.template_id}')">📝 Response Letter Template</button>`
+    : '';
+
+  const irsLinkBtn = n.irs_url
+    ? `<a class="btn btn-secondary" href="${escapeHtml(n.irs_url)}" target="_blank" rel="noopener">↗ Read on IRS.gov</a>`
+    : '';
+
+  detailPanel.innerHTML = `
+    <div class="detail-header">
+      <div class="detail-code-block">
+        <div class="detail-code">${escapeHtml(n.code)}</div>
+        <div class="detail-pills">
+          <span class="sev-pill ${n.severity}">${severityLabel(n.severity)}</span>
+          <span class="detail-cat-pill">${categoryLabel(n.category)}</span>
+        </div>
+      </div>
+    </div>
+    <div class="detail-title">${escapeHtml(n.title)}</div>
+    <div class="detail-summary">${escapeHtml(n.summary)}</div>
+
+    ${deadlineSection}
+
+    <div class="detail-section">
+      <div class="detail-section-title">What triggered this notice</div>
+      <div class="detail-text">${escapeHtml(n.triggered_by)}</div>
+    </div>
+
+    <div class="detail-section">
+      <div class="detail-section-title">Recommended response</div>
+      <ul class="action-list">${actionsHtml}</ul>
+    </div>
+
+    <div class="detail-section">
+      <div class="detail-section-title">Related forms</div>
+      <div class="forms-list">${formsHtml}</div>
+    </div>
+
+    ${n.preparer_note ? `
+    <div class="preparer-note">
+      <div class="preparer-note-label">💡 Tax preparer note</div>
+      ${escapeHtml(n.preparer_note)}
+    </div>` : ''}
+
+    <div class="detail-actions">
+      ${templateBtn}
+      ${irsLinkBtn}
+    </div>
+  `;
+
+  // Set up deadline updater if applicable
+  const dateInput = $('deadlineDate');
+  if (dateInput) {
+    dateInput.addEventListener('change', () => updateDeadlineCounter(n));
+  }
+
+  detailPanel.scrollIntoView({behavior:'smooth', block:'start'});
+}
+
+function renderDeadlineCard(n, defaultDate) {
+  const sev = n.severity === 'critical' ? '' : (n.severity === 'serious' ? 'warn' : 'info');
+  return `
+    <div class="deadline-card ${sev}">
+      <div class="deadline-row">
+        <div class="deadline-label">Response Deadline</div>
+        <div class="deadline-counter" id="deadlineCounter">${n.deadline_days} days from notice date</div>
+      </div>
+      <div class="deadline-input-row">
+        Notice date:
+        <input type="date" id="deadlineDate" value="${defaultDate}" />
+        <span style="margin-left:auto;font-size:0.78rem;" id="deadlineComputed"></span>
+      </div>
+      <div class="deadline-desc">${escapeHtml(n.deadline_desc || '')}</div>
+    </div>
+  `;
+}
+
+function updateDeadlineCounter(n) {
+  const dateInput = $('deadlineDate');
+  const counter = $('deadlineCounter');
+  const computed = $('deadlineComputed');
+  if (!dateInput || !counter) return;
+  const noticeDate = new Date(dateInput.value);
+  if (isNaN(noticeDate)) return;
+  const today = new Date();
+  today.setHours(0,0,0,0);
+  const deadline = new Date(noticeDate);
+  deadline.setDate(deadline.getDate() + n.deadline_days);
+  const daysLeft = Math.round((deadline - today) / (1000 * 60 * 60 * 24));
+  if (daysLeft < 0) {
+    counter.textContent = `Deadline passed (${-daysLeft} days ago)`;
+    counter.style.color = 'var(--red)';
+  } else if (daysLeft <= 7) {
+    counter.textContent = `${daysLeft} days remaining ⚠️`;
+    counter.style.color = 'var(--orange)';
+  } else {
+    counter.textContent = `${daysLeft} days remaining`;
+    counter.style.color = 'var(--white)';
+  }
+  computed.textContent = `Deadline: ${deadline.toLocaleDateString('en-US', {year:'numeric', month:'short', day:'numeric'})}`;
+}
+
+function showTemplate(id) {
+  const t = RESPONSE_TEMPLATES[id];
+  if (!t) return;
+  $('modalTitle').textContent = t.title;
+  // Highlight placeholders
+  const highlighted = escapeHtml(t.body).replace(/\[([A-Z_0-9 .#\/–-]+)\]/g, '<span class="template-placeholder">[$1]</span>');
+  $('modalBody').innerHTML = highlighted;
+  $('modal').classList.add('show');
+  $('modalCopy').dataset.text = t.body;
+}
+
+function closeModal() {
+  $('modal').classList.remove('show');
+}
+
+$('modalClose').addEventListener('click', closeModal);
+$('modal').addEventListener('click', (e) => {
+  if (e.target.id === 'modal') closeModal();
+});
+document.addEventListener('keydown', (e) => {
+  if (e.key === 'Escape') closeModal();
+});
+$('modalCopy').addEventListener('click', () => {
+  const text = $('modalCopy').dataset.text;
+  navigator.clipboard.writeText(text).then(() => {
+    const btn = $('modalCopy');
+    const orig = btn.textContent;
+    btn.textContent = '✓ Copied!';
+    setTimeout(() => btn.textContent = orig, 1800);
+  });
+});
+
+// Filter chips
+filterRow.addEventListener('click', (e) => {
+  if (e.target.classList.contains('filter-chip')) {
+    filterRow.querySelectorAll('.filter-chip').forEach(c => c.classList.remove('on'));
+    e.target.classList.add('on');
+    activeFilter = e.target.dataset.filter;
+    filterAndSearch();
+  }
+});
+
+// Search
+searchInput.addEventListener('input', filterAndSearch);
+searchClear.addEventListener('click', () => {
+  searchInput.value = '';
+  searchInput.focus();
+  filterAndSearch();
+});
+
+// Keyboard navigation
+searchInput.addEventListener('keydown', (e) => {
+  if (e.key === 'Enter') {
+    const first = resultsList.querySelector('.result-item');
+    if (first) showDetail(first.dataset.code);
+  }
+});
+
+// Hamburger menu
+(function(){
+  var btn = document.getElementById('navHamburger');
+  var ul = document.querySelector('nav .nav-links');
+  if(!btn || !ul) return;
+  btn.addEventListener('click', function(){
+    btn.classList.toggle('open');
+    ul.classList.toggle('mobile-open');
+  });
+})();
+
+// Make showTemplate available globally
+window.showTemplate = showTemplate;
+
+// Initial render
+filterAndSearch();
+</script>
+</body>
+</html>
