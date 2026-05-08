@@ -1138,9 +1138,20 @@ function filterAndSearch() {
     });
   }
 
-  // Sort: by severity first (critical -> serious -> action -> info), then alphabetical by code
+  // Sort: exact code match first, then by severity (critical -> serious -> action -> info), then alphabetical
   const sevOrder = {critical:0, serious:1, action_required:2, informational:3};
+  const qNorm = q.replace(/\s+/g, '').toLowerCase();
   filtered.sort((a, b) => {
+    // Exact code match wins
+    if (qNorm) {
+      const aExact = a.code.replace(/\s+/g,'').toLowerCase() === qNorm ? 0 : 1;
+      const bExact = b.code.replace(/\s+/g,'').toLowerCase() === qNorm ? 0 : 1;
+      if (aExact !== bExact) return aExact - bExact;
+      // Then prefix match on code
+      const aPrefix = a.code.replace(/\s+/g,'').toLowerCase().startsWith(qNorm) ? 0 : 1;
+      const bPrefix = b.code.replace(/\s+/g,'').toLowerCase().startsWith(qNorm) ? 0 : 1;
+      if (aPrefix !== bPrefix) return aPrefix - bPrefix;
+    }
     const s = (sevOrder[a.severity] ?? 9) - (sevOrder[b.severity] ?? 9);
     if (s !== 0) return s;
     return a.code.localeCompare(b.code);
