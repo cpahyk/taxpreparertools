@@ -345,10 +345,36 @@
 
   .who-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-    gap: 24px;
-    max-width: 1100px;
+    grid-template-columns: repeat(5, 1fr);
+    gap: 20px;
+    max-width: 1200px;
     margin: 0 auto;
+  }
+
+  /* ── Mobile carousel ── */
+  @media (max-width: 900px) {
+    .who-grid {
+      display: flex;
+      overflow-x: auto;
+      scroll-snap-type: x mandatory;
+      -webkit-overflow-scrolling: touch;
+      gap: 14px;
+      padding-bottom: 16px;
+      /* hide scrollbar visually but keep functionality */
+      scrollbar-width: none;
+      -ms-overflow-style: none;
+      /* full-width so cards don't collapse */
+      max-width: 100%;
+    }
+    .who-grid::-webkit-scrollbar { display: none; }
+    .who-card {
+      flex: 0 0 72vw;
+      max-width: 280px;
+      scroll-snap-align: start;
+    }
+  }
+  @media (max-width: 480px) {
+    .who-card { flex: 0 0 80vw; }
   }
 
   .who-card {
@@ -386,6 +412,20 @@
     font-size: 0.85rem;
     color: var(--muted);
     line-height: 1.6;
+  }
+
+  .carousel-hint {
+    display: none;
+    text-align: center;
+    font-family: 'DM Mono', monospace;
+    font-size: 0.7rem;
+    color: var(--muted);
+    letter-spacing: 0.08em;
+    margin-top: 4px;
+    opacity: 0.6;
+  }
+  @media (max-width: 900px) {
+    .carousel-hint { display: block; }
   }
 
   /* ─── TOOLS SECTION ─── */
@@ -1095,6 +1135,8 @@
       <div class="who-desc">Entity comparison, payroll tax estimators, quarterly payment tools, and depreciation calculators.</div>
     </div>
   </div>
+  <!-- Mobile swipe hint -->
+  <p class="carousel-hint">← Swipe to explore →</p>
 </section>
 
 <!-- TOOLS GRID -->
@@ -1322,22 +1364,25 @@
 
 <script>
 const tools = [
-  { name: "Federal Tax Estimator", icon: "🧮", cat: "calc", tag: "tag-calc", label: "Calculator", desc: "Estimate 2025 federal income tax across all filing statuses with bracket breakdown.", url: "federal-tax-estimator.html" },
-  { name: "Self-Employment Tax Calc", icon: "💼", cat: "calc", tag: "tag-calc", label: "Calculator", desc: "Calculate SE tax (Social Security + Medicare) and the deductible portion on Schedule SE.", url: "se-tax-calculator.html" },
-  { name: "Quarterly Estimated Payments", icon: "📆", cat: "calc", tag: "tag-calc", label: "Calculator", desc: "Determine safe-harbor amounts and compute quarterly payment schedules automatically.", url: "quarterly-payments.html" },
+  { name: "Federal Tax Estimator", icon: "🧮", cat: "calc", tag: "tag-calc", label: "Calculator", desc: "Estimate 2025 federal income tax across all filing statuses with bracket breakdown.", url: "tools/federal-tax-estimator.html" },
+  { name: "Self-Employment Tax Calc", icon: "💼", cat: "calc", tag: "tag-calc", label: "Calculator", desc: "Calculate SE tax (Social Security + Medicare) and the deductible portion on Schedule SE.", url: "tools/se-tax-calculator.html" },
+  { name: "Quarterly Estimated Payments", icon: "📆", cat: "calc", tag: "tag-calc", label: "Calculator", desc: "Determine safe-harbor amounts and compute quarterly payment schedules automatically.", url: "tools/quarterly-payments.html" },
   { name: "W-4 Withholding Optimizer", icon: "📝", cat: "individual", tag: "tag-individual", label: "Individual", desc: "Help employees complete Form W-4 to withhold the right amount from each paycheck.", url: "/tools/w4-optimizer", coming_soon: true },
-  { name: "Mileage Log & Tracker", icon: "🚗", cat: "individual", tag: "tag-individual", label: "Individual", desc: "Track business miles and calculate deductions using current IRS standard mileage rates.", url: "mileage.html" },
-  { name: "Depreciation Calculator", icon: "📉", cat: "business", tag: "tag-business", label: "Business", desc: "MACRS depreciation schedules, Section 179 election, and bonus depreciation for 2025.", url: "depreciation.html" },
-  { name: "S-Corp Payroll Optimizer", icon: "🏢", cat: "business", tag: "tag-business", label: "Business", desc: "Determine reasonable compensation and model S-Corp tax savings versus LLC/sole prop.", url: "se-tax-calculator.html" },
-  { name: "IRS Penalty Calculator", icon: "⚠️", cat: "pro", tag: "tag-pro", label: "CPA / EA Pro", desc: "Compute failure-to-file and failure-to-pay penalties with daily interest accruals.", url: "penalty-calculator.html" },
+  { name: "Mileage Log & Tracker", icon: "🚗", cat: "individual", tag: "tag-individual", label: "Individual", desc: "Track business miles and calculate deductions using current IRS standard mileage rates.", url: "tools/mileage.html" },
+  { name: "Depreciation Calculator", icon: "📉", cat: "business", tag: "tag-business", label: "Business", desc: "MACRS depreciation schedules, Section 179 election, and bonus depreciation for 2025.", url: "tools/depreciation.html" },
+  { name: "S-Corp Payroll Optimizer", icon: "🏢", cat: "business", tag: "tag-business", label: "Business", desc: "Determine reasonable compensation and model S-Corp tax savings versus LLC/sole prop.", url: "tools/se-tax-calculator.html" },
+  { name: "IRS Penalty Calculator", icon: "⚠️", cat: "pro", tag: "tag-pro", label: "CPA / EA Pro", desc: "Compute failure-to-file and failure-to-pay penalties with daily interest accruals.", url: "tools/penalty-calculator.html" },
+  { name: "QBI Deduction Calculator", icon: "🏗️", cat: "business", tag: "tag-business", label: "Business", desc: "Calculate your Section 199A qualified business income deduction with SSTB phase-out and W-2 wage limits.", url: "tools/qbi.html" },
+  { name: "Capital Gains Tax Calculator", icon: "📈", cat: "calc", tag: "tag-calc", label: "Calculator", desc: "Calculate short-term and long-term capital gains tax for 2025, including NIIT on investment income.", url: "tools/capital-gains.html" },
+  { name: "Home Office Deduction Calculator", icon: "🏠", cat: "individual", tag: "tag-individual", label: "Individual", desc: "Calculate your home office deduction using the simplified or actual expense method — picks the larger.", url: "tools/home-office.html" },
   { name: "Installment Agreement Planner", icon: "🤝", cat: "pro", tag: "tag-pro", label: "CPA / EA Pro", desc: "Model IRS payment plan options including OIC eligibility and PPIA calculations.", url: "/tools/installment-agreement", coming_soon: true },
   { name: "Audit Risk Indicator", icon: "🔍", cat: "pro", tag: "tag-pro", label: "CPA / EA Pro", desc: "Assess return red flags based on income type, deduction ratios, and industry benchmarks.", url: "/tools/audit-risk", coming_soon: true },
-  { name: "Deadline Calendar", icon: "📅", cat: "deadline", tag: "tag-deadline", label: "Deadlines", desc: "Full 2025–2026 tax deadline calendar with export to Google Calendar or iCal.", url: "deadlines" },
+  { name: "Deadline Calendar", icon: "📅", cat: "deadline", tag: "tag-deadline", label: "Deadlines", desc: "Full 2025–2026 tax deadline calendar with export to Google Calendar or iCal.", url: "deadlines.html" },
   { name: "Refund Tracker Guide", icon: "💰", cat: "individual", tag: "tag-individual", label: "Individual", desc: "Step-by-step guide to checking IRS Where's My Refund and understanding refund timelines.", url: "/tools/refund-tracker", coming_soon: true },
   { name: "State Tax Rate Lookup", icon: "🗺️", cat: "calc", tag: "tag-calc", label: "Calculator", desc: "Quick reference for state income, sales, and property tax rates across all 50 states.", url: "/tools/state-taxes", coming_soon: true },
   { name: "Child Tax Credit Estimator", icon: "👨‍👩‍👧", cat: "individual", tag: "tag-individual", label: "Individual", desc: "Calculate your CTC and ACTC based on number of qualifying children and income level.", url: "/tools/ctc", coming_soon: true },
   { name: "Business Entity Comparison", icon: "⚖️", cat: "business", tag: "tag-business", label: "Business", desc: "Side-by-side comparison of LLC, S-Corp, C-Corp, and Sole Prop for tax planning.", url: "/tools/entity-comparison", coming_soon: true },
-  { name: "Extension Toolkit", icon: "🕐", cat: "deadline", tag: "tag-deadline", label: "Deadlines", desc: "File Form 4868 or 7004 properly — includes payment due with extension calculator.", url: "deadlines" },
+  { name: "Extension Toolkit", icon: "🕐", cat: "deadline", tag: "tag-deadline", label: "Deadlines", desc: "File Form 4868 or 7004 properly — includes payment due with extension calculator.", url: "deadlines.html" },
 ];
 
 function renderTools(filter = 'all') {
@@ -1349,7 +1394,7 @@ function renderTools(filter = 'all') {
       <span class="tool-icon">${t.icon}</span>
       <div class="tool-name">${t.name}</div>
       <div class="tool-desc">${t.desc}</div>
-      ${t.coming_soon ? '<span class="tool-link tool-link-disabled">Coming Soon</span>' : `<a href="${t.url}.html" class="tool-link">Open Tool →</a>`}
+      ${t.coming_soon ? '<span class="tool-link tool-link-disabled">Coming Soon</span>' : `<a href="${t.url}" class="tool-link">Open Tool →</a>`}
     </div>
   `).join('');
 }
