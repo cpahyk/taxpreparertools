@@ -493,7 +493,7 @@ const ALL_TOOLS = [
   { id:13, emoji:"⚠️", name:"IRS Penalty Calculator", desc:"Failure-to-file, failure-to-pay, and underpayment penalty computations with daily interest accrual.", cat:"pro", catLabel:"CPA / EA Pro", avail:"free", url:"penalty-calculator.html", tags:["penalty","FTF","FTP","interest","underpayment","abatement"] },
   { id:14, emoji:"🤝", name:"Installment Agreement Planner", desc:"Model IRS payment plan options, OIC eligibility pre-screen, and PPIA computation worksheet.", cat:"pro", catLabel:"CPA / EA Pro", avail:"pro", url:"/tools/installment-agreement", tags:["installment agreement","IRS","payment plan","OIC","PPIA","collection"], comingSoon:true },
   { id:15, emoji:"🔍", name:"Audit Risk Indicator", desc:"Score a return's audit risk based on income type, deduction ratios, and IRS DIF score proxies.", cat:"pro", catLabel:"CPA / EA Pro", avail:"pro", isNew:true, url:"/tools/audit-risk", tags:["audit","DIF","red flags","risk score","IRS examination"], comingSoon:true },
-  { id:16, emoji:"📋", name:"IRS Notice Decoder", desc:"Paste any IRS notice number (CP2000, CP503, LT11…) and get a plain-English explanation + action plan.", cat:"pro", catLabel:"CPA / EA Pro", avail:"free", isNew:true, url:"/tools/notice-decoder", tags:["IRS notice","CP2000","LT11","CP503","letter","response"], comingSoon:true },
+  { id:16, emoji:"🛡️", name:"Penalty Abatement Request Builder", desc:"Generate Form 843 arguments for first-time abatement and reasonable cause relief automatically.", cat:"pro", catLabel:"CPA / EA Pro", avail:"pro", url:"/tools/abatement-builder", tags:["abatement","843","FTA","reasonable cause","penalty relief"], comingSoon:true },
   { id:17, emoji:"🛡️", name:"Penalty Abatement Request Builder", desc:"Generate Form 843 arguments for first-time abatement and reasonable cause relief automatically.", cat:"pro", catLabel:"CPA / EA Pro", avail:"pro", url:"/tools/abatement-builder", tags:["abatement","843","FTA","reasonable cause","penalty relief"], comingSoon:true },
   { id:18, emoji:"📊", name:"Engagement Letter Generator", desc:"Customizable engagement letters for individual, business, and representation matters.", cat:"pro", catLabel:"CPA / EA Pro", avail:"pro", url:"/tools/engagement-letter", tags:["engagement letter","CPA","EA","practice management","client"], comingSoon:true },
   { id:19, emoji:"🔄", name:"Amended Return Checklist", desc:"Step-by-step 1040-X preparation checklist with common triggers and timing guidance.", cat:"pro", catLabel:"CPA / EA Pro", avail:"free", url:"/tools/amended-return", tags:["1040-X","amended","correction","refund claim"], comingSoon:true },
@@ -528,6 +528,10 @@ const ALL_TOOLS = [
 
   // REFERENCE
   { id:42, emoji:"📚", name:"IRS Forms Library", desc:"Searchable index of all current IRS forms, instructions, and publications with direct download links.", cat:"ref", catLabel:"Reference", avail:"free", url:"/tools/forms-library", tags:["forms","publications","IRS","1040","instructions","library"], comingSoon:true },
+
+  // LIVE TOOLS — unlocked
+  { id:43, emoji:"📋", name:"IRS Notice Decoder", desc:"Paste any IRS notice number (CP2000, CP14, CP504, LT11, Letter 226-J…) and get a plain-English explanation, response deadline, and downloadable response template.", cat:"pro", catLabel:"CPA / EA Pro", avail:"free", isNew:true, url:"irs-notice-decoder.html", tags:["IRS notice","CP2000","CP14","CP504","LT11","letter","response","decoder","penalty","audit"] },
+  { id:44, emoji:"🏠", name:"Property Tax Search", desc:"Free property tax record lookup for all 50 US states and 300+ counties. Direct deep-links to official assessor portals — search by address, parcel/PIN, or owner name.", cat:"ind", catLabel:"Individual", avail:"free", isNew:true, url:"property-tax-search.html", tags:["property tax","assessor","parcel","county","real estate","tax record","address lookup","homeowner"] },
 ];
 
 let currentCat = "all";
