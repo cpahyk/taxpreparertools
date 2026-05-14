@@ -470,6 +470,9 @@
   }
 
   .tool-card {
+    display: block;
+    text-decoration: none;
+    cursor: pointer;
     background: var(--card-bg);
     border: 1px solid var(--border);
     border-radius: 18px;
@@ -954,6 +957,8 @@
   .tool-coming-soon { opacity: 0.6; }
   .tool-cs-badge { font-size: 0.65rem; font-weight: 700; background: rgba(200,168,75,0.15); color: var(--gold, #c8a84b); border: 1px solid rgba(200,168,75,0.3); border-radius: 20px; padding: 2px 8px; margin-left: auto; }
   .tool-link-disabled { display: inline-block; padding: 8px 16px; border-radius: 8px; font-size: 0.8rem; font-weight: 600; color: var(--muted, #7a8fac); cursor: not-allowed; border: 1px solid rgba(255,255,255,0.08); }
+  .tool-card-soon { cursor: default; opacity: 0.65; }
+  .tool-card-soon:hover { transform: none !important; box-shadow: none !important; background: var(--card-bg) !important; border-color: var(--border) !important; }
 
 
   /* ── Mobile hamburger nav ── */
@@ -1388,15 +1393,19 @@ const tools = [
 function renderTools(filter = 'all') {
   const grid = document.getElementById('toolsGrid');
   const filtered = filter === 'all' ? tools : tools.filter(t => t.cat === filter);
-  grid.innerHTML = filtered.map(t => `
-    <div class="tool-card">
+  grid.innerHTML = filtered.map(t => {
+    const tag  = t.coming_soon ? 'div' : 'a';
+    const href = t.coming_soon ? '' : `href="${t.url}"`;
+    const cs   = t.coming_soon ? ' tool-card-soon' : '';
+    return `
+    <${tag} ${href} class="tool-card${cs}">
       <div class="tool-tag ${t.tag}">${t.label}</div>
       <span class="tool-icon">${t.icon}</span>
       <div class="tool-name">${t.name}</div>
       <div class="tool-desc">${t.desc}</div>
-      ${t.coming_soon ? '<span class="tool-link tool-link-disabled">Coming Soon</span>' : `<a href="${t.url}" class="tool-link">Open Tool →</a>`}
-    </div>
-  `).join('');
+      <span class="tool-link${t.coming_soon ? ' tool-link-disabled' : ''}">${t.coming_soon ? 'Coming Soon' : 'Open Tool →'}</span>
+    </${tag}>`;
+  }).join('');
 }
 
 function filterTools(cat, btn) {
