@@ -60,10 +60,12 @@ select option{background:var(--navy);}
 .toggle-btn.on{background:var(--gold);color:var(--navy);}
 .calc-btn{width:100%;background:var(--gold);color:var(--navy);border:none;border-radius:10px;padding:14px;font-size:0.97rem;font-weight:800;cursor:pointer;transition:all .25s;font-family:'DM Sans',sans-serif;margin-top:6px;}
 .calc-btn:hover{background:var(--gold-light);transform:translateY(-2px);box-shadow:0 10px 32px rgba(200,168,75,.26);}
+
 /* RESULTS */
 .results{display:none;margin-top:22px;animation:fu .4s ease;}
 .results.show{display:block;}
 @keyframes fu{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:translateY(0)}}
+
 .r-hero{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:14px;}
 .r-box{background:var(--card);border:1px solid var(--border);border-radius:12px;padding:16px;text-align:center;}
 .r-box.featured{background:linear-gradient(135deg,rgba(200,168,75,0.1),rgba(200,168,75,0.03));border-color:rgba(200,168,75,.28);}
@@ -73,18 +75,18 @@ select option{background:var(--navy);}
 .rb-val.green{color:var(--green);}
 .rb-val.red{color:var(--red);}
 .rb-sub{font-size:0.66rem;color:var(--muted);margin-top:3px;}
+
 .breakdown-table{background:var(--card);border:1px solid var(--border);border-radius:12px;overflow:hidden;margin-bottom:12px;}
 .bt-row{display:flex;justify-content:space-between;align-items:center;padding:11px 16px;border-bottom:1px solid rgba(255,255,255,.04);}
 .bt-row:last-child{border-bottom:none;}
 .bt-row.total{background:rgba(200,168,75,.06);border-top:1px solid rgba(200,168,75,.15);}
-.bt-row.agi-note{background:rgba(74,222,128,.04);border-top:1px solid rgba(74,222,128,.15);}
 .bt-label{font-size:0.8rem;color:var(--muted);}
 .bt-label strong{color:var(--text);}
-.bt-label .note{font-size:0.68rem;color:var(--muted);opacity:.8;display:block;margin-top:2px;}
 .bt-val{font-family:'DM Mono',monospace;font-size:0.85rem;font-weight:600;color:var(--text);}
 .bt-val.gold{color:var(--gold);}
 .bt-val.green{color:var(--green);}
 .bt-val.red{color:var(--red);}
+
 .viz-bar-wrap{background:var(--card);border:1px solid var(--border);border-radius:12px;padding:16px;margin-bottom:12px;}
 .viz-title{font-size:0.7rem;font-family:'DM Mono',monospace;font-weight:700;text-transform:uppercase;letter-spacing:.08em;color:var(--muted);margin-bottom:12px;}
 .viz-bar{display:flex;height:18px;border-radius:9px;overflow:hidden;gap:2px;margin-bottom:10px;}
@@ -95,6 +97,7 @@ select option{background:var(--navy);}
 .viz-legend{display:flex;gap:14px;flex-wrap:wrap;}
 .vl-item{display:flex;align-items:center;gap:5px;font-size:0.68rem;color:var(--muted);}
 .vl-dot{width:8px;height:8px;border-radius:50%;}
+
 .comparison-box{background:linear-gradient(135deg,var(--slate),var(--navy-mid));border:1px solid rgba(200,168,75,.2);border-radius:12px;padding:18px;}
 .cb-title{font-size:0.7rem;font-family:'DM Mono',monospace;font-weight:700;text-transform:uppercase;letter-spacing:.08em;color:var(--gold);margin-bottom:12px;}
 .cb-row{display:flex;justify-content:space-between;padding:8px 0;border-bottom:1px solid rgba(255,255,255,.05);font-size:0.8rem;}
@@ -102,13 +105,7 @@ select option{background:var(--navy);}
 .cb-k{color:var(--muted);}
 .cb-v{font-family:'DM Mono',monospace;font-weight:600;color:var(--text);}
 .cb-v.gold{color:var(--gold);}
-/* ACTION BUTTONS */
-.result-actions{display:flex;gap:8px;margin-top:14px;}
-.act-btn{flex:1;padding:9px 14px;border-radius:8px;font-size:0.8rem;font-weight:700;cursor:pointer;border:1px solid var(--border);background:rgba(255,255,255,.04);color:var(--muted);font-family:'DM Sans',sans-serif;transition:all .2s;text-align:center;}
-.act-btn:hover{border-color:rgba(200,168,75,.4);color:var(--gold);background:rgba(200,168,75,.06);}
-/* REASONABLE COMP NOTE */
-.field-note{font-size:0.72rem;color:var(--muted);line-height:1.55;margin-top:6px;padding:8px 10px;background:rgba(251,146,60,.07);border:1px solid rgba(251,146,60,.2);border-radius:7px;}
-.field-note strong{color:var(--orange);}
+
 /* SIDEBAR */
 .right-col{display:flex;flex-direction:column;gap:16px;}
 .info-card{background:var(--navy-mid);border:1px solid var(--border);border-radius:15px;padding:20px;}
@@ -118,7 +115,6 @@ select option{background:var(--navy);}
 .ic-k{color:var(--muted);}
 .ic-v{font-family:'DM Mono',monospace;font-weight:600;color:var(--text);}
 .ic-v.gold{color:var(--gold);}
-.ic-v.green{color:var(--green);}
 .tip-item{display:flex;gap:9px;padding:8px 0;border-bottom:1px solid rgba(255,255,255,.04);}
 .tip-item:last-child{border-bottom:none;}
 .tip-icon{font-size:0.95rem;flex-shrink:0;margin-top:1px;}
@@ -132,80 +128,105 @@ select option{background:var(--navy);}
 .rd{font-size:0.66rem;color:var(--muted);}
 .ra{margin-left:auto;color:var(--muted);font-size:0.85rem;transition:all .18s;}
 .rel-item:hover .ra{color:var(--gold);transform:translateX(3px);}
+
 .explainer{background:var(--navy-mid);border:1px solid var(--border);border-radius:15px;padding:24px;margin-top:20px;}
 .exp-title{font-family:'Playfair Display',serif;font-size:1.1rem;font-weight:700;color:var(--white);margin-bottom:14px;}
 .exp-sec{margin-bottom:16px;}
 .exp-h{font-size:0.78rem;font-weight:700;color:var(--gold);margin-bottom:6px;}
 .exp-p{font-size:0.8rem;color:var(--muted);line-height:1.7;}
 .exp-p strong{color:var(--text);}
+
 footer{border-top:1px solid var(--border);padding:26px 48px;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:12px;background:var(--navy-mid);}
 .fl{font-size:0.72rem;color:var(--muted);}
 .fl a{color:var(--gold);text-decoration:none;}
 .flinks{display:flex;gap:18px;}
 .flinks a{font-size:0.72rem;color:var(--muted);text-decoration:none;transition:color .2s;}
 .flinks a:hover{color:var(--gold);}
+
 @media(max-width:960px){nav{padding:13px 18px;}.nav-links{display:none;}.page-wrap{padding:26px 18px 60px;}.layout{grid-template-columns:1fr;}.field-row{grid-template-columns:1fr;}footer{padding:18px 18px;flex-direction:column;}}
-.nav-hamburger{display:none;flex-direction:column;gap:5px;cursor:pointer;padding:6px;border:none;background:transparent;z-index:300;}
-.nav-hamburger span{display:block;width:22px;height:2px;background:var(--gold,#c8a84b);border-radius:2px;transition:all .25s;}
-.nav-hamburger.open span:nth-child(1){transform:translateY(7px) rotate(45deg);}
-.nav-hamburger.open span:nth-child(2){opacity:0;}
-.nav-hamburger.open span:nth-child(3){transform:translateY(-7px) rotate(-45deg);}
-@media(max-width:768px){
-.nav-hamburger{display:flex;}
-nav ul,.nav-links{display:none!important;position:fixed;top:60px;left:0;right:0;background:rgba(8,21,42,0.98);backdrop-filter:blur(20px);flex-direction:column!important;padding:16px 0;z-index:200;border-bottom:1px solid rgba(200,168,75,.18);}
-nav ul.mobile-open,.nav-links.mobile-open{display:flex!important;}
-nav ul li,.nav-links li{width:100%;text-align:center;}
-nav ul li a,.nav-links li a{display:block;padding:12px 24px;font-size:1rem;}
-.nav-right,.nav-cta-wrap{display:none!important;}
-}
-/* Print styles */
-@media print{
-nav,footer,.result-actions,.calc-btn,.right-col,.explainer{display:none!important;}
-body{background:#fff;color:#000;}
-.page-wrap{padding:0;}
-.layout{grid-template-columns:1fr;}
-.breakdown-table,.viz-bar-wrap,.comparison-box,.r-hero{break-inside:avoid;}
-}
+
+  /* ── Mobile hamburger nav ── */
+  .nav-hamburger{display:none;flex-direction:column;gap:5px;cursor:pointer;padding:6px;border:none;background:transparent;z-index:300;}
+  .nav-hamburger span{display:block;width:22px;height:2px;background:var(--gold,#c8a84b);border-radius:2px;transition:all .25s;}
+  .nav-hamburger.open span:nth-child(1){transform:translateY(7px) rotate(45deg);}
+  .nav-hamburger.open span:nth-child(2){opacity:0;}
+  .nav-hamburger.open span:nth-child(3){transform:translateY(-7px) rotate(-45deg);}
+  @media(max-width:768px){
+    .nav-hamburger{display:flex;}
+    nav ul,.nav-links{display:none!important;position:fixed;top:60px;left:0;right:0;background:rgba(8,21,42,0.98);backdrop-filter:blur(20px);flex-direction:column!important;padding:16px 0;z-index:200;border-bottom:1px solid rgba(200,168,75,.18);}
+    nav ul.mobile-open,.nav-links.mobile-open{display:flex!important;}
+    nav ul li,.nav-links li{width:100%;text-align:center;}
+    nav ul li a,.nav-links li a{display:block;padding:12px 24px;font-size:1rem;}
+    .nav-right,.nav-cta-wrap{display:none!important;}
+  }
+
 </style>
-<meta property="og:type" content="website" />
-<meta property="og:url" content="https://taxpreparertools.com/se-tax-calculator" />
-<meta property="og:title" content="SE Tax Calculator 2025" />
-<meta property="og:description" content="Calculate self-employment tax, Medicare surcharge, and S-Corp conversion savings for 2025." />
-<meta property="og:image" content="https://taxpreparertools.com/assets/og-image.png" />
-<meta name="twitter:card" content="summary_large_image" />
-<meta name="twitter:title" content="SE Tax Calculator 2025" />
-<meta name="twitter:description" content="Calculate self-employment tax, Medicare surcharge, and S-Corp conversion savings for 2025." />
-<meta name="twitter:image" content="https://taxpreparertools.com/assets/og-image.png" />
+  <!-- Open Graph / Social Sharing -->
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="https://taxpreparertools.com/se-tax-calculator" />
+  <meta property="og:title" content="SE Tax Calculator 2025" />
+  <meta property="og:description" content="Calculate self-employment tax, Medicare surcharge, and S-Corp conversion savings for 2025." />
+  <meta property="og:image" content="https://taxpreparertools.com/assets/og-image.png" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="SE Tax Calculator 2025" />
+  <meta name="twitter:description" content="Calculate self-employment tax, Medicare surcharge, and S-Corp conversion savings for 2025." />
+  <meta name="twitter:image" content="https://taxpreparertools.com/assets/og-image.png" />
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "WebApplication",
+      "name": 'Self-Employment Tax Calculator 2025',
+      "url": 'https://taxpreparertools.com/tools/se-tax-calculator',
+      "description": 'Calculate your 2025 self-employment tax (Schedule SE), deductible SE portion, and net impact on your AGI. For freelancers, 1099 contractors, and sole proprietors.',
+      "applicationCategory": "FinanceApplication",
+      "operatingSystem": "Web",
+      "offers": {"@type": "Offer", "price": "0", "priceCurrency": "USD"},
+      "provider": {
+        "@type": "Organization",
+        "name": "TaxPreparerTools",
+        "url": "https://taxpreparertools.com/"
+      }
+    },
+    {
+      "@type": "FAQPage",
+      "mainEntity": [
+        {"@type": "Question", "name": 'What is self-employment tax?', "acceptedAnswer": {"@type": "Answer", "text": 'Self-employment tax is the 15.3% tax on net self-employment income covering Social Security (12.4%) and Medicare (2.9%). Self-employed individuals pay both the employee and employer portions.'}},
+        {"@type": "Question", "name": 'How is the SE tax deduction calculated?', "acceptedAnswer": {"@type": "Answer", "text": 'You may deduct 50% of your self-employment tax from gross income on Schedule 1, reducing your adjusted gross income (AGI) but not your self-employment tax itself.'}},
+        {"@type": "Question", "name": 'Does self-employment tax apply to all business income?', "acceptedAnswer": {"@type": "Answer", "text": 'SE tax applies to net profit from self-employment. The Social Security portion (12.4%) only applies up to the wage base ($176,100 for 2025). The Medicare portion (2.9%) applies to all net SE income.'}}
+      ]
+    }
+  ]
+}
+</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    {"@type": "ListItem", "position": 1, "name": "Home", "item": "https://taxpreparertools.com/"},
+    {"@type": "ListItem", "position": 2, "name": "Tools", "item": "https://taxpreparertools.com/tools"},
+    {"@type": "ListItem", "position": 3, "name": "SE Tax Calculator", "item": "https://taxpreparertools.com/se-tax-calculator"}
+  ]
+}
+</script>
 </head>
 <body>
 <nav>
   <a href="index.html" class="logo"><div class="logo-mark">⚖</div><div><span class="logo-name">TaxPreparer<span>Tools</span></span><span class="logo-domain">taxpreparertools.com</span></div></a>
   <button id="navHamburger" class="nav-hamburger" aria-label="Menu"><span></span><span></span><span></span></button>
-  <ul class="nav-links">
-    <li><a href="tools.html" class="active">Tools</a></li>
-    <li><a href="deadlines.html">Deadlines</a></li>
-    <li><a href="ai-assistant.html">AI Assistant</a></li>
-    <li><a href="resources.html">Resources</a></li>
-  </ul>
+  <ul class="nav-links"><li><a href="tools.html" class="active">Tools</a></li><li><a href="deadlines.html">Deadlines</a></li><li><a href="ai-assistant.html">AI Assistant</a></li><li><a href="resources.html">Resources</a></li><li><a href="blog/">Blog</a></li><li><a href="about.html">About</a></li></ul>
   <a href="signup.html" class="btn-sm">Get Pro Free</a>
 </nav>
 
 <div class="page-wrap">
-  <div class="breadcrumb">
-    <a href="index.html">Home</a><span>/</span>
-    <a href="tools.html">Tools</a><span>/</span>
-    <a href="tools.html?cat=calc">Calculators</a><span>/</span>
-    SE Tax Calculator
-  </div>
+  <div class="breadcrumb"><a href="index.html">Home</a><span>/</span><a href="tools.html">Tools</a><span>/</span><a href="tools.html?cat=calc">Calculators</a><span>/</span>SE Tax Calculator</div>
 
   <div class="tool-header">
     <div class="tool-icon">💼</div>
     <div>
-      <div class="tool-badges">
-        <span class="badge badge-free">Free</span>
-        <span class="badge badge-upd">Updated Jan 2026</span>
-        <span class="badge badge-cat">Calculator</span>
-      </div>
+      <div class="tool-badges"><span class="badge badge-free">Free</span><span class="badge badge-upd">Updated Jan 2026</span><span class="badge badge-cat">Calculator</span></div>
       <h1>Self-Employment Tax<br>Calculator 2025</h1>
       <p class="tool-desc-txt">Compute your SE tax (Social Security + Medicare), the deductible half, and its impact on your AGI. Built for freelancers, 1099 contractors, sole proprietors, and single-member LLCs.</p>
     </div>
@@ -214,19 +235,13 @@ body{background:#fff;color:#000;}
   <div class="layout">
     <div>
       <div class="calc-card">
-        <div class="cc-head">
-          <div class="cc-title">Enter Your Self-Employment Details</div>
-          <div class="cc-sub">Tax Year 2025 · Schedule SE rates</div>
-        </div>
+        <div class="cc-head"><div class="cc-title">Enter Your Self-Employment Details</div><div class="cc-sub">Tax Year 2025 · Schedule SE rates</div></div>
         <div class="cc-body">
-
-          <div class="sec-title">Schedule C Income &amp; Deductions</div>
-
+          <div class="sec-title">Business Income</div>
           <div class="field">
             <div class="f-label">Gross Business Revenue <span class="f-hint">Total before any deductions</span></div>
             <div class="input-wrap"><span class="pfx">$</span><input type="number" id="revenue" placeholder="0" oninput="liveCalc()" min="0"/></div>
           </div>
-
           <div class="field-row">
             <div class="field" style="margin-bottom:0">
               <div class="f-label">Business Expenses <span class="f-hint">Schedule C deductions</span></div>
@@ -237,25 +252,18 @@ body{background:#fff;color:#000;}
               <div class="input-wrap"><span class="pfx">$</span><input type="number" id="homeoffice" placeholder="0" oninput="liveCalc()" min="0"/></div>
             </div>
           </div>
-
           <div class="field-row" style="margin-top:12px;">
             <div class="field" style="margin-bottom:0">
               <div class="f-label">Vehicle Deduction</div>
               <div class="input-wrap"><span class="pfx">$</span><input type="number" id="vehicle" placeholder="0" oninput="liveCalc()" min="0"/></div>
             </div>
             <div class="field" style="margin-bottom:0">
-              <!-- FIX 1: Clearly labeled as above-the-line, NOT a Schedule C deduction -->
-              <div class="f-label">Retirement Contributions <span class="f-hint">SEP, SIMPLE, Solo 401k — above-the-line only</span></div>
+              <div class="f-label">Retirement Contributions <span class="f-hint">SEP, SIMPLE, Solo 401k</span></div>
               <div class="input-wrap"><span class="pfx">$</span><input type="number" id="retirement" placeholder="0" oninput="liveCalc()" min="0"/></div>
             </div>
           </div>
-          <!-- FIX 1: Explain that retirement does NOT reduce SE tax -->
-          <div class="field-note" id="retirementNote" style="display:none;">
-            ⚠️ <strong>Important:</strong> Retirement contributions (SEP-IRA, Solo 401k, SIMPLE) are <strong>above-the-line deductions on Form 1040</strong> — they reduce your AGI and income tax, but do <strong>not</strong> reduce self-employment income or SE tax. They appear separately below.
-          </div>
 
-          <div class="sec-title" style="margin-top:22px;">Other Income &amp; Context</div>
-
+          <div class="sec-title" style="margin-top:22px;">Other Income & Context</div>
           <div class="field-row">
             <div class="field" style="margin-bottom:0">
               <div class="f-label">W-2 Wages (if any)</div>
@@ -273,7 +281,6 @@ body{background:#fff;color:#000;}
           </div>
 
           <div class="sec-title" style="margin-top:22px;">Comparison Mode</div>
-
           <div class="field" style="margin-bottom:0">
             <div class="f-label">Compare Entity Structure</div>
             <div class="toggle-group" id="entityToggle">
@@ -281,15 +288,10 @@ body{background:#fff;color:#000;}
               <button class="toggle-btn" data-entity="scorp" onclick="setEntity(this)">S-Corp</button>
             </div>
           </div>
-
           <div id="scorpField" style="display:none;margin-top:12px;">
             <div class="field" style="margin-bottom:0">
-              <div class="f-label">Reasonable Compensation (Salary) <span class="f-hint">S-Corp owner W-2 salary</span></div>
+              <div class="f-label">Reasonable Compensation (Salary) <span class="f-hint">S-Corp owner salary</span></div>
               <div class="input-wrap"><span class="pfx">$</span><input type="number" id="scorpSalary" placeholder="0" oninput="liveCalc()" min="0"/></div>
-            </div>
-            <!-- FIX: Reasonable compensation IRS guidance note -->
-            <div class="field-note" style="margin-top:8px;">
-              ⚖️ <strong>IRS Reasonable Compensation:</strong> The IRS requires S-Corp owner-employees to pay a salary comparable to what a third party would earn for the same services (Rev. Rul. 74-44). Common benchmark: <strong>60–70% of net profit</strong>, or an industry-comparable wage. Artificially low salaries are an IRS audit trigger and may result in reclassification of distributions as wages.
             </div>
           </div>
 
@@ -310,7 +312,7 @@ body{background:#fff;color:#000;}
               <div class="r-box">
                 <div class="rb-lbl">Net SE Income</div>
                 <div class="rb-val" id="r_netSE">—</div>
-                <div class="rb-sub">After Schedule C expenses</div>
+                <div class="rb-sub">After business expenses</div>
               </div>
               <div class="r-box">
                 <div class="rb-lbl">Effective SE Rate</div>
@@ -319,26 +321,17 @@ body{background:#fff;color:#000;}
               </div>
             </div>
 
-            <!-- BREAKDOWN TABLE with retirement row fix -->
             <div class="breakdown-table">
               <div class="bt-row"><span class="bt-label">Gross Revenue</span><span class="bt-val" id="bt_revenue">—</span></div>
-              <div class="bt-row"><span class="bt-label">Schedule C Expenses (business, home office, vehicle)</span><span class="bt-val red" id="bt_expenses">—</span></div>
+              <div class="bt-row"><span class="bt-label">Business Expenses</span><span class="bt-val red" id="bt_expenses">—</span></div>
               <div class="bt-row"><span class="bt-label"><strong>Net SE Income (Schedule C)</strong></span><span class="bt-val" id="bt_netSE">—</span></div>
               <div class="bt-row"><span class="bt-label">SE Tax Base (× 92.35%)</span><span class="bt-val" id="bt_seBase">—</span></div>
               <div class="bt-row"><span class="bt-label">Social Security Tax (12.4%)</span><span class="bt-val" id="bt_ssTax">—</span></div>
               <div class="bt-row"><span class="bt-label">Medicare Tax (2.9%)</span><span class="bt-val" id="bt_mcTax">—</span></div>
-              <div class="bt-row"><span class="bt-label">Additional Medicare (0.9% over threshold)</span><span class="bt-val" id="bt_addMc">—</span></div>
+              <div class="bt-row"><span class="bt-label">Additional Medicare (0.9% over $200k)</span><span class="bt-val" id="bt_addMc">—</span></div>
               <div class="bt-row total"><span class="bt-label"><strong>Total SE Tax (Schedule SE)</strong></span><span class="bt-val gold" id="bt_total">—</span></div>
-              <div class="bt-row"><span class="bt-label">Deductible SE (above-the-line, Form 1040)</span><span class="bt-val green" id="bt_ded">—</span></div>
-              <div class="bt-row"><span class="bt-label">Net SE Tax Impact (after deduction)</span><span class="bt-val" id="bt_net">—</span></div>
-              <!-- FIX 1: Retirement row — shown only when user enters a value. Above-the-line, not SE reduction -->
-              <div class="bt-row agi-note" id="bt_retirementRow" style="display:none;">
-                <span class="bt-label">
-                  Retirement Contribution (above-the-line)
-                  <span class="note">Reduces AGI &amp; income tax — does NOT reduce SE tax</span>
-                </span>
-                <span class="bt-val green" id="bt_retirement">—</span>
-              </div>
+              <div class="bt-row"><span class="bt-label">Deductible SE (above-the-line)</span><span class="bt-val green" id="bt_ded">—</span></div>
+              <div class="bt-row"><span class="bt-label">Net SE Tax Impact</span><span class="bt-val" id="bt_net">—</span></div>
             </div>
 
             <div class="viz-bar-wrap">
@@ -349,27 +342,19 @@ body{background:#fff;color:#000;}
                 <div class="vb-seg vb-net" id="viz_net" style="width:0%">Keep</div>
               </div>
               <div class="viz-legend">
-                <!-- FIX 5: Legend now correctly says "Net after full SE tax" -->
                 <div class="vl-item"><div class="vl-dot" style="background:var(--gold)"></div>Social Security (<span id="vl_ss">—</span>)</div>
                 <div class="vl-item"><div class="vl-dot" style="background:var(--blue)"></div>Medicare (<span id="vl_mc">—</span>)</div>
-                <div class="vl-item"><div class="vl-dot" style="background:rgba(74,222,128,.5)"></div>Net after full SE tax (<span id="vl_net">—</span>)</div>
+                <div class="vl-item"><div class="vl-dot" style="background:rgba(74,222,128,.5)"></div>Net after SE tax (<span id="vl_net">—</span>)</div>
               </div>
             </div>
 
-            <!-- FIX 6: S-Corp comparison box is hidden in Sole Prop mode -->
-            <div class="comparison-box" id="comparisonBox" style="display:none;">
-              <div class="cb-title" id="compTitle">📊 S-Corp vs. Sole Prop — SE Tax Comparison</div>
+            <div class="comparison-box" id="comparisonBox">
+              <div class="cb-title" id="compTitle">📊 Entity Comparison</div>
               <div class="cb-row"><span class="cb-k">Sole Prop SE Tax</span><span class="cb-v" id="comp_soleSetax">—</span></div>
-              <div class="cb-row"><span class="cb-k">S-Corp FICA (employer + employee on salary)</span><span class="cb-v" id="comp_scorpSetax">—</span></div>
+              <div class="cb-row"><span class="cb-k">S-Corp SE Tax (on salary)</span><span class="cb-v" id="comp_scorpSetax">—</span></div>
               <div class="cb-row"><span class="cb-k">SE Tax Savings with S-Corp</span><span class="cb-v gold" id="comp_savings">—</span></div>
               <div class="cb-row"><span class="cb-k">Est. S-Corp Admin Cost</span><span class="cb-v red">~$2,000–4,000/yr</span></div>
-              <div class="cb-row"><span class="cb-k">Net Annual Benefit of S-Corp</span><span class="cb-v gold" id="comp_netBenefit">—</span></div>
-            </div>
-
-            <!-- Action buttons: copy results and print -->
-            <div class="result-actions">
-              <button class="act-btn" onclick="copyResults()">📋 Copy Results</button>
-              <button class="act-btn" onclick="window.print()">🖨️ Print Summary</button>
+              <div class="cb-row"><span class="cb-k">Net Benefit of S-Corp</span><span class="cb-v gold" id="comp_netBenefit">—</span></div>
             </div>
           </div>
         </div>
@@ -383,23 +368,15 @@ body{background:#fff;color:#000;}
         </div>
         <div class="exp-sec">
           <div class="exp-h">The 92.35% Multiplier</div>
-          <div class="exp-p">You don't pay SE tax on 100% of net self-employment income. The IRS applies a <strong>92.35% factor</strong> (equivalent to 1 − 7.65%) to approximate the "employer deduction." So SE tax = Net Income × 92.35% × 15.3%.</div>
+          <div class="exp-p">You don't pay SE tax on 100% of net self-employment income. The IRS applies a <strong>92.35% factor</strong> (equivalent to 1 - 7.65%) to approximate the "employer deduction." So SE tax = Net Income × 92.35% × 15.3%.</div>
         </div>
         <div class="exp-sec">
           <div class="exp-h">The Deductible Half</div>
-          <div class="exp-p">You can deduct <strong>50% of SE tax</strong> as an above-the-line adjustment to income on Form 1040. This reduces your AGI (and potentially your income tax bracket) without itemizing.</div>
-        </div>
-        <div class="exp-sec">
-          <div class="exp-h">Retirement Plans &amp; SE Tax</div>
-          <div class="exp-p">SEP-IRA, Solo 401(k), and SIMPLE contributions are <strong>above-the-line deductions on Form 1040</strong> — they reduce your taxable income and income tax, but they do <strong>not</strong> reduce Schedule C net income. Therefore they have no effect on SE tax itself. This is a common misconception.</div>
+          <div class="exp-p">You can deduct <strong>50% of SE tax</strong> as an above-the-line adjustment to income on Form 1040. This reduces your AGI (and potentially your income tax bracket) without requiring itemizing.</div>
         </div>
         <div class="exp-sec">
           <div class="exp-h">Social Security Wage Base 2025</div>
-          <div class="exp-p">The <strong>SS wage base for 2025 is $176,100</strong>. Income above this threshold is still subject to the 2.9% Medicare tax, but not the 12.4% SS portion. High earners (over $200k single / $250k MFJ / $125k MFS) also pay a <strong>0.9% Additional Medicare Tax</strong> on earned income above that threshold.</div>
-        </div>
-        <div class="exp-sec">
-          <div class="exp-h">S-Corp FICA vs. SE Tax</div>
-          <div class="exp-p">An S-Corp pays FICA on the owner's W-2 salary — 7.65% from the employee + 7.65% from the employer = 15.3% total. But profit distributions are <strong>not subject to FICA</strong>. The 92.35% SE factor does <strong>not</strong> apply to W-2 wages; FICA is computed on the full salary amount.</div>
+          <div class="exp-p">The <strong>SS wage base for 2025 is $176,100</strong>. Income above this threshold is still subject to the 2.9% Medicare tax — but not the 12.4% Social Security portion. High earners (over $200k single / $250k joint) also pay a <strong>0.9% Additional Medicare Tax</strong>.</div>
         </div>
       </div>
     </div>
@@ -411,19 +388,18 @@ body{background:#fff;color:#000;}
         <div class="ic-row"><span class="ic-k">Medicare Rate</span><span class="ic-v gold">2.9%</span></div>
         <div class="ic-row"><span class="ic-k">Total SE Rate</span><span class="ic-v gold">15.3%</span></div>
         <div class="ic-row"><span class="ic-k">SE Tax Base Factor</span><span class="ic-v">92.35%</span></div>
-        <div class="ic-row"><span class="ic-k">SS Wage Base 2025</span><span class="ic-v">$176,100</span></div>
-        <div class="ic-row"><span class="ic-k">Add'l Medicare Threshold</span><span class="ic-v">$200k / $250k MFJ</span></div>
+        <div class="ic-row"><span class="ic-k">SS Wage Base</span><span class="ic-v">$176,100</span></div>
+        <div class="ic-row"><span class="ic-k">Add'l Medicare Threshold</span><span class="ic-v">$200k / $250k</span></div>
         <div class="ic-row"><span class="ic-k">Add'l Medicare Rate</span><span class="ic-v">+0.9%</span></div>
         <div class="ic-row"><span class="ic-k">Deductible Portion</span><span class="ic-v green">50%</span></div>
       </div>
 
       <div class="info-card">
         <div class="ic-title">💡 Reduce Your SE Tax</div>
-        <div class="tip-item"><div class="tip-icon">🏢</div><div class="tip-text"><strong>S-Corp Election:</strong> Pay yourself a reasonable salary; take remaining profit as distributions (no FICA on distributions). See IRS Rev. Rul. 74-44 for compensation standards.</div></div>
-        <div class="tip-item"><div class="tip-icon">🏦</div><div class="tip-text"><strong>SEP-IRA:</strong> Contribute up to 25% of net SE income (max $70,000 in 2025) — fully deductible above-the-line, reducing your income tax. Note: does not reduce SE tax itself.</div></div>
-        <div class="tip-item"><div class="tip-icon">🏠</div><div class="tip-text"><strong>Home Office:</strong> Deduct the business portion of home expenses on Schedule C — directly reduces net SE income and SE tax.</div></div>
-        <!-- FIX (low): mileage rate stored as a JS constant rendered here by script -->
-        <div class="tip-item"><div class="tip-icon">🚗</div><div class="tip-text"><strong>Vehicle Expenses:</strong> Track business miles at <span id="mileageRateTip">70¢</span>/mile (2025) or deduct actual expenses including depreciation.</div></div>
+        <div class="tip-item"><div class="tip-icon">🏢</div><div class="tip-text"><strong>S-Corp Election:</strong> Pay yourself a reasonable salary; take remaining profit as distributions — no SE tax on distributions.</div></div>
+        <div class="tip-item"><div class="tip-icon">🏦</div><div class="tip-text"><strong>SEP-IRA:</strong> Contribute up to 25% of net SE income (max $70,000) — fully deductible, reduces net income subject to SE tax.</div></div>
+        <div class="tip-item"><div class="tip-icon">🏠</div><div class="tip-text"><strong>Home Office:</strong> Deduct the business portion of home expenses — reduces net SE income directly.</div></div>
+        <div class="tip-item"><div class="tip-icon">🚗</div><div class="tip-text"><strong>Vehicle Expenses:</strong> Track business miles at 70¢/mile (2025) or deduct actual expenses including depreciation.</div></div>
       </div>
 
       <div class="info-card">
@@ -437,21 +413,25 @@ body{background:#fff;color:#000;}
   </div>
 </div>
 
+
+<div style="max-width:900px;margin:0 auto 32px;padding:0 24px">
+  <a href="blog/qbi-sstb-phase-out-2025.html" style="display:flex;align-items:center;gap:12px;background:rgba(200,168,75,0.06);border:1px solid rgba(200,168,75,0.18);border-radius:10px;padding:16px 20px;text-decoration:none;">
+    <span style="font-size:1.2rem">📖</span>
+    <div>
+      <div style="font-size:0.8rem;font-family:monospace;text-transform:uppercase;letter-spacing:0.08em;color:#c8a84b;margin-bottom:3px">Related Guide</div>
+      <div style="color:#e8edf5;font-size:0.9rem;font-weight:500">QBI & SE Tax Planning Guide</div>
+    </div>
+    <span style="margin-left:auto;color:#c8a84b">→</span>
+  </a>
+</div>
 <footer>
   <div class="fl">© 2026 <a href="index.html">TaxPreparerTools.com</a> · For informational use only · Verify with a qualified tax professional</div>
   <div class="flinks"><a href="privacy.html">Privacy</a><a href="terms.html">Terms</a><a href="https://irs.gov" target="_blank">IRS.gov ↗</a></div>
 </footer>
 
 <script>
-// ── CONSTANTS — update annually ──────────────────────────────────────────────
-const SS_WAGE_BASE   = 176100;   // 2025 Social Security wage base
-const SE_FACTOR      = 0.9235;   // IRS Schedule SE factor (1 - 7.65%)
-const MILEAGE_RATE   = 0.70;     // IRS standard business mileage rate 2025 — update each Jan
-const SEP_LIMIT      = 70000;    // 2025 SEP-IRA / Solo 401k limit
-
-// FIX (low): render mileage rate from constant so sidebar never drifts
-document.getElementById('mileageRateTip').textContent = (MILEAGE_RATE * 100).toFixed(0) + '¢';
-
+const SS_WAGE_BASE = 176100;
+const SE_FACTOR = 0.9235;
 let entityMode = 'sole';
 
 function setEntity(btn) {
@@ -459,188 +439,110 @@ function setEntity(btn) {
   btn.classList.add('on');
   entityMode = btn.dataset.entity;
   document.getElementById('scorpField').style.display = entityMode === 'scorp' ? '' : 'none';
-  // FIX 6: hide comparison box when not in S-Corp mode
-  document.getElementById('comparisonBox').style.display = 'none';
-  liveCalc();
 }
 
-function fmt(n)  { return '$' + Math.round(n).toLocaleString(); }
-function pct(n, d=1) { return isFinite(n) ? (n*100).toFixed(d)+'%' : '0.0%'; }
+function fmt(n) { return '$' + Math.round(n).toLocaleString(); }
+function pct(n, decimals=1) { return (n*100).toFixed(decimals)+'%'; }
 
-function hideResults() {
-  document.getElementById('resultsPanel').classList.remove('show');
-}
-
+// Live calculation fires on every input change
 function liveCalc() { calculate(); }
 
 function calculate() {
-  const revenue    = +document.getElementById('revenue').value    || 0;
-  const expenses   = +document.getElementById('expenses').value   || 0;
-  const homeoffice = +document.getElementById('homeoffice').value || 0;
-  const vehicle    = +document.getElementById('vehicle').value    || 0;
-  const retirement = +document.getElementById('retirement').value || 0;
-  const w2wages    = +document.getElementById('w2wages').value    || 0;
-  const status     = document.getElementById('filingStatus').value;
-  const scorpSalary = +document.getElementById('scorpSalary').value || 0;
+  const revenue = +document.getElementById('revenue').value||0;
+  const expenses = +document.getElementById('expenses').value||0;
+  const homeoffice = +document.getElementById('homeoffice').value||0;
+  const vehicle = +document.getElementById('vehicle').value||0;
+  const retirement = +document.getElementById('retirement').value||0;
+  const w2wages = +document.getElementById('w2wages').value||0;
+  const status = document.getElementById('filingStatus').value;
+  const scorpSalary = +document.getElementById('scorpSalary').value||0;
 
-  // FIX 1: Retirement is NOT a Schedule C deduction.
-  // Schedule C net income uses only actual business deductions.
-  const schedCExp = expenses + homeoffice + vehicle;
-  const netSE     = Math.max(0, revenue - schedCExp);
-
-  // Show/hide retirement note
-  const retNote = document.getElementById('retirementNote');
-  retNote.style.display = retirement > 0 ? '' : 'none';
-
-  // Guard: nothing entered yet
-  if (revenue === 0 && w2wages === 0) { hideResults(); return; }
-
+  const totalExp = expenses + homeoffice + vehicle + retirement;
+  const netSE = Math.max(0, revenue - totalExp);
   const seBase = netSE * SE_FACTOR;
 
-  // Social Security tax — capped at wage base, coordinated with any W-2 wages
-  const ssFromW2 = Math.min(w2wages, SS_WAGE_BASE);
-  const ssableFromSE = Math.max(0, Math.min(seBase, SS_WAGE_BASE - ssFromW2));
+  // SS tax (capped at wage base)
+  const ssableFromW2 = Math.min(w2wages, SS_WAGE_BASE);
+  const ssableFromSE = Math.max(0, Math.min(seBase, SS_WAGE_BASE - ssableFromW2));
   const ssTax = ssableFromSE * 0.124;
 
-  // Medicare (uncapped)
+  // Medicare
   const mcTax = seBase * 0.029;
 
-  // FIX 3: Additional Medicare (0.9%) — compare against seBase (× 92.35%), not raw netSE.
-  // For SE income, net earnings = seBase = netSE * SE_FACTOR.
-  const addMcThreshold = (status === 'mfj') ? 250000 : (status === 'mfs') ? 125000 : 200000;
-  const incomeForAMT   = w2wages + seBase;
-  const addMcBase      = Math.max(0, incomeForAMT - addMcThreshold);
-  const addMcTax       = addMcBase * 0.009;
+  // Additional Medicare
+  const addMcThreshold = (status === 'mfj') ? 250000 : 200000;
+  const totalIncome = w2wages + netSE;
+  const addMcBase = Math.max(0, totalIncome - addMcThreshold);
+  const addMcTax = addMcBase * 0.009;
 
-  const seTax      = ssTax + mcTax + addMcTax;
+  const seTax = ssTax + mcTax + addMcTax;
   const seDeduction = seTax / 2;
-  const effRate    = netSE > 0 ? seTax / netSE : 0;
+  const effRate = netSE > 0 ? seTax / netSE : 0;
 
-  // FIX 2: S-Corp FICA — NO 92.35% factor on W-2 salary wages.
-  // FICA is computed on the full dollar salary. Both halves = × 2.
-  const scorp_ss    = Math.min(scorpSalary, SS_WAGE_BASE) * 0.124;
-  const scorp_mc    = scorpSalary * 0.029;
-  const scorpFICA   = (scorp_ss + scorp_mc) * 2; // employer + employee
-  const seSavings   = seTax - scorpFICA;
-  const adminCost   = 3000; // conservative midpoint estimate
-  const netBenefit  = seSavings - adminCost;
+  // S-Corp comparison
+  const scorpBase = Math.min(scorpSalary, SS_WAGE_BASE) * SE_FACTOR;
+  const scorp_ssTax = scorpBase * 0.124;
+  const scorp_mcTax = scorpSalary * 0.9235 * 0.029;
+  const scorpSeTax = (scorp_ssTax + scorp_mcTax) * 2; // employer + employee
+  const seSavings = seTax - scorpSeTax;
+  const netBenefit = seSavings - 3000; // mid-point admin cost
 
-  // ── Render summary boxes ──────────────────────────────────────────────────
-  document.getElementById('r_seTax').textContent     = fmt(seTax);
+  // Render
+  document.getElementById('r_seTax').textContent = fmt(seTax);
   document.getElementById('r_seDeduction').textContent = fmt(seDeduction);
-  document.getElementById('r_netSE').textContent     = fmt(netSE);
-  document.getElementById('r_effRate').textContent   = pct(effRate);
+  document.getElementById('r_netSE').textContent = fmt(netSE);
+  document.getElementById('r_effRate').textContent = pct(effRate);
 
-  // ── Render breakdown table ────────────────────────────────────────────────
-  document.getElementById('bt_revenue').textContent  = fmt(revenue);
-  document.getElementById('bt_expenses').textContent = schedCExp > 0 ? '-'+fmt(schedCExp) : '$0';
-  document.getElementById('bt_netSE').textContent    = fmt(netSE);
-  document.getElementById('bt_seBase').textContent   = fmt(seBase);
-  document.getElementById('bt_ssTax').textContent    = fmt(ssTax);
-  document.getElementById('bt_mcTax').textContent    = fmt(mcTax);
-  document.getElementById('bt_addMc').textContent    = addMcTax > 0 ? fmt(addMcTax) : 'N/A';
-  document.getElementById('bt_total').textContent    = fmt(seTax);
-  document.getElementById('bt_ded').textContent      = '-'+fmt(seDeduction);
-  document.getElementById('bt_net').textContent      = fmt(seTax - seDeduction);
+  document.getElementById('bt_revenue').textContent = fmt(revenue);
+  document.getElementById('bt_expenses').textContent = totalExp > 0 ? '-'+fmt(totalExp) : '$0';
+  document.getElementById('bt_netSE').textContent = fmt(netSE);
+  document.getElementById('bt_seBase').textContent = fmt(seBase);
+  document.getElementById('bt_ssTax').textContent = fmt(ssTax);
+  document.getElementById('bt_mcTax').textContent = fmt(mcTax);
+  document.getElementById('bt_addMc').textContent = addMcTax > 0 ? fmt(addMcTax) : 'N/A';
+  document.getElementById('bt_total').textContent = fmt(seTax);
+  document.getElementById('bt_ded').textContent = '-'+fmt(seDeduction);
+  document.getElementById('bt_net').textContent = fmt(seTax - seDeduction);
 
-  // FIX 1: Retirement row shown separately — does NOT reduce SE tax base
-  const retRow = document.getElementById('bt_retirementRow');
-  if (retirement > 0) {
-    retRow.style.display = '';
-    document.getElementById('bt_retirement').textContent = '-'+fmt(retirement);
-  } else {
-    retRow.style.display = 'none';
-  }
+  // Viz bar
+  const total = seTax + netSE;
+  const ssW = total > 0 ? (ssTax/total*100).toFixed(1) : 0;
+  const mcW = total > 0 ? ((mcTax+addMcTax)/total*100).toFixed(1) : 0;
+  const netW = total > 0 ? (netSE/total*100).toFixed(1) : 0;
+  document.getElementById('viz_ss').style.width = ssW+'%';
+  document.getElementById('viz_mc').style.width = mcW+'%';
+  document.getElementById('viz_net').style.width = netW+'%';
+  document.getElementById('vl_ss').textContent = fmt(ssTax);
+  document.getElementById('vl_mc').textContent = fmt(mcTax+addMcTax);
+  document.getElementById('vl_net').textContent = fmt(netSE - seTax + seDeduction);
 
-  // FIX 5: Viz bar "Keep" = netSE minus full SE tax (before the 50% deduction)
-  // The 50% SE deduction is an income-tax concept, not a cash impact on SE earnings.
-  const keepAfterSE = Math.max(0, netSE - seTax);
-  const barTotal    = seTax + keepAfterSE;
-  const ssW  = barTotal > 0 ? (ssTax / barTotal * 100).toFixed(1) : 0;
-  const mcW  = barTotal > 0 ? ((mcTax + addMcTax) / barTotal * 100).toFixed(1) : 0;
-  const netW = barTotal > 0 ? (keepAfterSE / barTotal * 100).toFixed(1) : 0;
-
-  document.getElementById('viz_ss').style.width  = ssW + '%';
-  document.getElementById('viz_mc').style.width  = mcW + '%';
-  document.getElementById('viz_net').style.width = netW + '%';
-  document.getElementById('vl_ss').textContent   = fmt(ssTax);
-  document.getElementById('vl_mc').textContent   = fmt(mcTax + addMcTax);
-  document.getElementById('vl_net').textContent  = fmt(keepAfterSE);
-
-  // FIX 6: S-Corp comparison only shown in S-Corp mode
-  const compBox = document.getElementById('comparisonBox');
-  if (entityMode === 'scorp') {
-    compBox.style.display = '';
-    document.getElementById('comp_soleSetax').textContent  = fmt(seTax);
-    document.getElementById('comp_scorpSetax').textContent =
-      scorpSalary > 0 ? fmt(scorpFICA) : '(enter salary above)';
-    document.getElementById('comp_savings').textContent    =
-      seSavings > 0 ? fmt(seSavings) : '$0';
-    document.getElementById('comp_netBenefit').textContent =
-      netBenefit > 0 ? fmt(netBenefit)+'/yr' : 'May not justify S-Corp yet';
-  } else {
-    compBox.style.display = 'none';
-  }
+  // Comparison
+  document.getElementById('comp_soleSetax').textContent = fmt(seTax);
+  document.getElementById('comp_scorpSetax').textContent = entityMode === 'scorp' ? fmt(scorpSeTax) : '(enter salary above)';
+  document.getElementById('comp_savings').textContent = seSavings > 0 ? fmt(seSavings) : '$0';
+  document.getElementById('comp_netBenefit').textContent = netBenefit > 0 ? fmt(netBenefit)+'/yr' : 'May not be beneficial yet';
 
   document.getElementById('resultsPanel').classList.add('show');
-  setTimeout(() => {
-    document.getElementById('resultsPanel').scrollIntoView({behavior:'smooth',block:'nearest'});
-  }, 50);
-}
-
-// Copy results to clipboard
-function copyResults() {
-  const panel = document.getElementById('resultsPanel');
-  if (!panel.classList.contains('show')) return;
-  const lines = [];
-  lines.push('=== SE Tax Calculator Results 2025 ===');
-  lines.push('Total SE Tax:       ' + document.getElementById('r_seTax').textContent);
-  lines.push('SE Tax Deduction:   ' + document.getElementById('r_seDeduction').textContent);
-  lines.push('Net SE Income:      ' + document.getElementById('r_netSE').textContent);
-  lines.push('Effective SE Rate:  ' + document.getElementById('r_effRate').textContent);
-  lines.push('');
-  lines.push('--- Schedule C Breakdown ---');
-  lines.push('Gross Revenue:      ' + document.getElementById('bt_revenue').textContent);
-  lines.push('Schedule C Exp:     ' + document.getElementById('bt_expenses').textContent);
-  lines.push('Net SE Income:      ' + document.getElementById('bt_netSE').textContent);
-  lines.push('SE Tax Base (×92.35%): ' + document.getElementById('bt_seBase').textContent);
-  lines.push('Social Security:    ' + document.getElementById('bt_ssTax').textContent);
-  lines.push('Medicare:           ' + document.getElementById('bt_mcTax').textContent);
-  lines.push('Add\'l Medicare:     ' + document.getElementById('bt_addMc').textContent);
-  lines.push('Total SE Tax:       ' + document.getElementById('bt_total').textContent);
-  lines.push('SE Deduction:       ' + document.getElementById('bt_ded').textContent);
-  const retEl = document.getElementById('bt_retirementRow');
-  if (retEl.style.display !== 'none') {
-    lines.push('Retirement (above-the-line, not SE): ' + document.getElementById('bt_retirement').textContent);
-  }
-  lines.push('');
-  lines.push('Generated by TaxPreparerTools.com — for informational purposes only.');
-  navigator.clipboard.writeText(lines.join('\n')).then(() => {
-    const btn = event.target;
-    const orig = btn.textContent;
-    btn.textContent = '✓ Copied!';
-    setTimeout(() => { btn.textContent = orig; }, 2000);
-  }).catch(() => { alert('Copy failed — please manually select and copy the results.'); });
+  setTimeout(() => document.getElementById('resultsPanel').scrollIntoView({behavior:'smooth',block:'nearest'}), 50);
 }
 </script>
-
 <script>
 (function(){
   var btn = document.getElementById('navHamburger');
-  var ul  = document.querySelector('.nav-links');
+  var ul  = document.querySelector('nav ul, nav .nav-links');
   if(!btn || !ul) return;
   btn.addEventListener('click', function(){
     btn.classList.toggle('open');
     ul.classList.toggle('mobile-open');
   });
+  // Close on outside click
   document.addEventListener('click', function(e){
     if(!e.target.closest('nav')){
       btn.classList.remove('open');
-      ul.classList.remove('mobile-open');
+      ul && ul.classList.remove('mobile-open');
     }
   });
 })();
 </script>
-
 </body>
 </html>
