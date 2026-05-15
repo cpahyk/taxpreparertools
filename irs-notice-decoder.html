@@ -230,7 +230,7 @@ IRS Notice Decoder
 <div class="tool-badges">
 <span class="badge badge-free">Free</span>
 <span class="badge badge-new">New</span>
-<span class="badge badge-count" id="badgeCount">35+ Notices</span>
+<span class="badge badge-count" id="badgeCount">53+ Notices</span>
 <span class="badge badge-cat">Lookup Tool</span>
 </div>
 <h1>IRS Notice &amp; Letter<br>Decoder</h1>
@@ -989,7 +989,388 @@ const NOTICES = [
     forms: ["Form 886-H-EIC", "Form 8862 (if previously banned)"],
     irs_url: "https://www.irs.gov/individuals/understanding-your-cp75-notice",
     preparer_note: "EITC audits have a high taxpayer loss rate because documentation is often inadequate. Build the case with multiple independent sources of evidence — school + medical + lease beats just school records alone. If the client is divorced/separated and claiming child, the custody documentation is critical."
-  }
+  },
+
+  // ─── ADDITIONAL BALANCE DUE / LEVY / COLLECTIONS ───
+  {
+    code: "CP90",
+    title: "Final Notice of Intent to Levy & Right to a Hearing (Individual)",
+    summary: "Statutory Final Notice of Intent to Levy under IRC §6330. Triggers a 30-day Collection Due Process (CDP) hearing window — the LAST chance to dispute or negotiate before the IRS levies bank accounts, wages, retirement funds, and other property.",
+    category: "levy",
+    severity: "critical",
+    triggered_by: "Continued non-payment after CP504 and other reminders. Issued by Automated Collection System (ACS) for individual taxpayers.",
+    deadline_days: 30,
+    deadline_desc: "30 days from the notice date to request a Collection Due Process (CDP) hearing using Form 12153. Missing this window forfeits the right to Tax Court review of the collection action.",
+    actions: [
+      "FILE FORM 12153 IMMEDIATELY by certified mail with return receipt",
+      "Same 30 days: pay in full, set up installment agreement, or submit Offer in Compromise",
+      "Gather financial info (Form 433-A or 433-F) to negotiate during CDP hearing",
+      "Engage a tax pro — DIY at this stage is high-risk"
+    ],
+    forms: ["Form 12153", "Form 9465", "Form 656", "Form 433-A", "Form 433-F"],
+    irs_url: "https://www.irs.gov/individuals/understanding-your-cp90-notice",
+    preparer_note: "CP90 and LT11 are functionally equivalent — both grant CDP rights under §6330. The 30-day window is jurisdictional. Send Form 12153 by certified mail and KEEP the receipt — this is the only proof of timely filing.",
+    template_id: "cdp_hearing_request"
+  },
+  {
+    code: "CP91",
+    title: "Final Notice — Intent to Levy Social Security Benefits",
+    summary: "Final Notice of Intent to Levy specifically targeting Social Security benefits under the Federal Payment Levy Program (FPLP). The IRS can take up to 15% of monthly SS benefits.",
+    category: "levy",
+    severity: "critical",
+    triggered_by: "Outstanding tax debt and the taxpayer receives Social Security benefits. Issued via the FPLP system.",
+    deadline_days: 30,
+    deadline_desc: "30 days to request CDP hearing or take action. After that, the IRS can levy up to 15% of monthly SS benefits indefinitely.",
+    actions: [
+      "File Form 12153 for CDP hearing within 30 days",
+      "Request Currently Not Collectible (CNC) status if SS is the only income — IRS routinely grants this for seniors with no other resources",
+      "Request a hardship exception via FPLP — provides immediate temporary relief",
+      "If approved for CNC, IRS removes the levy and stops further collection until financial circumstances change"
+    ],
+    forms: ["Form 12153", "Form 433-F"],
+    irs_url: "https://www.irs.gov/individuals/understanding-your-cp91-notice",
+    preparer_note: "FPLP levy on Social Security is automated through Treasury — even if you negotiate IA or CNC with IRS, the FPLP levy may need to be manually released. Always confirm via account transcript that TC 530 (CNC) or TC 590 (release) has posted before assuring the client benefits are safe."
+  },
+  {
+    code: "CP504B",
+    title: "Final Notice Before Levy — Business",
+    summary: "Business equivalent of CP504. Final notice before the IRS levies the business's state tax refunds and other assets.",
+    category: "balance_due",
+    severity: "serious",
+    triggered_by: "Continued non-payment on a business tax debt (typically 941 payroll tax, 940 FUTA, or 1120 income tax).",
+    deadline_days: 30,
+    deadline_desc: "30 days before the IRS levies state tax refunds and begins asset enforcement.",
+    actions: [
+      "URGENT for 941 balance — Trust Fund Recovery Penalty (TFRP) exposure for responsible persons",
+      "Pay in full or establish IA immediately",
+      "If unable to pay: file Form 9423 for collection appeal",
+      "Consider IRC §6672 designation in writing — direct payments to trust fund portion first to limit personal TFRP liability"
+    ],
+    forms: ["Form 9423", "Form 9465", "Form 433-B"],
+    irs_url: "https://www.irs.gov/businesses/small-businesses-self-employed/understanding-your-cp504b-notice",
+    preparer_note: "On a 941 balance, the personal TFRP exposure is the real fight. Get written designation of payments to trust fund first into the file. The IRS may dispute the designation but documented intent matters."
+  },
+  {
+    code: "CP259",
+    title: "Business Return Delinquency — We Have No Record",
+    summary: "The IRS believes the business had a filing requirement for a specific return (1120, 1065, 1041, 990, etc.) but has no record of receiving it.",
+    category: "identity",
+    severity: "action_required",
+    triggered_by: "Business is identified as having a filing requirement (typically from prior-year filings or EIN registration) but the return for a given year is missing.",
+    deadline_days: 30,
+    deadline_desc: "30 days to file the return or explain why one wasn't required. Continued non-response triggers a Substitute for Return (SFR) which won't include any deductions.",
+    actions: [
+      "Determine if a return was actually filed (check e-file confirmations, certified mail receipts)",
+      "If filed but not processed: send proof of filing",
+      "If not filed: prepare and file ASAP — even nil return if no activity",
+      "If no filing requirement: respond explaining why (dissolved, no activity, etc.)"
+    ],
+    forms: ["Form 1120/1065/1041 for the year in question", "Form 2848 if represented"],
+    irs_url: "https://www.irs.gov/businesses/small-businesses-self-employed/understanding-your-cp259-notice",
+    preparer_note: "CP259 variants (A through I) correspond to different return types. Pull a Business Master File transcript to verify what the IRS thinks should have been filed. Often the filing requirement is stale from a long-dissolved entity — needs explicit closure."
+  },
+  {
+    code: "CP276A",
+    title: "Form 941 Deposit Calculation Discrepancy",
+    summary: "The IRS recalculated the employer's federal tax deposit (FTD) penalty and the calculation doesn't match what was filed. Often a math error or timing issue.",
+    category: "math_error",
+    severity: "action_required",
+    triggered_by: "Discrepancy between deposits made (EFTPS records) and what was reported on Form 941. Can be a math error, missed deposit, or timing issue.",
+    deadline_days: 60,
+    deadline_desc: "60 days to dispute under §6213(b)(2) math error abatement, or pay the calculated penalty.",
+    actions: [
+      "Pull EFTPS payment history and reconcile against Form 941 deposit schedule",
+      "If a deposit was made but not credited: provide EFTPS confirmation receipts",
+      "If deposit timing was wrong: respond explaining the schedule (monthly vs. semi-weekly)",
+      "If math error: request abatement under §6213(b)(2) within 60 days"
+    ],
+    forms: ["Form 843", "Form 941-X"],
+    irs_url: "https://www.irs.gov/businesses/small-businesses-self-employed/understanding-your-cp276a-notice",
+    preparer_note: "FTD penalty rates: 2% (1-5 days late), 5% (6-15 days), 10% (16+ days), 15% (after 10 days from IRS notice). First-time abatement (FTA) often applies — easy win if it's the client's first slip-up. Compare against First-Time Penalty Abatement criteria.",
+    template_id: "penalty_abatement_request"
+  },
+  {
+    code: "Letter 11",
+    title: "Final Notice of Intent to Levy (Older Variant)",
+    summary: "Older format of the Final Notice of Intent to Levy. Functionally identical to LT11 and CP90 — same statutory protection under IRC §6330.",
+    category: "levy",
+    severity: "critical",
+    triggered_by: "Issued by Revenue Officers for older or special-handling cases. Same enforcement consequences as LT11.",
+    deadline_days: 30,
+    deadline_desc: "30 days to file Form 12153 for CDP hearing.",
+    actions: [
+      "Same as LT11: file Form 12153 within 30 days",
+      "Contact the Revenue Officer named on the letter",
+      "Prepare full financial disclosure (Form 433-A) if installment agreement above $50K"
+    ],
+    forms: ["Form 12153", "Form 9465", "Form 433-A"],
+    irs_url: "https://www.irs.gov/individuals/understanding-your-letter-11",
+    preparer_note: "Letter 11 indicates a Revenue Officer is assigned — more serious than ACS handling. ROs do field collection and have more discretion. Get Form 2848 in place immediately so the RO contacts you, not the client."
+  },
+  {
+    code: "Letter 105C",
+    title: "Claim Disallowance — Refund Denied",
+    summary: "The IRS denied a refund claim (typically from an amended return or Form 843). The taxpayer has limited time to dispute via Tax Court or District Court.",
+    category: "refund",
+    severity: "serious",
+    triggered_by: "Refund claim (Form 1040-X or Form 843) was reviewed and denied — usually because IRS believes it's not allowed or filed too late (statute of limitations).",
+    deadline_days: 730,
+    deadline_desc: "2 YEARS from the notice date to file suit in District Court or U.S. Court of Federal Claims for refund. After 2 years, the refund claim is permanently barred under IRC §6532.",
+    actions: [
+      "Review the disallowance reason carefully — common: late filing, lack of documentation, position not allowed",
+      "If late filing: confirm filing date vs. 3-year statute under §6511. Statute may be tolled (e.g., financial disability under §6511(h))",
+      "If position dispute: gather supporting documentation and file a protest with IRS Appeals",
+      "If unsuccessful at Appeals: file suit within 2 years"
+    ],
+    forms: ["Form 12203 (Appeals request)", "District Court complaint", "Form 1040-X"],
+    irs_url: "https://www.irs.gov/individuals/understanding-your-letter-105c",
+    preparer_note: "The 2-year statute under §6532 is the trap — many practitioners miss it. Even if you're protesting at Appeals, the District Court statute keeps running. Best practice: file protective refund suit if Appeals is dragging past 18 months."
+  },
+  {
+    code: "Letter 916C",
+    title: "Additional Information Needed — Audit/Examination",
+    summary: "Examiner needs more documentation during an audit. May be issued multiple times during a single audit as different items are reviewed.",
+    category: "underreporter",
+    severity: "action_required",
+    triggered_by: "Audit examiner requires specific documentation to verify items on the return.",
+    deadline_days: 30,
+    deadline_desc: "30 days (typically) to provide the requested documents. Failure to respond can result in disallowance of the items and adverse adjustment.",
+    actions: [
+      "Read the letter carefully — it specifies exactly which items need substantiation",
+      "Pull the supporting documentation (receipts, bank statements, contemporaneous records)",
+      "Organize by line item — make the examiner's job easy",
+      "Send copies (never originals) by certified mail with return receipt",
+      "If unable to produce records: explain why in writing (Cohan rule for reasonable estimates)"
+    ],
+    forms: ["Form 2848", "Form 8275 (disclosure)"],
+    irs_url: "https://www.irs.gov/businesses/understanding-your-letter-916c",
+    preparer_note: "Always include a cover letter that summarizes what's enclosed and ties it back to specific items requested. Numbered tabs help. If documents are missing, address it head-on — silence implies you can't substantiate, which loses cases."
+  },
+  {
+    code: "Letter 3164",
+    title: "Notice of Third Party Contact Authorization",
+    summary: "The IRS plans to contact third parties (employers, banks, customers) to gather information about the taxpayer's tax matters under IRC §7602(c).",
+    category: "underreporter",
+    severity: "action_required",
+    triggered_by: "Audit or collection case where the IRS believes third-party contacts will help establish facts.",
+    deadline_days: 30,
+    deadline_desc: "30 days advance notice required before contacts begin. Taxpayer can request a list of who was contacted.",
+    actions: [
+      "If you have records that would satisfy IRS need, provide them BEFORE third parties are contacted — avoid embarrassment",
+      "Get Form 2848 in place so all contacts go through you, not the client",
+      "Request a list of third-party contacts made (taxpayer is entitled under §7602(c)(3))",
+      "Document any harm caused by third-party contacts for potential damages under IRC §7433"
+    ],
+    forms: ["Form 2848", "Form 4506-T"],
+    irs_url: "https://www.irs.gov/businesses/small-businesses-self-employed/third-party-contacts",
+    preparer_note: "Third-party contacts can damage client relationships and reputation. Push back hard — offer to produce records to avoid contacts. Document any improper contacts (without §7602(c) notice) for potential §7433 damages."
+  },
+  {
+    code: "CP01H",
+    title: "Frozen Refund — SSN Belongs to a Deceased Taxpayer",
+    summary: "The IRS has frozen the refund because the SSN on the return belongs to a person reported as deceased. Often happens to recent widows/widowers or in identity theft cases.",
+    category: "refund",
+    severity: "action_required",
+    triggered_by: "SSA reports the SSN as deceased and the IRS holds the refund pending verification.",
+    deadline_days: null,
+    deadline_desc: "No specific deadline — but refund stays frozen until verified.",
+    actions: [
+      "Verify whether the deceased status is correct (recent death of taxpayer or spouse)",
+      "If error: contact SSA to correct the death record (1-800-772-1213)",
+      "If filing for deceased taxpayer: provide death certificate copy and Form 1310 (Statement of Person Claiming Refund Due a Deceased Taxpayer)",
+      "If identity theft: file Form 14039 (Identity Theft Affidavit) and request IP PIN"
+    ],
+    forms: ["Form 1310", "Form 14039"],
+    irs_url: "https://www.irs.gov/individuals/understanding-your-cp01h-notice",
+    preparer_note: "If correctly reported as deceased and the survivor is filing jointly for the year of death, Form 1310 is critical. Surviving spouse retains MFJ filing for year of death if no remarriage. Refund check should be made out to surviving spouse alone if MFJ."
+  },
+  {
+    code: "CP54G",
+    title: "Name and SSN Don't Match Our Records",
+    summary: "The IRS records show a different name or SSN combination than what was on the return. Refund is held pending verification.",
+    category: "identity",
+    severity: "action_required",
+    triggered_by: "Mismatch between IRS Master File and the return — often a recent name change (marriage, divorce) not yet reflected with SSA.",
+    deadline_days: 30,
+    deadline_desc: "30 days to verify identity or correct records.",
+    actions: [
+      "If recent name change: file Form SS-5 with SSA to update SSA records, then notify IRS",
+      "If SSN typo on the return: file Form 1040-X with corrected SSN",
+      "If identity theft suspected: file Form 14039 immediately",
+      "Call IRS at 1-800-829-1040 with documentation in hand to clarify"
+    ],
+    forms: ["Form SS-5 (SSA)", "Form 1040-X", "Form 14039"],
+    irs_url: "https://www.irs.gov/individuals/understanding-your-cp54g-notice",
+    preparer_note: "CP54A, CP54B, CP54E, CP54G are variants — all SSN/name mismatch series. Most resolve via SSA name update. After SSA updates, allow 4-6 weeks for IRS records to sync before re-filing or contacting IRS."
+  },
+  {
+    code: "CP2566",
+    title: "Substitute for Return (SFR) Proposed",
+    summary: "The IRS has prepared a Substitute for Return based on third-party information (W-2s, 1099s) without any deductions or credits. The proposed assessment is typically much higher than what an actual return would show.",
+    category: "underreporter",
+    severity: "serious",
+    triggered_by: "Non-filing followed by CP59 with no response. IRS prepares SFR assuming MFS filing status, single dependent, no deductions, no credits.",
+    deadline_days: 30,
+    deadline_desc: "30 days to file the actual return (preferred) or dispute the SFR figures. SFR becomes binding assessment after 90-day Statutory Notice of Deficiency if no response.",
+    actions: [
+      "FILE THE ACTUAL RETURN ASAP — almost always reduces tax dramatically (proper filing status, deductions, credits)",
+      "Original returns filed after SFR are treated as audit reconsideration requests — still works",
+      "Pull Wage & Income transcript to reconstruct income data for missing year",
+      "If amount owed: arrange payment plan (Form 9465) with the original return"
+    ],
+    forms: ["Form 1040 for missing year", "Form 9465 (installment)", "Form 433-F"],
+    irs_url: "https://www.irs.gov/individuals/substitute-for-return",
+    preparer_note: "SFR is almost always wrong (MFS rate, no exemptions, no standard deduction beyond bare minimum, no business deductions). Original return reduces SFR balance by 50-80% routinely. Audit reconsideration is straightforward — IRS even has an Audit Reconsideration form (which is essentially just filing the actual return)."
+  },
+  {
+    code: "Letter 5747C",
+    title: "Identity Verification — In-Person Visit Required",
+    summary: "Same purpose as 4883C/5071C but verification must be done in person at a Taxpayer Assistance Center (TAC). Used when phone/online verification isn't sufficient.",
+    category: "identity",
+    severity: "action_required",
+    triggered_by: "Higher-risk identity flags or earlier verification attempts failed.",
+    deadline_days: 30,
+    deadline_desc: "30 days to schedule and complete in-person verification at a TAC.",
+    actions: [
+      "Schedule TAC appointment via irs.gov/appointment or 1-844-545-5640",
+      "Bring two forms of ID (one government-issued photo ID), a copy of last year's return, the current year return, and the notice",
+      "Wait times for TAC appointments can be 6-8 weeks in busy areas — schedule immediately"
+    ],
+    forms: ["Form 14039 if identity theft confirmed"],
+    irs_url: "https://www.irs.gov/individuals/understanding-your-letter-5747c",
+    preparer_note: "If wait time is unacceptable due to hardship, file Form 911 with Taxpayer Advocate Service. TAS can expedite TAC appointment scheduling."
+  },
+  {
+    code: "Letter 6336",
+    title: "PPP Loan Forgiveness Audit Notice",
+    summary: "The IRS is examining the Paycheck Protection Program (PPP) loan forgiveness claim — verifying that loan proceeds were used for qualifying expenses.",
+    category: "underreporter",
+    severity: "serious",
+    triggered_by: "PPP forgiveness claim flagged for review — may be from SBA referral, third-party data matching, or random selection.",
+    deadline_days: 30,
+    deadline_desc: "30 days to provide documentation supporting the forgiveness amount claimed.",
+    actions: [
+      "Pull complete PPP file: loan documents, forgiveness application (3508/3508EZ/3508S), payroll records, rent/utilities documentation",
+      "Show 60%+ of forgiveness was used for payroll costs",
+      "Document FTE retention or qualified safe harbors",
+      "If audit finds shortfall: may need to repay non-forgiven amount with penalties"
+    ],
+    forms: ["Form 3508/3508EZ/3508S (forgiveness application)", "Bank records", "Payroll records"],
+    irs_url: "https://www.irs.gov/coronavirus/paycheck-protection-program",
+    preparer_note: "PPP audits often hinge on documentation completeness. If client's records are incomplete, gather from third parties (bank statements show payroll outflows, lender records, etc.). Penalties on disallowed forgiveness can include fraud — engage a tax attorney if intentional misstatement is alleged."
+  },
+  {
+    code: "CP297",
+    title: "Final Notice — Intent to Seize Business Property",
+    summary: "Business-equivalent of CP90/LT11. Final Notice of Intent to Levy under IRC §6330 — the IRS will seize business assets, accounts receivable, and equipment.",
+    category: "levy",
+    severity: "critical",
+    triggered_by: "Continued business tax debt non-payment (typically large 941 or 1120 balance) after multiple notices.",
+    deadline_days: 30,
+    deadline_desc: "30 days to file Form 12153 for CDP hearing.",
+    actions: [
+      "URGENT — 941 trust fund exposure for responsible persons (personal TFRP under §6672)",
+      "File Form 12153 immediately by certified mail",
+      "Negotiate installment agreement based on business cash flow (Form 433-B)",
+      "Consider Offer in Compromise if business is failing (doubt as to collectibility)"
+    ],
+    forms: ["Form 12153", "Form 9465-FS", "Form 433-B", "Form 656"],
+    irs_url: "https://www.irs.gov/businesses/small-businesses-self-employed/understanding-your-cp297-notice",
+    preparer_note: "Business levy can destroy the business overnight (frozen A/R, seized equipment). Negotiate aggressively before the CDP deadline. Trust fund TFRP personal exposure means the owners' personal assets are on the line too — coordinate with owners' counsel."
+  },
+  {
+    code: "Notice 1444",
+    title: "Economic Impact Payment Statement",
+    summary: "Documentation of stimulus/EIP payments received during pandemic relief periods. Used to reconcile Recovery Rebate Credit on the return.",
+    category: "math_error",
+    severity: "informational",
+    triggered_by: "IRS-issued EIP1 (CARES), EIP2 (December 2020), or EIP3 (American Rescue Plan).",
+    deadline_days: null,
+    deadline_desc: "Informational only. Keep with tax records — needed for Recovery Rebate Credit reconciliation on 2020 and 2021 returns.",
+    actions: [
+      "Compare Notice 1444/1444-B/1444-C amounts to Recovery Rebate Credit on the return",
+      "If notice amounts don't match what was received: file Form 3911 to trace the payment",
+      "If amounts received exceed RRC eligibility: do NOT pay back (no clawback for EIP overpayments under CARES Act)"
+    ],
+    forms: ["Form 3911 (payment trace)"],
+    irs_url: "https://www.irs.gov/coronavirus/economic-impact-payments",
+    preparer_note: "Most common 2020/2021 return issue: RRC mismatch. Pull account transcript to verify EIP amounts the IRS believes were paid. Often clients lost the Notice 1444 — transcript is the canonical source."
+  },
+  {
+    code: "Letter 12C",
+    title: "Information Missing from Your Tax Return",
+    summary: "The IRS needs missing information to complete processing — typically a missing form, schedule, or signature.",
+    category: "math_error",
+    severity: "action_required",
+    triggered_by: "Return processing error: missing Form 8962 (PTC reconciliation), missing W-2, missing signature, etc.",
+    deadline_days: 20,
+    deadline_desc: "20 days to provide the missing information. Failure to respond delays refund or causes return to be rejected.",
+    actions: [
+      "Read the letter carefully — it specifies EXACTLY what's missing",
+      "Common: Form 8962 missing for Marketplace coverage clients who claimed PTC",
+      "Send only the requested item (not a complete re-file)",
+      "Include the Letter 12C reference number on the cover sheet"
+    ],
+    forms: ["Form 8962", "W-2", "Schedule attached to the original return"],
+    irs_url: "https://www.irs.gov/individuals/understanding-your-letter-12c",
+    preparer_note: "Most common Letter 12C trigger: client had Marketplace coverage but didn't include Form 8962 on the return. If client received APTC, this form is mandatory even if they don't qualify for additional PTC. Fast turn-around — 20 days is tight."
+  },
+  {
+    code: "CP08",
+    title: "You May Qualify for the Additional Child Tax Credit",
+    summary: "The IRS believes the taxpayer may qualify for ACTC based on what was reported but the credit wasn't claimed on the original return.",
+    category: "refund",
+    severity: "informational",
+    triggered_by: "Filed a return without claiming ACTC despite having qualifying children and other indicators.",
+    deadline_days: null,
+    deadline_desc: "No specific deadline — taxpayer can claim the credit via amended return within 3 years.",
+    actions: [
+      "Review qualifying child criteria — confirm eligibility",
+      "If qualified: file Form 1040-X with Schedule 8812 to claim the credit",
+      "Document residency for qualifying children (school records, lease, medical records)"
+    ],
+    forms: ["Form 1040-X", "Schedule 8812"],
+    irs_url: "https://www.irs.gov/individuals/understanding-your-cp08-notice",
+    preparer_note: "Low-income clients sometimes don't claim ACTC because they assume zero tax liability means no benefit. ACTC is refundable up to $1,700 per child in 2024/2025. Always run the math. Watch out for §32(k) ban from prior EITC denials — affects ACTC too."
+  },
+  {
+    code: "CP09",
+    title: "You May Qualify for the Earned Income Tax Credit",
+    summary: "The IRS believes the taxpayer may qualify for EITC based on income and filing status but the credit wasn't claimed.",
+    category: "refund",
+    severity: "informational",
+    triggered_by: "Income and filing status suggest EITC eligibility but credit wasn't claimed on the original return.",
+    deadline_days: null,
+    deadline_desc: "No specific deadline — taxpayer can file Form 15111 to claim EITC, or amend.",
+    actions: [
+      "Review EITC eligibility (income limits, qualifying children, residency, investment income limits)",
+      "Complete the worksheet in the notice (Form 15111) to determine credit",
+      "File Form 15111 to claim EITC without filing a full amendment",
+      "Check for §32(k) ban from prior EITC denials"
+    ],
+    forms: ["Form 15111", "Schedule EIC"],
+    irs_url: "https://www.irs.gov/individuals/understanding-your-cp09-notice",
+    preparer_note: "EITC has multi-year recapture/ban consequences if previously disallowed. Pull transcripts before claiming to confirm no §32(k) ban is active. Combat-pay election for EITC is sometimes beneficial — model both ways."
+  },
+  {
+    code: "CP01A",
+    title: "Identity Protection PIN (IP PIN) Notice",
+    summary: "The IRS is providing the taxpayer's 6-digit Identity Protection PIN (IP PIN) for the upcoming tax year. Must be used on next return.",
+    category: "identity",
+    severity: "informational",
+    triggered_by: "Taxpayer is enrolled in the IP PIN program (voluntary opt-in or post-identity-theft mandatory enrollment).",
+    deadline_days: null,
+    deadline_desc: "Keep secure. Required on the next return to file successfully.",
+    actions: [
+      "STORE THE IP PIN SECURELY (password manager recommended)",
+      "Enter on Form 1040 in the IP PIN field at the bottom",
+      "Without the IP PIN, e-file will be rejected — preparer needs to ask client EVERY year",
+      "If IP PIN is lost: retrieve at irs.gov/getanippin (requires Secure Access account)"
+    ],
+    forms: ["Form 14039 if compromised"],
+    irs_url: "https://www.irs.gov/identity-theft-fraud-scams/get-an-identity-protection-pin",
+    preparer_note: "IP PIN changes EVERY year. Build it into your intake checklist. Without it, e-file rejects (R0000-194 if SSN matches but IP PIN missing/wrong)."
+  },
 ];
 
 const RESPONSE_TEMPLATES = {
@@ -1128,7 +1509,181 @@ Sincerely,
 [PHONE]
 
 cc: [Tax Preparer Name, EA/CPA, if represented]`
-  }
+  },
+
+  cdp_hearing_request: {
+    title: "Collection Due Process (CDP) Hearing Request — Form 12153 Cover",
+    body: `[DATE]
+
+Internal Revenue Service
+[ADDRESS FROM NOTICE]
+
+VIA CERTIFIED MAIL — RETURN RECEIPT REQUESTED
+
+RE: Request for Collection Due Process Hearing under IRC §6330
+Taxpayer: [CLIENT NAME]
+SSN/EIN: [LAST 4 DIGITS XXX-XX-####]
+Tax Year(s) at Issue: [YEAR(S)]
+Notice Type and Date: [LT11 / Letter 1058 / CP90 / Notice 1450 / CP297] dated [NOTICE DATE]
+
+Dear Sir or Madam:
+
+Pursuant to Internal Revenue Code Section 6330 (or §6320 for lien notices), I/we hereby REQUEST A COLLECTION DUE PROCESS HEARING regarding the above-referenced notice.
+
+This request is timely filed within the 30-day statutory period beginning on the notice date.
+
+ISSUES TO BE RAISED AT HEARING:
+
+[CHECK ALL THAT APPLY — these are the issues that can be raised at CDP]
+
+[ ]  Spousal Defenses (innocent spouse relief under §6015)
+[ ]  Existence or Amount of the Underlying Tax Liability — taxpayer did not have prior opportunity to dispute
+[ ]  Appropriateness of Collection Action — installment agreement, OIC, or CNC alternatives should be considered
+[ ]  Offer in Compromise (Form 656) submission
+[ ]  Installment Agreement proposal (Form 9465 / Form 433-F enclosed)
+[ ]  Currently Not Collectible (CNC) status request
+[ ]  Tax Court Petition rights preservation
+[ ]  Other: [SPECIFY]
+
+REQUEST FOR ALTERNATIVE COLLECTION:
+[Describe the proposed alternative — installment amount, OIC offer, hardship facts]
+
+The taxpayer is in [filing/payment] compliance for [recent years], demonstrating good faith.
+
+Enclosures:
+  • Completed Form 12153
+  • [Form 433-A/F for financial disclosure, if applicable]
+  • [Form 9465 if proposing installment agreement, if applicable]
+  • [Form 656 if proposing Offer in Compromise, if applicable]
+  • [Form 2848 Power of Attorney if represented]
+
+Please confirm receipt of this CDP request in writing and provide the date of the hearing. We request the hearing be held by telephone or correspondence to expedite resolution.
+
+Thank you for your attention to this matter.
+
+Sincerely,
+
+[CLIENT NAME or REPRESENTATIVE]
+[ADDRESS]
+[PHONE]
+
+cc: [Representative Name, EA/CPA/Attorney]
+    Form 2848 attached`
+  },
+  oic_cover_letter: {
+    title: "Offer in Compromise (OIC) Cover Letter — Form 656",
+    body: `[DATE]
+
+Internal Revenue Service
+Memphis Service Center  (OIC unit; verify current address per Form 656 instructions)
+P.O. Box 30803, AMC
+Memphis, TN 38130-0803
+
+RE: Offer in Compromise — Doubt as to [Collectibility / Liability]
+Taxpayer: [CLIENT NAME]
+SSN/EIN: [LAST 4 DIGITS XXX-XX-####]
+Tax Years at Issue: [YEARS]
+Offer Amount: $[OFFER AMOUNT]
+Payment Terms: [Lump Sum Cash / Periodic Payment]
+
+Dear Sir or Madam:
+
+Enclosed please find an Offer in Compromise (Form 656) for the above-referenced taxpayer in the amount of $[OFFER_AMOUNT], based on [doubt as to collectibility / doubt as to liability / effective tax administration].
+
+GROUNDS FOR COMPROMISE:
+
+[DESCRIBE — pick the appropriate ground:]
+
+DOUBT AS TO COLLECTIBILITY: Based on the financial information disclosed on enclosed Form 433-A (OIC) or Form 433-B (OIC), the taxpayer's Reasonable Collection Potential (RCP) is $[RCP_AMOUNT], computed as:
+  • Net Realizable Equity in assets:       $[AMOUNT]
+  • Future Income (12 or 24 months):       $[AMOUNT]
+  • Total RCP:                              $[RCP_AMOUNT]
+
+The offer amount of $[OFFER_AMOUNT] reflects [matches RCP / exceeds RCP by $___ for good faith / is reduced due to special circumstances enumerated below].
+
+SPECIAL CIRCUMSTANCES (if applicable):
+[Describe — economic hardship, age, illness, family circumstances, etc.]
+
+ENCLOSED:
+  • Form 656 (Offer in Compromise) — signed
+  • Form 433-A (OIC) or Form 433-B (OIC) — completed with required documentation
+  • $205 application fee (waived for low-income certified)
+  • [20% / Initial Periodic Payment]: $[AMOUNT] (per Form 656)
+  • Supporting documentation: 3 months bank statements, paystubs, expense receipts, asset valuations, etc.
+  • Form 2848 (Power of Attorney) if represented
+
+The taxpayer is in [filing/payment] compliance for all tax periods. We request expedited review and notification of any deficiencies within the offer.
+
+Should the IRS require additional information, please contact the undersigned at [PHONE] or [EMAIL].
+
+Sincerely,
+
+[CLIENT NAME or REPRESENTATIVE]
+[ADDRESS]
+[PHONE]
+
+cc: [Tax Preparer Name, EA/CPA/Attorney]`
+  },
+  intl_info_return_reasonable_cause: {
+    title: "Reasonable Cause Letter — International Information Return Penalty (Form 5471, 8938, 3520, 5472)",
+    body: `[DATE]
+
+Internal Revenue Service
+[ADDRESS FROM NOTICE — typically Ogden Service Center for international returns]
+
+RE: Request for Reasonable Cause Abatement of International Information Return Penalty
+Taxpayer: [CLIENT NAME]
+SSN/EIN: [LAST 4 DIGITS XXX-XX-####]
+Form at Issue: [Form 5471 / Form 8938 / Form 3520 / Form 5472 / Form 8865 / Form 8858]
+Tax Year(s) at Issue: [YEAR(S)]
+Penalty Amount: $[AMOUNT]
+Notice Date: [NOTICE DATE]
+Notice Number: CP15
+
+Dear Sir or Madam:
+
+The above-referenced taxpayer respectfully requests REASONABLE CAUSE ABATEMENT of the [PENALTY TYPE] penalty assessed in the above-referenced notice.
+
+The taxpayer's failure to timely file the [FORM NUMBER] was due to REASONABLE CAUSE and NOT willful neglect, as established by the following facts and circumstances:
+
+ORDINARY BUSINESS CARE AND PRUDENCE:
+[Describe — taxpayer exercised ordinary business care and prudence by retaining a qualified tax professional, providing complete records, etc.]
+
+SPECIFIC FACTS DEMONSTRATING REASONABLE CAUSE:
+
+1. RELIANCE ON PROFESSIONAL ADVICE: The taxpayer retained [PREPARER NAME], a [CPA/EA/Attorney], to prepare the [YEAR] returns. The preparer was unaware of the [FORM NUMBER] filing requirement because [REASON — e.g., client did not disclose foreign account, complex ownership structure was misunderstood, foreign entity was newly acquired and not yet on the preparer's radar]. The taxpayer reasonably relied on this professional. Under United States v. Boyle, 469 U.S. 241 (1985), and IRM 20.1.1.3.2.2.2, reliance on a tax professional for substantive tax law application is a basis for reasonable cause.
+
+2. FACTS UNIQUE TO THIS TAXPAYER: [Describe — first-time foreign filing requirement, recent immigration to US, foreign asset acquired through inheritance, etc.]
+
+3. NO WILLFULNESS: The taxpayer's conduct shows no pattern of evasion. The taxpayer has filed all other required returns timely and has reported all foreign income on Form 1040 (Schedule B). The failure was administrative oversight on the specific information return, not concealment of foreign assets or income.
+
+4. PROMPT CORRECTIVE ACTION: Upon learning of the requirement, the taxpayer filed the [FORM NUMBER] within [TIMEFRAME] and has implemented procedures to prevent recurrence.
+
+LEGAL AUTHORITY:
+The reasonable cause standard for international information return penalties is well-established. See IRC §6038(c)(4)(B); Treas. Reg. §1.6038-2(k)(3); IRM 21.8.2.6.3. The taxpayer's good faith effort to comply, the absence of willfulness, and reasonable reliance on tax counsel constitute reasonable cause as a matter of law.
+
+REQUESTED RELIEF:
+The taxpayer respectfully requests full abatement of the assessed penalty of $[AMOUNT] for [YEAR(S)].
+
+SUPPORTING DOCUMENTATION ENCLOSED:
+  • [Filed Form 5471/8938/3520]
+  • [Affidavit from preparer if available]
+  • [Documentation of disclosure to preparer]
+  • Form 2848 (Power of Attorney) if represented
+
+Please notify me/us in writing of the determination. If denied, please provide the specific reasons and information about my/our appeal rights to IRS Appeals.
+
+Thank you for your consideration.
+
+Sincerely,
+
+[CLIENT NAME or REPRESENTATIVE]
+[ADDRESS]
+[PHONE]
+
+cc: [Representative Name, EA/CPA/Attorney]
+    Form 2848 attached`
+  },
 };
 
 /* ============================================================
