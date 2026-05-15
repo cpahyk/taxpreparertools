@@ -1,0 +1,561 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>The IRS Decoder Suite — 125+ IRS Codes in Plain English | TaxPreparerTools.com</title>
+<meta name="description" content="Free reference tools for tax preparers: IRS Notice Decoder (53 notices + letter templates), Transcript Code Decoder (49 TC codes), and E-File Reject Lookup (23 reject codes). Smart search routes any code to the right decoder.">
+<link rel="canonical" href="https://taxpreparertools.com/decoders" />
+
+<!-- Favicons & App Icons -->
+<link rel="icon" type="image/x-icon" href="/favicon.ico">
+<link rel="icon" type="image/svg+xml" href="/assets/favicon.svg">
+<link rel="icon" type="image/png" sizes="32x32" href="/assets/favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="/assets/favicon-16x16.png">
+<link rel="apple-touch-icon" sizes="180x180" href="/assets/apple-touch-icon.png">
+<link rel="manifest" href="/site.webmanifest">
+<meta name="theme-color" content="#c8a84b">
+<meta name="msapplication-TileColor" content="#08152a">
+<meta name="msapplication-config" content="/browserconfig.xml">
+
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700;900&family=DM+Sans:wght@300;400;500;600&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "CollectionPage",
+  "name": "The IRS Decoder Suite",
+  "url": "https://taxpreparertools.com/decoders",
+  "description": "Three free IRS reference decoders for tax preparers: notice decoder, transcript code decoder, and e-file reject lookup.",
+  "publisher": {"@type": "Organization", "name": "TaxPreparerTools", "url": "https://taxpreparertools.com/"},
+  "hasPart": [
+    {"@type": "WebApplication", "name": "IRS Notice Decoder", "url": "https://taxpreparertools.com/irs-notice-decoder", "description": "Decode any IRS notice (CP2000, CP14, LT11, Letter 226-J) with response templates"},
+    {"@type": "WebApplication", "name": "IRS Transcript Code Decoder", "url": "https://taxpreparertools.com/irs-transcript-decoder", "description": "Decode transaction codes (TC 150, TC 290, TC 570, TC 846, TC 922, TC 971) for reading account transcripts"},
+    {"@type": "WebApplication", "name": "IRS E-File Reject Code Lookup", "url": "https://taxpreparertools.com/irs-efile-reject-decoder", "description": "Decode e-file reject codes (R0000-504, IND-031, IND-181, FW2-502) with step-by-step fixes"}
+  ]
+}
+</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    {"@type":"ListItem","position":1,"name":"Home","item":"https://taxpreparertools.com/"},
+    {"@type":"ListItem","position":2,"name":"Decoders","item":"https://taxpreparertools.com/decoders"}
+  ]
+}
+</script>
+
+<meta property="og:type" content="website" />
+<meta property="og:url" content="https://taxpreparertools.com/decoders" />
+<meta property="og:title" content="The IRS Decoder Suite — 125+ IRS Codes Explained" />
+<meta property="og:description" content="Free reference tools for tax preparers: notice decoder, transcript code decoder, e-file reject lookup. Smart search routes any code to the right decoder." />
+<meta property="og:image" content="https://taxpreparertools.com/assets/og-image.png" />
+<meta property="og:image:width" content="1200" />
+<meta property="og:image:height" content="630" />
+<meta name="twitter:card" content="summary_large_image" />
+<meta name="twitter:image" content="https://taxpreparertools.com/assets/og-image.png" />
+
+<style>
+:root{
+--navy:#08152a;--navy-mid:#0f1f3d;--slate:#1a2f52;
+--gold:#c8a84b;--gold-light:#e8c96a;--gold-dim:rgba(200,168,75,0.13);
+--white:#fff;--muted:#7a8fac;--text:#dde4f0;--border:rgba(200,168,75,0.14);
+--card:rgba(255,255,255,0.04);
+--green:#4ade80;--blue:#60a5fa;--orange:#fb923c;--purple:#a78bfa;
+}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+html{scroll-behavior:smooth;}
+body{font-family:'DM Sans',sans-serif;background:var(--navy);color:var(--text);min-height:100vh;overflow-x:hidden;}
+
+/* NAV */
+nav{position:sticky;top:0;z-index:200;padding:14px 48px;display:flex;align-items:center;justify-content:space-between;background:rgba(8,21,42,0.95);backdrop-filter:blur(20px);border-bottom:1px solid var(--border);}
+.logo{display:flex;align-items:center;gap:10px;text-decoration:none;}
+.logo-mark{width:32px;height:32px;background:var(--gold);border-radius:7px;display:flex;align-items:center;justify-content:center;font-size:15px;}
+.logo-name{font-family:'Playfair Display',serif;font-size:1.1rem;font-weight:700;color:var(--white);}
+.logo-name span{color:var(--gold);}
+.logo-domain{font-size:0.62rem;color:var(--muted);font-family:'DM Mono',monospace;display:block;}
+.nav-links{display:flex;gap:24px;list-style:none;}
+.nav-links a{color:var(--muted);font-size:0.82rem;font-weight:500;text-decoration:none;transition:color .2s;}
+.nav-links a:hover,.nav-links a.active{color:var(--gold);}
+.btn-sm{padding:7px 16px;border-radius:6px;font-size:0.8rem;font-weight:700;cursor:pointer;text-decoration:none;transition:all .2s;border:none;font-family:'DM Sans',sans-serif;}
+.btn-gold{background:var(--gold);color:var(--navy);}
+.btn-gold:hover{background:var(--gold-light);}
+
+/* HERO */
+.hero{position:relative;padding:80px 48px 60px;max-width:1200px;margin:0 auto;text-align:center;overflow:hidden;}
+.hero::before{content:'';position:absolute;top:0;left:50%;transform:translateX(-50%);width:900px;height:500px;background:radial-gradient(ellipse,rgba(200,168,75,0.10) 0%,transparent 65%);pointer-events:none;z-index:-1;}
+.breadcrumb{font-size:0.73rem;font-family:'DM Mono',monospace;color:var(--muted);margin-bottom:32px;display:flex;gap:7px;align-items:center;justify-content:center;flex-wrap:wrap;}
+.breadcrumb a{color:var(--gold);text-decoration:none;}
+.breadcrumb a:hover{text-decoration:underline;}
+.hero-badge{display:inline-flex;align-items:center;gap:8px;background:rgba(200,168,75,0.12);border:1px solid rgba(200,168,75,0.3);color:var(--gold);padding:7px 18px;border-radius:50px;font-size:0.74rem;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;margin-bottom:28px;font-family:'DM Mono',monospace;}
+.hero-badge::before{content:'';width:6px;height:6px;background:var(--gold);border-radius:50%;animation:pulse 2s infinite;}
+@keyframes pulse{0%,100%{opacity:1;}50%{opacity:.4;}}
+h1{font-family:'Playfair Display',serif;font-size:clamp(2rem,5vw,3.4rem);font-weight:900;color:var(--white);letter-spacing:-0.03em;line-height:1.1;margin-bottom:18px;}
+h1 em{font-style:normal;color:var(--gold);position:relative;}
+h1 em::after{content:'';position:absolute;bottom:-3px;left:0;right:0;height:3px;background:var(--gold);border-radius:2px;opacity:.4;}
+.hero-sub{font-size:1.05rem;color:var(--muted);max-width:680px;margin:0 auto 36px;line-height:1.7;}
+
+/* UNIFIED SEARCH */
+.smart-search{max-width:720px;margin:0 auto 18px;}
+.smart-search-card{background:var(--navy-mid);border:1.5px solid rgba(200,168,75,0.2);border-radius:18px;padding:8px;display:flex;align-items:center;gap:10px;transition:border-color .2s,box-shadow .2s;}
+.smart-search-card:focus-within{border-color:var(--gold);box-shadow:0 0 0 4px rgba(200,168,75,0.10);}
+.smart-search-icon{margin-left:16px;color:var(--gold);font-size:1.2rem;}
+#smartSearch{flex:1;background:transparent;border:none;color:var(--white);padding:14px 4px;font-size:1.05rem;font-family:'DM Sans',sans-serif;outline:none;}
+#smartSearch::placeholder{color:var(--muted);}
+.smart-search-route{display:inline-flex;align-items:center;gap:8px;background:var(--gold);color:var(--navy);padding:11px 20px;border-radius:11px;font-weight:700;font-size:0.88rem;font-family:'DM Sans',sans-serif;text-decoration:none;transition:all .2s;cursor:pointer;border:none;white-space:nowrap;}
+.smart-search-route:hover{background:var(--gold-light);transform:translateX(2px);}
+.smart-search-route.muted{background:rgba(255,255,255,.05);color:var(--muted);cursor:not-allowed;}
+.smart-search-route.muted:hover{background:rgba(255,255,255,.05);transform:none;}
+.smart-hint{font-size:0.78rem;color:var(--muted);font-family:'DM Mono',monospace;margin-top:14px;min-height:1.4em;}
+.smart-hint strong{color:var(--gold);font-weight:600;}
+.smart-examples{display:flex;gap:6px;justify-content:center;flex-wrap:wrap;margin-top:20px;}
+.smart-example{background:rgba(255,255,255,.04);border:1px solid var(--border);color:var(--gold);font-family:'DM Mono',monospace;font-size:0.74rem;padding:5px 12px;border-radius:50px;cursor:pointer;transition:all .2s;}
+.smart-example:hover{background:rgba(200,168,75,.1);border-color:rgba(200,168,75,.3);transform:translateY(-1px);}
+
+/* STATS STRIP */
+.stats-strip{max-width:1100px;margin:50px auto 0;padding:32px 48px;background:linear-gradient(135deg,var(--slate) 0%,var(--navy-mid) 100%);border:1px solid var(--border);border-radius:18px;display:grid;grid-template-columns:repeat(4,1fr);gap:24px;}
+.stat-item{text-align:center;}
+.stat-num{font-family:'Playfair Display',serif;font-size:2.4rem;font-weight:700;color:var(--gold);line-height:1;margin-bottom:6px;}
+.stat-label{font-size:0.72rem;color:var(--muted);font-family:'DM Mono',monospace;text-transform:uppercase;letter-spacing:0.08em;font-weight:600;}
+
+/* SECTION HEADER */
+.section{padding:80px 48px;max-width:1200px;margin:0 auto;}
+.section-header{text-align:center;margin-bottom:54px;}
+.section-tag{display:inline-block;font-size:0.7rem;font-weight:700;letter-spacing:0.15em;text-transform:uppercase;color:var(--gold);margin-bottom:14px;font-family:'DM Mono',monospace;}
+h2{font-family:'Playfair Display',serif;font-size:clamp(1.7rem,3.5vw,2.4rem);font-weight:700;color:var(--white);letter-spacing:-0.02em;line-height:1.2;margin-bottom:14px;}
+.section-sub{color:var(--muted);font-size:0.96rem;max-width:560px;margin:0 auto;line-height:1.7;}
+
+/* DECODER CARDS */
+.decoder-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(340px,1fr));gap:24px;}
+.decoder-card{background:var(--navy-mid);border:1px solid var(--border);border-radius:20px;padding:36px 32px;text-decoration:none;color:inherit;display:flex;flex-direction:column;transition:all .3s;position:relative;overflow:hidden;}
+.decoder-card::after{content:'';position:absolute;inset:0;border-radius:20px;background:linear-gradient(135deg,rgba(200,168,75,0.06) 0%,transparent 50%);opacity:0;transition:opacity .3s;pointer-events:none;}
+.decoder-card:hover{border-color:rgba(200,168,75,0.4);transform:translateY(-5px);box-shadow:0 24px 60px rgba(0,0,0,0.35);}
+.decoder-card:hover::after{opacity:1;}
+.decoder-card-icon{width:56px;height:56px;background:linear-gradient(135deg,var(--gold-dim),rgba(200,168,75,0.05));border:1px solid rgba(200,168,75,0.3);border-radius:14px;display:flex;align-items:center;justify-content:center;font-size:26px;margin-bottom:22px;}
+.decoder-card-count{display:inline-block;font-family:'DM Mono',monospace;font-size:0.7rem;font-weight:700;color:var(--gold);background:rgba(200,168,75,0.1);padding:4px 10px;border-radius:50px;margin-bottom:14px;letter-spacing:0.05em;}
+.decoder-card h3{font-family:'Playfair Display',serif;font-size:1.4rem;font-weight:700;color:var(--white);line-height:1.2;margin-bottom:14px;}
+.decoder-card-desc{font-size:0.92rem;color:var(--muted);line-height:1.7;margin-bottom:24px;flex-grow:1;}
+.decoder-card-examples{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:24px;}
+.decoder-card-example{font-family:'DM Mono',monospace;font-size:0.7rem;color:var(--gold);background:rgba(200,168,75,0.06);border:1px solid rgba(200,168,75,0.15);padding:3px 9px;border-radius:50px;}
+.decoder-card-cta{display:inline-flex;align-items:center;gap:8px;color:var(--gold);font-size:0.88rem;font-weight:700;letter-spacing:0.02em;transition:gap .2s;margin-top:auto;}
+.decoder-card:hover .decoder-card-cta{gap:14px;}
+
+/* WHY SECTION */
+.why-section{background:var(--navy-mid);border-top:1px solid var(--border);border-bottom:1px solid var(--border);}
+.why-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:24px;margin-top:48px;}
+.why-card{background:rgba(255,255,255,0.03);border:1px solid var(--border);border-radius:14px;padding:28px;}
+.why-icon{font-size:1.8rem;margin-bottom:16px;display:block;}
+.why-title{font-family:'Playfair Display',serif;font-size:1.1rem;font-weight:700;color:var(--white);margin-bottom:10px;}
+.why-desc{font-size:0.87rem;color:var(--muted);line-height:1.65;}
+
+/* RELATED TOOLS */
+.related-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:14px;max-width:1100px;margin:0 auto;}
+.related-link{background:var(--card);border:1px solid var(--border);border-radius:12px;padding:20px;text-decoration:none;transition:all .25s;display:block;}
+.related-link:hover{border-color:rgba(200,168,75,0.4);background:rgba(200,168,75,0.04);transform:translateY(-2px);}
+.related-icon{font-size:1.4rem;margin-bottom:10px;display:block;}
+.related-title{font-family:'Playfair Display',serif;font-size:0.95rem;font-weight:700;color:var(--white);margin-bottom:6px;line-height:1.3;}
+.related-desc{font-size:0.78rem;color:var(--muted);line-height:1.55;}
+
+/* FOOTER */
+footer{border-top:1px solid var(--border);padding:28px 48px;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:12px;background:var(--navy-mid);}
+.footer-left{font-size:0.73rem;color:var(--muted);}
+.footer-left a{color:var(--gold);text-decoration:none;}
+.footer-links{display:flex;gap:20px;align-items:center;}
+.footer-links a{font-size:0.73rem;color:var(--muted);text-decoration:none;transition:color .2s;}
+.footer-links a:hover{color:var(--gold);}
+
+/* RESPONSIVE */
+@media(max-width:960px){
+nav{padding:13px 18px;}.nav-links{display:none;}
+.hero{padding:60px 18px 40px;}
+.section{padding:54px 18px;}
+.stats-strip{padding:24px 18px;grid-template-columns:repeat(2,1fr);gap:18px;}
+.stat-num{font-size:1.8rem;}
+.smart-search-card{flex-direction:column;padding:14px;}
+.smart-search-route{width:100%;justify-content:center;padding:14px;}
+.smart-search-icon{display:none;}
+#smartSearch{width:100%;padding:6px 0;text-align:center;}
+footer{padding:20px 18px;flex-direction:column;}
+}
+.nav-hamburger{display:none;flex-direction:column;gap:5px;cursor:pointer;padding:6px;border:none;background:transparent;z-index:300;}
+.nav-hamburger span{display:block;width:22px;height:2px;background:var(--gold);border-radius:2px;transition:all .25s;}
+.nav-hamburger.open span:nth-child(1){transform:translateY(7px) rotate(45deg);}
+.nav-hamburger.open span:nth-child(2){opacity:0;}
+.nav-hamburger.open span:nth-child(3){transform:translateY(-7px) rotate(-45deg);}
+@media(max-width:768px){
+.nav-hamburger{display:flex;}
+nav .nav-links{display:none;position:fixed;top:60px;left:0;right:0;background:rgba(8,21,42,0.98);backdrop-filter:blur(20px);flex-direction:column;padding:16px 0;z-index:200;border-bottom:1px solid rgba(200,168,75,.18);}
+nav .nav-links.mobile-open{display:flex;}
+nav .nav-links li{width:100%;text-align:center;list-style:none;}
+nav .nav-links li a{display:block;padding:12px 24px;font-size:1rem;}
+}
+</style>
+</head>
+<body>
+
+<nav>
+<a href="index.html" class="logo">
+<div class="logo-mark">⚖</div>
+<div><span class="logo-name">TaxPreparer<span>Tools</span></span><span class="logo-domain">taxpreparertools.com</span></div>
+</a>
+<button id="navHamburger" class="nav-hamburger" aria-label="Menu"><span></span><span></span><span></span></button>
+<ul class="nav-links">
+<li><a href="tools.html">Tools</a></li>
+<li><a href="decoders.html" class="active">Decoders</a></li>
+<li><a href="deadlines.html">Deadlines</a></li>
+<li><a href="ai-assistant.html">AI Assistant</a></li>
+<li><a href="resources.html">Resources</a></li>
+<li><a href="blog/">Blog</a></li>
+<li><a href="about.html">About</a></li>
+</ul>
+<a href="signup.html" class="btn-sm btn-gold">Get Pro Free</a>
+</nav>
+
+<!-- ═══ HERO ═══ -->
+<section class="hero">
+  <div class="breadcrumb">
+    <a href="index.html">Home</a> <span>/</span> Decoders
+  </div>
+  <div class="hero-badge">For Tax Preparers · Free · No Login</div>
+  <h1>The IRS Decoder Suite —<br>Three Tools, <em>One Plain-English Answer</em></h1>
+  <p class="hero-sub">When you've got a notice on the desk, a transcript on screen, or an e-file kicked back from the IRS — these tools have the answer in seconds. Built by tax preparers, for tax preparers.</p>
+
+  <!-- Smart unified search -->
+  <div class="smart-search">
+    <div class="smart-search-card">
+      <span class="smart-search-icon">🔎</span>
+      <input type="text" id="smartSearch" placeholder="Paste any code — CP2000, TC 846, R0000-504, IND-031..." autocomplete="off" autofocus />
+      <button class="smart-search-route muted" id="routeBtn" disabled>Choose a decoder<span>→</span></button>
+    </div>
+    <div class="smart-hint" id="smartHint">Type any IRS code above. We'll detect the type and send you to the right decoder.</div>
+    <div class="smart-examples">
+      <span class="smart-example" data-code="CP2000">CP2000</span>
+      <span class="smart-example" data-code="CP14">CP14</span>
+      <span class="smart-example" data-code="LT11">LT11</span>
+      <span class="smart-example" data-code="TC 150">TC 150</span>
+      <span class="smart-example" data-code="TC 846">TC 846</span>
+      <span class="smart-example" data-code="TC 570">TC 570</span>
+      <span class="smart-example" data-code="R0000-504">R0000-504</span>
+      <span class="smart-example" data-code="IND-031">IND-031</span>
+      <span class="smart-example" data-code="FW2-502">FW2-502</span>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ STATS STRIP ═══ -->
+<div style="padding:0 48px;">
+  <div class="stats-strip">
+    <div class="stat-item">
+      <div class="stat-num">125+</div>
+      <div class="stat-label">IRS Codes Indexed</div>
+    </div>
+    <div class="stat-item">
+      <div class="stat-num">6</div>
+      <div class="stat-label">Response Templates</div>
+    </div>
+    <div class="stat-item">
+      <div class="stat-num">2025</div>
+      <div class="stat-label">Tax Year Current</div>
+    </div>
+    <div class="stat-item">
+      <div class="stat-num">$0</div>
+      <div class="stat-label">Cost · Forever Free</div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══ DECODER CARDS ═══ -->
+<section class="section" id="decoders">
+  <div class="section-header">
+    <div class="section-tag">The Suite</div>
+    <h2>Three decoders. One coherent reference.</h2>
+    <p class="section-sub">Each tool covers a different moment in tax preparation work. All three share the same plain-English approach, same search UX, same severity coding.</p>
+  </div>
+
+  <div class="decoder-grid">
+
+    <!-- NOTICE DECODER -->
+    <a href="irs-notice-decoder.html" class="decoder-card">
+      <div class="decoder-card-icon">📋</div>
+      <span class="decoder-card-count">53 notices · 6 templates</span>
+      <h3>IRS Notice &amp; Letter Decoder</h3>
+      <p class="decoder-card-desc">For when an IRS notice arrives in the mail. Decode any CP2000, CP14, LT11, Letter 226-J, or 50+ others in plain English. Includes deadline countdown, response strategy, and downloadable letter templates for CP2000 disagreements, math error abatements, First-Time Penalty Abatement, CDP hearing requests, Offers in Compromise, and international information return penalty defenses.</p>
+      <div class="decoder-card-examples">
+        <span class="decoder-card-example">CP2000</span>
+        <span class="decoder-card-example">CP14</span>
+        <span class="decoder-card-example">LT11</span>
+        <span class="decoder-card-example">CP504</span>
+        <span class="decoder-card-example">Letter 226-J</span>
+        <span class="decoder-card-example">CP90</span>
+      </div>
+      <span class="decoder-card-cta">Open Notice Decoder →</span>
+    </a>
+
+    <!-- TRANSCRIPT DECODER -->
+    <a href="irs-transcript-decoder.html" class="decoder-card">
+      <div class="decoder-card-icon">📊</div>
+      <span class="decoder-card-count">49 transaction codes</span>
+      <h3>IRS Transcript Code Decoder</h3>
+      <p class="decoder-card-desc">For when you're reading an IRS account transcript and need to know what a Transaction Code means. Every TC code preparers actually encounter — TC 150 (return filed), TC 290 (additional assessment), TC 570 (account hold), TC 766/767 (credit/reversal), TC 846 (refund issued), TC 922 (AUR opened), TC 971 (notice issued). Includes "when you see this on a transcript" context, action steps, and tactical preparer notes on code combinations.</p>
+      <div class="decoder-card-examples">
+        <span class="decoder-card-example">TC 150</span>
+        <span class="decoder-card-example">TC 846</span>
+        <span class="decoder-card-example">TC 290</span>
+        <span class="decoder-card-example">TC 570</span>
+        <span class="decoder-card-example">TC 922</span>
+        <span class="decoder-card-example">TC 971</span>
+      </div>
+      <span class="decoder-card-cta">Open Transcript Decoder →</span>
+    </a>
+
+    <!-- E-FILE REJECT DECODER -->
+    <a href="irs-efile-reject-decoder.html" class="decoder-card">
+      <div class="decoder-card-icon">⚠️</div>
+      <span class="decoder-card-count">23 reject codes</span>
+      <h3>IRS E-File Reject Code Lookup</h3>
+      <p class="decoder-card-desc">For when an e-file gets kicked back and you've got 5 minutes to fix and retransmit. Decode R0000-504 (dependent SSN already used), IND-031 (prior-year AGI mismatch), IND-181 (IP PIN wrong), FW2-502 (employer EIN mismatch), F8962-006 (APTC reconciliation missing), and 18 more. Each entry has a "why this rejected" cause card and a step-by-step fix list, plus tactical notes for the trickier ones like custody-disputed dependents.</p>
+      <div class="decoder-card-examples">
+        <span class="decoder-card-example">R0000-504</span>
+        <span class="decoder-card-example">IND-031</span>
+        <span class="decoder-card-example">IND-181</span>
+        <span class="decoder-card-example">FW2-502</span>
+        <span class="decoder-card-example">F8962-006</span>
+        <span class="decoder-card-example">IND-901</span>
+      </div>
+      <span class="decoder-card-cta">Open Reject Decoder →</span>
+    </a>
+
+  </div>
+</section>
+
+<!-- ═══ WHY SECTION ═══ -->
+<section class="why-section">
+  <div class="section">
+    <div class="section-header">
+      <div class="section-tag">Why this exists</div>
+      <h2>Built for the moments where reference data wastes 20 minutes</h2>
+      <p class="section-sub">Every tax preparer has had that conversation where the client is on the phone, the notice is in their hand, and the answer is buried in IRS publications. These tools collapse that to seconds.</p>
+    </div>
+
+    <div class="why-grid">
+      <div class="why-card">
+        <span class="why-icon">🎯</span>
+        <div class="why-title">Plain English first</div>
+        <p class="why-desc">No IRS-speak. Each entry leads with what the code actually means in the words a preparer would use to a client — then drills into the technical details and statutory references for when you need them.</p>
+      </div>
+      <div class="why-card">
+        <span class="why-icon">⚡</span>
+        <div class="why-title">Action-oriented</div>
+        <p class="why-desc">Every entry tells you what to DO next. Notice Decoder includes downloadable response letter templates. Reject Decoder has numbered fix steps. Transcript Decoder shows you the next codes to look for.</p>
+      </div>
+      <div class="why-card">
+        <span class="why-icon">💡</span>
+        <div class="why-title">Preparer notes</div>
+        <p class="why-desc">Each entry has a tactical "tax preparer note" — the institutional knowledge that's only learned by doing the work. The kind of thing a senior partner mentions when you bring them the case.</p>
+      </div>
+      <div class="why-card">
+        <span class="why-icon">🔓</span>
+        <div class="why-title">Free forever</div>
+        <p class="why-desc">No login, no email signup, no paywall, no ads. Built as a public reference for the tax preparation community. Bookmark and share freely.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ RELATED TOOLS ═══ -->
+<section class="section">
+  <div class="section-header">
+    <div class="section-tag">Beyond the decoders</div>
+    <h2>Other tools you'll use weekly</h2>
+    <p class="section-sub">The decoders pair well with these calculators and lookups — same brand, same dark mode, same anti-bloat approach.</p>
+  </div>
+
+  <div class="related-grid">
+    <a href="penalty-calculator.html" class="related-link">
+      <span class="related-icon">⚠️</span>
+      <div class="related-title">IRS Penalty Calculator</div>
+      <p class="related-desc">FTF, FTP, and underpayment penalties with daily interest accrual.</p>
+    </a>
+    <a href="property-tax-search.html" class="related-link">
+      <span class="related-icon">🏛️</span>
+      <div class="related-title">US Property Tax Search</div>
+      <p class="related-desc">200+ counties indexed for Schedule A and Schedule E SALT lookups.</p>
+    </a>
+    <a href="federal-tax-estimator.html" class="related-link">
+      <span class="related-icon">🧮</span>
+      <div class="related-title">Federal Tax Estimator</div>
+      <p class="related-desc">2025 federal tax with full bracket breakdown across filing statuses.</p>
+    </a>
+    <a href="quarterly-payments.html" class="related-link">
+      <span class="related-icon">📆</span>
+      <div class="related-title">Quarterly Estimated Payments</div>
+      <p class="related-desc">Safe-harbor quarterly schedule for the full tax year.</p>
+    </a>
+    <a href="se-tax-calculator.html" class="related-link">
+      <span class="related-icon">💼</span>
+      <div class="related-title">Self-Employment Tax</div>
+      <p class="related-desc">Schedule SE computation with deductible portion calculation.</p>
+    </a>
+    <a href="tools.html" class="related-link">
+      <span class="related-icon">📂</span>
+      <div class="related-title">All 46 Tools</div>
+      <p class="related-desc">Browse the complete tools directory by category.</p>
+    </a>
+  </div>
+</section>
+
+<footer>
+<div class="footer-left">© 2026 <a href="index.html">TaxPreparerTools.com</a> · The IRS Decoder Suite is a free public reference. Not affiliated with the Internal Revenue Service.</div>
+<div class="footer-links"><a href="privacy.html">Privacy</a><a href="terms.html">Terms</a><a href="about.html">About</a><a href="sitemap.html">Sitemap</a><a href="https://www.irs.gov" target="_blank" rel="noopener">IRS.gov ↗</a></div>
+</footer>
+
+<script>
+/* ===========================================================================
+   SMART CODE-ROUTING SEARCH
+   Detects code patterns and routes to the appropriate decoder with ?q= param.
+=========================================================================== */
+
+const $ = (id) => document.getElementById(id);
+const searchInput = $('smartSearch');
+const routeBtn = $('routeBtn');
+const hint = $('smartHint');
+
+/**
+ * Detect which decoder a code belongs to based on its pattern.
+ * Returns: { type: 'notice'|'transcript'|'reject'|null, label, url, route }
+ */
+function detectCodeType(q) {
+  const s = q.trim();
+  if (!s) return null;
+  const upper = s.toUpperCase();
+
+  // Transcript codes: TC NNN, or just 3-digit number 1xx-9xx
+  // e.g. "TC 846", "846", "570", "tc290"
+  if (/^TC\s*\d{2,3}$/i.test(s) || /^\d{3}$/.test(s)) {
+    return {
+      type: 'transcript',
+      label: 'Transcript Code',
+      url: 'irs-transcript-decoder.html',
+      route: 'IRS Transcript Decoder'
+    };
+  }
+
+  // E-file rejects: R0000-NNN, IND-NNN, F1040-NNN, FW2-NNN, F8962-NNN, SEIC-NNN
+  // also bare "IND-031" or "R0000-504"
+  if (/^(R0000|IND|F1040|FW2|F8962|SEIC|F8867)[-\s]?\d/i.test(s)) {
+    return {
+      type: 'reject',
+      label: 'E-File Reject Code',
+      url: 'irs-efile-reject-decoder.html',
+      route: 'IRS E-File Reject Decoder'
+    };
+  }
+
+  // IRS Notices: CP-prefix, LT-prefix, "Letter ", "Notice "
+  // e.g. CP2000, CP14, LT11, Letter 226-J, Letter 105C, Notice 1444
+  if (/^(CP|LT)\d/i.test(s) || /^LETTER[\s-]\d/i.test(upper) || /^NOTICE[\s-]\d/i.test(upper)) {
+    return {
+      type: 'notice',
+      label: 'IRS Notice/Letter',
+      url: 'irs-notice-decoder.html',
+      route: 'IRS Notice Decoder'
+    };
+  }
+
+  // Soft keyword fallback — common search terms map to a default decoder
+  const kw = upper;
+  if (/REFUND|TRANSCRIPT|REVENUE OFFICE|UNDERREPORTER|AUR|CNC|TFRP|OIC|INSTALLMENT/.test(kw)) {
+    return {
+      type: 'transcript',
+      label: 'Try Transcript Decoder',
+      url: 'irs-transcript-decoder.html',
+      route: 'IRS Transcript Decoder'
+    };
+  }
+  if (/PIN|AGI|DEPENDENT|EFILE|E-FILE|REJECT|MEF|SCHEDULE/.test(kw)) {
+    return {
+      type: 'reject',
+      label: 'Try Reject Decoder',
+      url: 'irs-efile-reject-decoder.html',
+      route: 'IRS E-File Reject Decoder'
+    };
+  }
+  if (/NOTICE|LETTER|PENALTY|ABATEMENT|LEVY|LIEN|HEARING|CDP|MATH ERROR/.test(kw)) {
+    return {
+      type: 'notice',
+      label: 'Try Notice Decoder',
+      url: 'irs-notice-decoder.html',
+      route: 'IRS Notice Decoder'
+    };
+  }
+
+  return null;
+}
+
+function updateHint() {
+  const q = searchInput.value.trim();
+  if (!q) {
+    hint.innerHTML = 'Type any IRS code above. We\'ll detect the type and send you to the right decoder.';
+    routeBtn.classList.add('muted');
+    routeBtn.disabled = true;
+    routeBtn.innerHTML = 'Choose a decoder<span>→</span>';
+    routeBtn.onclick = null;
+    return;
+  }
+
+  const detected = detectCodeType(q);
+  if (detected) {
+    hint.innerHTML = `Looks like a <strong>${detected.label}</strong> · Press Enter or click the button to open the ${detected.route} →`;
+    routeBtn.classList.remove('muted');
+    routeBtn.disabled = false;
+    routeBtn.innerHTML = `Open ${detected.route.replace('IRS ','')}<span>→</span>`;
+    routeBtn.onclick = () => goToDecoder(detected, q);
+  } else {
+    hint.innerHTML = `Couldn\'t match \"<strong>${q}</strong>\" to a code pattern. Try browsing the three decoders below ↓`;
+    routeBtn.classList.add('muted');
+    routeBtn.disabled = true;
+    routeBtn.innerHTML = 'No match<span>?</span>';
+    routeBtn.onclick = null;
+  }
+}
+
+function goToDecoder(detected, q) {
+  const param = encodeURIComponent(q);
+  window.location.href = `${detected.url}?q=${param}`;
+}
+
+// Search input listeners
+searchInput.addEventListener('input', updateHint);
+searchInput.addEventListener('keydown', (e) => {
+  if (e.key === 'Enter' && !routeBtn.disabled) {
+    routeBtn.click();
+  }
+});
+
+// Example pill clicks → fill search and route
+document.querySelectorAll('.smart-example').forEach(el => {
+  el.addEventListener('click', () => {
+    const code = el.dataset.code;
+    searchInput.value = code;
+    searchInput.focus();
+    updateHint();
+  });
+});
+
+// Hamburger menu
+(function(){
+  const btn = $('navHamburger');
+  const ul = document.querySelector('nav .nav-links');
+  if (!btn || !ul) return;
+  btn.addEventListener('click', () => {
+    btn.classList.toggle('open');
+    ul.classList.toggle('mobile-open');
+  });
+})();
+
+updateHint();
+</script>
+
+</body>
+</html>
