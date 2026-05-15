@@ -1,0 +1,919 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>IRS E-File Reject Code Lookup — R0000-504, IND-031, IND-181 Solutions | TaxPreparerTools.com</title>
+<meta name="description" content="Decode IRS e-file reject codes (R0000-194, R0000-504, IND-031, IND-181, FW2-502) instantly. See cause, fix steps, and re-filing strategy for the 25+ most common rejects. Free reference for tax preparers.">
+<link rel="canonical" href="https://taxpreparertools.com/irs-efile-reject-decoder" />
+
+<!-- ═══ Favicons & App Icons ═══ -->
+<link rel="icon" type="image/x-icon" href="/favicon.ico">
+<link rel="icon" type="image/svg+xml" href="/assets/favicon.svg">
+<link rel="icon" type="image/png" sizes="32x32" href="/assets/favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="/assets/favicon-16x16.png">
+<link rel="apple-touch-icon" sizes="180x180" href="/assets/apple-touch-icon.png">
+<link rel="manifest" href="/site.webmanifest">
+<meta name="theme-color" content="#c8a84b">
+<meta name="msapplication-TileColor" content="#08152a">
+<meta name="msapplication-config" content="/browserconfig.xml">
+
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700;900&family=DM+Sans:wght@300;400;500;600&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"WebApplication","name":"IRS E-File Reject Code Lookup","url":"https://taxpreparertools.com/irs-efile-reject-decoder","description":"Decode IRS e-file reject codes (R0000-504, IND-031, IND-181, FW2-502) with cause and fix steps.","applicationCategory":"FinanceApplication","offers":{"@type":"Offer","price":"0","priceCurrency":"USD"}}
+</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    {"@type":"ListItem","position":1,"name":"Home","item":"https://taxpreparertools.com/"},
+    {"@type":"ListItem","position":2,"name":"Tools","item":"https://taxpreparertools.com/tools"},
+    {"@type":"ListItem","position":3,"name":"IRS E-File Reject Code Lookup","item":"https://taxpreparertools.com/irs-efile-reject-decoder"}
+  ]
+}
+</script>
+
+<meta property="og:type" content="website" />
+<meta property="og:url" content="https://taxpreparertools.com/irs-efile-reject-decoder" />
+<meta property="og:title" content="IRS E-File Reject Code Lookup — R0000-504, IND-031, IND-181 Solutions" />
+<meta property="og:description" content="Decode IRS e-file reject codes instantly. Cause, fix steps, and re-filing strategy for the 25+ most common rejects." />
+<meta property="og:image" content="https://taxpreparertools.com/assets/og-image.png" />
+<meta property="og:image:width" content="1200" />
+<meta property="og:image:height" content="630" />
+<meta name="twitter:card" content="summary_large_image" />
+<meta name="twitter:image" content="https://taxpreparertools.com/assets/og-image.png" />
+
+<style>
+:root{
+--navy:#08152a;--navy-mid:#0f1f3d;--slate:#1a2f52;
+--gold:#c8a84b;--gold-light:#e8c96a;--gold-dim:rgba(200,168,75,0.13);
+--white:#fff;--muted:#7a8fac;--text:#dde4f0;--border:rgba(200,168,75,0.14);
+--card:rgba(255,255,255,0.04);
+--green:#4ade80;--blue:#60a5fa;--red:#f87171;--orange:#fb923c;--purple:#a78bfa;
+--sev-easy:rgba(74,222,128,.15);--sev-easy-text:#86efac;
+--sev-moderate:rgba(96,165,250,.15);--sev-moderate-text:#93c5fd;
+--sev-serious:rgba(251,146,60,.15);--sev-serious-text:#fdba74;
+--sev-complex:rgba(248,113,113,.15);--sev-complex-text:#fca5a5;
+--sev-idtheft:rgba(167,139,250,.15);--sev-idtheft-text:#c4b5fd;
+}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+html{scroll-behavior:smooth;}
+body{font-family:'DM Sans',sans-serif;background:var(--navy);color:var(--text);min-height:100vh;}
+nav{position:sticky;top:0;z-index:200;padding:14px 48px;display:flex;align-items:center;justify-content:space-between;background:rgba(8,21,42,0.95);backdrop-filter:blur(20px);border-bottom:1px solid var(--border);}
+.logo{display:flex;align-items:center;gap:10px;text-decoration:none;}
+.logo-mark{width:32px;height:32px;background:var(--gold);border-radius:7px;display:flex;align-items:center;justify-content:center;font-size:15px;}
+.logo-name{font-family:'Playfair Display',serif;font-size:1.1rem;font-weight:700;color:var(--white);}
+.logo-name span{color:var(--gold);}
+.logo-domain{font-size:0.62rem;color:var(--muted);font-family:'DM Mono',monospace;display:block;}
+.nav-links{display:flex;gap:24px;list-style:none;}
+.nav-links a{color:var(--muted);font-size:0.82rem;font-weight:500;text-decoration:none;transition:color .2s;}
+.nav-links a:hover,.nav-links a.active{color:var(--gold);}
+.btn-sm{padding:7px 16px;border-radius:6px;font-size:0.8rem;font-weight:700;cursor:pointer;text-decoration:none;transition:all .2s;border:none;font-family:'DM Sans',sans-serif;}
+.btn-gold{background:var(--gold);color:var(--navy);}
+.btn-gold:hover{background:var(--gold-light);}
+.page-wrap{max-width:1160px;margin:0 auto;padding:40px 48px 80px;}
+.breadcrumb{font-size:0.73rem;font-family:'DM Mono',monospace;color:var(--muted);margin-bottom:20px;display:flex;gap:7px;align-items:center;flex-wrap:wrap;}
+.breadcrumb a{color:var(--gold);text-decoration:none;}
+.breadcrumb a:hover{text-decoration:underline;}
+.tool-header{display:flex;gap:24px;align-items:flex-start;margin-bottom:36px;}
+.tool-header-icon{width:60px;height:60px;background:linear-gradient(135deg,var(--gold-dim),rgba(200,168,75,0.05));border:1px solid rgba(200,168,75,0.3);border-radius:16px;display:flex;align-items:center;justify-content:center;font-size:28px;flex-shrink:0;}
+.tool-badges{display:flex;gap:7px;margin-bottom:10px;flex-wrap:wrap;}
+.badge{font-size:0.63rem;font-family:'DM Mono',monospace;font-weight:700;text-transform:uppercase;letter-spacing:.08em;padding:3px 10px;border-radius:50px;}
+.badge-free{background:rgba(74,222,128,.12);color:var(--green);}
+.badge-new{background:rgba(251,146,60,.12);color:var(--orange);}
+.badge-cat{background:var(--gold-dim);color:var(--gold);}
+.badge-count{background:rgba(96,165,250,.1);color:var(--blue);}
+h1{font-family:'Playfair Display',serif;font-size:clamp(1.6rem,3.5vw,2.4rem);font-weight:900;color:var(--white);letter-spacing:-0.03em;line-height:1.1;margin-bottom:8px;}
+.tool-desc{color:var(--muted);font-size:0.9rem;line-height:1.7;max-width:680px;}
+.search-card{background:var(--navy-mid);border:1px solid var(--border);border-radius:20px;padding:24px;margin-bottom:24px;}
+.search-row{display:flex;gap:12px;align-items:center;}
+.search-input-wrap{flex:1;position:relative;}
+.search-icon{position:absolute;left:16px;top:50%;transform:translateY(-50%);color:var(--gold);font-size:1.1rem;}
+#rejectSearch{width:100%;background:rgba(255,255,255,.05);border:1.5px solid rgba(200,168,75,.2);border-radius:12px;padding:14px 18px 14px 46px;color:var(--white);font-size:1rem;font-family:'DM Sans',sans-serif;outline:none;transition:all .2s;}
+#rejectSearch:focus{border-color:var(--gold);background:rgba(255,255,255,.07);box-shadow:0 0 0 3px rgba(200,168,75,.08);}
+#rejectSearch::placeholder{color:var(--muted);}
+.search-clear{padding:11px 18px;background:transparent;border:1px solid var(--border);color:var(--muted);border-radius:10px;cursor:pointer;font-family:'DM Sans',sans-serif;font-size:0.85rem;transition:all .2s;}
+.search-clear:hover{color:var(--gold);border-color:var(--gold);}
+.filter-row{display:flex;gap:8px;flex-wrap:wrap;margin-top:16px;}
+.filter-chip{padding:7px 14px;background:rgba(255,255,255,.04);border:1px solid var(--border);border-radius:50px;font-size:0.78rem;color:var(--muted);cursor:pointer;font-family:'DM Sans',sans-serif;transition:all .18s;}
+.filter-chip:hover{color:var(--text);border-color:rgba(200,168,75,.3);}
+.filter-chip.on{background:rgba(200,168,75,.1);color:var(--gold);border-color:var(--gold);}
+.results-meta{font-size:0.78rem;color:var(--muted);margin-top:14px;font-family:'DM Mono',monospace;}
+.results-meta span{color:var(--gold);font-weight:600;}
+.layout{display:grid;grid-template-columns:380px 1fr;gap:24px;align-items:start;}
+.results-panel{background:var(--navy-mid);border:1px solid var(--border);border-radius:16px;overflow:hidden;max-height:calc(100vh - 120px);overflow-y:auto;position:sticky;top:90px;}
+.results-panel::-webkit-scrollbar{width:6px;}
+.results-panel::-webkit-scrollbar-track{background:rgba(255,255,255,.02);}
+.results-panel::-webkit-scrollbar-thumb{background:rgba(200,168,75,.2);border-radius:3px;}
+.results-list{padding:8px;}
+.result-item{padding:12px 14px;border-radius:10px;cursor:pointer;transition:background .15s;border:1px solid transparent;margin-bottom:4px;}
+.result-item:hover{background:rgba(255,255,255,.04);}
+.result-item.active{background:rgba(200,168,75,.08);border-color:rgba(200,168,75,.3);}
+.result-code{font-family:'DM Mono',monospace;font-size:0.78rem;font-weight:700;color:var(--gold);margin-bottom:3px;display:flex;align-items:center;gap:8px;flex-wrap:wrap;}
+.result-title{font-size:0.85rem;color:var(--text);line-height:1.35;font-weight:500;}
+.result-empty{padding:40px 20px;text-align:center;color:var(--muted);font-size:0.85rem;}
+.sev-pill{font-size:0.58rem;font-family:'DM Mono',monospace;font-weight:700;text-transform:uppercase;letter-spacing:.08em;padding:2px 7px;border-radius:4px;}
+.sev-pill.easy{background:var(--sev-easy);color:var(--sev-easy-text);}
+.sev-pill.moderate{background:var(--sev-moderate);color:var(--sev-moderate-text);}
+.sev-pill.serious{background:var(--sev-serious);color:var(--sev-serious-text);}
+.sev-pill.complex{background:var(--sev-complex);color:var(--sev-complex-text);}
+.sev-pill.idtheft{background:var(--sev-idtheft);color:var(--sev-idtheft-text);}
+.detail-panel{background:var(--navy-mid);border:1px solid var(--border);border-radius:20px;padding:32px;min-height:500px;}
+.detail-empty{padding:60px 20px;text-align:center;color:var(--muted);}
+.detail-empty-icon{font-size:3.5rem;margin-bottom:12px;opacity:.4;}
+.detail-empty h3{font-family:'Playfair Display',serif;font-size:1.2rem;color:var(--text);margin-bottom:8px;font-weight:600;}
+.detail-empty p{font-size:0.88rem;line-height:1.6;max-width:380px;margin:0 auto;}
+.detail-empty .examples{margin-top:18px;display:flex;gap:6px;justify-content:center;flex-wrap:wrap;}
+.detail-empty .example-pill{background:rgba(255,255,255,.04);border:1px solid var(--border);color:var(--gold);font-family:'DM Mono',monospace;font-size:0.7rem;padding:4px 10px;border-radius:50px;cursor:pointer;transition:all .2s;}
+.detail-empty .example-pill:hover{background:rgba(200,168,75,.1);border-color:rgba(200,168,75,.3);}
+.detail-header{display:flex;justify-content:space-between;align-items:flex-start;gap:16px;margin-bottom:18px;padding-bottom:18px;border-bottom:1px solid var(--border);}
+.detail-code-block{display:flex;flex-direction:column;gap:6px;}
+.detail-code{font-family:'DM Mono',monospace;font-size:1.4rem;font-weight:700;color:var(--gold);letter-spacing:-0.02em;line-height:1;}
+.detail-pills{display:flex;gap:6px;align-items:center;flex-wrap:wrap;margin-top:6px;}
+.detail-cat-pill{font-size:0.65rem;font-family:'DM Mono',monospace;font-weight:600;text-transform:uppercase;letter-spacing:.06em;padding:3px 9px;border-radius:50px;background:rgba(255,255,255,.05);color:var(--muted);}
+.detail-title{font-family:'Playfair Display',serif;font-size:1.3rem;font-weight:700;color:var(--white);line-height:1.25;margin-bottom:14px;}
+.detail-summary{font-size:0.95rem;line-height:1.7;color:var(--text);margin-bottom:24px;padding:16px 18px;background:rgba(200,168,75,.05);border-left:3px solid var(--gold);border-radius:0 8px 8px 0;}
+.detail-section{margin-bottom:24px;}
+.detail-section-title{font-family:'DM Mono',monospace;font-size:0.7rem;font-weight:700;color:var(--muted);text-transform:uppercase;letter-spacing:.1em;margin-bottom:10px;display:flex;align-items:center;gap:8px;}
+.detail-section-title::before{content:"";width:14px;height:1px;background:var(--gold);}
+.detail-text{font-size:0.88rem;line-height:1.7;color:var(--text);}
+.detail-text strong{color:var(--white);}
+.cause-card{background:rgba(251,146,60,.04);border:1px solid rgba(251,146,60,.18);border-radius:10px;padding:12px 14px;margin-bottom:18px;font-size:0.86rem;line-height:1.6;color:var(--text);}
+.cause-label{font-size:0.65rem;font-family:'DM Mono',monospace;font-weight:700;text-transform:uppercase;letter-spacing:.08em;color:#fdba74;margin-bottom:5px;}
+.action-list{list-style:none;display:flex;flex-direction:column;gap:9px;counter-reset:step;}
+.action-list li{padding-left:28px;position:relative;font-size:0.88rem;line-height:1.65;color:var(--text);counter-increment:step;}
+.action-list li::before{content:counter(step);position:absolute;left:0;top:1px;width:18px;height:18px;border-radius:50%;background:var(--gold-dim);color:var(--gold);font-family:'DM Mono',monospace;font-size:0.7rem;font-weight:700;display:flex;align-items:center;justify-content:center;}
+.related-codes{display:flex;gap:6px;flex-wrap:wrap;}
+.related-pill{padding:5px 10px;background:rgba(255,255,255,.04);border:1px solid var(--border);border-radius:50px;font-family:'DM Mono',monospace;font-size:0.74rem;color:var(--text);transition:all .18s;cursor:pointer;text-decoration:none;display:inline-flex;align-items:center;gap:4px;}
+.related-pill:hover{background:rgba(200,168,75,.08);border-color:rgba(200,168,75,.3);color:var(--gold);}
+.preparer-note{background:rgba(167,139,250,.06);border:1px solid rgba(167,139,250,.2);border-radius:10px;padding:14px 16px;margin-top:16px;font-size:0.83rem;line-height:1.6;color:var(--text);}
+.preparer-note-label{font-size:0.65rem;font-family:'DM Mono',monospace;font-weight:700;text-transform:uppercase;letter-spacing:.08em;color:#c4b5fd;margin-bottom:6px;}
+.disclaimer{margin-top:32px;padding:18px 22px;background:rgba(96,165,250,.04);border:1px solid rgba(96,165,250,.15);border-radius:12px;}
+.disclaimer-title{font-size:0.72rem;font-family:'DM Mono',monospace;font-weight:700;color:#93c5fd;text-transform:uppercase;letter-spacing:.08em;margin-bottom:8px;}
+.disclaimer-text{font-size:0.8rem;color:var(--muted);line-height:1.65;}
+footer{border-top:1px solid var(--border);padding:28px 48px;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:12px;background:var(--navy-mid);}
+.footer-left{font-size:0.73rem;color:var(--muted);}
+.footer-left a{color:var(--gold);text-decoration:none;}
+.footer-links{display:flex;gap:20px;align-items:center;}
+.footer-links a{font-size:0.73rem;color:var(--muted);text-decoration:none;transition:color .2s;}
+.footer-links a:hover{color:var(--gold);}
+@media(max-width:960px){
+nav{padding:13px 18px;}.nav-links{display:none;}
+.page-wrap{padding:28px 18px 60px;}
+.layout{grid-template-columns:1fr;}
+.results-panel{position:static;max-height:380px;}
+footer{padding:20px 18px;flex-direction:column;}
+}
+.nav-hamburger{display:none;flex-direction:column;gap:5px;cursor:pointer;padding:6px;border:none;background:transparent;z-index:300;}
+.nav-hamburger span{display:block;width:22px;height:2px;background:var(--gold);border-radius:2px;transition:all .25s;}
+.nav-hamburger.open span:nth-child(1){transform:translateY(7px) rotate(45deg);}
+.nav-hamburger.open span:nth-child(2){opacity:0;}
+.nav-hamburger.open span:nth-child(3){transform:translateY(-7px) rotate(-45deg);}
+@media(max-width:768px){
+.nav-hamburger{display:flex;}
+nav .nav-links{display:none;position:fixed;top:60px;left:0;right:0;background:rgba(8,21,42,0.98);backdrop-filter:blur(20px);flex-direction:column;padding:16px 0;z-index:200;border-bottom:1px solid rgba(200,168,75,.18);}
+nav .nav-links.mobile-open{display:flex;}
+nav .nav-links li{width:100%;text-align:center;}
+nav .nav-links li a{display:block;padding:12px 24px;font-size:1rem;}
+}
+</style>
+</head>
+<body>
+<nav>
+<a href="index.html" class="logo">
+<div class="logo-mark">⚖</div>
+<div><span class="logo-name">TaxPreparer<span>Tools</span></span><span class="logo-domain">taxpreparertools.com</span></div>
+</a>
+<button id="navHamburger" class="nav-hamburger" aria-label="Menu"><span></span><span></span><span></span></button>
+<ul class="nav-links">
+<li><a href="tools.html" class="active">Tools</a></li>
+<li><a href="deadlines.html">Deadlines</a></li>
+<li><a href="ai-assistant.html">AI Assistant</a></li>
+<li><a href="resources.html">Resources</a></li>
+<li><a href="blog/">Blog</a></li>
+<li><a href="about.html">About</a></li>
+</ul>
+<a href="signup.html" class="btn-sm btn-gold">Get Pro Free</a>
+</nav>
+
+<div class="page-wrap">
+<div class="breadcrumb">
+<a href="index.html">Home</a> <span>/</span>
+<a href="tools.html">Tools</a> <span>/</span>
+IRS E-File Reject Code Lookup
+</div>
+
+<div class="tool-header">
+<div class="tool-header-icon">⚠️</div>
+<div class="tool-header-meta">
+<div class="tool-badges">
+<span class="badge badge-free">Free</span>
+<span class="badge badge-new">New</span>
+<span class="badge badge-count" id="badgeCount">25+ Codes</span>
+<span class="badge badge-cat">Lookup Tool</span>
+</div>
+<h1>IRS E-File Reject<br>Code Lookup</h1>
+<p class="tool-desc">Decode IRS e-file rejection codes (R0000-504, IND-031, IND-181, FW2-502, F8962-006…) instantly. Each entry shows what the code means, why it triggered, exact fix steps, and a tax-preparer note for the trickier ones. Built for the moment a software displays a cryptic reject and you need an answer fast.</p>
+</div>
+</div>
+
+<div class="search-card">
+  <div class="search-row">
+    <div class="search-input-wrap">
+      <span class="search-icon">🔎</span>
+      <input type="text" id="rejectSearch" placeholder="Paste a reject code (e.g. R0000-504, IND-031, FW2-502) or keyword (SSN, AGI, IP PIN, dependent, routing)..." autocomplete="off" autofocus />
+    </div>
+    <button class="search-clear" id="searchClear">Clear</button>
+  </div>
+  <div class="filter-row" id="filterRow">
+    <button class="filter-chip on" data-filter="all">All</button>
+    <button class="filter-chip" data-filter="identity">Identity / SSN</button>
+    <button class="filter-chip" data-filter="dependent">Dependents</button>
+    <button class="filter-chip" data-filter="ippin">IP PIN</button>
+    <button class="filter-chip" data-filter="agi">AGI / Signature</button>
+    <button class="filter-chip" data-filter="wages">W-2 / Wages</button>
+    <button class="filter-chip" data-filter="refund">Bank / Refund</button>
+    <button class="filter-chip" data-filter="credit">Credits / Schedules</button>
+    <button class="filter-chip" data-filter="preparer">Preparer Due Diligence</button>
+  </div>
+  <div class="results-meta" id="resultsMeta">Showing all reject codes</div>
+</div>
+
+<div class="layout">
+  <div class="results-panel">
+    <div class="results-list" id="resultsList"></div>
+  </div>
+
+  <div class="detail-panel" id="detailPanel">
+    <div class="detail-empty">
+      <div class="detail-empty-icon">⚠️</div>
+      <h3>Pick a reject code on the left</h3>
+      <p>Or paste the reject code from your tax software. Common ones:</p>
+      <div class="examples">
+        <span class="example-pill" data-code="R0000-504-02">R0000-504</span>
+        <span class="example-pill" data-code="R0000-507-01">R0000-507</span>
+        <span class="example-pill" data-code="IND-031-04">IND-031</span>
+        <span class="example-pill" data-code="IND-181-01">IND-181</span>
+        <span class="example-pill" data-code="FW2-502">FW2-502</span>
+        <span class="example-pill" data-code="F8962-006-01">F8962-006</span>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Related Tools panel -->
+<div style="max-width:1100px;margin:32px auto 0;">
+  <div style="background:rgba(255,255,255,0.03);border:1px solid rgba(200,168,75,0.15);border-radius:12px;padding:20px 24px;">
+    <div style="font-family:'DM Mono',monospace;font-size:0.68rem;text-transform:uppercase;letter-spacing:0.1em;color:#c8a84b;margin-bottom:14px;">Related Tools</div>
+    <a href="irs-notice-decoder.html" style="display:flex;align-items:center;gap:10px;color:#c8a84b;text-decoration:none;font-size:0.88rem;padding:8px 0;border-bottom:1px solid rgba(200,168,75,0.08);"><span style="flex-shrink:0">→</span><div><strong style="color:#e8edf5">IRS Notice &amp; Letter Decoder</strong><span style="color:#8a9bb5;font-size:0.8rem;margin-left:6px">— Decode any IRS notice (CP2000, CP14, LT11) with response letter templates</span></div></a>
+    <a href="irs-transcript-decoder.html" style="display:flex;align-items:center;gap:10px;color:#c8a84b;text-decoration:none;font-size:0.88rem;padding:8px 0;border-bottom:1px solid rgba(200,168,75,0.08);"><span style="flex-shrink:0">→</span><div><strong style="color:#e8edf5">IRS Transcript Code Decoder</strong><span style="color:#8a9bb5;font-size:0.8rem;margin-left:6px">— TC 150, 290, 570, 846, 922, 971 explained for reading account transcripts</span></div></a>
+    <a href="penalty-calculator.html" style="display:flex;align-items:center;gap:10px;color:#c8a84b;text-decoration:none;font-size:0.88rem;padding:8px 0;"><span style="flex-shrink:0">→</span><div><strong style="color:#e8edf5">IRS Penalty Calculator</strong><span style="color:#8a9bb5;font-size:0.8rem;margin-left:6px">— Compute FTF, FTP, and underpayment penalties with daily interest accrual</span></div></a>
+  </div>
+</div>
+
+<div class="disclaimer">
+  <div class="disclaimer-title">⚠️ How e-file rejects work</div>
+  <div class="disclaimer-text">Rejects come from IRS Modernized e-File (MeF) when a return fails validation. The reject code has two parts — the <strong>schema family</strong> (R0000, IND, F1040, FW2, etc.) and the <strong>specific reject reason</strong>. Most rejects can be fixed by correcting the data and re-transmitting; the IRS treats the re-filed return as timely if the original was transmitted by the deadline AND it's accepted within 5 calendar days of the reject (per Pub 4163). If you cannot fix the reject before the 5-day grace period, paper-file the return and attach Form 8948 (Preparer Explanation for Not Filing Electronically). For identity-related rejects (R0000-500/503/504, IND-901), assume potential identity theft and file Form 14039 if confirmed.</div>
+</div>
+</div>
+
+<footer>
+<div class="footer-left">© 2026 <a href="index.html">TaxPreparerTools.com</a> · Reject code information sourced from IRS Publications 4164 (MeF Programmer Specs) and 4163. Not affiliated with the Internal Revenue Service.</div>
+<div class="footer-links"><a href="privacy.html">Privacy</a><a href="terms.html">Terms</a><a href="about.html">About</a><a href="sitemap.html">Sitemap</a><a href="https://www.irs.gov" target="_blank" rel="noopener">IRS.gov ↗</a></div>
+</footer>
+
+<script>
+/* =========================================================================
+   IRS E-FILE REJECT CODE LOOKUP — Data + UI
+
+   Severity legend:
+     - easy: typo or one-field fix; re-file in 5 minutes
+     - moderate: needs investigation (AGI lookup, IP PIN retrieval)
+     - serious: third-party action needed (employer fix, SSA update)
+     - complex: multi-party investigation (dependent claimed elsewhere)
+     - idtheft: signals potential identity theft — file Form 14039
+========================================================================= */
+
+const REJECT_CODES = [
+  // ═══════════════════════════════════════════════════════════
+  //  IDENTITY / SSN
+  // ═══════════════════════════════════════════════════════════
+  {
+    code: "R0000-500-01",
+    title: "Primary Taxpayer's SSN and Name Don't Match SSA Records",
+    summary: "The primary taxpayer's name as entered doesn't match what the Social Security Administration has on file for the SSN.",
+    category: "identity",
+    severity: "moderate",
+    cause: "Recent name change (marriage, divorce, court order) not yet reflected with SSA. Or a typo in the name field on the return.",
+    actions: [
+      "Verify the SSN is entered correctly (no transposed digits)",
+      "Compare the name spelling to the Social Security card EXACTLY — including hyphens, apostrophes, spaces, middle name vs initial",
+      "If name on card is outdated: file Form SS-5 with SSA, wait 2 weeks, then retransmit. SSA records can take 10+ days to sync to IRS",
+      "If urgent: file Form SS-5 in person at SSA office for same-day update",
+      "Re-transmit the return after SSA update is confirmed"
+    ],
+    related: ["R0000-503-02", "R0000-902-01", "IND-901"],
+    preparer_note: "Most common cause: name on Social Security card uses middle initial but return uses full middle name (or vice versa). Match the SSN card EXACTLY — that's the IRS source of truth. Hyphenated names are notorious — IRS validates with hyphen included, no spaces."
+  },
+  {
+    code: "R0000-503-02",
+    title: "Spouse's SSN and Name Don't Match SSA Records",
+    summary: "On a joint return, the spouse's name doesn't match SSA records for the SSN provided.",
+    category: "identity",
+    severity: "moderate",
+    cause: "Same as R0000-500 but for the spouse: recent name change not updated with SSA, or typo.",
+    actions: [
+      "Verify spouse's SSN and name against the Social Security card",
+      "If recently married and spouse hasn't changed name with SSA: either file SS-5 OR file using the maiden name as it appears on the SS card",
+      "Some preparers file as MFJ with each spouse's pre-marriage name on the SS card, then update with SSA next year — IRS accepts this",
+      "Re-transmit after SSA update"
+    ],
+    related: ["R0000-500-01", "R0000-902-01"],
+    preparer_note: "When a client married mid-year and hasn't updated SSA yet, file using maiden name on the return (matching SS card) — perfectly legal. Update SSA after tax season for next year's return."
+  },
+  {
+    code: "R0000-504-02",
+    title: "Dependent's SSN Has Already Been Used on Another Return",
+    summary: "A dependent SSN listed on this return has already been claimed as a dependent — or as a primary/spouse — on another e-filed return for the same tax year.",
+    category: "dependent",
+    severity: "complex",
+    cause: "Three main causes: (1) custodial parent already claimed the child, (2) ex-spouse or non-custodial parent claimed the child without right, (3) identity theft — someone used the child's SSN fraudulently. Increasingly: an adult child filed their own return and incorrectly claimed themselves.",
+    actions: [
+      "FIRST: confirm your client has the right to claim the dependent under IRC §152 (residency, relationship, support tests). Pull custody documentation if divorced/separated parents",
+      "If client has the LEGITIMATE claim and another return claimed first: paper-file the return with documentation (custody papers, school records, medical records, lease showing residency). Cannot e-file — IRS will manually adjudicate",
+      "Attach Form 8332 if the custodial parent released the claim",
+      "If the other claimant was an adult child who self-claimed: have them file Form 1040-X removing themselves as dependent. Then your client can e-file (usually 8-12 weeks later)",
+      "If suspected identity theft on the child: file Form 14039 (Identity Theft Affidavit) and request IP PIN for the child via IRS",
+      "Paper-filed dependents-disputed returns take 6-9 months to resolve — set client expectations"
+    ],
+    related: ["R0000-507-01", "SEIC-F1040-501-02", "IND-901"],
+    preparer_note: "R0000-504 is THE preparer headache during March-April. Most common: divorced parents — non-custodial parent files first under the radar. Solution: paper-file with full documentation. IRS Reg §1.152-4 lays out the custody tiebreaker rules. Build a checklist: who lived with the child for more than half the year? That parent has the §152(c)(4) claim regardless of court orders unless Form 8332 was signed."
+  },
+  {
+    code: "R0000-507-01",
+    title: "Dependent's SSN Already Claimed as Primary Taxpayer",
+    summary: "An SSN listed as a dependent on this return was the primary taxpayer (or spouse) on another return for the same year.",
+    category: "dependent",
+    severity: "moderate",
+    cause: "Usually an adult child filed their own return AND was claimed as a dependent by parents. Or, less commonly, an older dependent (qualifying relative) filed their own return separately.",
+    actions: [
+      "Confirm whether the dependent SHOULD have filed their own return",
+      "If the dependent shouldn't have filed (parents have the legitimate claim): the dependent files Form 1040-X to remove the personal exemption and check the 'Someone can claim you as a dependent' box on Line 1",
+      "Wait 8-12 weeks after the 1040-X is processed before retransmitting the parents' return",
+      "If the dependent IS eligible to file independently (e.g., full-time student over 24, no longer a qualifying child): remove from parents' return"
+    ],
+    related: ["R0000-504-02", "SEIC-F1040-501-02"],
+    preparer_note: "First-job teenagers commonly auto-file via free filing software without realizing they're still a dependent. Two fixes: (1) wait for 1040-X to process (slow), or (2) parents paper-file. Paper-file is faster than waiting for 1040-X processing."
+  },
+  {
+    code: "R0000-902-01",
+    title: "Taxpayer Name and SSN Don't Match — Master File Mismatch",
+    summary: "The combination of SSN + name on the return doesn't match IRS Master File records. Similar to R0000-500 but at the Master File level.",
+    category: "identity",
+    severity: "moderate",
+    cause: "Often a typo or a name change not propagated. Can also be triggered by deceased SSN flags or identity locks.",
+    actions: [
+      "Triple-check SSN and name spelling",
+      "Pull the taxpayer's account transcript to verify the SSN is active and not flagged",
+      "If recent name change: file Form SS-5, wait 2 weeks",
+      "If suspected ID theft: call IRS Identity Theft hotline (1-800-908-4490) and file Form 14039"
+    ],
+    related: ["R0000-500-01", "IND-901", "IND-181-01"],
+    preparer_note: "If R0000-902 persists after a name update, the SSN may be flagged (deceased indicator, ID theft lock, IP PIN required without one entered). Pull account transcript via e-Services to diagnose."
+  },
+  {
+    code: "IND-901",
+    title: "Primary SSN Locked — Deceased Taxpayer Indicator",
+    summary: "The primary taxpayer's SSN is locked in IRS Master File due to a deceased indicator from SSA.",
+    category: "identity",
+    severity: "complex",
+    cause: "(1) Taxpayer is actually deceased — surviving spouse or executor is filing the final return. (2) SSA reported the wrong person as deceased (clerical error). (3) Identity theft attempt where fraudster reported the SSN as deceased.",
+    actions: [
+      "If taxpayer IS deceased: file the final return on paper. Attach Form 1310 (Statement of Person Claiming Refund Due a Deceased Taxpayer) if refund is expected, copy of death certificate, and PSA designation if claiming refund",
+      "If SSA error (taxpayer is alive): contact SSA (1-800-772-1213) to correct the death record. Bring multiple forms of ID. Allow 4-6 weeks for IRS to sync",
+      "If suspected identity theft: file Form 14039 and call IRS Identity Theft Specialized Unit (1-800-908-4490)",
+      "After SSA correction, the return must be paper-filed for the current year (IRS won't re-open e-filing on a locked SSN immediately)"
+    ],
+    related: ["R0000-902-01", "R0000-500-01"],
+    preparer_note: "When a living client gets IND-901, they're usually deeply rattled. Walk them through the SSA correction process. Surviving spouses filing MFJ for the year of death: the deceased indicator is the system working correctly — paper-file with Form 1310."
+  },
+
+  // ═══════════════════════════════════════════════════════════
+  //  IP PIN
+  // ═══════════════════════════════════════════════════════════
+  {
+    code: "IND-180-01",
+    title: "IP PIN Required But Not Provided",
+    summary: "The taxpayer is enrolled in the IP PIN program but no IP PIN was entered on the return.",
+    category: "ippin",
+    severity: "easy",
+    cause: "The taxpayer was assigned an IP PIN (voluntary opt-in OR mandatory post-identity-theft enrollment), but the preparer didn't enter it. IP PINs change every year — last year's PIN won't work.",
+    actions: [
+      "Ask the client to retrieve the current-year IP PIN from CP01A notice received in December/January",
+      "If lost: retrieve at irs.gov/getanippin (requires IRS Secure Access account) or call 1-800-908-4490",
+      "Enter the 6-digit IP PIN in the appropriate field (Form 1040, after the signature)",
+      "If spouse has IP PIN on MFJ: enter both — separate fields",
+      "Retransmit the return"
+    ],
+    related: ["IND-181-01", "IND-996"],
+    preparer_note: "Build IP PIN check into every intake. Ask EVERY year — IP PINs reset annually. CP01A is the December delivery notice. If client uses IP PIN online retrieval, they need their previous Secure Access login — set them up well before the deadline."
+  },
+  {
+    code: "IND-181-01",
+    title: "IP PIN Provided Is Incorrect",
+    summary: "An IP PIN was entered but doesn't match the IRS's current-year IP PIN for this SSN.",
+    category: "ippin",
+    severity: "easy",
+    cause: "Wrong IP PIN entered — either last year's, a typo, or confused with the e-file PIN/Self-Select PIN.",
+    actions: [
+      "Confirm the IP PIN is from the CURRENT year's CP01A notice (not prior year)",
+      "Verify the 6-digit code is entered correctly (no transposed digits)",
+      "If client doesn't have the current CP01A: retrieve at irs.gov/getanippin",
+      "Note: IP PIN is 6 digits. Self-Select PIN is 5 digits — don't confuse them",
+      "Retransmit"
+    ],
+    related: ["IND-180-01"],
+    preparer_note: "IP PIN ≠ Self-Select PIN. IP PIN is the 6-digit identity-protection code from CP01A. Self-Select PIN is the 5-digit code the taxpayer creates for signing. Mixing these up is the #1 cause of IND-181."
+  },
+
+  // ═══════════════════════════════════════════════════════════
+  //  AGI / SIGNATURE
+  // ═══════════════════════════════════════════════════════════
+  {
+    code: "IND-031-04",
+    title: "Prior-Year AGI Doesn't Match IRS Records (Primary)",
+    summary: "The prior-year AGI entered for identity verification doesn't match what IRS has on file for the primary taxpayer.",
+    category: "agi",
+    severity: "moderate",
+    cause: "Several causes: (1) used the AGI from an amended return instead of the originally-filed one, (2) prior year was a CP2000 adjustment with revised AGI, (3) didn't file last year (use $0), (4) IRS hasn't fully processed last year's return yet, (5) typo.",
+    actions: [
+      "ALWAYS use the AGI from the originally filed prior-year return, NOT an amended one",
+      "If client didn't file last year: enter $0 (not 'NA' or leave blank)",
+      "If client filed via paper last year and it's still processing: try $0 — sometimes works for unprocessed returns",
+      "If still failing: switch to Self-Select PIN method or use IRS e-file PIN tool",
+      "Last resort: paper-file the return"
+    ],
+    related: ["IND-032-04", "IND-180-01"],
+    preparer_note: "When in doubt, pull a tax transcript and use the AGI shown there. For divorced clients filing separately for first time post-divorce — they need their OWN prior-year AGI (which was the joint AGI if they filed MFJ last year). Both spouses use the same joint AGI as their prior AGI."
+  },
+  {
+    code: "IND-032-04",
+    title: "Prior-Year AGI Doesn't Match IRS Records (Spouse)",
+    summary: "Same as IND-031 but for the spouse's prior-year AGI on a joint return.",
+    category: "agi",
+    severity: "moderate",
+    cause: "Same as IND-031. Plus: on a first-year MFJ return after marriage, spouse needs THEIR OWN prior-year AGI from the year they filed separately.",
+    actions: [
+      "For first-year MFJ couples: use spouse's individual prior-year AGI (from when they filed Single/HoH last year)",
+      "If you used the JOINT prior-year AGI for both spouses: that's only correct if they filed jointly last year too",
+      "Same $0 rule applies if spouse didn't file last year",
+      "Try Self-Select PIN if AGI keeps failing"
+    ],
+    related: ["IND-031-04"],
+    preparer_note: "On first-year MFJ couples post-marriage: this trips up everyone. Both spouses had separate prior-year AGIs from their separate prior-year returns. Get both prior-year transcripts."
+  },
+  {
+    code: "IND-052-01",
+    title: "Self-Select PIN — Date of Birth Mismatch",
+    summary: "Date of birth entered for Self-Select PIN verification doesn't match SSA records.",
+    category: "agi",
+    severity: "easy",
+    cause: "Typo in date of birth, OR (rarely) SSA has wrong DOB on file.",
+    actions: [
+      "Verify DOB against the SS card or birth certificate",
+      "Check month/day order (MM/DD/YYYY)",
+      "If DOB is genuinely wrong with SSA: file SS-5 with corrected DOB and birth certificate evidence",
+      "For 2024+ returns: also possible IRS pulled DOB from a third-party source that differs — pull prior-year transcript to verify"
+    ],
+    related: ["IND-031-04"],
+    preparer_note: "When clients give a DOB verbally without showing ID, you sometimes get this. Always verify against documentation."
+  },
+
+  // ═══════════════════════════════════════════════════════════
+  //  W-2 / WAGES
+  // ═══════════════════════════════════════════════════════════
+  {
+    code: "FW2-502",
+    title: "Employer's EIN on W-2 Doesn't Match IRS Records",
+    summary: "The Employer Identification Number (EIN) reported on a W-2 doesn't match the IRS's record of valid EINs.",
+    category: "wages",
+    severity: "easy",
+    cause: "Typo on EIN entry, OR (occasionally) the W-2 form has an incorrect EIN, OR a newly-issued EIN not yet active in IRS systems.",
+    actions: [
+      "Verify the EIN against the W-2 box b — 9 digits in XX-XXXXXXX format",
+      "If the W-2 was issued early-year, EIN may not have been activated yet — try waiting 2 weeks",
+      "If the EIN on the W-2 itself is wrong: client must get a corrected W-2 (W-2c) from employer",
+      "If employer is uncooperative: file Form 4852 (Substitute for W-2) and paper-file"
+    ],
+    related: ["FW2-505", "F1040-528"],
+    preparer_note: "FW2-502 is usually a 5-second fix. Re-key the EIN carefully and resubmit. Watch out for letter O vs zero, dashes, spaces."
+  },
+  {
+    code: "FW2-505",
+    title: "W-2 Wages Don't Match IRS Third-Party Records",
+    summary: "The wages reported on the return don't match what the employer reported to IRS via Form W-3/W-2 transmittal.",
+    category: "wages",
+    severity: "serious",
+    cause: "Either the W-2 was entered wrong on the return, OR the employer's transmittal to IRS had different figures than the W-2 given to the employee, OR the employer hasn't yet transmitted (rare for established employers).",
+    actions: [
+      "Re-verify the W-2 box 1 (wages) and box 2 (federal withholding) against what was entered",
+      "Check if the W-2 was reissued (W-2c) — use the corrected figures",
+      "If employer transmittal is wrong: client needs employer to file corrected W-2c with SSA",
+      "Pull Wage & Income transcript via IRS to see what employer actually reported",
+      "If client received Form 4852 because employer never issued W-2: paper-file with documentation"
+    ],
+    related: ["FW2-502", "FW2-001-02"],
+    preparer_note: "FW2-505 sometimes appears when the employer made a late correction to the W-3 transmittal. Pulling the Wage & Income transcript shows you what IRS THINKS the wages should be. The transcript number is authoritative."
+  },
+  {
+    code: "F1040-525-02",
+    title: "Total Wages Don't Match Sum of W-2 Wages",
+    summary: "Form 1040 Line 1 (wages) doesn't equal the sum of box 1 wages from all attached W-2s.",
+    category: "wages",
+    severity: "easy",
+    cause: "Math error on the return — software bug, manual entry mistake, or missing W-2 entry.",
+    actions: [
+      "Sum all W-2 box 1 amounts and compare to Form 1040 Line 1",
+      "Check for missing W-2s — client may have forgotten one",
+      "Software should auto-sum — re-check the W-2 input screen for missed entries or duplicate entries",
+      "Correct the discrepancy and re-transmit"
+    ],
+    related: ["FW2-505"],
+    preparer_note: "Almost always a missing W-2. Ask client: 'Did you have any other jobs this year — even short-term, even seasonal?' Then check Wage & Income transcript as a backstop."
+  },
+
+  // ═══════════════════════════════════════════════════════════
+  //  BANK / REFUND
+  // ═══════════════════════════════════════════════════════════
+  {
+    code: "R0000-058",
+    title: "Direct Deposit Routing Number Invalid",
+    summary: "The bank routing number on the return doesn't pass IRS validation (wrong check-digit, non-ABA routing number).",
+    category: "refund",
+    severity: "easy",
+    cause: "Typo on the routing number, or client provided a credit card routing instead of bank account, or used an internal account number instead of an ABA routing number.",
+    actions: [
+      "Verify routing number is exactly 9 digits",
+      "Confirm against a check (routing number is bottom-left, before account number) or via the bank's customer service",
+      "Online-only banks (Chime, Cash App, etc.) often have different routing numbers depending on direct deposit vs ACH — verify with the bank",
+      "Correct and re-transmit"
+    ],
+    related: ["R0000-076"],
+    preparer_note: "Mobile-bank routing numbers are a recurring issue. Chime uses 031101279 (Bancorp Bank). Cash App uses 041215663 (Sutton Bank). Ask client to confirm with the bank's customer service if uncertain."
+  },
+  {
+    code: "R0000-076",
+    title: "Direct Deposit Account Number Invalid",
+    summary: "The bank account number on the return doesn't pass IRS validation (wrong format, length, or matches a known invalid pattern).",
+    category: "refund",
+    severity: "easy",
+    cause: "Typo on the account number, or client provided card number instead of account number.",
+    actions: [
+      "Verify account number from a check or bank statement",
+      "Note that some banks have account numbers shorter than the field's max length — that's fine, just enter what the bank shows",
+      "Re-transmit with corrected account number"
+    ],
+    related: ["R0000-058"],
+    preparer_note: "Account numbers can vary 4-17 digits depending on bank. Don't pad with zeros or leading characters."
+  },
+
+  // ═══════════════════════════════════════════════════════════
+  //  CREDITS / SCHEDULES
+  // ═══════════════════════════════════════════════════════════
+  {
+    code: "F8962-006-01",
+    title: "Form 8962 Required But Missing (APTC Recipient)",
+    summary: "IRS records show the taxpayer (or family member) received Advance Premium Tax Credit (APTC) through the Health Insurance Marketplace, but Form 8962 isn't attached.",
+    category: "credit",
+    severity: "moderate",
+    cause: "Client had Marketplace coverage and received APTC but didn't tell the preparer, OR client received Form 1095-A but didn't bring it, OR preparer omitted Form 8962.",
+    actions: [
+      "Get Form 1095-A from the client (or pull from healthcare.gov account)",
+      "Complete Form 8962 with the 1095-A data",
+      "Reconcile APTC received vs. actual PTC eligibility — may be additional refund OR additional tax owed",
+      "Attach Form 8962 to the return and re-transmit",
+      "If client truly didn't have Marketplace coverage: contact Marketplace to correct their records (rare but happens)"
+    ],
+    related: ["F8962-070-01", "F1040-525"],
+    preparer_note: "F8962-006 is THE most common reject during Affordable Care Act years. Always ask 'Did you have Marketplace insurance?' — even if client says 'no health insurance issues,' they may have had Marketplace and forgotten. Form 1095-A is the only definitive proof. Without it, the return WILL reject."
+  },
+  {
+    code: "SEIC-F1040-501-02",
+    title: "Dependent SSN on EITC Schedule (Schedule EIC) Already Used",
+    summary: "An SSN listed as a qualifying child for EITC has already been used as a qualifying child on another return.",
+    category: "credit",
+    severity: "complex",
+    cause: "Two parents claiming the same child for EITC — usually divorced/separated parents. Or, identity theft on the child's SSN.",
+    actions: [
+      "Confirm client has the rightful EITC claim under IRC §32 tiebreaker (custodial parent wins absent Form 8332)",
+      "Note: Form 8332 releases the dependency exemption but does NOT release EITC. EITC goes to the parent with whom the child lived more than half the year, regardless of Form 8332",
+      "If client has rightful claim: paper-file with documentation (school records, medical, lease)",
+      "Watch for §32(k) ban activation — if EITC is disallowed again, future-year ban applies",
+      "If identity theft on child: file Form 14039 for the child and request IP PIN for the child"
+    ],
+    related: ["R0000-504-02", "R0000-507-01"],
+    preparer_note: "EITC tiebreaker is RESIDENCY, not dependency. Even with Form 8332 signed over, the parent with whom the child lived gets EITC. This catches non-custodial parents who think Form 8332 gives them everything — it doesn't."
+  },
+  {
+    code: "IND-996",
+    title: "Form 8867 Required — Preparer Due Diligence Missing",
+    summary: "Form 8867 (Paid Preparer's Due Diligence Checklist) is required because the return claims a refundable credit (EITC, CTC/ACTC, AOTC, HOH filing status) but is missing from the return.",
+    category: "preparer",
+    severity: "easy",
+    cause: "Preparer forgot to attach Form 8867. Required since 2017 for all refundable credit claims by paid preparers under IRC §6695(g).",
+    actions: [
+      "Complete Form 8867 — answer all due diligence questions",
+      "Retain interview notes, supporting documents, computation worksheets for 3 years (§6695(g) record retention)",
+      "Attach Form 8867 to the return and re-transmit",
+      "If self-prepared (no paid preparer): Form 8867 isn't required — check that the return wasn't accidentally marked as paid-prepared"
+    ],
+    related: ["F8962-006-01"],
+    preparer_note: "Form 8867 penalty is $635 per failure (2024) — can apply per credit per return. With EITC, CTC, AOTC, and HoH all in scope, a single return can rack up multiple violations. Build into software workflow so it auto-attaches whenever any of those credits are claimed."
+  },
+  {
+    code: "F1040-034-04",
+    title: "Refund Routing Conflict — Multiple Direct Deposit Splits",
+    summary: "Form 8888 (refund splitting across multiple accounts) doesn't add up, or routing/account info is malformed.",
+    category: "refund",
+    severity: "easy",
+    cause: "Refund split amounts don't equal total refund, or one of the bank fields has an invalid format.",
+    actions: [
+      "Sum the split amounts on Form 8888 — must equal total refund on Form 1040 line 35a",
+      "Verify each account's routing/account number against bank records",
+      "If unable to split: deposit entire refund to a single account instead",
+      "Re-transmit"
+    ],
+    related: ["R0000-058", "R0000-076"],
+    preparer_note: "Refund splits are convenient but high-error. Recommend single-deposit unless client really wants the split for budgeting."
+  },
+  {
+    code: "F1040-526-03",
+    title: "Filing Status Doesn't Match Dependents Claimed",
+    summary: "The filing status (HoH, MFJ, etc.) is inconsistent with the dependents claimed — or vice versa.",
+    category: "dependent",
+    severity: "moderate",
+    cause: "Common: HoH filing status without a qualifying dependent, MFJ filing without a spouse SSN, Single status with dependent kids (might be HoH).",
+    actions: [
+      "If HoH: verify a qualifying child or qualifying relative is listed with the HoH-qualifying-person designation",
+      "If MFJ: verify spouse SSN is on the return (R0000-503 may be related)",
+      "If single but supporting dependents: consider whether HoH applies (lived more than half year with qualifying person + paid more than half cost of keeping up home)",
+      "Re-transmit with corrected status"
+    ],
+    related: ["R0000-504-02"],
+    preparer_note: "HoH filing requires both a qualifying person AND that the taxpayer maintained the household. Common error: divorced parents both think they're HoH — only ONE parent can be (the one who actually paid more than half the costs of keeping up the home where the qualifying person lived)."
+  },
+
+  // ═══════════════════════════════════════════════════════════
+  //  STATE / MISC
+  // ═══════════════════════════════════════════════════════════
+  {
+    code: "F1040-528",
+    title: "Schedule C Business Code Invalid",
+    summary: "The Principal Business Activity code on Schedule C doesn't match a valid IRS NAICS-derived code.",
+    category: "credit",
+    severity: "easy",
+    cause: "Wrong or outdated business code entered. IRS updates the business code list periodically.",
+    actions: [
+      "Look up the correct code in current Schedule C instructions (back of form)",
+      "Pick the code that best matches the principal business activity",
+      "Re-transmit",
+      "For mixed businesses: pick the code for the activity generating the most revenue"
+    ],
+    related: [],
+    preparer_note: "Common rejects are codes for activities that the IRS recoded between tax years (e.g., consulting work). When in doubt, '999999' (Other) is valid but invites scrutiny."
+  },
+  {
+    code: "F1040-516-02",
+    title: "Schedule C — Principal Business Address Mismatch",
+    summary: "Schedule C business address differs significantly from taxpayer's home address without explanation.",
+    category: "credit",
+    severity: "easy",
+    cause: "Home-based businesses sometimes flag this when the IRS has stale address records. Or, schedule C business address is just different from home (normal for actual business locations).",
+    actions: [
+      "Verify both addresses are correct",
+      "If home-based: enter the home address on both",
+      "If legitimately different: make sure the address format matches USPS standardization",
+      "Re-transmit"
+    ],
+    related: [],
+    preparer_note: "Rare reject. Usually a soft warning that the IRS converted to a rejection due to malformed address. USPS standardization helps."
+  },
+];
+
+const EXAMPLES = ["R0000-504-02", "R0000-507-01", "IND-031-04", "IND-181-01", "FW2-502", "F8962-006-01"];
+
+/* ============================================================
+   UI LOGIC
+============================================================ */
+
+const $ = (id) => document.getElementById(id);
+const searchInput = $('rejectSearch');
+const searchClear = $('searchClear');
+const filterRow = $('filterRow');
+const resultsList = $('resultsList');
+const resultsMeta = $('resultsMeta');
+const detailPanel = $('detailPanel');
+const badgeCount = $('badgeCount');
+
+let activeFilter = 'all';
+let activeCode = null;
+
+badgeCount.textContent = REJECT_CODES.length + ' Codes';
+
+function escapeHtml(s) {
+  return String(s || '').replace(/[&<>"']/g, ch => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[ch]));
+}
+
+function categoryLabel(cat) {
+  return {
+    identity: 'Identity/SSN',
+    dependent: 'Dependent',
+    ippin: 'IP PIN',
+    agi: 'AGI/Signature',
+    wages: 'W-2/Wages',
+    refund: 'Refund/Bank',
+    credit: 'Credit/Schedule',
+    preparer: 'Preparer DD',
+  }[cat] || cat;
+}
+
+function severityLabel(sev) {
+  return {easy:'Easy fix',moderate:'Investigate',serious:'Third-party',complex:'Multi-step',idtheft:'ID Theft'}[sev] || sev;
+}
+
+function normalizeCode(s) {
+  return String(s || '').replace(/\s+/g, '').toUpperCase();
+}
+
+function filterAndSearch() {
+  const q = searchInput.value.toLowerCase().trim();
+  const qNorm = normalizeCode(q);
+  let filtered = REJECT_CODES.slice();
+
+  if (activeFilter !== 'all') {
+    filtered = filtered.filter(n => n.category === activeFilter);
+  }
+  if (q) {
+    filtered = filtered.filter(n => {
+      const hay = (n.code + ' ' + n.title + ' ' + n.summary + ' ' + (n.cause || '') + ' ' + n.category).toLowerCase();
+      // Also match partial codes — e.g. "504" should match "R0000-504-02"
+      return hay.includes(q) || normalizeCode(n.code).includes(qNorm);
+    });
+  }
+
+  // Sort priority
+  filtered.sort((a, b) => {
+    if (q && qNorm) {
+      // 1. Exact match
+      const aExact = normalizeCode(a.code) === qNorm ? 0 : 1;
+      const bExact = normalizeCode(b.code) === qNorm ? 0 : 1;
+      if (aExact !== bExact) return aExact - bExact;
+      // 2. Code-prefix match (typing R0000 matches all R0000-* first)
+      const aPre = normalizeCode(a.code).startsWith(qNorm) ? 0 : 1;
+      const bPre = normalizeCode(b.code).startsWith(qNorm) ? 0 : 1;
+      if (aPre !== bPre) return aPre - bPre;
+      // 3. Title hit beats summary/cause hit
+      const aT = a.title.toLowerCase().includes(q) ? 0 : 1;
+      const bT = b.title.toLowerCase().includes(q) ? 0 : 1;
+      if (aT !== bT) return aT - bT;
+    }
+    return a.code.localeCompare(b.code, undefined, {numeric: true});
+  });
+
+  renderList(filtered);
+  renderMeta(filtered.length, q, activeFilter);
+}
+
+function renderList(items) {
+  if (items.length === 0) {
+    resultsList.innerHTML = '<div class="result-empty">No reject codes match your search. Try a different keyword or partial code (e.g., "504" or "AGI").</div>';
+    return;
+  }
+  resultsList.innerHTML = items.map(n => `
+    <div class="result-item ${activeCode === n.code ? 'active' : ''}" data-code="${escapeHtml(n.code)}">
+      <div class="result-code">
+        <span>${escapeHtml(n.code)}</span>
+        <span class="sev-pill ${n.severity}">${severityLabel(n.severity)}</span>
+      </div>
+      <div class="result-title">${escapeHtml(n.title)}</div>
+    </div>
+  `).join('');
+  resultsList.querySelectorAll('.result-item').forEach(el => {
+    el.addEventListener('click', () => showDetail(el.dataset.code));
+  });
+}
+
+function renderMeta(count, q, filter) {
+  const filterLabel = filter === 'all' ? '' : ' in ' + categoryLabel(filter);
+  if (q) {
+    resultsMeta.innerHTML = `Showing <span>${count}</span> code${count === 1 ? '' : 's'} matching "<strong>${escapeHtml(q)}</strong>"${filterLabel}`;
+  } else {
+    resultsMeta.innerHTML = `Showing <span>${count}</span> code${count === 1 ? '' : 's'}${filterLabel}`;
+  }
+}
+
+function showDetail(code) {
+  const n = REJECT_CODES.find(x => x.code === code);
+  if (!n) return;
+  activeCode = code;
+
+  resultsList.querySelectorAll('.result-item').forEach(el => {
+    el.classList.toggle('active', el.dataset.code === code);
+  });
+
+  const actionsHtml = n.actions.map(a => `<li>${escapeHtml(a)}</li>`).join('');
+  const relatedHtml = n.related && n.related.length
+    ? n.related.map(r => `<span class="related-pill" onclick="showDetail('${r.replace(/'/g, "\\'")}')">${escapeHtml(r)}</span>`).join('')
+    : '<span style="color:var(--muted);font-size:0.85rem;">None</span>';
+
+  detailPanel.innerHTML = `
+    <div class="detail-header">
+      <div class="detail-code-block">
+        <div class="detail-code">${escapeHtml(n.code)}</div>
+        <div class="detail-pills">
+          <span class="sev-pill ${n.severity}">${severityLabel(n.severity)}</span>
+          <span class="detail-cat-pill">${categoryLabel(n.category)}</span>
+        </div>
+      </div>
+    </div>
+    <div class="detail-title">${escapeHtml(n.title)}</div>
+    <div class="detail-summary">${escapeHtml(n.summary)}</div>
+
+    <div class="cause-card">
+      <div class="cause-label">Why this reject happens</div>
+      ${escapeHtml(n.cause)}
+    </div>
+
+    <div class="detail-section">
+      <div class="detail-section-title">How to fix</div>
+      <ul class="action-list">${actionsHtml}</ul>
+    </div>
+
+    <div class="detail-section">
+      <div class="detail-section-title">Related rejects</div>
+      <div class="related-codes">${relatedHtml}</div>
+    </div>
+
+    ${n.preparer_note ? `
+    <div class="preparer-note">
+      <div class="preparer-note-label">💡 Tax preparer note</div>
+      ${escapeHtml(n.preparer_note)}
+    </div>` : ''}
+  `;
+
+  detailPanel.scrollIntoView({behavior:'smooth', block:'start'});
+}
+
+// Example pill clicks
+detailPanel.addEventListener('click', (e) => {
+  if (e.target.classList.contains('example-pill')) {
+    const code = e.target.dataset.code;
+    searchInput.value = code;
+    filterAndSearch();
+    showDetail(code);
+  }
+});
+
+// Filter chips
+filterRow.addEventListener('click', (e) => {
+  if (e.target.classList.contains('filter-chip')) {
+    filterRow.querySelectorAll('.filter-chip').forEach(c => c.classList.remove('on'));
+    e.target.classList.add('on');
+    activeFilter = e.target.dataset.filter;
+    filterAndSearch();
+  }
+});
+
+// Search input
+searchInput.addEventListener('input', filterAndSearch);
+searchClear.addEventListener('click', () => {
+  searchInput.value = '';
+  searchInput.focus();
+  filterAndSearch();
+});
+searchInput.addEventListener('keydown', (e) => {
+  if (e.key === 'Enter') {
+    const first = resultsList.querySelector('.result-item');
+    if (first) showDetail(first.dataset.code);
+  }
+});
+
+// Hamburger menu
+(function(){
+  var btn = document.getElementById('navHamburger');
+  var ul = document.querySelector('nav .nav-links');
+  if(!btn || !ul) return;
+  btn.addEventListener('click', function(){
+    btn.classList.toggle('open');
+    ul.classList.toggle('mobile-open');
+  });
+})();
+
+window.showDetail = showDetail;
+
+filterAndSearch();
+</script>
+</body>
+</html>
