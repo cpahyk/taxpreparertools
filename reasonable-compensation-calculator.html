@@ -1,0 +1,739 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Reasonable Compensation Calculator for S-Corp Owners — Free 2025 Tool | TaxPreparerTools.com</title>
+<meta name="description" content="Calculate reasonable compensation for S-Corp shareholder-employees. Get a defensible range based on BLS wage data, geographic adjustment, experience, hours worked, and specialty. Includes IRS audit risk indicator and Watson v. US legal framework. Free alternative to RCReports.">
+<link rel="canonical" href="https://taxpreparertools.com/reasonable-compensation-calculator" />
+
+<!-- Favicons -->
+<link rel="icon" type="image/x-icon" href="/favicon.ico">
+<link rel="icon" type="image/svg+xml" href="/assets/favicon.svg">
+<link rel="icon" type="image/png" sizes="32x32" href="/assets/favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="/assets/favicon-16x16.png">
+<link rel="apple-touch-icon" sizes="180x180" href="/assets/apple-touch-icon.png">
+<link rel="manifest" href="/site.webmanifest">
+<meta name="theme-color" content="#c8a84b">
+<meta name="msapplication-TileColor" content="#08152a">
+
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700;900&family=DM+Sans:wght@300;400;500;600&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"WebApplication","name":"Reasonable Compensation Calculator for S-Corp Owners","url":"https://taxpreparertools.com/reasonable-compensation-calculator","description":"Free calculator for determining reasonable compensation for S-Corp shareholder-employees, based on BLS wage data with geographic, experience, and specialty adjustments.","applicationCategory":"FinanceApplication","offers":{"@type":"Offer","price":"0","priceCurrency":"USD"}}
+</script>
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Home","item":"https://taxpreparertools.com/"},{"@type":"ListItem","position":2,"name":"Tools","item":"https://taxpreparertools.com/tools"},{"@type":"ListItem","position":3,"name":"Reasonable Compensation Calculator","item":"https://taxpreparertools.com/reasonable-compensation-calculator"}]}
+</script>
+
+<meta property="og:type" content="website" />
+<meta property="og:url" content="https://taxpreparertools.com/reasonable-compensation-calculator" />
+<meta property="og:title" content="Reasonable Compensation Calculator for S-Corp Owners — Free 2025 Tool" />
+<meta property="og:description" content="Calculate a defensible reasonable comp range for S-Corp shareholder-employees based on BLS data, geography, experience, and specialty. With IRS audit risk gauge." />
+<meta property="og:image" content="https://taxpreparertools.com/assets/og-image.png" />
+
+<style>
+:root{
+--navy:#08152a;--navy-mid:#0f1f3d;--slate:#1a2f52;
+--gold:#c8a84b;--gold-light:#e8c96a;--gold-dim:rgba(200,168,75,0.13);
+--white:#fff;--muted:#7a8fac;--text:#dde4f0;--border:rgba(200,168,75,0.14);
+--card:rgba(255,255,255,0.04);
+--green:#4ade80;--green-bg:rgba(74,222,128,0.12);
+--yellow:#fcd34d;--yellow-bg:rgba(252,211,77,0.12);
+--red:#f87171;--red-bg:rgba(248,113,113,0.12);
+--blue:#60a5fa;
+}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+html{scroll-behavior:smooth;}
+body{font-family:'DM Sans',sans-serif;background:var(--navy);color:var(--text);min-height:100vh;}
+
+nav{position:sticky;top:0;z-index:200;padding:14px 48px;display:flex;align-items:center;justify-content:space-between;background:rgba(8,21,42,0.95);backdrop-filter:blur(20px);border-bottom:1px solid var(--border);}
+.logo{display:flex;align-items:center;gap:10px;text-decoration:none;}
+.logo-mark{width:32px;height:32px;background:var(--gold);border-radius:7px;display:flex;align-items:center;justify-content:center;font-size:15px;}
+.logo-name{font-family:'Playfair Display',serif;font-size:1.1rem;font-weight:700;color:var(--white);}
+.logo-name span{color:var(--gold);}
+.logo-domain{font-size:0.62rem;color:var(--muted);font-family:'DM Mono',monospace;display:block;}
+.nav-links{display:flex;gap:24px;list-style:none;}
+.nav-links a{color:var(--muted);font-size:0.82rem;font-weight:500;text-decoration:none;transition:color .2s;}
+.nav-links a:hover,.nav-links a.active{color:var(--gold);}
+.btn-sm{padding:7px 16px;border-radius:6px;font-size:0.8rem;font-weight:700;cursor:pointer;text-decoration:none;transition:all .2s;border:none;font-family:'DM Sans',sans-serif;}
+.btn-gold{background:var(--gold);color:var(--navy);}
+.btn-gold:hover{background:var(--gold-light);}
+
+.page-wrap{max-width:1200px;margin:0 auto;padding:36px 48px 80px;}
+.breadcrumb{font-size:0.73rem;font-family:'DM Mono',monospace;color:var(--muted);margin-bottom:20px;display:flex;gap:7px;align-items:center;flex-wrap:wrap;}
+.breadcrumb a{color:var(--gold);text-decoration:none;}
+
+.tool-header{display:flex;gap:22px;align-items:flex-start;margin-bottom:32px;}
+.tool-header-icon{width:60px;height:60px;background:linear-gradient(135deg,var(--gold-dim),rgba(200,168,75,0.05));border:1px solid rgba(200,168,75,0.3);border-radius:16px;display:flex;align-items:center;justify-content:center;font-size:28px;flex-shrink:0;}
+.tool-badges{display:flex;gap:7px;margin-bottom:10px;flex-wrap:wrap;}
+.badge{font-size:0.63rem;font-family:'DM Mono',monospace;font-weight:700;text-transform:uppercase;letter-spacing:.08em;padding:3px 10px;border-radius:50px;}
+.badge-free{background:rgba(74,222,128,.12);color:var(--green);}
+.badge-new{background:rgba(251,146,60,.12);color:#fb923c;}
+.badge-cat{background:var(--gold-dim);color:var(--gold);}
+.badge-saver{background:rgba(96,165,250,.12);color:var(--blue);}
+h1{font-family:'Playfair Display',serif;font-size:clamp(1.6rem,3.5vw,2.4rem);font-weight:900;color:var(--white);letter-spacing:-0.03em;line-height:1.1;margin-bottom:8px;}
+.tool-desc{color:var(--muted);font-size:0.92rem;line-height:1.7;max-width:720px;}
+
+/* Two-column layout */
+.calc-layout{display:grid;grid-template-columns:480px 1fr;gap:28px;align-items:start;}
+
+/* Input card */
+.input-card{background:var(--navy-mid);border:1px solid var(--border);border-radius:18px;padding:28px;position:sticky;top:90px;}
+.input-card h3{font-family:'Playfair Display',serif;font-size:1.05rem;font-weight:700;color:var(--white);margin-bottom:18px;padding-bottom:14px;border-bottom:1px solid var(--border);}
+
+.field{margin-bottom:18px;}
+.field-label{font-size:0.75rem;font-weight:600;color:var(--text);margin-bottom:8px;display:flex;justify-content:space-between;align-items:center;}
+.field-hint{font-size:0.68rem;color:var(--muted);font-family:'DM Mono',monospace;}
+.field select,.field input[type="number"]{width:100%;background:rgba(255,255,255,.04);border:1.5px solid rgba(200,168,75,.18);border-radius:10px;padding:11px 14px;color:var(--white);font-size:0.92rem;font-family:'DM Sans',sans-serif;outline:none;transition:border-color .2s;}
+.field select:focus,.field input[type="number"]:focus{border-color:var(--gold);background:rgba(255,255,255,.06);}
+.field input[type="range"]{-webkit-appearance:none;width:100%;height:5px;background:rgba(255,255,255,.08);border-radius:5px;outline:none;margin:8px 0;}
+.field input[type="range"]::-webkit-slider-thumb{-webkit-appearance:none;width:18px;height:18px;background:var(--gold);border-radius:50%;cursor:pointer;border:3px solid var(--navy-mid);}
+.field input[type="range"]::-moz-range-thumb{width:18px;height:18px;background:var(--gold);border-radius:50%;cursor:pointer;border:3px solid var(--navy-mid);}
+.field-value{font-family:'DM Mono',monospace;color:var(--gold);font-weight:700;font-size:0.82rem;}
+.field-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;}
+
+.field-segmented{display:grid;grid-template-columns:repeat(auto-fit,minmax(80px,1fr));gap:4px;background:rgba(255,255,255,.04);border:1.5px solid rgba(200,168,75,.18);border-radius:10px;padding:4px;}
+.field-segmented button{background:transparent;border:none;color:var(--muted);padding:8px 6px;font-size:0.75rem;font-weight:600;cursor:pointer;border-radius:6px;font-family:'DM Sans',sans-serif;transition:all .15s;}
+.field-segmented button.active{background:var(--gold);color:var(--navy);}
+.field-segmented button:hover:not(.active){background:rgba(255,255,255,.04);color:var(--text);}
+
+.input-currency{position:relative;}
+.input-currency::before{content:'$';position:absolute;left:12px;top:50%;transform:translateY(-50%);color:var(--muted);font-weight:600;}
+.input-currency input{padding-left:24px !important;}
+
+/* Output panel */
+.output-panel{background:var(--navy-mid);border:1px solid var(--border);border-radius:18px;padding:34px;min-height:520px;}
+
+.result-headline{margin-bottom:24px;padding-bottom:22px;border-bottom:1px solid var(--border);}
+.result-eyebrow{font-family:'DM Mono',monospace;font-size:0.7rem;font-weight:700;color:var(--gold);letter-spacing:0.1em;text-transform:uppercase;margin-bottom:10px;}
+.result-range{display:flex;align-items:baseline;gap:14px;margin-bottom:8px;flex-wrap:wrap;}
+.result-mid{font-family:'Playfair Display',serif;font-size:2.6rem;font-weight:800;color:var(--white);letter-spacing:-0.03em;line-height:1;}
+.result-mid-label{font-size:0.78rem;color:var(--muted);font-family:'DM Mono',monospace;}
+.result-bracket{display:flex;align-items:center;gap:14px;font-family:'DM Mono',monospace;font-size:0.84rem;color:var(--muted);margin-top:14px;}
+.result-bracket .lo,.result-bracket .hi{color:var(--text);font-weight:600;}
+.result-line{flex:1;height:6px;background:linear-gradient(90deg,rgba(248,113,113,0.2) 0%,rgba(74,222,128,0.4) 50%,rgba(248,113,113,0.2) 100%);border-radius:6px;position:relative;}
+.result-line::after{content:'';position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);width:14px;height:14px;background:var(--gold);border:3px solid var(--navy-mid);border-radius:50%;}
+
+/* Risk gauge */
+.risk-gauge{margin-bottom:28px;padding:20px;border-radius:12px;border:1px solid;}
+.risk-gauge.green{background:var(--green-bg);border-color:rgba(74,222,128,0.3);}
+.risk-gauge.yellow{background:var(--yellow-bg);border-color:rgba(252,211,77,0.3);}
+.risk-gauge.red{background:var(--red-bg);border-color:rgba(248,113,113,0.3);}
+.risk-header{display:flex;align-items:center;gap:12px;margin-bottom:10px;}
+.risk-icon{width:36px;height:36px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:16px;flex-shrink:0;}
+.risk-gauge.green .risk-icon{background:rgba(74,222,128,0.2);color:var(--green);}
+.risk-gauge.yellow .risk-icon{background:rgba(252,211,77,0.2);color:var(--yellow);}
+.risk-gauge.red .risk-icon{background:rgba(248,113,113,0.2);color:var(--red);}
+.risk-title{font-family:'Playfair Display',serif;font-size:1.05rem;font-weight:700;color:var(--white);}
+.risk-desc{font-size:0.84rem;line-height:1.65;color:var(--text);}
+
+/* Breakdown */
+.breakdown{margin-bottom:24px;}
+.breakdown-title{font-family:'DM Mono',monospace;font-size:0.7rem;font-weight:700;color:var(--muted);text-transform:uppercase;letter-spacing:.1em;margin-bottom:12px;}
+.breakdown-grid{display:grid;grid-template-columns:1fr 1fr;gap:0;}
+.breakdown-item{padding:11px 16px;background:rgba(255,255,255,.02);border:1px solid rgba(255,255,255,.04);font-size:0.85rem;display:flex;justify-content:space-between;align-items:center;}
+.breakdown-item:first-child{border-radius:10px 0 0 0;}
+.breakdown-item:nth-child(2){border-radius:0 10px 0 0;}
+.breakdown-item:nth-last-child(2){border-radius:0 0 0 10px;}
+.breakdown-item:last-child{border-radius:0 0 10px 0;}
+.breakdown-key{color:var(--muted);font-size:0.78rem;font-family:'DM Mono',monospace;}
+.breakdown-val{color:var(--text);font-weight:600;font-family:'DM Mono',monospace;}
+.breakdown-val.gold{color:var(--gold);}
+
+/* Comparison line */
+.comparison{margin-bottom:26px;padding:18px 20px;background:rgba(96,165,250,0.04);border:1px solid rgba(96,165,250,0.18);border-radius:12px;}
+.comparison-label{font-size:0.66rem;font-family:'DM Mono',monospace;font-weight:700;color:#93c5fd;text-transform:uppercase;letter-spacing:.08em;margin-bottom:8px;}
+.comparison-text{font-size:0.86rem;line-height:1.6;color:var(--text);}
+.comparison-text strong{color:var(--white);}
+.comparison-text .delta-good{color:var(--green);}
+.comparison-text .delta-bad{color:var(--red);}
+
+/* Methodology */
+.method-section{margin-top:30px;padding-top:24px;border-top:1px solid var(--border);}
+.method-title{font-family:'Playfair Display',serif;font-size:1rem;font-weight:700;color:var(--white);margin-bottom:14px;display:flex;align-items:center;gap:10px;}
+.method-title::before{content:'';width:14px;height:1px;background:var(--gold);}
+.method-cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:10px;}
+.method-card{background:rgba(255,255,255,.03);border:1px solid var(--border);border-radius:10px;padding:14px;}
+.method-card-name{font-size:0.74rem;font-weight:700;color:var(--gold);font-family:'DM Mono',monospace;margin-bottom:6px;letter-spacing:.04em;}
+.method-card-desc{font-size:0.8rem;color:var(--muted);line-height:1.6;}
+
+/* Empty state */
+.empty-result{padding:60px 20px;text-align:center;color:var(--muted);}
+.empty-result-icon{font-size:3rem;margin-bottom:12px;opacity:0.4;}
+
+/* Audit triggers section */
+.audit-triggers{margin-top:48px;background:var(--navy-mid);border:1px solid var(--border);border-radius:18px;padding:28px;}
+.audit-triggers h2{font-family:'Playfair Display',serif;font-size:1.3rem;font-weight:700;color:var(--white);margin-bottom:18px;}
+.audit-list{list-style:none;display:flex;flex-direction:column;gap:13px;}
+.audit-list li{padding-left:32px;position:relative;font-size:0.88rem;line-height:1.65;color:var(--text);}
+.audit-list li::before{content:'⚠️';position:absolute;left:0;top:0;font-size:0.95rem;}
+.audit-list strong{color:var(--white);}
+
+/* Legal context */
+.legal-context{margin-top:24px;background:rgba(167,139,250,0.06);border:1px solid rgba(167,139,250,0.2);border-radius:14px;padding:24px;}
+.legal-label{font-size:0.68rem;font-family:'DM Mono',monospace;font-weight:700;color:#c4b5fd;text-transform:uppercase;letter-spacing:0.08em;margin-bottom:14px;}
+.legal-case{margin-bottom:14px;}
+.legal-case:last-child{margin-bottom:0;}
+.legal-case-title{font-family:'Playfair Display',serif;font-size:0.95rem;font-weight:700;color:var(--white);margin-bottom:4px;}
+.legal-case-desc{font-size:0.83rem;color:var(--muted);line-height:1.65;}
+
+/* Related tools */
+.related-tools{margin-top:32px;background:rgba(255,255,255,0.03);border:1px solid rgba(200,168,75,0.15);border-radius:12px;padding:22px 26px;}
+.related-tools-label{font-family:'DM Mono',monospace;font-size:0.68rem;text-transform:uppercase;letter-spacing:0.1em;color:#c8a84b;margin-bottom:14px;font-weight:700;}
+.related-tools a{display:flex;align-items:center;gap:10px;color:#c8a84b;text-decoration:none;font-size:0.88rem;padding:8px 0;border-bottom:1px solid rgba(200,168,75,0.08);}
+.related-tools a:last-child{border-bottom:none;}
+.related-tools a strong{color:#e8edf5;}
+.related-tools a span.desc{color:#8a9bb5;font-size:0.8rem;margin-left:6px;}
+
+.disclaimer{margin-top:36px;padding:22px;background:rgba(96,165,250,0.04);border:1px solid rgba(96,165,250,0.15);border-radius:14px;}
+.disclaimer-title{font-family:'DM Mono',monospace;font-size:0.72rem;font-weight:700;color:#93c5fd;text-transform:uppercase;letter-spacing:.08em;margin-bottom:10px;}
+.disclaimer-text{font-size:0.82rem;color:var(--muted);line-height:1.7;}
+
+footer{border-top:1px solid var(--border);padding:28px 48px;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:12px;background:var(--navy-mid);}
+.footer-left{font-size:0.73rem;color:var(--muted);}
+.footer-left a{color:var(--gold);text-decoration:none;}
+.footer-links{display:flex;gap:20px;align-items:center;}
+.footer-links a{font-size:0.73rem;color:var(--muted);text-decoration:none;}
+.footer-links a:hover{color:var(--gold);}
+
+@media(max-width:1000px){
+  .calc-layout{grid-template-columns:1fr;}
+  .input-card{position:static;}
+}
+@media(max-width:768px){
+  nav{padding:13px 18px;}.nav-links{display:none;}
+  .page-wrap{padding:24px 18px 60px;}
+  .input-card,.output-panel{padding:20px;}
+  .result-mid{font-size:2rem;}
+  footer{padding:20px 18px;flex-direction:column;}
+}
+.nav-hamburger{display:none;flex-direction:column;gap:5px;cursor:pointer;padding:6px;border:none;background:transparent;}
+.nav-hamburger span{display:block;width:22px;height:2px;background:var(--gold);border-radius:2px;}
+@media(max-width:768px){.nav-hamburger{display:flex;}nav .nav-links{display:none;}nav .nav-links.mobile-open{display:flex;position:fixed;top:60px;left:0;right:0;background:rgba(8,21,42,0.98);flex-direction:column;padding:16px 0;z-index:200;border-bottom:1px solid rgba(200,168,75,.18);}nav .nav-links li{width:100%;text-align:center;list-style:none;}nav .nav-links li a{display:block;padding:12px 24px;}}
+</style>
+</head>
+<body>
+
+<nav>
+  <a href="index.html" class="logo">
+    <div class="logo-mark">⚖</div>
+    <div><span class="logo-name">TaxPreparer<span>Tools</span></span><span class="logo-domain">taxpreparertools.com</span></div>
+  </a>
+  <button id="navHamburger" class="nav-hamburger" aria-label="Menu"><span></span><span></span><span></span></button>
+  <ul class="nav-links">
+    <li><a href="tools.html" class="active">Tools</a></li>
+    <li><a href="decoders.html">Decoders</a></li>
+    <li><a href="deadlines.html">Deadlines</a></li>
+    <li><a href="ai-assistant.html">AI Assistant</a></li>
+    <li><a href="resources.html">Resources</a></li>
+    <li><a href="blog/">Blog</a></li>
+    <li><a href="about.html">About</a></li>
+  </ul>
+  <a href="signup.html" class="btn-sm btn-gold">Get Pro Free</a>
+</nav>
+
+<div class="page-wrap">
+
+  <div class="breadcrumb">
+    <a href="index.html">Home</a> <span>/</span>
+    <a href="tools.html">Tools</a> <span>/</span>
+    Reasonable Compensation Calculator
+  </div>
+
+  <div class="tool-header">
+    <div class="tool-header-icon">💼</div>
+    <div>
+      <div class="tool-badges">
+        <span class="badge badge-free">Free</span>
+        <span class="badge badge-new">New</span>
+        <span class="badge badge-saver">Saves $300–500/yr</span>
+        <span class="badge badge-cat">S-Corp Planning</span>
+      </div>
+      <h1>Reasonable Compensation Calculator<br>for S-Corp Owners</h1>
+      <p class="tool-desc">The #1 IRS audit trigger for small S-Corps is owner-employee compensation that's too low (or zero). This calculator gives you a defensible range based on Bureau of Labor Statistics wage data, adjusted for your geography, experience, hours worked, and specialty. Includes an audit risk indicator based on the ratio of W-2 comp to S-Corp distributions.</p>
+    </div>
+  </div>
+
+  <div class="calc-layout">
+
+    <!-- ═══ INPUT CARD ═══ -->
+    <div class="input-card">
+      <h3>Your Information</h3>
+
+      <div class="field">
+        <label class="field-label">Industry / Role
+          <span class="field-hint">Closest match</span>
+        </label>
+        <select id="industry">
+          <optgroup label="Professional Services">
+            <option value="lawyer_general" data-base="145760">Attorney — General Practice</option>
+            <option value="lawyer_specialty" data-base="195000">Attorney — Tax/Corporate/IP</option>
+            <option value="cpa" data-base="79880">CPA / Accountant</option>
+            <option value="ea" data-base="65000">Enrolled Agent / Tax Practitioner</option>
+            <option value="tax_preparer" data-base="50080">Tax Preparer (non-credentialed)</option>
+            <option value="bookkeeper" data-base="48000">Bookkeeper</option>
+            <option value="financial_advisor" data-base="99580">Financial Advisor / Planner</option>
+            <option value="insurance_agent" data-base="59370">Insurance Sales Agent</option>
+            <option value="management_consultant" data-base="99410">Management Consultant</option>
+            <option value="marketing_consultant" data-base="98920">Marketing Consultant</option>
+          </optgroup>
+          <optgroup label="Healthcare">
+            <option value="physician_primary" data-base="235000">Physician — Primary Care</option>
+            <option value="physician_specialist" data-base="300000">Physician — Specialist</option>
+            <option value="dentist" data-base="170910">Dentist</option>
+            <option value="chiropractor" data-base="75380">Chiropractor</option>
+            <option value="optometrist" data-base="131860">Optometrist</option>
+            <option value="therapist_mental" data-base="59190">Therapist / Counselor</option>
+            <option value="veterinarian" data-base="103260">Veterinarian</option>
+          </optgroup>
+          <optgroup label="Tech / Creative">
+            <option value="software_dev" data-base="130160">Software Developer</option>
+            <option value="it_consultant" data-base="100530">IT / Systems Consultant</option>
+            <option value="web_developer" data-base="84960">Web Developer</option>
+            <option value="graphic_designer" data-base="58910">Graphic Designer</option>
+            <option value="photographer" data-base="40760">Photographer</option>
+            <option value="writer_author" data-base="73690">Writer / Author / Content Creator</option>
+          </optgroup>
+          <optgroup label="Engineering / Construction">
+            <option value="engineer_civil" data-base="95890">Civil Engineer</option>
+            <option value="engineer_mechanical" data-base="99510">Mechanical Engineer</option>
+            <option value="architect" data-base="93310">Architect</option>
+            <option value="general_contractor" data-base="98890">General Contractor</option>
+            <option value="electrician" data-base="61590">Electrician</option>
+            <option value="plumber" data-base="61550">Plumber</option>
+            <option value="hvac_tech" data-base="51390">HVAC Technician</option>
+          </optgroup>
+          <optgroup label="Real Estate / Sales">
+            <option value="real_estate_broker" data-base="62990">Real Estate Broker</option>
+            <option value="real_estate_agent" data-base="52030">Real Estate Agent</option>
+          </optgroup>
+          <optgroup label="Retail / Service">
+            <option value="restaurant_owner" data-base="65000">Restaurant Owner-Operator</option>
+            <option value="retail_owner" data-base="55000">Retail Store Owner-Operator</option>
+            <option value="auto_repair" data-base="47770">Auto Mechanic / Body Shop</option>
+            <option value="personal_trainer" data-base="46480">Personal Trainer / Fitness</option>
+            <option value="hair_salon" data-base="34970">Hair Stylist / Salon Owner</option>
+            <option value="dry_cleaner" data-base="42000">Dry Cleaner / Laundry Service</option>
+          </optgroup>
+          <optgroup label="Other">
+            <option value="generic_professional" data-base="75000">Generic Professional Service</option>
+            <option value="generic_skilled_trade" data-base="58000">Generic Skilled Trade</option>
+            <option value="generic_small_biz" data-base="50000">Generic Small Business Owner</option>
+          </optgroup>
+        </select>
+      </div>
+
+      <div class="field">
+        <label class="field-label">State (geographic adjustment)
+          <span class="field-hint">Cost-of-labor</span>
+        </label>
+        <select id="state">
+          <optgroup label="High cost (1.20×)">
+            <option value="CA" data-mult="1.20">California</option>
+            <option value="NY" data-mult="1.20">New York</option>
+            <option value="MA" data-mult="1.20">Massachusetts</option>
+            <option value="NJ" data-mult="1.20">New Jersey</option>
+            <option value="CT" data-mult="1.20">Connecticut</option>
+            <option value="WA" data-mult="1.20">Washington</option>
+            <option value="HI" data-mult="1.20">Hawaii</option>
+            <option value="DC" data-mult="1.20">District of Columbia</option>
+            <option value="AK" data-mult="1.20">Alaska</option>
+          </optgroup>
+          <optgroup label="Mid-high (1.10×)">
+            <option value="CO" data-mult="1.10">Colorado</option>
+            <option value="IL" data-mult="1.10">Illinois</option>
+            <option value="MD" data-mult="1.10">Maryland</option>
+            <option value="VA" data-mult="1.10">Virginia</option>
+            <option value="OR" data-mult="1.10">Oregon</option>
+            <option value="MN" data-mult="1.10">Minnesota</option>
+            <option value="NH" data-mult="1.10">New Hampshire</option>
+            <option value="VT" data-mult="1.10">Vermont</option>
+            <option value="RI" data-mult="1.10">Rhode Island</option>
+          </optgroup>
+          <optgroup label="Average (1.00×)">
+            <option value="OTHER" data-mult="1.00" selected>Other / Average state</option>
+            <option value="PA" data-mult="1.00">Pennsylvania</option>
+            <option value="OH" data-mult="1.00">Ohio</option>
+            <option value="MI" data-mult="1.00">Michigan</option>
+            <option value="WI" data-mult="1.00">Wisconsin</option>
+            <option value="UT" data-mult="1.00">Utah</option>
+            <option value="ME" data-mult="1.00">Maine</option>
+            <option value="DE" data-mult="1.00">Delaware</option>
+            <option value="MO" data-mult="1.00">Missouri</option>
+            <option value="IN" data-mult="1.00">Indiana</option>
+            <option value="IA" data-mult="1.00">Iowa</option>
+            <option value="KS" data-mult="1.00">Kansas</option>
+            <option value="NE" data-mult="1.00">Nebraska</option>
+            <option value="MT" data-mult="1.00">Montana</option>
+            <option value="ND" data-mult="1.00">North Dakota</option>
+            <option value="SD" data-mult="1.00">South Dakota</option>
+            <option value="WY" data-mult="1.00">Wyoming</option>
+            <option value="NV" data-mult="1.00">Nevada</option>
+            <option value="ID" data-mult="1.00">Idaho</option>
+            <option value="NM" data-mult="1.00">New Mexico</option>
+          </optgroup>
+          <optgroup label="Mid-low (0.95×)">
+            <option value="TX" data-mult="0.95">Texas</option>
+            <option value="FL" data-mult="0.95">Florida</option>
+            <option value="GA" data-mult="0.95">Georgia</option>
+            <option value="AZ" data-mult="0.95">Arizona</option>
+            <option value="NC" data-mult="0.95">North Carolina</option>
+            <option value="SC" data-mult="0.95">South Carolina</option>
+            <option value="TN" data-mult="0.95">Tennessee</option>
+            <option value="OK" data-mult="0.95">Oklahoma</option>
+            <option value="LA" data-mult="0.95">Louisiana</option>
+          </optgroup>
+          <optgroup label="Lower cost (0.85×)">
+            <option value="AL" data-mult="0.85">Alabama</option>
+            <option value="AR" data-mult="0.85">Arkansas</option>
+            <option value="MS" data-mult="0.85">Mississippi</option>
+            <option value="KY" data-mult="0.85">Kentucky</option>
+            <option value="WV" data-mult="0.85">West Virginia</option>
+          </optgroup>
+        </select>
+      </div>
+
+      <div class="field">
+        <label class="field-label">Years of experience in this work
+          <span class="field-value" id="experienceVal">10 years</span>
+        </label>
+        <input type="range" id="experience" min="0" max="30" value="10" step="1" />
+      </div>
+
+      <div class="field">
+        <label class="field-label">Hours per week working in the S-Corp
+          <span class="field-value" id="hoursVal">40 hrs/wk</span>
+        </label>
+        <input type="range" id="hours" min="5" max="80" value="40" step="1" />
+      </div>
+
+      <div class="field">
+        <label class="field-label">Seniority / Specialty Level</label>
+        <div class="field-segmented" id="seniority" data-active="3">
+          <button data-mult="0.80" data-label="Entry">Entry</button>
+          <button data-mult="0.92" data-label="Mid">Mid</button>
+          <button class="active" data-mult="1.00" data-label="Senior">Senior</button>
+          <button data-mult="1.30" data-label="Expert">Expert</button>
+          <button data-mult="1.60" data-label="Specialist">Specialist</button>
+        </div>
+      </div>
+
+      <div class="field">
+        <label class="field-label">S-Corp profit before owner comp (annual)
+          <span class="field-hint">For audit risk</span>
+        </label>
+        <div class="input-currency">
+          <input type="number" id="profit" placeholder="e.g. 200000" min="0" step="1000" />
+        </div>
+      </div>
+
+      <div class="field">
+        <label class="field-label">Current W-2 wages you're paying yourself
+          <span class="field-hint">Optional — for comparison</span>
+        </label>
+        <div class="input-currency">
+          <input type="number" id="currentComp" placeholder="e.g. 50000" min="0" step="1000" />
+        </div>
+      </div>
+    </div>
+
+    <!-- ═══ OUTPUT PANEL ═══ -->
+    <div class="output-panel" id="output">
+      <div class="empty-result">
+        <div class="empty-result-icon">💼</div>
+        <h3 style="font-family:'Playfair Display',serif;font-size:1.1rem;color:var(--text);margin-bottom:8px;">Pick an industry to begin</h3>
+        <p style="font-size:0.88rem;line-height:1.6;max-width:380px;margin:0 auto;color:var(--muted);">The calculator will compute your reasonable compensation range and audit risk as you fill in the inputs.</p>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- ═══ AUDIT TRIGGERS ═══ -->
+  <div class="audit-triggers">
+    <h2>What triggers an IRS reasonable comp audit?</h2>
+    <ul class="audit-list">
+      <li><strong>Zero or very low W-2 wages combined with substantial S-Corp distributions.</strong> If the IRS sees Form 1120-S showing big distributions but a $0 or token W-2 amount, that's the loudest possible audit signal. They will reclassify distributions as wages and assess back SE tax, payroll taxes, penalties, and interest.</li>
+      <li><strong>W-2 wages less than 30–40% of total compensation</strong> (wages + distributions) in a professional services context. <em>Watson v. United States</em> (2012) established that 40% of total compensation was unreasonably low for an accountant — the court ordered a substantial increase.</li>
+      <li><strong>Total comp dramatically below industry/role benchmarks.</strong> The IRS knows what a CPA, attorney, doctor, or specialist earns in your geography. Underpaying owner-employees relative to non-owner peers in the same role is a red flag.</li>
+      <li><strong>Owner does substantial work but pays themselves minimally.</strong> If you're a single-owner S-Corp doing 40+ hours/week of skilled professional work, paying yourself $30K W-2 while taking $150K in distributions is not defensible.</li>
+      <li><strong>Increase in distributions following an S-election.</strong> The IRS data-matches: if you converted from sole prop to S-Corp and your distributions jumped while W-2 wages stayed low, expect scrutiny.</li>
+      <li><strong>No documentation of the comp decision.</strong> Even if your number is reasonable, the absence of a documented basis (board resolution, salary survey, comparable analysis) makes defense harder during audit.</li>
+    </ul>
+  </div>
+
+  <!-- ═══ LEGAL CONTEXT ═══ -->
+  <div class="legal-context">
+    <div class="legal-label">⚖️ Legal framework — what the courts say</div>
+
+    <div class="legal-case">
+      <div class="legal-case-title">Watson v. United States, 668 F.3d 1008 (8th Cir. 2012)</div>
+      <div class="legal-case-desc">CPA paid himself $24K W-2 while taking $175K in distributions from his accounting firm. IRS reclassified additional $67,044 as wages. Eighth Circuit affirmed, holding the comp was unreasonably low for the services rendered. This is the foundational case — its reasoning is cited in nearly every reasonable comp audit since.</div>
+    </div>
+
+    <div class="legal-case">
+      <div class="legal-case-title">JD &amp; Associates Ltd. v. United States, 2006-1 USTC ¶50,290</div>
+      <div class="legal-case-desc">Accounting firm paid CPA owner $19K-$30K while distributing $47K-$87K. Court reclassified $48K, $51K, and $48K as wages across three years. Notable: court explicitly considered owner's experience, training, duties performed, time devoted to business, dividend history, and comparable salaries.</div>
+    </div>
+
+    <div class="legal-case">
+      <div class="legal-case-title">Rev. Rul. 59-60 (factors the IRS uses)</div>
+      <div class="legal-case-desc">The seminal IRS guidance on valuation. Adapted to reasonable comp context, the factors are: (1) nature and history of the business, (2) economic outlook, (3) book value and financial condition, (4) earning capacity, (5) dividend-paying capacity, (6) goodwill, (7) prior sales of stock, (8) market price of stocks of similar entities. Document these factors in your file.</div>
+    </div>
+
+    <div class="legal-case">
+      <div class="legal-case-title">Treasury Reg. §31.3121(d)-1(c)(2) — Officer-Employee status</div>
+      <div class="legal-case-desc">"Generally, an officer of a corporation is an employee of the corporation." This is what allows the IRS to require W-2 wages for shareholder-officers in the first place. An S-Corp officer who performs more than minor services cannot escape employee status by labeling all comp as distributions.</div>
+    </div>
+  </div>
+
+  <!-- Related Tools -->
+  <div class="related-tools">
+    <div class="related-tools-label">Related Tools</div>
+    <a href="se-tax-calculator.html">→ <div><strong>Self-Employment Tax Calculator</strong><span class="desc">— Schedule SE computation for sole proprietors and partners</span></div></a>
+    <a href="quarterly-payments.html">→ <div><strong>Quarterly Estimated Payments</strong><span class="desc">— Safe-harbor estimates after factoring in owner W-2 + distributions</span></div></a>
+    <a href="penalty-calculator.html">→ <div><strong>IRS Penalty Calculator</strong><span class="desc">— Compute potential exposure if reasonable comp is reclassified</span></div></a>
+    <a href="decoders.html">→ <div><strong>IRS Decoder Suite</strong><span class="desc">— Decode any notice, transcript code, or e-file reject</span></div></a>
+  </div>
+
+  <div class="disclaimer">
+    <div class="disclaimer-title">⚠️ How to read this output</div>
+    <div class="disclaimer-text">
+      The wage benchmarks used here are approximate 2024 U.S. Bureau of Labor Statistics median annual wages for the listed occupations (May 2024 OEWS estimates). Geographic and experience multipliers are heuristic ranges based on cost-of-labor variation across states. <strong>This calculator produces a defensible starting point — not a substitute for a formal reasonable compensation analysis</strong> from a professional valuation firm or compensation consultant when stakes are high (large distributions, multiple owners, complex business, or an active IRS audit). For high-stakes situations, services like RCReports, Paychex Reasonable Comp, or a credentialed business appraiser can produce a fully-documented report. For most small S-Corps, this calculator's range — combined with documenting the inputs you used — is a reasonable defense posture. Always document your reasoning in writing (board minutes, comp memo to file).
+    </div>
+  </div>
+
+</div>
+
+<footer>
+  <div class="footer-left">© 2026 <a href="index.html">TaxPreparerTools.com</a> · Wage benchmarks from U.S. Bureau of Labor Statistics OEWS data. Not legal or tax advice.</div>
+  <div class="footer-links"><a href="privacy.html">Privacy</a><a href="terms.html">Terms</a><a href="about.html">About</a><a href="sitemap.html">Sitemap</a><a href="https://www.bls.gov/oes/" target="_blank" rel="noopener">BLS OEWS ↗</a></div>
+</footer>
+
+<script>
+/* ===========================================================================
+   REASONABLE COMPENSATION CALCULATOR — Calculation logic + UI
+=========================================================================== */
+
+const $ = (id) => document.getElementById(id);
+
+function fmt(n) {
+  return '$' + Math.round(n).toLocaleString();
+}
+
+function experienceMultiplier(years) {
+  // Smooth experience curve
+  if (years <= 1) return 0.70;
+  if (years <= 3) return 0.78 + (years - 1) * 0.04;       // 0.78–0.86
+  if (years <= 5) return 0.86 + (years - 3) * 0.04;       // 0.86–0.94
+  if (years <= 10) return 0.94 + (years - 5) * 0.012;     // 0.94–1.00
+  if (years <= 15) return 1.00 + (years - 10) * 0.02;     // 1.00–1.10
+  if (years <= 25) return 1.10 + (years - 15) * 0.015;    // 1.10–1.25
+  return 1.28;
+}
+
+function compute() {
+  // Read inputs
+  const indSel = $('industry');
+  if (!indSel.value) return null;
+  const baseWage = parseFloat(indSel.options[indSel.selectedIndex].dataset.base);
+  const industryLabel = indSel.options[indSel.selectedIndex].textContent;
+
+  const stateSel = $('state');
+  const geoMult = parseFloat(stateSel.options[stateSel.selectedIndex].dataset.mult);
+  const stateLabel = stateSel.options[stateSel.selectedIndex].textContent.split(' ')[0];
+
+  const years = parseInt($('experience').value);
+  const expMult = experienceMultiplier(years);
+
+  const hours = parseInt($('hours').value);
+  const hoursMult = hours / 40;
+
+  const seniorityBtns = $('seniority').querySelectorAll('button');
+  let senMult = 1.0, senLabel = 'Senior';
+  seniorityBtns.forEach(b => {
+    if (b.classList.contains('active')) {
+      senMult = parseFloat(b.dataset.mult);
+      senLabel = b.dataset.label;
+    }
+  });
+
+  const profit = parseFloat($('profit').value) || 0;
+  const currentComp = parseFloat($('currentComp').value) || 0;
+
+  // Core calculation
+  const adjusted = baseWage * geoMult * expMult * hoursMult * senMult;
+  const lo = adjusted * 0.80;
+  const mid = adjusted;
+  const hi = adjusted * 1.30;
+
+  // Apply profit cap — RC shouldn't exceed total available cash (profit + current comp)
+  // Per Mike J. Graham Trucking v. US, RC capped at amounts the corp could actually pay
+  const totalAvailable = profit + currentComp;
+  let capped = false;
+  let cappedMid = mid;
+  let cappedLo = lo;
+  let cappedHi = hi;
+  if (totalAvailable > 0 && mid > totalAvailable) {
+    capped = true;
+    cappedMid = totalAvailable * 0.85;  // 85% of total available
+    cappedLo = totalAvailable * 0.70;
+    cappedHi = totalAvailable * 0.95;
+  }
+
+  // Audit risk
+  let riskLevel = 'green';
+  let riskTitle = 'Low Audit Risk';
+  let riskDesc = 'Insufficient data — fill in profit and current comp for audit risk assessment.';
+
+  if (totalAvailable > 0 && currentComp > 0) {
+    const ratio = currentComp / totalAvailable;
+    if (currentComp >= cappedMid * 0.85) {
+      riskLevel = 'green';
+      riskTitle = 'Low Audit Risk';
+      riskDesc = `Your current W-2 wages ($${Math.round(currentComp).toLocaleString()}) are within ~85% of the calculated reasonable comp. You're in a defensible position. Document your basis in a comp memo to file.`;
+    } else if (currentComp >= cappedMid * 0.50) {
+      riskLevel = 'yellow';
+      riskTitle = 'Moderate Audit Risk';
+      riskDesc = `Your W-2 ($${Math.round(currentComp).toLocaleString()}) is below the calculated reasonable comp (${fmt(cappedMid)}). The gap of ${fmt(cappedMid - currentComp)} is the IRS reclassification target. Consider increasing W-2 wages and documenting your inputs.`;
+    } else {
+      riskLevel = 'red';
+      riskTitle = 'High Audit Risk';
+      riskDesc = `Your W-2 wages (${fmt(currentComp)}) are well below the calculated reasonable comp range (${fmt(cappedLo)}–${fmt(cappedHi)}). This profile is exactly what Watson v. US looked like. Strongly consider increasing W-2 wages before year-end and documenting the basis.`;
+    }
+  } else if (currentComp === 0 && profit > 0) {
+    riskLevel = 'red';
+    riskTitle = 'High Audit Risk';
+    riskDesc = `Zero W-2 wages combined with $${Math.round(profit).toLocaleString()} of S-Corp profit/distributions is the loudest possible audit signal. Set up payroll and pay yourself W-2 wages — calculated range is ${fmt(cappedLo)}–${fmt(cappedHi)}.`;
+  }
+
+  return {
+    base: baseWage, geoMult, expMult, hoursMult, senMult,
+    lo: cappedLo, mid: cappedMid, hi: cappedHi,
+    rawMid: mid,
+    industryLabel: indSel.options[indSel.selectedIndex].textContent,
+    stateLabel, years, hours, senLabel, profit, currentComp,
+    riskLevel, riskTitle, riskDesc, capped, totalAvailable
+  };
+}
+
+function render() {
+  const r = compute();
+  const out = $('output');
+  if (!r) {
+    out.innerHTML = `<div class="empty-result"><div class="empty-result-icon">💼</div><h3 style="font-family:'Playfair Display',serif;font-size:1.1rem;color:var(--text);margin-bottom:8px;">Pick an industry to begin</h3><p style="font-size:0.88rem;line-height:1.6;max-width:380px;margin:0 auto;color:var(--muted);">The calculator will compute your reasonable compensation range and audit risk as you fill in the inputs.</p></div>`;
+    return;
+  }
+
+  const comparison = r.currentComp > 0 ? `
+    <div class="comparison">
+      <div class="comparison-label">Comparison to your current W-2</div>
+      <div class="comparison-text">
+        You're currently paying yourself <strong>${fmt(r.currentComp)}</strong>.
+        Calculated reasonable comp midpoint: <strong>${fmt(r.mid)}</strong>.
+        ${r.currentComp >= r.mid
+          ? `<span class="delta-good">You're ${fmt(r.currentComp - r.mid)} above the midpoint — defensible.</span>`
+          : `<span class="delta-bad">Gap of ${fmt(r.mid - r.currentComp)} is the IRS reclassification target.</span>`}
+      </div>
+    </div>
+  ` : '';
+
+  const cappedNote = r.capped ? `<div style="font-size:0.78rem;color:var(--muted);font-family:'DM Mono',monospace;margin-top:8px;">📊 Capped at available cash (profit + current comp = ${fmt(r.totalAvailable)}). Uncapped midpoint would be ${fmt(r.rawMid)}.</div>` : '';
+
+  out.innerHTML = `
+    <div class="result-headline">
+      <div class="result-eyebrow">Recommended Reasonable Compensation</div>
+      <div class="result-range">
+        <div class="result-mid">${fmt(r.mid)}</div>
+        <div class="result-mid-label">midpoint · annual W-2</div>
+      </div>
+      <div class="result-bracket">
+        <span class="lo">${fmt(r.lo)}</span>
+        <span class="result-line"></span>
+        <span class="hi">${fmt(r.hi)}</span>
+      </div>
+      <div style="font-size:0.74rem;color:var(--muted);font-family:'DM Mono',monospace;margin-top:8px;">Defensible range — low to high</div>
+      ${cappedNote}
+    </div>
+
+    <div class="risk-gauge ${r.riskLevel}">
+      <div class="risk-header">
+        <div class="risk-icon">${r.riskLevel === 'green' ? '✓' : r.riskLevel === 'yellow' ? '!' : '⚠'}</div>
+        <div class="risk-title">${r.riskTitle}</div>
+      </div>
+      <div class="risk-desc">${r.riskDesc}</div>
+    </div>
+
+    ${comparison}
+
+    <div class="breakdown">
+      <div class="breakdown-title">How we got there</div>
+      <div class="breakdown-grid">
+        <div class="breakdown-item"><span class="breakdown-key">BLS base wage</span><span class="breakdown-val">${fmt(r.base)}</span></div>
+        <div class="breakdown-item"><span class="breakdown-key">× Geographic (${r.stateLabel})</span><span class="breakdown-val">${r.geoMult.toFixed(2)}×</span></div>
+        <div class="breakdown-item"><span class="breakdown-key">× Experience (${r.years}y)</span><span class="breakdown-val">${r.expMult.toFixed(2)}×</span></div>
+        <div class="breakdown-item"><span class="breakdown-key">× Hours (${r.hours}/wk)</span><span class="breakdown-val">${r.hoursMult.toFixed(2)}×</span></div>
+        <div class="breakdown-item"><span class="breakdown-key">× Seniority (${r.senLabel})</span><span class="breakdown-val">${r.senMult.toFixed(2)}×</span></div>
+        <div class="breakdown-item"><span class="breakdown-key">= Reasonable Comp</span><span class="breakdown-val gold">${fmt(r.mid)}</span></div>
+      </div>
+    </div>
+
+    <div class="method-section">
+      <div class="method-title">The three IRS methodologies (for reference)</div>
+      <div class="method-cards">
+        <div class="method-card">
+          <div class="method-card-name">COST APPROACH</div>
+          <div class="method-card-desc">What would it cost to replace the owner — i.e., hire an employee to do the work? Uses BLS wage data. This calculator's primary methodology.</div>
+        </div>
+        <div class="method-card">
+          <div class="method-card-name">MARKET APPROACH</div>
+          <div class="method-card-desc">What are comparable employees at similar firms paid? Uses salary surveys (Robert Half, BLS, industry associations). Hardest to assemble but strongest in audit.</div>
+        </div>
+        <div class="method-card">
+          <div class="method-card-name">INCOME APPROACH</div>
+          <div class="method-card-desc">What portion of total business income is attributable to owner's labor vs. capital? Split between wages and return-on-capital. Used in capital-intensive businesses.</div>
+        </div>
+      </div>
+    </div>
+  `;
+}
+
+// Wire up inputs
+$('industry').addEventListener('change', render);
+$('state').addEventListener('change', render);
+$('experience').addEventListener('input', () => {
+  $('experienceVal').textContent = $('experience').value + ' years';
+  render();
+});
+$('hours').addEventListener('input', () => {
+  $('hoursVal').textContent = $('hours').value + ' hrs/wk';
+  render();
+});
+$('profit').addEventListener('input', render);
+$('currentComp').addEventListener('input', render);
+
+$('seniority').querySelectorAll('button').forEach(b => {
+  b.addEventListener('click', () => {
+    $('seniority').querySelectorAll('button').forEach(x => x.classList.remove('active'));
+    b.classList.add('active');
+    render();
+  });
+});
+
+// Set a default industry on load so user sees something
+$('industry').value = 'cpa';
+render();
+
+// Hamburger
+(function(){
+  const btn = $('navHamburger');
+  const ul = document.querySelector('nav .nav-links');
+  if(!btn || !ul) return;
+  btn.addEventListener('click', () => {
+    btn.classList.toggle('open');
+    ul.classList.toggle('mobile-open');
+  });
+})();
+</script>
+</body>
+</html>
