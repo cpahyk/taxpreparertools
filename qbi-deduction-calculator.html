@@ -1,0 +1,746 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>QBI Deduction Calculator §199A — 2025 + 2026 OBBBA Rules | TaxPreparerTools.com</title>
+<meta name="description" content="Free Section 199A QBI deduction calculator for 2025 and 2026 tax years. Handles below-threshold, phase-in range, and SSTB rules. Updated for OBBBA (One Big Beautiful Bill Act) expanded phase-in ranges and $400 minimum deduction effective 2026.">
+<link rel="canonical" href="https://taxpreparertools.com/qbi-deduction-calculator" />
+
+<link rel="icon" type="image/x-icon" href="/favicon.ico">
+<link rel="icon" type="image/svg+xml" href="/assets/favicon.svg">
+<link rel="icon" type="image/png" sizes="32x32" href="/assets/favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="/assets/favicon-16x16.png">
+<link rel="apple-touch-icon" sizes="180x180" href="/assets/apple-touch-icon.png">
+<link rel="manifest" href="/site.webmanifest">
+<meta name="theme-color" content="#c8a84b">
+<meta name="msapplication-TileColor" content="#08152a">
+
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700;900&family=DM+Sans:wght@300;400;500;600&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"WebApplication","name":"QBI Deduction Calculator (Section 199A)","url":"https://taxpreparertools.com/qbi-deduction-calculator","description":"Free Section 199A QBI deduction calculator for 2025 and 2026 tax years, updated for OBBBA expanded phase-in ranges and $400 minimum deduction.","applicationCategory":"FinanceApplication","offers":{"@type":"Offer","price":"0","priceCurrency":"USD"}}
+</script>
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Home","item":"https://taxpreparertools.com/"},{"@type":"ListItem","position":2,"name":"Tools","item":"https://taxpreparertools.com/tools"},{"@type":"ListItem","position":3,"name":"QBI Deduction Calculator","item":"https://taxpreparertools.com/qbi-deduction-calculator"}]}
+</script>
+
+<meta property="og:type" content="website" />
+<meta property="og:url" content="https://taxpreparertools.com/qbi-deduction-calculator" />
+<meta property="og:title" content="QBI Deduction Calculator §199A — 2025 + 2026 OBBBA Rules" />
+<meta property="og:description" content="Free Section 199A calculator with current OBBBA rules. Handles below-threshold, phase-in, SSTB, and wages/UBIA cap." />
+<meta property="og:image" content="https://taxpreparertools.com/assets/og-image.png" />
+
+<style>
+:root{
+--navy:#08152a;--navy-mid:#0f1f3d;--slate:#1a2f52;
+--gold:#c8a84b;--gold-light:#e8c96a;--gold-dim:rgba(200,168,75,0.13);
+--white:#fff;--muted:#7a8fac;--text:#dde4f0;--border:rgba(200,168,75,0.14);
+--card:rgba(255,255,255,0.04);
+--green:#4ade80;--green-bg:rgba(74,222,128,0.12);
+--yellow:#fcd34d;--yellow-bg:rgba(252,211,77,0.10);
+--red:#f87171;--red-bg:rgba(248,113,113,0.10);
+--blue:#60a5fa;--blue-bg:rgba(96,165,250,0.08);
+--purple:#a78bfa;
+}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+html{scroll-behavior:smooth;}
+body{font-family:'DM Sans',sans-serif;background:var(--navy);color:var(--text);min-height:100vh;}
+
+nav{position:sticky;top:0;z-index:200;padding:14px 48px;display:flex;align-items:center;justify-content:space-between;background:rgba(8,21,42,0.95);backdrop-filter:blur(20px);border-bottom:1px solid var(--border);}
+.logo{display:flex;align-items:center;gap:10px;text-decoration:none;}
+.logo-mark{width:32px;height:32px;background:var(--gold);border-radius:7px;display:flex;align-items:center;justify-content:center;font-size:15px;}
+.logo-name{font-family:'Playfair Display',serif;font-size:1.1rem;font-weight:700;color:var(--white);}
+.logo-name span{color:var(--gold);}
+.logo-domain{font-size:0.62rem;color:var(--muted);font-family:'DM Mono',monospace;display:block;}
+.nav-links{display:flex;gap:24px;list-style:none;}
+.nav-links a{color:var(--muted);font-size:0.82rem;font-weight:500;text-decoration:none;transition:color .2s;}
+.nav-links a:hover,.nav-links a.active{color:var(--gold);}
+.btn-sm{padding:7px 16px;border-radius:6px;font-size:0.8rem;font-weight:700;cursor:pointer;text-decoration:none;transition:all .2s;border:none;font-family:'DM Sans',sans-serif;}
+.btn-gold{background:var(--gold);color:var(--navy);}
+.btn-gold:hover{background:var(--gold-light);}
+
+.page-wrap{max-width:1200px;margin:0 auto;padding:36px 48px 80px;}
+.breadcrumb{font-size:0.73rem;font-family:'DM Mono',monospace;color:var(--muted);margin-bottom:20px;display:flex;gap:7px;align-items:center;flex-wrap:wrap;}
+.breadcrumb a{color:var(--gold);text-decoration:none;}
+
+.tool-header{display:flex;gap:22px;align-items:flex-start;margin-bottom:28px;}
+.tool-header-icon{width:60px;height:60px;background:linear-gradient(135deg,rgba(167,139,250,0.15),rgba(167,139,250,0.04));border:1px solid rgba(167,139,250,0.3);border-radius:16px;display:flex;align-items:center;justify-content:center;font-size:28px;flex-shrink:0;}
+.tool-badges{display:flex;gap:7px;margin-bottom:10px;flex-wrap:wrap;}
+.badge{font-size:0.63rem;font-family:'DM Mono',monospace;font-weight:700;text-transform:uppercase;letter-spacing:.08em;padding:3px 10px;border-radius:50px;}
+.badge-free{background:rgba(74,222,128,.12);color:var(--green);}
+.badge-new{background:rgba(251,146,60,.12);color:#fb923c;}
+.badge-cat{background:var(--gold-dim);color:var(--gold);}
+.badge-obbba{background:rgba(167,139,250,.12);color:var(--purple);}
+h1{font-family:'Playfair Display',serif;font-size:clamp(1.6rem,3.5vw,2.4rem);font-weight:900;color:var(--white);letter-spacing:-0.03em;line-height:1.1;margin-bottom:8px;}
+.tool-desc{color:var(--muted);font-size:0.92rem;line-height:1.7;max-width:720px;}
+
+.obbba-banner{background:linear-gradient(135deg,rgba(167,139,250,0.10),rgba(167,139,250,0.03));border:1px solid rgba(167,139,250,0.25);border-radius:14px;padding:18px 22px;margin-bottom:32px;}
+.obbba-eyebrow{font-family:'DM Mono',monospace;font-size:0.66rem;font-weight:700;color:var(--purple);letter-spacing:0.1em;text-transform:uppercase;margin-bottom:6px;}
+.obbba-text{font-size:0.86rem;color:var(--text);line-height:1.65;}
+.obbba-text strong{color:var(--white);}
+
+.calc-layout{display:grid;grid-template-columns:420px 1fr;gap:28px;align-items:start;}
+
+.input-card{background:var(--navy-mid);border:1px solid var(--border);border-radius:18px;padding:26px;position:sticky;top:90px;}
+.input-card h3{font-family:'Playfair Display',serif;font-size:1.05rem;font-weight:700;color:var(--white);margin-bottom:18px;padding-bottom:14px;border-bottom:1px solid var(--border);}
+.input-card .subsection{font-family:'DM Mono',monospace;font-size:0.7rem;font-weight:700;color:var(--gold);text-transform:uppercase;letter-spacing:.08em;margin:18px 0 10px;padding-top:10px;border-top:1px solid var(--border);}
+.input-card .subsection:first-of-type{padding-top:0;border-top:none;margin-top:0;}
+.field{margin-bottom:14px;}
+.field-label{font-size:0.75rem;font-weight:600;color:var(--text);margin-bottom:6px;display:flex;justify-content:space-between;align-items:center;}
+.field-hint{font-size:0.68rem;color:var(--muted);font-family:'DM Mono',monospace;}
+.field input[type="number"],.field select{width:100%;background:rgba(255,255,255,.04);border:1.5px solid rgba(200,168,75,.18);border-radius:10px;padding:10px 14px;color:var(--white);font-size:0.92rem;font-family:'DM Sans',sans-serif;outline:none;transition:border-color .2s;}
+.field input:focus,.field select:focus{border-color:var(--gold);background:rgba(255,255,255,.06);}
+.input-currency{position:relative;}
+.input-currency::before{content:'$';position:absolute;left:12px;top:50%;transform:translateY(-50%);color:var(--muted);font-weight:600;}
+.input-currency input{padding-left:24px !important;}
+
+.segmented{display:flex;gap:4px;background:rgba(255,255,255,.04);border:1.5px solid rgba(200,168,75,.18);border-radius:10px;padding:4px;}
+.segmented button{flex:1;background:transparent;border:none;color:var(--muted);padding:9px 6px;font-size:0.78rem;font-weight:600;cursor:pointer;border-radius:6px;font-family:'DM Sans',sans-serif;transition:all .15s;}
+.segmented button.active{background:var(--gold);color:var(--navy);}
+.segmented button:hover:not(.active){background:rgba(255,255,255,.04);color:var(--text);}
+
+.toggle-row{display:flex;align-items:center;gap:10px;padding:10px 12px;background:rgba(255,255,255,.02);border:1px solid var(--border);border-radius:10px;cursor:pointer;transition:all .15s;margin-bottom:10px;}
+.toggle-row:hover{background:rgba(255,255,255,.04);}
+.toggle-row.on{background:rgba(200,168,75,.06);border-color:rgba(200,168,75,.35);}
+.toggle-switch{width:36px;height:20px;background:rgba(255,255,255,.08);border-radius:20px;position:relative;flex-shrink:0;transition:background .2s;}
+.toggle-switch::after{content:'';position:absolute;left:2px;top:2px;width:16px;height:16px;background:var(--muted);border-radius:50%;transition:all .2s;}
+.toggle-row.on .toggle-switch{background:var(--gold);}
+.toggle-row.on .toggle-switch::after{left:18px;background:var(--navy);}
+.toggle-meta{flex:1;min-width:0;}
+.toggle-name{font-size:0.82rem;color:var(--text);font-weight:600;}
+.toggle-desc{font-size:0.7rem;color:var(--muted);margin-top:2px;line-height:1.4;}
+
+.output-panel{display:flex;flex-direction:column;gap:22px;}
+
+.result-card{background:var(--navy-mid);border:1px solid var(--border);border-radius:18px;padding:30px;}
+.result-eyebrow{font-family:'DM Mono',monospace;font-size:0.7rem;font-weight:700;color:var(--gold);letter-spacing:0.1em;text-transform:uppercase;margin-bottom:10px;}
+.result-amount{font-family:'Playfair Display',serif;font-size:3rem;font-weight:800;color:var(--white);letter-spacing:-0.03em;line-height:1;margin-bottom:8px;}
+.result-pct{display:inline-block;font-family:'DM Mono',monospace;color:var(--green);background:rgba(74,222,128,0.08);padding:3px 10px;border-radius:5px;font-size:0.8rem;font-weight:700;margin-top:8px;}
+.result-savings{font-size:0.86rem;color:var(--muted);margin-top:8px;}
+.result-savings strong{color:var(--green);font-family:'DM Mono',monospace;}
+
+/* Zone indicator */
+.zone-card{background:rgba(255,255,255,0.03);border:1px solid var(--border);border-radius:14px;padding:18px 20px;margin-top:18px;}
+.zone-card.green{background:var(--green-bg);border-color:rgba(74,222,128,0.3);}
+.zone-card.yellow{background:var(--yellow-bg);border-color:rgba(252,211,77,0.3);}
+.zone-card.red{background:var(--red-bg);border-color:rgba(248,113,113,0.3);}
+.zone-title{font-family:'Playfair Display',serif;font-size:1.05rem;font-weight:700;color:var(--white);margin-bottom:8px;display:flex;align-items:center;gap:10px;}
+.zone-card.green .zone-title::before{content:'✓';color:var(--green);width:24px;height:24px;background:rgba(74,222,128,0.2);border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:0.85rem;}
+.zone-card.yellow .zone-title::before{content:'!';color:var(--yellow);width:24px;height:24px;background:rgba(252,211,77,0.2);border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:0.85rem;}
+.zone-card.red .zone-title::before{content:'⚠';color:var(--red);width:24px;height:24px;background:rgba(248,113,113,0.2);border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:0.75rem;}
+.zone-desc{font-size:0.86rem;line-height:1.65;color:var(--text);}
+
+/* Spectrum visualization */
+.spectrum{margin-top:20px;}
+.spectrum-bar{position:relative;height:36px;border-radius:10px;background:linear-gradient(90deg,var(--green) 0%,var(--green) 33%,var(--yellow) 33%,var(--yellow) 66%,var(--red) 66%,var(--red) 100%);overflow:hidden;}
+.spectrum-bar::before{content:'';position:absolute;inset:0;background:linear-gradient(90deg,rgba(74,222,128,0.5) 0%,rgba(252,211,77,0.5) 50%,rgba(248,113,113,0.5) 100%);}
+.spectrum-marker{position:absolute;top:-4px;width:4px;height:44px;background:var(--white);border-radius:2px;box-shadow:0 0 0 2px var(--navy-mid),0 4px 12px rgba(0,0,0,0.5);z-index:2;transition:left .35s ease-out;}
+.spectrum-labels{display:flex;justify-content:space-between;margin-top:8px;font-size:0.7rem;color:var(--muted);font-family:'DM Mono',monospace;}
+
+/* Breakdown */
+.breakdown-section{margin-top:20px;}
+.breakdown-title{font-family:'DM Mono',monospace;font-size:0.7rem;font-weight:700;color:var(--muted);text-transform:uppercase;letter-spacing:.1em;margin-bottom:12px;}
+.breakdown-rows{background:rgba(255,255,255,0.02);border:1px solid var(--border);border-radius:12px;overflow:hidden;font-family:'DM Mono',monospace;font-size:0.82rem;}
+.bd-row{display:flex;justify-content:space-between;align-items:center;padding:11px 16px;border-bottom:1px solid var(--border);}
+.bd-row:last-child{border-bottom:none;}
+.bd-row.final{background:rgba(200,168,75,0.06);}
+.bd-row.final .bd-key{color:var(--gold);font-weight:700;}
+.bd-row.final .bd-val{color:var(--gold);font-weight:700;}
+.bd-key{color:var(--muted);}
+.bd-val{color:var(--text);font-weight:600;}
+.bd-pct{font-size:0.74rem;color:var(--muted);font-family:'DM Mono',monospace;margin-left:8px;}
+
+/* Strategy section */
+.strategy-section{margin-top:32px;background:var(--navy-mid);border:1px solid var(--border);border-radius:18px;padding:28px;}
+.strategy-section h2{font-family:'Playfair Display',serif;font-size:1.25rem;font-weight:700;color:var(--white);margin-bottom:14px;}
+.strategy-section h3{font-family:'Playfair Display',serif;font-size:1.0rem;font-weight:700;color:var(--white);margin-top:22px;margin-bottom:10px;}
+.strategy-section p{font-size:0.88rem;color:var(--text);line-height:1.7;margin-bottom:10px;}
+.strategy-section strong{color:var(--white);}
+.strategy-section code{background:rgba(200,168,75,0.08);color:var(--gold);padding:2px 6px;border-radius:4px;font-family:'DM Mono',monospace;font-size:0.85em;}
+
+.sstb-list{display:flex;flex-wrap:wrap;gap:6px;margin-top:10px;}
+.sstb-pill{font-family:'DM Mono',monospace;font-size:0.74rem;background:rgba(167,139,250,0.08);color:var(--purple);padding:4px 10px;border-radius:50px;border:1px solid rgba(167,139,250,0.2);}
+
+/* Related */
+.related-tools{margin-top:32px;background:rgba(255,255,255,0.03);border:1px solid rgba(200,168,75,0.15);border-radius:12px;padding:22px 26px;}
+.related-tools-label{font-family:'DM Mono',monospace;font-size:0.68rem;text-transform:uppercase;letter-spacing:0.1em;color:#c8a84b;margin-bottom:14px;font-weight:700;}
+.related-tools a{display:flex;align-items:center;gap:10px;color:#c8a84b;text-decoration:none;font-size:0.88rem;padding:8px 0;border-bottom:1px solid rgba(200,168,75,0.08);}
+.related-tools a:last-child{border-bottom:none;}
+.related-tools a strong{color:#e8edf5;}
+.related-tools a span.desc{color:#8a9bb5;font-size:0.8rem;margin-left:6px;}
+
+.disclaimer{margin-top:36px;padding:22px;background:var(--blue-bg);border:1px solid rgba(96,165,250,0.15);border-radius:14px;}
+.disclaimer-title{font-family:'DM Mono',monospace;font-size:0.72rem;font-weight:700;color:#93c5fd;text-transform:uppercase;letter-spacing:.08em;margin-bottom:10px;}
+.disclaimer-text{font-size:0.82rem;color:var(--muted);line-height:1.7;}
+.disclaimer-text strong{color:var(--text);}
+
+footer{border-top:1px solid var(--border);padding:28px 48px;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:12px;background:var(--navy-mid);}
+.footer-left{font-size:0.73rem;color:var(--muted);}
+.footer-left a{color:var(--gold);text-decoration:none;}
+.footer-links{display:flex;gap:20px;align-items:center;}
+.footer-links a{font-size:0.73rem;color:var(--muted);text-decoration:none;}
+.footer-links a:hover{color:var(--gold);}
+
+@media(max-width:1000px){
+  .calc-layout{grid-template-columns:1fr;}
+  .input-card{position:static;}
+}
+@media(max-width:768px){
+  nav{padding:13px 18px;}.nav-links{display:none;}
+  .page-wrap{padding:24px 18px 60px;}
+  .input-card,.result-card{padding:20px;}
+  .result-amount{font-size:2.2rem;}
+  footer{padding:20px 18px;flex-direction:column;}
+}
+.nav-hamburger{display:none;flex-direction:column;gap:5px;cursor:pointer;padding:6px;border:none;background:transparent;}
+.nav-hamburger span{display:block;width:22px;height:2px;background:var(--gold);border-radius:2px;}
+@media(max-width:768px){.nav-hamburger{display:flex;}nav .nav-links.mobile-open{display:flex;position:fixed;top:60px;left:0;right:0;background:rgba(8,21,42,0.98);flex-direction:column;padding:16px 0;z-index:200;border-bottom:1px solid rgba(200,168,75,.18);}nav .nav-links.mobile-open li{width:100%;text-align:center;list-style:none;}nav .nav-links.mobile-open li a{display:block;padding:12px 24px;}}
+</style>
+</head>
+<body>
+
+<nav>
+  <a href="index.html" class="logo">
+    <div class="logo-mark">⚖</div>
+    <div><span class="logo-name">TaxPreparer<span>Tools</span></span><span class="logo-domain">taxpreparertools.com</span></div>
+  </a>
+  <button id="navHamburger" class="nav-hamburger" aria-label="Menu"><span></span><span></span><span></span></button>
+  <ul class="nav-links">
+    <li><a href="tools.html" class="active">Tools</a></li>
+    <li><a href="decoders.html">Decoders</a></li>
+    <li><a href="deadlines.html">Deadlines</a></li>
+    <li><a href="ai-assistant.html">AI Assistant</a></li>
+    <li><a href="resources.html">Resources</a></li>
+    <li><a href="blog/">Blog</a></li>
+    <li><a href="about.html">About</a></li>
+  </ul>
+  <a href="signup.html" class="btn-sm btn-gold">Get Pro Free</a>
+</nav>
+
+<div class="page-wrap">
+
+  <div class="breadcrumb">
+    <a href="index.html">Home</a> <span>/</span>
+    <a href="tools.html">Tools</a> <span>/</span>
+    QBI Deduction Calculator
+  </div>
+
+  <div class="tool-header">
+    <div class="tool-header-icon">📊</div>
+    <div>
+      <div class="tool-badges">
+        <span class="badge badge-free">Free</span>
+        <span class="badge badge-new">New</span>
+        <span class="badge badge-obbba">OBBBA Updated</span>
+        <span class="badge badge-cat">§199A Pass-Through</span>
+      </div>
+      <h1>QBI Deduction Calculator<br>(Section 199A)</h1>
+      <p class="tool-desc">Calculate the 20% Qualified Business Income deduction for pass-through entities — sole proprietors, partnerships, and S-Corp owners. Handles the three calculation zones (below threshold, phase-in, fully phased out) and the SSTB rules. Updated for the One Big Beautiful Bill Act (OBBBA) signed July 2025: §199A is now permanent with expanded phase-in ranges and a new $400 minimum deduction effective 2026.</p>
+    </div>
+  </div>
+
+  <div class="obbba-banner">
+    <div class="obbba-eyebrow">★ OBBBA Update — Effective 2026</div>
+    <div class="obbba-text">
+      The <strong>One Big Beautiful Bill Act</strong> (signed July 4, 2025) made §199A <strong>permanent</strong> — no more 2025 sunset. For 2026, the phase-in range expands from $50K to $75K (single) and from $100K to $150K (MFJ), letting more taxpayers keep partial deductions. A new <strong>$400 minimum deduction</strong> kicks in if QBI ≥ $1,000 and you materially participate.
+    </div>
+  </div>
+
+  <div class="calc-layout">
+
+    <!-- INPUTS -->
+    <div class="input-card">
+      <h3>Inputs</h3>
+
+      <div class="subsection">Tax year &amp; status</div>
+
+      <div class="field">
+        <label class="field-label">Tax year</label>
+        <div class="segmented" id="taxYear">
+          <button data-year="2025">2025 (TCJA)</button>
+          <button class="active" data-year="2026">2026 (OBBBA)</button>
+        </div>
+      </div>
+
+      <div class="field">
+        <label class="field-label">Filing status</label>
+        <select id="filingStatus">
+          <option value="single">Single</option>
+          <option value="hoh">Head of Household</option>
+          <option value="mfj" selected>Married Filing Jointly</option>
+          <option value="mfs">Married Filing Separately</option>
+        </select>
+      </div>
+
+      <div class="subsection">Income</div>
+
+      <div class="field">
+        <label class="field-label">Taxable income before QBI
+          <span class="field-hint">After std/itemized</span>
+        </label>
+        <div class="input-currency">
+          <input type="number" id="taxableIncome" value="350000" min="0" step="1000" />
+        </div>
+      </div>
+
+      <div class="field">
+        <label class="field-label">Net capital gains
+          <span class="field-hint">LTCG + qual div</span>
+        </label>
+        <div class="input-currency">
+          <input type="number" id="capGains" value="0" min="0" step="1000" />
+        </div>
+      </div>
+
+      <div class="subsection">Business</div>
+
+      <div class="field">
+        <label class="field-label">QBI (qualified business income)
+          <span class="field-hint">Net income</span>
+        </label>
+        <div class="input-currency">
+          <input type="number" id="qbi" value="200000" min="0" step="1000" />
+        </div>
+      </div>
+
+      <div class="field">
+        <label class="field-label">W-2 wages paid by the business
+          <span class="field-hint">For wages cap</span>
+        </label>
+        <div class="input-currency">
+          <input type="number" id="w2Wages" value="80000" min="0" step="1000" />
+        </div>
+      </div>
+
+      <div class="field">
+        <label class="field-label">UBIA of qualified property
+          <span class="field-hint">Unadj. basis</span>
+        </label>
+        <div class="input-currency">
+          <input type="number" id="ubia" value="0" min="0" step="1000" />
+        </div>
+      </div>
+
+      <div class="toggle-row" id="sstbToggle" data-on="false">
+        <div class="toggle-switch"></div>
+        <div class="toggle-meta">
+          <div class="toggle-name">Is this an SSTB?</div>
+          <div class="toggle-desc">Specified Service Trade/Business: law, health, accounting, consulting, financial services, brokerage, athletics, performing arts, investment management.</div>
+        </div>
+      </div>
+
+      <div class="toggle-row on" id="materialPartToggle" data-on="true">
+        <div class="toggle-switch"></div>
+        <div class="toggle-meta">
+          <div class="toggle-name">Material participation</div>
+          <div class="toggle-desc">Active involvement in the business (relevant for 2026 $400 minimum).</div>
+        </div>
+      </div>
+
+      <div class="subsection">Other</div>
+
+      <div class="field">
+        <label class="field-label">Marginal tax rate
+          <span class="field-hint">For savings est.</span>
+        </label>
+        <select id="marginalRate">
+          <option value="0.10">10%</option>
+          <option value="0.12">12%</option>
+          <option value="0.22">22%</option>
+          <option value="0.24" selected>24%</option>
+          <option value="0.32">32%</option>
+          <option value="0.35">35%</option>
+          <option value="0.37">37%</option>
+        </select>
+      </div>
+
+    </div>
+
+    <!-- OUTPUT -->
+    <div class="output-panel" id="output">
+      <!-- populated by JS -->
+    </div>
+
+  </div>
+
+  <!-- STRATEGY NOTES -->
+  <div class="strategy-section">
+    <h2>How §199A actually works (the short version)</h2>
+    <p>Three income zones determine your QBI deduction:</p>
+
+    <h3>1. Below the threshold — simple 20%</h3>
+    <p>If your <strong>taxable income (before QBI deduction)</strong> is at or below the threshold, your QBI deduction is the lesser of <code>20% × QBI</code> or <code>20% × (Taxable Income − Net Capital Gains)</code>. No wages or UBIA test, SSTB status doesn't matter. <strong>Form 8995 (simplified)</strong> handles this.</p>
+
+    <h3>2. In the phase-in range — partial deduction, mechanics matter</h3>
+    <p>The wages/UBIA test phases in linearly for non-SSTBs. For SSTBs, the QBI itself, wages, and UBIA all phase out linearly — at the top of the range, an SSTB gets nothing. The 2026 OBBBA expanded these ranges: single went from $50K wide to $75K wide; MFJ went from $100K wide to $150K wide.</p>
+
+    <h3>3. Above the phase-out — wages/UBIA test applies fully (non-SSTB only)</h3>
+    <p>Non-SSTB businesses get the lesser of <code>20% × QBI</code> or the greater of:</p>
+    <p>· <code>50% × W-2 wages paid</code><br>
+       · <code>25% × W-2 wages + 2.5% × UBIA of qualified property</code></p>
+    <p>SSTBs get <strong>$0</strong> above the phase-out — except for the new OBBBA $400 minimum if material participation + QBI ≥ $1,000 (effective 2026).</p>
+
+    <h3>What's an SSTB?</h3>
+    <p>Per IRC §199A(d)(2), a Specified Service Trade or Business includes:</p>
+    <div class="sstb-list">
+      <span class="sstb-pill">Health</span>
+      <span class="sstb-pill">Law</span>
+      <span class="sstb-pill">Accounting</span>
+      <span class="sstb-pill">Actuarial science</span>
+      <span class="sstb-pill">Performing arts</span>
+      <span class="sstb-pill">Consulting</span>
+      <span class="sstb-pill">Athletics</span>
+      <span class="sstb-pill">Financial services</span>
+      <span class="sstb-pill">Brokerage services</span>
+      <span class="sstb-pill">Investing/investment management</span>
+      <span class="sstb-pill">Trading</span>
+      <span class="sstb-pill">Dealing in securities</span>
+      <span class="sstb-pill">Any trade where principal asset is reputation/skill of one or more employees</span>
+    </div>
+    <p style="margin-top:14px;">Notably <strong>not SSTBs</strong>: engineering, architecture, software development, real estate (generally), most manufacturing, and most retail.</p>
+
+    <h3>Strategies for SSTB owners above the threshold</h3>
+    <p>· <strong>Defer income</strong> into the next year to stay below threshold (Section 199A is income-based, not business-based).<br>
+       · <strong>Increase retirement contributions</strong> — Solo 401(k), SEP-IRA, defined benefit plans reduce taxable income.<br>
+       · <strong>Bunch deductions</strong> in years where SSTB phase-out is binding (large charitable contributions, etc.).<br>
+       · <strong>Separate non-SSTB activities</strong> into a different entity if the activity has its own economic substance (e.g., a real estate holding company for the building separate from the SSTB operating company).<br>
+       · <strong>Aggregate eligible non-SSTBs</strong> (per Reg. §1.199A-4) to combine wages/UBIA across related businesses for the wages cap test.</p>
+  </div>
+
+  <!-- RELATED -->
+  <div class="related-tools">
+    <div class="related-tools-label">Related Tools</div>
+    <a href="reasonable-compensation-calculator.html">→ <div><strong>Reasonable Compensation Calculator (S-Corp)</strong><span class="desc">— W-2 wages set here flow directly into the §199A wages cap</span></div></a>
+    <a href="self-employed-retirement-calculator.html">→ <div><strong>Self-Employed Retirement Plan Calculator</strong><span class="desc">— Retirement contributions reduce taxable income → may keep you below QBI threshold</span></div></a>
+    <a href="s-corp-audit-exposure-calculator.html">→ <div><strong>S-Corp Audit Exposure Calculator</strong><span class="desc">— Reclassification risk if W-2 wages aren't reasonable</span></div></a>
+    <a href="federal-tax-estimator.html">→ <div><strong>Federal Tax Estimator</strong><span class="desc">— Full tax computation including QBI</span></div></a>
+  </div>
+
+  <div class="disclaimer">
+    <div class="disclaimer-title">⚠️ Methodology &amp; scope</div>
+    <div class="disclaimer-text">
+      This calculator handles <strong>one trade or business at a time</strong>. For multiple businesses with aggregation, multiple SSTBs, REIT/PTP dividends, agricultural/horticultural cooperative patrons, or carryover losses from prior years, use <strong>Form 8995-A</strong> and its instructions (or your tax software).
+      <br><br>
+      <strong>2025 thresholds (TCJA):</strong> Single/HoH/MFS phase-in starts at $197,300, fully phased out at $247,300 (+$50K range). MFJ phase-in starts at $394,600, fully phased out at $494,600 (+$100K range).
+      <br><br>
+      <strong>2026 thresholds (OBBBA):</strong> Single/HoH/MFS phase-in starts at $201,750, fully phased out at $276,750 (+$75K range). MFJ phase-in starts at $403,500, fully phased out at $553,500 (+$150K range). New $400 minimum deduction if QBI ≥ $1,000 and material participation.
+      <br><br>
+      The phase-in mechanics (specifically the gradual application of wages/UBIA limits for non-SSTBs and gradual exclusion of SSTBs) follow Treas. Reg. §1.199A-1(d)(2)(iv). This is a planning estimate — your actual deduction may vary based on full facts. Form 8995-A is the authoritative computation for complex cases.
+    </div>
+  </div>
+
+</div>
+
+<footer>
+  <div class="footer-left">© 2026 <a href="index.html">TaxPreparerTools.com</a> · Section 199A logic per OBBBA H.R.1 (July 2025). Not legal or tax advice.</div>
+  <div class="footer-links"><a href="privacy.html">Privacy</a><a href="terms.html">Terms</a><a href="about.html">About</a><a href="sitemap.html">Sitemap</a><a href="https://www.irs.gov/forms-pubs/about-form-8995-a" target="_blank" rel="noopener">Form 8995-A ↗</a></div>
+</footer>
+
+<script>
+/* ===========================================================================
+   QBI DEDUCTION CALCULATOR (§199A) — 2025 (TCJA) + 2026 (OBBBA) logic
+=========================================================================== */
+
+const $ = (id) => document.getElementById(id);
+const fmt = (n) => '$' + Math.round(n).toLocaleString();
+
+// Thresholds and phase-in ranges per tax year and filing status
+const THRESHOLDS = {
+  2025: {  // TCJA original ranges
+    single:  { start: 197300, end: 247300, range: 50000  },
+    hoh:     { start: 197300, end: 247300, range: 50000  },
+    mfs:     { start: 197300, end: 247300, range: 50000  },
+    mfj:     { start: 394600, end: 494600, range: 100000 }
+  },
+  2026: {  // OBBBA expanded ranges
+    single:  { start: 201750, end: 276750, range: 75000  },
+    hoh:     { start: 201750, end: 276750, range: 75000  },
+    mfs:     { start: 201750, end: 276750, range: 75000  },
+    mfj:     { start: 403500, end: 553500, range: 150000 }
+  }
+};
+
+// OBBBA minimum deduction (effective 2026)
+const MIN_DEDUCTION_2026 = 400;
+const MIN_QBI_FOR_MIN_DEDUCTION = 1000;
+
+let state = {
+  year: '2026',
+  filingStatus: 'mfj',
+  sstb: false,
+  materialPart: true
+};
+
+// Wire up year toggle
+$('taxYear').querySelectorAll('button').forEach(b => {
+  b.addEventListener('click', () => {
+    $('taxYear').querySelectorAll('button').forEach(x => x.classList.remove('active'));
+    b.classList.add('active');
+    state.year = b.dataset.year;
+    render();
+  });
+});
+
+// Wire up status, toggles, inputs
+$('filingStatus').addEventListener('change', () => {
+  state.filingStatus = $('filingStatus').value;
+  render();
+});
+
+['sstbToggle', 'materialPartToggle'].forEach(id => {
+  $(id).addEventListener('click', () => {
+    const el = $(id);
+    el.classList.toggle('on');
+    if (id === 'sstbToggle') state.sstb = el.classList.contains('on');
+    if (id === 'materialPartToggle') state.materialPart = el.classList.contains('on');
+    render();
+  });
+});
+
+['taxableIncome', 'capGains', 'qbi', 'w2Wages', 'ubia', 'marginalRate'].forEach(id => {
+  $(id).addEventListener('input', render);
+});
+
+/* ─── Core calculation logic ─── */
+
+function computeQBI({ year, filingStatus, taxableIncome, capGains, qbi, w2Wages, ubia, sstb, materialPart, marginalRate }) {
+  const thr = THRESHOLDS[year][filingStatus];
+
+  // Overall limit: 20% × (Taxable Income - Net Capital Gains)
+  const overallLimit = Math.max(0, 0.20 * (taxableIncome - capGains));
+
+  // Tentative deduction: 20% × QBI
+  const tentative = 0.20 * qbi;
+
+  let zone, deduction = 0, breakdown = [], notes = [];
+
+  if (taxableIncome <= thr.start) {
+    // ─── ZONE 1: BELOW THRESHOLD ───
+    zone = 'green';
+    deduction = Math.min(tentative, overallLimit);
+    breakdown = [
+      { key: '20% × QBI', val: tentative },
+      { key: '20% × (TI − NCG) limit', val: overallLimit },
+      { key: 'QBI Deduction (lesser)', val: deduction, final: true }
+    ];
+    notes.push({
+      zone: 'Below threshold',
+      desc: 'You qualify for the simple 20% deduction — no wages test, no UBIA test, SSTB status irrelevant. File Form 8995 (simplified).'
+    });
+  } else if (taxableIncome >= thr.end) {
+    // ─── ZONE 3: ABOVE FULL PHASE-OUT ───
+    zone = 'red';
+    if (sstb) {
+      // SSTB: $0 (except for OBBBA $400 minimum if 2026 + qualifies)
+      if (year === '2026' && qbi >= MIN_QBI_FOR_MIN_DEDUCTION && materialPart) {
+        deduction = MIN_DEDUCTION_2026;
+        notes.push({
+          zone: 'Above full phase-out (SSTB) — OBBBA minimum applies',
+          desc: `As an SSTB above the full phase-out ($${thr.end.toLocaleString()}), normally $0 deduction. BUT the 2026 OBBBA $400 minimum kicks in because QBI ≥ $1,000 and you materially participate.`
+        });
+        breakdown = [
+          { key: 'SSTB above phase-out', val: 0 },
+          { key: 'OBBBA $400 minimum', val: 400 },
+          { key: 'QBI Deduction', val: 400, final: true }
+        ];
+      } else {
+        deduction = 0;
+        notes.push({
+          zone: 'Above full phase-out (SSTB) — no deduction',
+          desc: `Your income exceeds the full phase-out ($${thr.end.toLocaleString()} for ${filingStatus.toUpperCase()}) and this is an SSTB. Standard result: $0 deduction. ${year === '2026' ? 'The $400 minimum requires material participation AND QBI ≥ $1,000.' : ''}`
+        });
+        breakdown = [
+          { key: 'SSTB above full phase-out', val: 0, final: true }
+        ];
+      }
+    } else {
+      // Non-SSTB: wages/UBIA test applies fully
+      const wagesCap = 0.50 * w2Wages;
+      const wagesUbiaCap = 0.25 * w2Wages + 0.025 * ubia;
+      const cap = Math.max(wagesCap, wagesUbiaCap);
+      deduction = Math.min(tentative, cap, overallLimit);
+      breakdown = [
+        { key: '20% × QBI (tentative)', val: tentative },
+        { key: '50% × W-2 wages', val: wagesCap },
+        { key: '25% × W-2 + 2.5% × UBIA', val: wagesUbiaCap },
+        { key: 'Greater wages/UBIA cap', val: cap },
+        { key: '20% × (TI − NCG) limit', val: overallLimit },
+        { key: 'QBI Deduction (lesser of caps)', val: deduction, final: true }
+      ];
+      notes.push({
+        zone: 'Above full phase-out (non-SSTB)',
+        desc: 'Wages and UBIA test fully applies. Your deduction is limited to the greater of 50% of W-2 wages OR 25% of wages + 2.5% of UBIA — whichever beats the other.'
+      });
+      if (w2Wages === 0 && ubia === 0) {
+        notes.push({
+          zone: 'No wages or property — $0 deduction',
+          desc: 'With zero W-2 wages and zero UBIA above the threshold, your deduction is $0. Consider paying yourself W-2 wages from an S-Corp (see Reasonable Comp Calculator) or aggregating with a business that has wages.'
+        });
+        deduction = 0;
+        breakdown[breakdown.length - 1].val = 0;
+      }
+    }
+  } else {
+    // ─── ZONE 2: IN PHASE-IN RANGE ───
+    zone = 'yellow';
+    const excess = taxableIncome - thr.start;
+    const phaseInRatio = excess / thr.range;  // 0 to 1, how far into phase-in
+
+    if (sstb) {
+      // For SSTBs, the percentage of QBI/wages/UBIA that counts is (1 - phaseInRatio)
+      const includedRatio = 1 - phaseInRatio;
+      const adjQBI = qbi * includedRatio;
+      const adjWages = w2Wages * includedRatio;
+      const adjUBIA = ubia * includedRatio;
+
+      const adjTentative = 0.20 * adjQBI;
+      const wagesCap = 0.50 * adjWages;
+      const wagesUbiaCap = 0.25 * adjWages + 0.025 * adjUBIA;
+
+      // Reduction in wages/UBIA cap also phases in
+      const wagesCapReduction = (wagesCap - adjTentative) * phaseInRatio;
+      const effectiveCap = adjTentative - Math.max(0, (adjTentative - Math.max(wagesCap, wagesUbiaCap)) * phaseInRatio);
+
+      deduction = Math.max(0, Math.min(adjTentative, overallLimit));
+
+      // Check OBBBA minimum for 2026
+      if (year === '2026' && qbi >= MIN_QBI_FOR_MIN_DEDUCTION && materialPart && deduction < MIN_DEDUCTION_2026) {
+        deduction = MIN_DEDUCTION_2026;
+        notes.push({
+          zone: 'OBBBA $400 minimum applied',
+          desc: `Calculated SSTB deduction in phase-in was below $400. OBBBA minimum applies since QBI ≥ $1,000 and material participation.`
+        });
+      }
+
+      breakdown = [
+        { key: 'Phase-in ratio', val: `${(phaseInRatio * 100).toFixed(1)}%` },
+        { key: 'QBI included (SSTB)', val: adjQBI, pct: `(${(includedRatio * 100).toFixed(1)}% × ${fmt(qbi)})` },
+        { key: '20% × included QBI', val: adjTentative },
+        { key: 'QBI Deduction', val: deduction, final: true }
+      ];
+      notes.push({
+        zone: 'SSTB in phase-in range',
+        desc: `Your taxable income (${fmt(taxableIncome)}) is ${(phaseInRatio * 100).toFixed(1)}% into the phase-in range. As an SSTB, ${(includedRatio * 100).toFixed(0)}% of your QBI counts toward the deduction. At the top of the range, SSTBs get nothing.`
+      });
+    } else {
+      // For non-SSTBs, the wages/UBIA test phases IN
+      const wagesCap = 0.50 * w2Wages;
+      const wagesUbiaCap = 0.25 * w2Wages + 0.025 * ubia;
+      const fullCap = Math.max(wagesCap, wagesUbiaCap);
+
+      // The unlimited 20% × QBI applies fully at start of phase-in,
+      // becomes fully capped by wages/UBIA at end of phase-in
+      const reductionDueToWagesTest = Math.max(0, tentative - fullCap);
+      const phasedReduction = reductionDueToWagesTest * phaseInRatio;
+      const allowed = tentative - phasedReduction;
+      deduction = Math.min(allowed, overallLimit);
+
+      breakdown = [
+        { key: 'Phase-in ratio', val: `${(phaseInRatio * 100).toFixed(1)}%` },
+        { key: '20% × QBI (tentative)', val: tentative },
+        { key: 'Wages/UBIA cap (full)', val: fullCap },
+        { key: 'Reduction at full phase-out', val: reductionDueToWagesTest },
+        { key: 'Reduction × phase-in ratio', val: phasedReduction },
+        { key: 'QBI Deduction', val: deduction, final: true }
+      ];
+      notes.push({
+        zone: 'Non-SSTB in phase-in range',
+        desc: `Your income (${fmt(taxableIncome)}) is ${(phaseInRatio * 100).toFixed(1)}% into the phase-in range. The wages/UBIA test gradually applies — you keep some of your tentative deduction even where the wages test would otherwise reduce it.`
+      });
+    }
+  }
+
+  // Tax savings
+  const taxSavings = deduction * marginalRate;
+
+  return { zone, deduction, tentative, overallLimit, breakdown, notes, taxSavings, thr };
+}
+
+function render() {
+  const inputs = {
+    year: state.year,
+    filingStatus: state.filingStatus,
+    taxableIncome: parseFloat($('taxableIncome').value) || 0,
+    capGains: parseFloat($('capGains').value) || 0,
+    qbi: parseFloat($('qbi').value) || 0,
+    w2Wages: parseFloat($('w2Wages').value) || 0,
+    ubia: parseFloat($('ubia').value) || 0,
+    sstb: state.sstb,
+    materialPart: state.materialPart,
+    marginalRate: parseFloat($('marginalRate').value)
+  };
+
+  const r = computeQBI(inputs);
+
+  // Spectrum marker position (0 to 100%)
+  let spectrumPos = 50;
+  if (inputs.taxableIncome <= r.thr.start) {
+    spectrumPos = (inputs.taxableIncome / r.thr.start) * 33;
+  } else if (inputs.taxableIncome >= r.thr.end) {
+    spectrumPos = 66 + Math.min(33, ((inputs.taxableIncome - r.thr.end) / r.thr.end) * 33);
+    spectrumPos = Math.min(95, spectrumPos);
+  } else {
+    spectrumPos = 33 + ((inputs.taxableIncome - r.thr.start) / r.thr.range) * 33;
+  }
+
+  const breakdownHtml = r.breakdown.map(b => `
+    <div class="bd-row ${b.final ? 'final' : ''}">
+      <span class="bd-key">${b.key}${b.pct ? ' <span class="bd-pct">' + b.pct + '</span>' : ''}</span>
+      <span class="bd-val">${typeof b.val === 'string' ? b.val : fmt(b.val)}</span>
+    </div>
+  `).join('');
+
+  const notesHtml = r.notes.map(n => `
+    <div class="zone-card ${r.zone}">
+      <div class="zone-title">${n.zone}</div>
+      <div class="zone-desc">${n.desc}</div>
+    </div>
+  `).join('');
+
+  const pct = inputs.qbi > 0 ? (r.deduction / inputs.qbi * 100).toFixed(1) : '0.0';
+
+  $('output').innerHTML = `
+    <div class="result-card">
+      <div class="result-eyebrow">${state.year} QBI Deduction (§199A)</div>
+      <div class="result-amount">${fmt(r.deduction)}</div>
+      <div class="result-pct">${pct}% of your QBI</div>
+      <div class="result-savings">Estimated tax savings at ${(inputs.marginalRate * 100).toFixed(0)}% marginal rate: <strong>${fmt(r.taxSavings)}</strong></div>
+
+      <div class="spectrum">
+        <div class="spectrum-bar">
+          <div class="spectrum-marker" style="left:${spectrumPos}%;"></div>
+        </div>
+        <div class="spectrum-labels">
+          <span>$0</span>
+          <span>${fmt(r.thr.start)} threshold</span>
+          <span>${fmt(r.thr.end)} fully phased out</span>
+        </div>
+      </div>
+
+      ${notesHtml}
+
+      <div class="breakdown-section">
+        <div class="breakdown-title">Calculation breakdown</div>
+        <div class="breakdown-rows">${breakdownHtml}</div>
+      </div>
+    </div>
+  `;
+}
+
+// Initial render
+render();
+
+// Hamburger
+(function(){
+  const btn = $('navHamburger');
+  const ul = document.querySelector('nav .nav-links');
+  if(!btn || !ul) return;
+  btn.addEventListener('click', () => {
+    btn.classList.toggle('open');
+    ul.classList.toggle('mobile-open');
+  });
+})();
+</script>
+</body>
+</html>
