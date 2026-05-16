@@ -26,6 +26,12 @@
   <url><loc>https://taxpreparertools.com/blog/qbi-sstb-phase-out-2025</loc><lastmod>2026-03-10</lastmod><changefreq>yearly</changefreq><priority>0.7</priority></url>
 
   <url><loc>https://taxpreparertools.com/sitemap</loc><lastmod>2026-05-12</lastmod><changefreq>monthly</changefreq><priority>0.4</priority></url>
+    <url>
+    <loc>https://taxpreparertools.com/decoders</loc>
+    <lastmod>2026-05-15</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.95</priority>
+  </url>
   <url><loc>https://taxpreparertools.com/irs-notice-decoder</loc><lastmod>2026-05-14</lastmod><changefreq>yearly</changefreq><priority>0.85</priority></url>
   <url>
     <loc>https://taxpreparertools.com/irs-transcript-decoder</loc>
