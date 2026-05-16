@@ -1,0 +1,582 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>S-Corp Audit Exposure Calculator — Reasonable Comp Reclassification Math | TaxPreparerTools.com</title>
+<meta name="description" content="Calculate the IRS audit exposure if S-Corp distributions get reclassified as reasonable compensation. FICA/Medicare tax + FTF/FTP/§6662 penalties + compound interest across multiple years. Free companion to the Reasonable Comp Calculator.">
+<link rel="canonical" href="https://taxpreparertools.com/s-corp-audit-exposure-calculator" />
+
+<link rel="icon" type="image/x-icon" href="/favicon.ico">
+<link rel="icon" type="image/svg+xml" href="/assets/favicon.svg">
+<link rel="icon" type="image/png" sizes="32x32" href="/assets/favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="/assets/favicon-16x16.png">
+<link rel="apple-touch-icon" sizes="180x180" href="/assets/apple-touch-icon.png">
+<link rel="manifest" href="/site.webmanifest">
+<meta name="theme-color" content="#c8a84b">
+<meta name="msapplication-TileColor" content="#08152a">
+
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700;900&family=DM+Sans:wght@300;400;500;600&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"WebApplication","name":"S-Corp Audit Exposure Calculator","url":"https://taxpreparertools.com/s-corp-audit-exposure-calculator","description":"Calculate IRS audit exposure when S-Corp distributions get reclassified as reasonable compensation — includes FICA/Medicare tax, FTF/FTP/§6662 penalties, and compound interest.","applicationCategory":"FinanceApplication","offers":{"@type":"Offer","price":"0","priceCurrency":"USD"}}
+</script>
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Home","item":"https://taxpreparertools.com/"},{"@type":"ListItem","position":2,"name":"Tools","item":"https://taxpreparertools.com/tools"},{"@type":"ListItem","position":3,"name":"S-Corp Audit Exposure Calculator","item":"https://taxpreparertools.com/s-corp-audit-exposure-calculator"}]}
+</script>
+
+<meta property="og:type" content="website" />
+<meta property="og:url" content="https://taxpreparertools.com/s-corp-audit-exposure-calculator" />
+<meta property="og:title" content="S-Corp Audit Exposure Calculator — Reasonable Comp Reclassification Math" />
+<meta property="og:description" content="What happens if the IRS reclassifies your S-Corp distributions as wages? Compute multi-year FICA/Medicare exposure plus penalties and interest." />
+<meta property="og:image" content="https://taxpreparertools.com/assets/og-image.png" />
+
+<style>
+:root{
+--navy:#08152a;--navy-mid:#0f1f3d;--slate:#1a2f52;
+--gold:#c8a84b;--gold-light:#e8c96a;--gold-dim:rgba(200,168,75,0.13);
+--white:#fff;--muted:#7a8fac;--text:#dde4f0;--border:rgba(200,168,75,0.14);
+--card:rgba(255,255,255,0.04);
+--green:#4ade80;--green-bg:rgba(74,222,128,0.12);
+--yellow:#fcd34d;
+--red:#f87171;--red-bg:rgba(248,113,113,0.12);
+--blue:#60a5fa;--blue-bg:rgba(96,165,250,0.08);
+--purple:#a78bfa;
+}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+html{scroll-behavior:smooth;}
+body{font-family:'DM Sans',sans-serif;background:var(--navy);color:var(--text);min-height:100vh;}
+
+nav{position:sticky;top:0;z-index:200;padding:14px 48px;display:flex;align-items:center;justify-content:space-between;background:rgba(8,21,42,0.95);backdrop-filter:blur(20px);border-bottom:1px solid var(--border);}
+.logo{display:flex;align-items:center;gap:10px;text-decoration:none;}
+.logo-mark{width:32px;height:32px;background:var(--gold);border-radius:7px;display:flex;align-items:center;justify-content:center;font-size:15px;}
+.logo-name{font-family:'Playfair Display',serif;font-size:1.1rem;font-weight:700;color:var(--white);}
+.logo-name span{color:var(--gold);}
+.logo-domain{font-size:0.62rem;color:var(--muted);font-family:'DM Mono',monospace;display:block;}
+.nav-links{display:flex;gap:24px;list-style:none;}
+.nav-links a{color:var(--muted);font-size:0.82rem;font-weight:500;text-decoration:none;transition:color .2s;}
+.nav-links a:hover,.nav-links a.active{color:var(--gold);}
+.btn-sm{padding:7px 16px;border-radius:6px;font-size:0.8rem;font-weight:700;cursor:pointer;text-decoration:none;transition:all .2s;border:none;font-family:'DM Sans',sans-serif;}
+.btn-gold{background:var(--gold);color:var(--navy);}
+.btn-gold:hover{background:var(--gold-light);}
+
+.page-wrap{max-width:1200px;margin:0 auto;padding:36px 48px 80px;}
+.breadcrumb{font-size:0.73rem;font-family:'DM Mono',monospace;color:var(--muted);margin-bottom:20px;display:flex;gap:7px;align-items:center;flex-wrap:wrap;}
+.breadcrumb a{color:var(--gold);text-decoration:none;}
+
+.tool-header{display:flex;gap:22px;align-items:flex-start;margin-bottom:32px;}
+.tool-header-icon{width:60px;height:60px;background:linear-gradient(135deg,rgba(248,113,113,0.15),rgba(248,113,113,0.04));border:1px solid rgba(248,113,113,0.3);border-radius:16px;display:flex;align-items:center;justify-content:center;font-size:28px;flex-shrink:0;}
+.tool-badges{display:flex;gap:7px;margin-bottom:10px;flex-wrap:wrap;}
+.badge{font-size:0.63rem;font-family:'DM Mono',monospace;font-weight:700;text-transform:uppercase;letter-spacing:.08em;padding:3px 10px;border-radius:50px;}
+.badge-free{background:rgba(74,222,128,.12);color:var(--green);}
+.badge-new{background:rgba(251,146,60,.12);color:#fb923c;}
+.badge-cat{background:var(--gold-dim);color:var(--gold);}
+.badge-companion{background:rgba(167,139,250,.12);color:var(--purple);}
+h1{font-family:'Playfair Display',serif;font-size:clamp(1.6rem,3.5vw,2.4rem);font-weight:900;color:var(--white);letter-spacing:-0.03em;line-height:1.1;margin-bottom:8px;}
+.tool-desc{color:var(--muted);font-size:0.92rem;line-height:1.7;max-width:720px;}
+
+.companion-note{background:rgba(167,139,250,0.06);border:1px solid rgba(167,139,250,0.2);border-radius:10px;padding:12px 16px;margin-bottom:32px;font-size:0.84rem;line-height:1.55;color:var(--text);}
+.companion-note a{color:var(--purple);font-weight:600;text-decoration:none;}
+.companion-note a:hover{text-decoration:underline;}
+
+/* Layout */
+.calc-layout{display:grid;grid-template-columns:440px 1fr;gap:28px;align-items:start;}
+
+/* Inputs */
+.input-card{background:var(--navy-mid);border:1px solid var(--border);border-radius:18px;padding:26px;position:sticky;top:90px;}
+.input-card h3{font-family:'Playfair Display',serif;font-size:1.05rem;font-weight:700;color:var(--white);margin-bottom:18px;padding-bottom:14px;border-bottom:1px solid var(--border);}
+.field{margin-bottom:18px;}
+.field-label{font-size:0.75rem;font-weight:600;color:var(--text);margin-bottom:8px;display:flex;justify-content:space-between;align-items:center;}
+.field-hint{font-size:0.68rem;color:var(--muted);font-family:'DM Mono',monospace;}
+.field-value{font-family:'DM Mono',monospace;color:var(--gold);font-weight:700;font-size:0.82rem;}
+.field input[type="number"],.field select{width:100%;background:rgba(255,255,255,.04);border:1.5px solid rgba(200,168,75,.18);border-radius:10px;padding:11px 14px;color:var(--white);font-size:0.92rem;font-family:'DM Sans',sans-serif;outline:none;transition:border-color .2s;}
+.field input:focus,.field select:focus{border-color:var(--gold);background:rgba(255,255,255,.06);}
+.field input[type="range"]{-webkit-appearance:none;width:100%;height:5px;background:rgba(255,255,255,.08);border-radius:5px;outline:none;margin:8px 0;}
+.field input[type="range"]::-webkit-slider-thumb{-webkit-appearance:none;width:18px;height:18px;background:var(--gold);border-radius:50%;cursor:pointer;border:3px solid var(--navy-mid);}
+.field input[type="range"]::-moz-range-thumb{width:18px;height:18px;background:var(--gold);border-radius:50%;cursor:pointer;border:3px solid var(--navy-mid);}
+.input-currency{position:relative;}
+.input-currency::before{content:'$';position:absolute;left:12px;top:50%;transform:translateY(-50%);color:var(--muted);font-weight:600;}
+.input-currency input{padding-left:24px !important;}
+
+/* Toggle switches for penalties */
+.toggle-list{display:flex;flex-direction:column;gap:8px;}
+.toggle-row{display:flex;align-items:center;gap:10px;padding:10px 12px;background:rgba(255,255,255,.02);border:1px solid var(--border);border-radius:10px;cursor:pointer;transition:all .15s;}
+.toggle-row:hover{background:rgba(255,255,255,.04);border-color:rgba(200,168,75,.25);}
+.toggle-row.on{background:rgba(200,168,75,.06);border-color:rgba(200,168,75,.35);}
+.toggle-switch{width:36px;height:20px;background:rgba(255,255,255,.08);border-radius:20px;position:relative;flex-shrink:0;transition:background .2s;}
+.toggle-switch::after{content:'';position:absolute;left:2px;top:2px;width:16px;height:16px;background:var(--muted);border-radius:50%;transition:all .2s;}
+.toggle-row.on .toggle-switch{background:var(--gold);}
+.toggle-row.on .toggle-switch::after{left:18px;background:var(--navy);}
+.toggle-meta{flex:1;min-width:0;}
+.toggle-name{font-size:0.85rem;color:var(--text);font-weight:600;}
+.toggle-desc{font-size:0.7rem;color:var(--muted);margin-top:2px;line-height:1.4;}
+
+/* Output panel */
+.output-panel{background:var(--navy-mid);border:1px solid var(--border);border-radius:18px;padding:32px;min-height:520px;}
+
+/* Hero exposure number */
+.exposure-headline{margin-bottom:28px;padding-bottom:22px;border-bottom:1px solid var(--border);}
+.exposure-eyebrow{font-family:'DM Mono',monospace;font-size:0.7rem;font-weight:700;color:var(--red);letter-spacing:0.1em;text-transform:uppercase;margin-bottom:10px;}
+.exposure-total{font-family:'Playfair Display',serif;font-size:3rem;font-weight:800;color:var(--white);letter-spacing:-0.03em;line-height:1;margin-bottom:8px;}
+.exposure-vs{font-size:0.84rem;color:var(--muted);font-family:'DM Mono',monospace;}
+.exposure-vs strong{color:var(--text);}
+.exposure-multiplier{display:inline-block;font-family:'DM Mono',monospace;color:var(--red);background:rgba(248,113,113,0.08);padding:2px 8px;border-radius:4px;font-size:0.78rem;font-weight:700;margin-top:8px;}
+
+/* Per-year table */
+.year-table{margin-bottom:30px;}
+.year-table-title{font-family:'DM Mono',monospace;font-size:0.7rem;font-weight:700;color:var(--muted);text-transform:uppercase;letter-spacing:.1em;margin-bottom:12px;}
+.year-grid{display:grid;grid-template-columns:auto repeat(5,1fr);gap:0;border:1px solid var(--border);border-radius:12px;overflow:hidden;font-size:0.82rem;}
+.year-grid > div{padding:10px 12px;border-right:1px solid var(--border);border-bottom:1px solid var(--border);font-family:'DM Mono',monospace;}
+.year-grid > div:nth-child(6n){border-right:none;}
+.year-grid .yh{background:rgba(200,168,75,0.06);color:var(--gold);font-size:0.7rem;font-weight:700;text-transform:uppercase;letter-spacing:0.05em;}
+.year-grid .yr{color:var(--muted);font-weight:600;}
+.year-grid .yt{color:var(--white);font-weight:600;text-align:right;}
+.year-grid .yp{color:var(--text);text-align:right;}
+.year-grid .yi{color:#fb923c;text-align:right;}
+.year-grid .ytot{background:rgba(200,168,75,0.04);color:var(--gold);font-weight:700;text-align:right;}
+.year-grid .tot-row > div{background:rgba(200,168,75,0.08);font-weight:700;color:var(--text);}
+.year-grid .tot-row .tot-final{color:var(--white);}
+
+/* Breakdown card stack */
+.breakdown-cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:12px;margin-bottom:30px;}
+.bd-card{background:rgba(255,255,255,.03);border:1px solid var(--border);border-radius:12px;padding:14px 16px;}
+.bd-label{font-size:0.65rem;font-family:'DM Mono',monospace;color:var(--muted);text-transform:uppercase;letter-spacing:0.08em;margin-bottom:6px;}
+.bd-amount{font-family:'Playfair Display',serif;font-size:1.3rem;font-weight:700;color:var(--white);letter-spacing:-0.02em;line-height:1.1;}
+.bd-card.tax .bd-amount{color:var(--gold);}
+.bd-card.pen .bd-amount{color:#fb923c;}
+.bd-card.int .bd-amount{color:var(--red);}
+.bd-pct{font-size:0.7rem;color:var(--muted);font-family:'DM Mono',monospace;margin-top:4px;}
+
+/* What this means */
+.what-section{margin-top:28px;padding-top:24px;border-top:1px solid var(--border);}
+.what-title{font-family:'Playfair Display',serif;font-size:1rem;font-weight:700;color:var(--white);margin-bottom:14px;display:flex;align-items:center;gap:10px;}
+.what-title::before{content:'';width:14px;height:1px;background:var(--gold);}
+.what-text{font-size:0.88rem;line-height:1.7;color:var(--text);}
+.what-text strong{color:var(--white);}
+
+/* Defensive actions section */
+.defense-section{margin-top:48px;background:var(--navy-mid);border:1px solid var(--border);border-radius:18px;padding:28px;}
+.defense-section h2{font-family:'Playfair Display',serif;font-size:1.3rem;font-weight:700;color:var(--white);margin-bottom:16px;}
+.defense-sub{font-size:0.88rem;color:var(--muted);line-height:1.65;margin-bottom:24px;}
+.defense-list{list-style:none;display:flex;flex-direction:column;gap:14px;counter-reset:dstep;}
+.defense-list li{padding-left:36px;position:relative;font-size:0.9rem;line-height:1.7;color:var(--text);counter-increment:dstep;}
+.defense-list li::before{content:counter(dstep);position:absolute;left:0;top:1px;width:22px;height:22px;border-radius:50%;background:var(--gold-dim);color:var(--gold);font-family:'DM Mono',monospace;font-size:0.75rem;font-weight:700;display:flex;align-items:center;justify-content:center;}
+.defense-list strong{color:var(--white);}
+
+/* Related */
+.related-tools{margin-top:32px;background:rgba(255,255,255,0.03);border:1px solid rgba(200,168,75,0.15);border-radius:12px;padding:22px 26px;}
+.related-tools-label{font-family:'DM Mono',monospace;font-size:0.68rem;text-transform:uppercase;letter-spacing:0.1em;color:#c8a84b;margin-bottom:14px;font-weight:700;}
+.related-tools a{display:flex;align-items:center;gap:10px;color:#c8a84b;text-decoration:none;font-size:0.88rem;padding:8px 0;border-bottom:1px solid rgba(200,168,75,0.08);}
+.related-tools a:last-child{border-bottom:none;}
+.related-tools a strong{color:#e8edf5;}
+.related-tools a span.desc{color:#8a9bb5;font-size:0.8rem;margin-left:6px;}
+
+.disclaimer{margin-top:36px;padding:22px;background:var(--blue-bg);border:1px solid rgba(96,165,250,0.15);border-radius:14px;}
+.disclaimer-title{font-family:'DM Mono',monospace;font-size:0.72rem;font-weight:700;color:#93c5fd;text-transform:uppercase;letter-spacing:.08em;margin-bottom:10px;}
+.disclaimer-text{font-size:0.82rem;color:var(--muted);line-height:1.7;}
+.disclaimer-text strong{color:var(--text);}
+
+footer{border-top:1px solid var(--border);padding:28px 48px;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:12px;background:var(--navy-mid);}
+.footer-left{font-size:0.73rem;color:var(--muted);}
+.footer-left a{color:var(--gold);text-decoration:none;}
+.footer-links{display:flex;gap:20px;align-items:center;}
+.footer-links a{font-size:0.73rem;color:var(--muted);text-decoration:none;}
+.footer-links a:hover{color:var(--gold);}
+
+@media(max-width:1000px){
+  .calc-layout{grid-template-columns:1fr;}
+  .input-card{position:static;}
+}
+@media(max-width:768px){
+  nav{padding:13px 18px;}.nav-links{display:none;}
+  .page-wrap{padding:24px 18px 60px;}
+  .input-card,.output-panel{padding:18px;}
+  .exposure-total{font-size:2.2rem;}
+  .year-grid{grid-template-columns:auto 1fr 1fr;font-size:0.74rem;}
+  .year-grid .yh:nth-child(n+5),.year-grid .yt:nth-child(6n-2),.year-grid .yp:nth-child(6n-1),.year-grid .yi:nth-child(6n){display:none;}
+  footer{padding:20px 18px;flex-direction:column;}
+}
+.nav-hamburger{display:none;flex-direction:column;gap:5px;cursor:pointer;padding:6px;border:none;background:transparent;}
+.nav-hamburger span{display:block;width:22px;height:2px;background:var(--gold);border-radius:2px;}
+@media(max-width:768px){.nav-hamburger{display:flex;}nav .nav-links.mobile-open{display:flex;position:fixed;top:60px;left:0;right:0;background:rgba(8,21,42,0.98);flex-direction:column;padding:16px 0;z-index:200;border-bottom:1px solid rgba(200,168,75,.18);}nav .nav-links.mobile-open li{width:100%;text-align:center;list-style:none;}nav .nav-links.mobile-open li a{display:block;padding:12px 24px;}}
+</style>
+</head>
+<body>
+
+<nav>
+  <a href="index.html" class="logo">
+    <div class="logo-mark">⚖</div>
+    <div><span class="logo-name">TaxPreparer<span>Tools</span></span><span class="logo-domain">taxpreparertools.com</span></div>
+  </a>
+  <button id="navHamburger" class="nav-hamburger" aria-label="Menu"><span></span><span></span><span></span></button>
+  <ul class="nav-links">
+    <li><a href="tools.html" class="active">Tools</a></li>
+    <li><a href="decoders.html">Decoders</a></li>
+    <li><a href="deadlines.html">Deadlines</a></li>
+    <li><a href="ai-assistant.html">AI Assistant</a></li>
+    <li><a href="resources.html">Resources</a></li>
+    <li><a href="blog/">Blog</a></li>
+    <li><a href="about.html">About</a></li>
+  </ul>
+  <a href="signup.html" class="btn-sm btn-gold">Get Pro Free</a>
+</nav>
+
+<div class="page-wrap">
+
+  <div class="breadcrumb">
+    <a href="index.html">Home</a> <span>/</span>
+    <a href="tools.html">Tools</a> <span>/</span>
+    S-Corp Audit Exposure Calculator
+  </div>
+
+  <div class="tool-header">
+    <div class="tool-header-icon">⚠️</div>
+    <div>
+      <div class="tool-badges">
+        <span class="badge badge-free">Free</span>
+        <span class="badge badge-new">New</span>
+        <span class="badge badge-companion">Companion Tool</span>
+        <span class="badge badge-cat">S-Corp Planning</span>
+      </div>
+      <h1>S-Corp Audit Exposure Calculator</h1>
+      <p class="tool-desc">If the IRS reclassifies your S-Corp distributions as wages, what's the actual cost? This calculator models FICA/Medicare tax on the reclassified amount, layered with applicable penalties (FTF, FTP, §6662) and compound interest at the federal short-term rate plus 3%. Multi-year exposure shown per year and cumulatively — same math the IRS uses on a reclassification adjustment.</p>
+    </div>
+  </div>
+
+  <div class="companion-note">
+    💡 <strong>Pair this with the <a href="reasonable-compensation-calculator.html">Reasonable Compensation Calculator</a></strong> — find your defensible RC range there, then enter the shortfall here to quantify the audit exposure if you've been underpaying yourself.
+  </div>
+
+  <div class="calc-layout">
+
+    <!-- INPUTS -->
+    <div class="input-card">
+      <h3>Reclassification Scenario</h3>
+
+      <div class="field">
+        <label class="field-label">Annual RC shortfall
+          <span class="field-hint">Per year</span>
+        </label>
+        <div class="input-currency">
+          <input type="number" id="shortfall" value="50000" min="0" step="1000" />
+        </div>
+        <div style="font-size:0.7rem;color:var(--muted);margin-top:6px;line-height:1.45;">The amount the IRS would reclassify from distributions to W-2 wages each year.</div>
+      </div>
+
+      <div class="field">
+        <label class="field-label">Number of years exposed
+          <span class="field-value" id="yearsVal">3 years</span>
+        </label>
+        <input type="range" id="years" min="1" max="6" value="3" step="1" />
+        <div style="font-size:0.7rem;color:var(--muted);margin-top:6px;line-height:1.45;">IRS typically has a 3-year statute (§6501(a)), extended to 6 years for substantial omissions (§6501(e)).</div>
+      </div>
+
+      <div class="field">
+        <label class="field-label">Wages already on W-2 (per year)
+          <span class="field-hint">For SS-base calc</span>
+        </label>
+        <div class="input-currency">
+          <input type="number" id="existingWages" value="0" min="0" step="1000" />
+        </div>
+        <div style="font-size:0.7rem;color:var(--muted);margin-top:6px;line-height:1.45;">Wages already reported on Form W-2. Used to determine how much of the reclassified amount stays under the Social Security wage base ($176,100 for 2025).</div>
+      </div>
+
+      <div class="field" style="margin-top:24px;">
+        <div style="font-family:'DM Mono',monospace;font-size:0.7rem;font-weight:700;color:var(--muted);text-transform:uppercase;letter-spacing:.1em;margin-bottom:10px;">Penalties to apply</div>
+        <div class="toggle-list">
+
+          <div class="toggle-row on" data-toggle="ftp">
+            <div class="toggle-switch"></div>
+            <div class="toggle-meta">
+              <div class="toggle-name">Failure-to-Pay (FTP) — §6651(a)(2)</div>
+              <div class="toggle-desc">0.5%/mo, max 25%. Applies on any unpaid balance at the due date.</div>
+            </div>
+          </div>
+
+          <div class="toggle-row" data-toggle="ftf">
+            <div class="toggle-switch"></div>
+            <div class="toggle-meta">
+              <div class="toggle-name">Failure-to-File (FTF) — §6651(a)(1)</div>
+              <div class="toggle-desc">5%/mo, max 25%. Only if Form 941 wasn't filed (rare for reclassification cases).</div>
+            </div>
+          </div>
+
+          <div class="toggle-row on" data-toggle="accuracy">
+            <div class="toggle-switch"></div>
+            <div class="toggle-meta">
+              <div class="toggle-name">Accuracy-Related — §6662</div>
+              <div class="toggle-desc">20% of underpayment. Applied for substantial understatement; common in reclassification cases.</div>
+            </div>
+          </div>
+
+          <div class="toggle-row on" data-toggle="interest">
+            <div class="toggle-switch"></div>
+            <div class="toggle-meta">
+              <div class="toggle-name">Interest — §6601</div>
+              <div class="toggle-desc">Fed short-term rate + 3%. Currently ~8% APR, compounded daily.</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="field" style="margin-top:18px;">
+        <label class="field-label">Annual interest rate
+          <span class="field-value" id="rateVal">8.0%</span>
+        </label>
+        <input type="range" id="rate" min="3" max="12" value="8" step="0.5" />
+      </div>
+
+    </div>
+
+    <!-- OUTPUT -->
+    <div class="output-panel" id="output">
+      <!-- populated by JS -->
+    </div>
+
+  </div>
+
+  <!-- DEFENSIVE ACTIONS -->
+  <div class="defense-section">
+    <h2>If you're underpaying, here's what to do before the IRS finds you</h2>
+    <p class="defense-sub">The cost of voluntary correction is dramatically lower than the cost of an audit-driven correction. Penalties may be reduced or waived for taxpayers who self-correct in good faith.</p>
+    <ol class="defense-list">
+      <li><strong>Document your current basis.</strong> Run the <a href="reasonable-compensation-calculator.html" style="color:var(--gold);">Reasonable Compensation Calculator</a> for your industry, geography, and seniority. Save the output to file with a dated memo explaining the inputs you used. This is the single most important defensive document.</li>
+      <li><strong>Increase W-2 wages going forward.</strong> Adjust payroll for the rest of the current year to bring annualized W-2 wages into the calculated reasonable comp range. Run a year-end "true-up" bonus through payroll if needed.</li>
+      <li><strong>For prior-year exposure: file Form 941-X.</strong> Use IRS Form 941-X to amend prior payroll tax returns and add the trust fund (employee FICA) and employer match for the reclassified amount. Pay the additional tax with interest but BEFORE penalties accrue further.</li>
+      <li><strong>Consider Form W-2c.</strong> Issue corrected W-2s reporting the additional wages. The shareholder-employee will need to file Form 1040-X to report the additional W-2 wages — but federal income tax often doesn't change (because the wages replace distributions that already flowed through).</li>
+      <li><strong>Request reasonable cause penalty abatement.</strong> If you self-corrected before audit, ask the IRS to waive accuracy-related and FTP penalties under the reasonable cause standard (IRC §6664(c)). Document the reliance on professional advice, the affirmative steps taken to correct, and the absence of willfulness.</li>
+      <li><strong>Document the correction in board minutes or a comp memo.</strong> S-Corp board minutes documenting the decision to increase reasonable compensation — and the basis for the new number — create contemporaneous evidence that strengthens any future audit defense.</li>
+    </ol>
+  </div>
+
+  <!-- RELATED -->
+  <div class="related-tools">
+    <div class="related-tools-label">Related Tools</div>
+    <a href="reasonable-compensation-calculator.html">→ <div><strong>Reasonable Compensation Calculator</strong><span class="desc">— Find the defensible RC range first, then quantify exposure here</span></div></a>
+    <a href="penalty-calculator.html">→ <div><strong>IRS Penalty Calculator (General)</strong><span class="desc">— Same FTF/FTP/accuracy/interest math for any tax balance, not just reclassification</span></div></a>
+    <a href="decoders.html">→ <div><strong>IRS Decoder Suite</strong><span class="desc">— If you've received a CP2000, CP14, or transcript with TC 290 from a reclassification</span></div></a>
+    <a href="se-tax-calculator.html">→ <div><strong>Self-Employment Tax Calculator</strong><span class="desc">— Schedule SE math (sole-prop alternative to S-Corp)</span></div></a>
+  </div>
+
+  <div class="disclaimer">
+    <div class="disclaimer-title">⚠️ Methodology &amp; limitations</div>
+    <div class="disclaimer-text">
+      This calculator models <strong>employer-side FICA/Medicare exposure</strong> on amounts reclassified from S-Corp distributions to W-2 wages. The math: 15.3% (FICA 12.4% + Medicare 2.9%) up to the Social Security wage base ($176,100 for 2025), then 2.9% Medicare-only above. Optional 0.9% Additional Medicare Tax on amounts over $200K (single) / $250K (MFJ) is not separately modeled but rarely changes the order of magnitude. <strong>Federal income tax is not impacted</strong> by reclassification because S-Corp wages and distributions both flow through to the shareholder's Form 1040 — the FIT was already paid. Penalty math uses the standard IRC rates effective for 2024-2025. Interest accrues at the federal short-term rate plus 3 percentage points (IRC §6621), compounded daily — this calculator approximates with annual compounding. <strong>This is a planning estimate, not a substitute for professional audit defense.</strong> For an actual reclassification dispute, engage a tax attorney or EA — penalty abatement strategies, Innocent Spouse arguments, and reasonable cause defenses can materially reduce exposure beyond what this calculator shows.
+    </div>
+  </div>
+
+</div>
+
+<footer>
+  <div class="footer-left">© 2026 <a href="index.html">TaxPreparerTools.com</a> · Calculation logic based on IRC §3101, §3111, §6651, §6601, §6662. Not legal or tax advice.</div>
+  <div class="footer-links"><a href="privacy.html">Privacy</a><a href="terms.html">Terms</a><a href="about.html">About</a><a href="sitemap.html">Sitemap</a><a href="https://www.irs.gov" target="_blank" rel="noopener">IRS.gov ↗</a></div>
+</footer>
+
+<script>
+/* ============================================================
+   S-CORP AUDIT EXPOSURE CALCULATOR
+============================================================ */
+const $ = (id) => document.getElementById(id);
+const fmt = (n) => '$' + Math.round(n).toLocaleString();
+
+// 2025 Social Security wage base
+const SS_BASE = 176100;
+
+// Penalty toggles (true = applied)
+let penalties = { ftp: true, ftf: false, accuracy: true, interest: true };
+
+// Set up toggle clicks
+document.querySelectorAll('.toggle-row').forEach(row => {
+  row.addEventListener('click', () => {
+    const key = row.dataset.toggle;
+    penalties[key] = !penalties[key];
+    row.classList.toggle('on');
+    render();
+  });
+});
+
+// Sliders / inputs
+['shortfall', 'years', 'existingWages', 'rate'].forEach(id => {
+  $(id).addEventListener('input', () => {
+    if (id === 'years') $('yearsVal').textContent = $('years').value + (parseInt($('years').value) === 1 ? ' year' : ' years');
+    if (id === 'rate') $('rateVal').textContent = parseFloat($('rate').value).toFixed(1) + '%';
+    render();
+  });
+});
+
+function computeFicaOnReclassified(shortfall, existingWages) {
+  // How much of the reclassified amount falls under SS base?
+  const ssRoom = Math.max(0, SS_BASE - existingWages);
+  const ficaPortion = Math.min(shortfall, ssRoom);
+  const medicareOnlyPortion = shortfall - ficaPortion;
+
+  // FICA (both halves combined: 12.4%) + Medicare (both halves: 2.9%) on FICA portion
+  const ficaTax = ficaPortion * 0.124;
+  const medicareOnFica = ficaPortion * 0.029;
+  // Medicare only on the rest (2.9%)
+  const medicareOnly = medicareOnlyPortion * 0.029;
+
+  return {
+    ficaPortion,
+    medicareOnlyPortion,
+    fica: ficaTax,
+    medicare: medicareOnFica + medicareOnly,
+    total: ficaTax + medicareOnFica + medicareOnly
+  };
+}
+
+function computePenalty(tax, months, rate, max) {
+  // max is the cap (e.g., 0.25 for 25%)
+  return Math.min(tax * rate * months, tax * max);
+}
+
+function render() {
+  const shortfall = parseFloat($('shortfall').value) || 0;
+  const years = parseInt($('years').value);
+  const existingWages = parseFloat($('existingWages').value) || 0;
+  const annualRate = parseFloat($('rate').value) / 100;
+
+  // Compute base tax per year
+  const taxComp = computeFicaOnReclassified(shortfall, existingWages);
+  const annualTax = taxComp.total;
+
+  // For each year exposed, compute total exposure
+  // Year N (oldest) has been accruing for N years
+  // Year 1 (most recent) has been accruing for 1 year
+  let yearRows = [];
+  let totals = { tax: 0, ftf: 0, ftp: 0, accuracy: 0, interest: 0 };
+
+  for (let yearsAgo = years; yearsAgo >= 1; yearsAgo--) {
+    const months = Math.min(yearsAgo * 12, 50); // Max 50 months for penalty cap
+
+    let ftf = 0, ftp = 0, accuracy = 0, interest = 0;
+
+    if (penalties.ftf) {
+      // 5%/month, max 25%
+      ftf = computePenalty(annualTax, months, 0.05, 0.25);
+    }
+    if (penalties.ftp) {
+      // 0.5%/month, max 25%
+      // If FTF also applies, FTF is reduced to 4.5% to keep combined at 5%/mo
+      ftp = computePenalty(annualTax, months, 0.005, 0.25);
+      if (penalties.ftf) {
+        // Reduce FTF by amount of FTP to keep combined at 5%/mo max
+        ftf = computePenalty(annualTax, months, 0.045, 0.25);
+      }
+    }
+    if (penalties.accuracy) {
+      accuracy = annualTax * 0.20;
+    }
+    if (penalties.interest) {
+      // Compound annually for simplicity (IRS actually compounds daily)
+      // Interest accrues on tax + already-assessed penalties
+      const basePlusPenalty = annualTax + ftf + ftp + accuracy;
+      interest = basePlusPenalty * (Math.pow(1 + annualRate, yearsAgo) - 1);
+    }
+
+    const yearTotal = annualTax + ftf + ftp + accuracy + interest;
+    yearRows.push({
+      yearsAgo,
+      tax: annualTax,
+      ftf,
+      ftp,
+      accuracy,
+      interest,
+      total: yearTotal
+    });
+
+    totals.tax += annualTax;
+    totals.ftf += ftf;
+    totals.ftp += ftp;
+    totals.accuracy += accuracy;
+    totals.interest += interest;
+  }
+
+  const grandTotal = totals.tax + totals.ftf + totals.ftp + totals.accuracy + totals.interest;
+  const rawTax = totals.tax;
+  const multiplier = rawTax > 0 ? (grandTotal / rawTax) : 1;
+
+  // Build year table
+  const yearTableRows = yearRows.map(r => `
+    <div class="yr">${r.yearsAgo} yr ago</div>
+    <div class="yt">${fmt(r.tax)}</div>
+    <div class="yp">${fmt(r.ftf + r.ftp)}</div>
+    <div class="yp">${fmt(r.accuracy)}</div>
+    <div class="yi">${fmt(r.interest)}</div>
+    <div class="ytot">${fmt(r.total)}</div>
+  `).join('');
+
+  // Build output
+  $('output').innerHTML = `
+    <div class="exposure-headline">
+      <div class="exposure-eyebrow">Total IRS Exposure (${years}-Year Window)</div>
+      <div class="exposure-total">${fmt(grandTotal)}</div>
+      <div class="exposure-vs">vs. raw tax owed of <strong>${fmt(rawTax)}</strong> — <span class="exposure-multiplier">${multiplier.toFixed(2)}× multiplier</span></div>
+    </div>
+
+    <div class="breakdown-cards">
+      <div class="bd-card tax">
+        <div class="bd-label">Underpaid Tax</div>
+        <div class="bd-amount">${fmt(totals.tax)}</div>
+        <div class="bd-pct">FICA + Medicare</div>
+      </div>
+      <div class="bd-card pen">
+        <div class="bd-label">Penalties</div>
+        <div class="bd-amount">${fmt(totals.ftf + totals.ftp + totals.accuracy)}</div>
+        <div class="bd-pct">FTF/FTP/§6662</div>
+      </div>
+      <div class="bd-card int">
+        <div class="bd-label">Interest</div>
+        <div class="bd-amount">${fmt(totals.interest)}</div>
+        <div class="bd-pct">Compound, ${(annualRate * 100).toFixed(1)}%</div>
+      </div>
+    </div>
+
+    <div class="year-table">
+      <div class="year-table-title">Per-Year Breakdown</div>
+      <div class="year-grid">
+        <div class="yh">Year</div>
+        <div class="yh">Tax</div>
+        <div class="yh">FTF + FTP</div>
+        <div class="yh">§6662</div>
+        <div class="yh">Interest</div>
+        <div class="yh">Total</div>
+        ${yearTableRows}
+        <div class="tot-row"><div>TOTAL</div></div>
+        <div class="tot-row"><div class="yt">${fmt(totals.tax)}</div></div>
+        <div class="tot-row"><div class="yp">${fmt(totals.ftf + totals.ftp)}</div></div>
+        <div class="tot-row"><div class="yp">${fmt(totals.accuracy)}</div></div>
+        <div class="tot-row"><div class="yi">${fmt(totals.interest)}</div></div>
+        <div class="tot-row"><div class="tot-final">${fmt(grandTotal)}</div></div>
+      </div>
+    </div>
+
+    <div class="what-section">
+      <div class="what-title">What this number means</div>
+      <p class="what-text">
+        If the IRS audits your S-Corp and reclassifies ${fmt(shortfall)}/year of distributions as wages over the last ${years} year${years > 1 ? 's' : ''},
+        you'd owe <strong>${fmt(grandTotal)}</strong> in total — <strong>${multiplier.toFixed(2)}× the raw underpaid tax of ${fmt(rawTax)}</strong>.
+        The multiplier comes from penalties (${fmt(totals.ftf + totals.ftp + totals.accuracy)}) and compound interest (${fmt(totals.interest)}) layered on top.
+        ${totals.interest > totals.tax * 0.2 ? `<br><br>Notice that <strong>interest alone is ${(totals.interest / rawTax * 100).toFixed(0)}% of the underlying tax</strong>. Time is the enemy — the longer the exposure goes uncorrected, the worse the math gets.` : ''}
+        ${penalties.accuracy ? '<br><br>The §6662 accuracy-related penalty (20%) is often successfully abated through reasonable cause if the taxpayer documented their RC position in advance. The defensive actions below show how.' : ''}
+      </p>
+    </div>
+  `;
+}
+
+// Initial render
+render();
+
+// Hamburger
+(function(){
+  const btn = $('navHamburger');
+  const ul = document.querySelector('nav .nav-links');
+  if(!btn || !ul) return;
+  btn.addEventListener('click', () => {
+    btn.classList.toggle('open');
+    ul.classList.toggle('mobile-open');
+  });
+})();
+</script>
+</body>
+</html>
