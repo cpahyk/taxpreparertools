@@ -1,0 +1,724 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Self-Employed Retirement Plan Calculator — SEP-IRA vs Solo 401(k) vs SIMPLE 2025 | TaxPreparerTools.com</title>
+<meta name="description" content="Free 2025 retirement plan comparison for self-employed and S-Corp owners. Compare SEP-IRA, Solo 401(k), SIMPLE IRA, Traditional and Roth IRA side-by-side. See your max contribution and tax savings at your marginal rate.">
+<link rel="canonical" href="https://taxpreparertools.com/self-employed-retirement-calculator" />
+
+<link rel="icon" type="image/x-icon" href="/favicon.ico">
+<link rel="icon" type="image/svg+xml" href="/assets/favicon.svg">
+<link rel="icon" type="image/png" sizes="32x32" href="/assets/favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="/assets/favicon-16x16.png">
+<link rel="apple-touch-icon" sizes="180x180" href="/assets/apple-touch-icon.png">
+<link rel="manifest" href="/site.webmanifest">
+<meta name="theme-color" content="#c8a84b">
+<meta name="msapplication-TileColor" content="#08152a">
+
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700;900&family=DM+Sans:wght@300;400;500;600&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"WebApplication","name":"Self-Employed Retirement Plan Calculator","url":"https://taxpreparertools.com/self-employed-retirement-calculator","description":"Free 2025 retirement plan comparison for self-employed and S-Corp owners. SEP-IRA, Solo 401(k), SIMPLE IRA, Traditional and Roth IRA contribution limits + tax savings.","applicationCategory":"FinanceApplication","offers":{"@type":"Offer","price":"0","priceCurrency":"USD"}}
+</script>
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Home","item":"https://taxpreparertools.com/"},{"@type":"ListItem","position":2,"name":"Tools","item":"https://taxpreparertools.com/tools"},{"@type":"ListItem","position":3,"name":"Self-Employed Retirement Calculator","item":"https://taxpreparertools.com/self-employed-retirement-calculator"}]}
+</script>
+
+<meta property="og:type" content="website" />
+<meta property="og:url" content="https://taxpreparertools.com/self-employed-retirement-calculator" />
+<meta property="og:title" content="Self-Employed Retirement Plan Calculator — SEP-IRA vs Solo 401(k) vs SIMPLE 2025" />
+<meta property="og:description" content="Side-by-side comparison of every self-employed retirement plan: max contribution, tax savings, eligibility. 2025 IRS limits." />
+<meta property="og:image" content="https://taxpreparertools.com/assets/og-image.png" />
+
+<style>
+:root{
+--navy:#08152a;--navy-mid:#0f1f3d;--slate:#1a2f52;
+--gold:#c8a84b;--gold-light:#e8c96a;--gold-dim:rgba(200,168,75,0.13);
+--white:#fff;--muted:#7a8fac;--text:#dde4f0;--border:rgba(200,168,75,0.14);
+--card:rgba(255,255,255,0.04);
+--green:#4ade80;--green-bg:rgba(74,222,128,0.12);
+--blue:#60a5fa;--blue-bg:rgba(96,165,250,0.08);
+--purple:#a78bfa;--purple-bg:rgba(167,139,250,0.08);
+--orange:#fb923c;
+}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+html{scroll-behavior:smooth;}
+body{font-family:'DM Sans',sans-serif;background:var(--navy);color:var(--text);min-height:100vh;}
+
+nav{position:sticky;top:0;z-index:200;padding:14px 48px;display:flex;align-items:center;justify-content:space-between;background:rgba(8,21,42,0.95);backdrop-filter:blur(20px);border-bottom:1px solid var(--border);}
+.logo{display:flex;align-items:center;gap:10px;text-decoration:none;}
+.logo-mark{width:32px;height:32px;background:var(--gold);border-radius:7px;display:flex;align-items:center;justify-content:center;font-size:15px;}
+.logo-name{font-family:'Playfair Display',serif;font-size:1.1rem;font-weight:700;color:var(--white);}
+.logo-name span{color:var(--gold);}
+.logo-domain{font-size:0.62rem;color:var(--muted);font-family:'DM Mono',monospace;display:block;}
+.nav-links{display:flex;gap:24px;list-style:none;}
+.nav-links a{color:var(--muted);font-size:0.82rem;font-weight:500;text-decoration:none;transition:color .2s;}
+.nav-links a:hover,.nav-links a.active{color:var(--gold);}
+.btn-sm{padding:7px 16px;border-radius:6px;font-size:0.8rem;font-weight:700;cursor:pointer;text-decoration:none;transition:all .2s;border:none;font-family:'DM Sans',sans-serif;}
+.btn-gold{background:var(--gold);color:var(--navy);}
+.btn-gold:hover{background:var(--gold-light);}
+
+.page-wrap{max-width:1200px;margin:0 auto;padding:36px 48px 80px;}
+.breadcrumb{font-size:0.73rem;font-family:'DM Mono',monospace;color:var(--muted);margin-bottom:20px;display:flex;gap:7px;align-items:center;flex-wrap:wrap;}
+.breadcrumb a{color:var(--gold);text-decoration:none;}
+
+.tool-header{display:flex;gap:22px;align-items:flex-start;margin-bottom:28px;}
+.tool-header-icon{width:60px;height:60px;background:linear-gradient(135deg,rgba(74,222,128,0.15),rgba(74,222,128,0.04));border:1px solid rgba(74,222,128,0.3);border-radius:16px;display:flex;align-items:center;justify-content:center;font-size:28px;flex-shrink:0;}
+.tool-badges{display:flex;gap:7px;margin-bottom:10px;flex-wrap:wrap;}
+.badge{font-size:0.63rem;font-family:'DM Mono',monospace;font-weight:700;text-transform:uppercase;letter-spacing:.08em;padding:3px 10px;border-radius:50px;}
+.badge-free{background:rgba(74,222,128,.12);color:var(--green);}
+.badge-new{background:rgba(251,146,60,.12);color:var(--orange);}
+.badge-cat{background:var(--gold-dim);color:var(--gold);}
+.badge-year{background:rgba(96,165,250,.12);color:var(--blue);}
+h1{font-family:'Playfair Display',serif;font-size:clamp(1.6rem,3.5vw,2.4rem);font-weight:900;color:var(--white);letter-spacing:-0.03em;line-height:1.1;margin-bottom:8px;}
+.tool-desc{color:var(--muted);font-size:0.92rem;line-height:1.7;max-width:720px;}
+
+.companion-note{background:rgba(74,222,128,0.05);border:1px solid rgba(74,222,128,0.2);border-radius:10px;padding:12px 16px;margin-bottom:32px;font-size:0.84rem;line-height:1.55;color:var(--text);}
+.companion-note a{color:var(--green);font-weight:600;text-decoration:none;}
+.companion-note a:hover{text-decoration:underline;}
+
+.calc-layout{display:grid;grid-template-columns:380px 1fr;gap:28px;align-items:start;}
+
+.input-card{background:var(--navy-mid);border:1px solid var(--border);border-radius:18px;padding:26px;position:sticky;top:90px;}
+.input-card h3{font-family:'Playfair Display',serif;font-size:1.05rem;font-weight:700;color:var(--white);margin-bottom:18px;padding-bottom:14px;border-bottom:1px solid var(--border);}
+.field{margin-bottom:18px;}
+.field-label{font-size:0.75rem;font-weight:600;color:var(--text);margin-bottom:8px;display:flex;justify-content:space-between;align-items:center;}
+.field-hint{font-size:0.68rem;color:var(--muted);font-family:'DM Mono',monospace;}
+.field-value{font-family:'DM Mono',monospace;color:var(--gold);font-weight:700;font-size:0.82rem;}
+.field input[type="number"],.field select{width:100%;background:rgba(255,255,255,.04);border:1.5px solid rgba(200,168,75,.18);border-radius:10px;padding:11px 14px;color:var(--white);font-size:0.92rem;font-family:'DM Sans',sans-serif;outline:none;transition:border-color .2s;}
+.field input:focus,.field select:focus{border-color:var(--gold);background:rgba(255,255,255,.06);}
+.field input[type="range"]{-webkit-appearance:none;width:100%;height:5px;background:rgba(255,255,255,.08);border-radius:5px;outline:none;margin:8px 0;}
+.field input[type="range"]::-webkit-slider-thumb{-webkit-appearance:none;width:18px;height:18px;background:var(--gold);border-radius:50%;cursor:pointer;border:3px solid var(--navy-mid);}
+.field input[type="range"]::-moz-range-thumb{width:18px;height:18px;background:var(--gold);border-radius:50%;cursor:pointer;border:3px solid var(--navy-mid);}
+.input-currency{position:relative;}
+.input-currency::before{content:'$';position:absolute;left:12px;top:50%;transform:translateY(-50%);color:var(--muted);font-weight:600;}
+.input-currency input{padding-left:24px !important;}
+
+.segmented{display:grid;grid-template-columns:repeat(3,1fr);gap:4px;background:rgba(255,255,255,.04);border:1.5px solid rgba(200,168,75,.18);border-radius:10px;padding:4px;}
+.segmented button{background:transparent;border:none;color:var(--muted);padding:9px 6px;font-size:0.75rem;font-weight:600;cursor:pointer;border-radius:6px;font-family:'DM Sans',sans-serif;transition:all .15s;}
+.segmented button.active{background:var(--gold);color:var(--navy);}
+.segmented button:hover:not(.active){background:rgba(255,255,255,.04);color:var(--text);}
+
+.toggle-row{display:flex;align-items:center;gap:10px;padding:10px 12px;background:rgba(255,255,255,.02);border:1px solid var(--border);border-radius:10px;cursor:pointer;transition:all .15s;margin-bottom:10px;}
+.toggle-row:hover{background:rgba(255,255,255,.04);}
+.toggle-row.on{background:rgba(200,168,75,.06);border-color:rgba(200,168,75,.35);}
+.toggle-switch{width:36px;height:20px;background:rgba(255,255,255,.08);border-radius:20px;position:relative;flex-shrink:0;transition:background .2s;}
+.toggle-switch::after{content:'';position:absolute;left:2px;top:2px;width:16px;height:16px;background:var(--muted);border-radius:50%;transition:all .2s;}
+.toggle-row.on .toggle-switch{background:var(--gold);}
+.toggle-row.on .toggle-switch::after{left:18px;background:var(--navy);}
+.toggle-meta{flex:1;min-width:0;}
+.toggle-name{font-size:0.82rem;color:var(--text);font-weight:600;}
+.toggle-desc{font-size:0.7rem;color:var(--muted);margin-top:2px;line-height:1.4;}
+
+.output-panel{display:flex;flex-direction:column;gap:24px;}
+
+/* Winner card */
+.winner-card{background:linear-gradient(135deg,var(--navy-mid) 0%,rgba(74,222,128,0.04) 100%);border:1px solid rgba(74,222,128,0.3);border-radius:18px;padding:28px;}
+.winner-eyebrow{font-family:'DM Mono',monospace;font-size:0.7rem;font-weight:700;color:var(--green);letter-spacing:0.1em;text-transform:uppercase;margin-bottom:8px;display:flex;align-items:center;gap:8px;}
+.winner-eyebrow::before{content:'★';color:var(--green);font-size:0.85rem;}
+.winner-name{font-family:'Playfair Display',serif;font-size:1.6rem;font-weight:800;color:var(--white);letter-spacing:-0.02em;margin-bottom:4px;}
+.winner-contrib{font-family:'DM Mono',monospace;font-size:1.4rem;color:var(--green);font-weight:700;}
+.winner-reason{font-size:0.86rem;color:var(--muted);line-height:1.65;margin-top:14px;}
+.winner-reason strong{color:var(--text);}
+
+/* Plan comparison grid */
+.plans-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:14px;}
+.plan-card{background:var(--navy-mid);border:1px solid var(--border);border-radius:16px;padding:22px;transition:all .25s;position:relative;}
+.plan-card.recommended{border-color:rgba(74,222,128,0.4);box-shadow:0 0 0 1px rgba(74,222,128,0.15);}
+.plan-card.ineligible{opacity:0.5;}
+.plan-card.recommended::before{content:'BEST FIT';position:absolute;top:-9px;left:18px;background:var(--green);color:var(--navy);font-family:'DM Mono',monospace;font-size:0.62rem;font-weight:700;padding:3px 8px;border-radius:4px;letter-spacing:0.06em;}
+.plan-name{font-family:'Playfair Display',serif;font-size:1.05rem;font-weight:700;color:var(--white);margin-bottom:4px;}
+.plan-subtitle{font-size:0.7rem;color:var(--muted);font-family:'DM Mono',monospace;letter-spacing:0.05em;margin-bottom:18px;}
+.plan-max{font-family:'Playfair Display',serif;font-size:1.6rem;font-weight:700;color:var(--gold);line-height:1;margin-bottom:4px;}
+.plan-max-label{font-size:0.7rem;color:var(--muted);font-family:'DM Mono',monospace;margin-bottom:14px;}
+.plan-breakdown{margin-bottom:14px;padding-top:12px;border-top:1px solid var(--border);}
+.plan-line{display:flex;justify-content:space-between;align-items:center;font-size:0.78rem;margin-bottom:4px;color:var(--muted);}
+.plan-line span:last-child{color:var(--text);font-family:'DM Mono',monospace;font-weight:600;}
+.plan-tax-savings{padding-top:12px;border-top:1px solid var(--border);font-size:0.78rem;color:var(--muted);}
+.plan-tax-savings strong{color:var(--green);font-family:'DM Mono',monospace;font-size:0.95rem;}
+.plan-notes{margin-top:14px;font-size:0.74rem;color:var(--muted);line-height:1.55;font-style:italic;}
+.plan-notes.warning{color:var(--orange);}
+.plan-notes.disabled{color:var(--red);}
+
+/* Roth vs Trad decision card */
+.roth-card{background:var(--navy-mid);border:1px solid var(--border);border-radius:16px;padding:24px;}
+.roth-card h3{font-family:'Playfair Display',serif;font-size:1.05rem;font-weight:700;color:var(--white);margin-bottom:14px;}
+.roth-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-top:14px;}
+.roth-col{padding:14px 16px;background:rgba(255,255,255,.02);border:1px solid var(--border);border-radius:10px;}
+.roth-col-title{font-family:'DM Mono',monospace;font-size:0.7rem;font-weight:700;letter-spacing:0.08em;text-transform:uppercase;margin-bottom:8px;}
+.roth-col.trad .roth-col-title{color:var(--blue);}
+.roth-col.roth .roth-col-title{color:var(--purple);}
+.roth-col ul{list-style:none;font-size:0.8rem;line-height:1.6;color:var(--text);}
+.roth-col li{padding-left:14px;position:relative;margin-bottom:5px;}
+.roth-col li::before{content:'·';position:absolute;left:4px;color:var(--gold);font-weight:700;}
+
+/* Strategy notes */
+.strategy-section{margin-top:32px;background:var(--navy-mid);border:1px solid var(--border);border-radius:18px;padding:28px;}
+.strategy-section h2{font-family:'Playfair Display',serif;font-size:1.3rem;font-weight:700;color:var(--white);margin-bottom:16px;}
+.strategy-list{list-style:none;display:flex;flex-direction:column;gap:14px;counter-reset:sstep;}
+.strategy-list li{padding-left:36px;position:relative;font-size:0.9rem;line-height:1.7;color:var(--text);counter-increment:sstep;}
+.strategy-list li::before{content:counter(sstep);position:absolute;left:0;top:1px;width:22px;height:22px;border-radius:50%;background:var(--gold-dim);color:var(--gold);font-family:'DM Mono',monospace;font-size:0.75rem;font-weight:700;display:flex;align-items:center;justify-content:center;}
+.strategy-list strong{color:var(--white);}
+
+/* Related */
+.related-tools{margin-top:32px;background:rgba(255,255,255,0.03);border:1px solid rgba(200,168,75,0.15);border-radius:12px;padding:22px 26px;}
+.related-tools-label{font-family:'DM Mono',monospace;font-size:0.68rem;text-transform:uppercase;letter-spacing:0.1em;color:#c8a84b;margin-bottom:14px;font-weight:700;}
+.related-tools a{display:flex;align-items:center;gap:10px;color:#c8a84b;text-decoration:none;font-size:0.88rem;padding:8px 0;border-bottom:1px solid rgba(200,168,75,0.08);}
+.related-tools a:last-child{border-bottom:none;}
+.related-tools a strong{color:#e8edf5;}
+.related-tools a span.desc{color:#8a9bb5;font-size:0.8rem;margin-left:6px;}
+
+.disclaimer{margin-top:36px;padding:22px;background:var(--blue-bg);border:1px solid rgba(96,165,250,0.15);border-radius:14px;}
+.disclaimer-title{font-family:'DM Mono',monospace;font-size:0.72rem;font-weight:700;color:#93c5fd;text-transform:uppercase;letter-spacing:.08em;margin-bottom:10px;}
+.disclaimer-text{font-size:0.82rem;color:var(--muted);line-height:1.7;}
+.disclaimer-text strong{color:var(--text);}
+
+footer{border-top:1px solid var(--border);padding:28px 48px;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:12px;background:var(--navy-mid);}
+.footer-left{font-size:0.73rem;color:var(--muted);}
+.footer-left a{color:var(--gold);text-decoration:none;}
+.footer-links{display:flex;gap:20px;align-items:center;}
+.footer-links a{font-size:0.73rem;color:var(--muted);text-decoration:none;}
+.footer-links a:hover{color:var(--gold);}
+
+@media(max-width:1000px){
+  .calc-layout{grid-template-columns:1fr;}
+  .input-card{position:static;}
+}
+@media(max-width:768px){
+  nav{padding:13px 18px;}.nav-links{display:none;}
+  .page-wrap{padding:24px 18px 60px;}
+  .input-card,.winner-card,.plan-card,.roth-card{padding:18px;}
+  .roth-grid{grid-template-columns:1fr;}
+  footer{padding:20px 18px;flex-direction:column;}
+}
+.nav-hamburger{display:none;flex-direction:column;gap:5px;cursor:pointer;padding:6px;border:none;background:transparent;}
+.nav-hamburger span{display:block;width:22px;height:2px;background:var(--gold);border-radius:2px;}
+@media(max-width:768px){.nav-hamburger{display:flex;}nav .nav-links.mobile-open{display:flex;position:fixed;top:60px;left:0;right:0;background:rgba(8,21,42,0.98);flex-direction:column;padding:16px 0;z-index:200;border-bottom:1px solid rgba(200,168,75,.18);}nav .nav-links.mobile-open li{width:100%;text-align:center;list-style:none;}nav .nav-links.mobile-open li a{display:block;padding:12px 24px;}}
+</style>
+</head>
+<body>
+
+<nav>
+  <a href="index.html" class="logo">
+    <div class="logo-mark">⚖</div>
+    <div><span class="logo-name">TaxPreparer<span>Tools</span></span><span class="logo-domain">taxpreparertools.com</span></div>
+  </a>
+  <button id="navHamburger" class="nav-hamburger" aria-label="Menu"><span></span><span></span><span></span></button>
+  <ul class="nav-links">
+    <li><a href="tools.html" class="active">Tools</a></li>
+    <li><a href="decoders.html">Decoders</a></li>
+    <li><a href="deadlines.html">Deadlines</a></li>
+    <li><a href="ai-assistant.html">AI Assistant</a></li>
+    <li><a href="resources.html">Resources</a></li>
+    <li><a href="blog/">Blog</a></li>
+    <li><a href="about.html">About</a></li>
+  </ul>
+  <a href="signup.html" class="btn-sm btn-gold">Get Pro Free</a>
+</nav>
+
+<div class="page-wrap">
+
+  <div class="breadcrumb">
+    <a href="index.html">Home</a> <span>/</span>
+    <a href="tools.html">Tools</a> <span>/</span>
+    Self-Employed Retirement Plan Calculator
+  </div>
+
+  <div class="tool-header">
+    <div class="tool-header-icon">🌱</div>
+    <div>
+      <div class="tool-badges">
+        <span class="badge badge-free">Free</span>
+        <span class="badge badge-new">New</span>
+        <span class="badge badge-year">2025 Limits</span>
+        <span class="badge badge-cat">Self-Employed Planning</span>
+      </div>
+      <h1>Self-Employed Retirement<br>Plan Calculator</h1>
+      <p class="tool-desc">Compare SEP-IRA, Solo 401(k), SIMPLE IRA, Traditional IRA, and Roth IRA side-by-side. Plug in your self-employment income or S-Corp W-2 wages, see the maximum contribution each plan allows, and the tax savings at your marginal rate. Using current 2025 IRS contribution limits.</p>
+    </div>
+  </div>
+
+  <div class="companion-note">
+    💡 <strong>For S-Corp owners:</strong> Your retirement contribution is capped by your <strong>W-2 wages</strong>, not S-Corp distributions. Paying yourself a higher reasonable comp (see <a href="reasonable-compensation-calculator.html">RCC</a>) directly raises your Solo 401(k) and SEP-IRA contribution ceiling — a bonus benefit of moving comp into wages.
+  </div>
+
+  <div class="calc-layout">
+
+    <!-- INPUTS -->
+    <div class="input-card">
+      <h3>Your Situation</h3>
+
+      <div class="field">
+        <label class="field-label">Income type</label>
+        <div class="segmented" id="incomeType" data-active="0">
+          <button class="active" data-type="solo">Sole Prop</button>
+          <button data-type="scorp">S-Corp W-2</button>
+          <button data-type="partnership">Partnership</button>
+        </div>
+        <div style="font-size:0.7rem;color:var(--muted);margin-top:6px;line-height:1.45;" id="incomeTypeHint">Schedule C / SE income</div>
+      </div>
+
+      <div class="field">
+        <label class="field-label" id="incomeLabel">Net SE income (Schedule C profit)
+          <span class="field-hint">Annual</span>
+        </label>
+        <div class="input-currency">
+          <input type="number" id="income" value="100000" min="0" step="1000" />
+        </div>
+      </div>
+
+      <div class="field">
+        <label class="field-label">Your age
+          <span class="field-value" id="ageVal">40</span>
+        </label>
+        <input type="range" id="age" min="18" max="75" value="40" step="1" />
+        <div style="font-size:0.7rem;color:var(--muted);margin-top:6px;line-height:1.45;">Age 50+ unlocks catch-up contributions.</div>
+      </div>
+
+      <div class="field">
+        <label class="field-label">Marginal tax rate
+          <span class="field-value" id="rateVal">24%</span>
+        </label>
+        <select id="rate">
+          <option value="0.10">10% (lowest bracket)</option>
+          <option value="0.12">12%</option>
+          <option value="0.22">22%</option>
+          <option value="0.24" selected>24%</option>
+          <option value="0.32">32%</option>
+          <option value="0.35">35%</option>
+          <option value="0.37">37% (highest bracket)</option>
+        </select>
+        <div style="font-size:0.7rem;color:var(--muted);margin-top:6px;line-height:1.45;">Combined federal + state for accurate savings.</div>
+      </div>
+
+      <div class="toggle-row" id="hasW2" data-on="false">
+        <div class="toggle-switch"></div>
+        <div class="toggle-meta">
+          <div class="toggle-name">Also have a W-2 job?</div>
+          <div class="toggle-desc">401(k) elective deferral limit ($23,500) is shared across all employers — affects Solo 401(k).</div>
+        </div>
+      </div>
+
+      <div class="field" id="w2DeferralField" style="display:none;">
+        <label class="field-label">W-2 401(k) deferral already made
+          <span class="field-hint">YTD</span>
+        </label>
+        <div class="input-currency">
+          <input type="number" id="w2Deferral" value="0" min="0" max="23500" step="500" />
+        </div>
+      </div>
+
+      <div class="toggle-row" id="hasEmployees" data-on="false">
+        <div class="toggle-switch"></div>
+        <div class="toggle-meta">
+          <div class="toggle-name">Have non-spouse employees?</div>
+          <div class="toggle-desc">Disqualifies Solo 401(k). Affects SEP-IRA (must cover them) and SIMPLE IRA (must offer to all).</div>
+        </div>
+      </div>
+
+      <div class="toggle-row on" id="incCatchUp" data-on="true">
+        <div class="toggle-switch"></div>
+        <div class="toggle-meta">
+          <div class="toggle-name">Apply catch-up if 50+</div>
+          <div class="toggle-desc">Adds $7,500 (401k) or $3,500 (SIMPLE) or $1,000 (IRA) for age 50+.</div>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- OUTPUT -->
+    <div class="output-panel" id="output">
+      <!-- populated by JS -->
+    </div>
+
+  </div>
+
+  <!-- STRATEGY NOTES -->
+  <div class="strategy-section">
+    <h2>Tactical notes for choosing a plan</h2>
+    <ol class="strategy-list">
+      <li><strong>If you're a one-person operation maximizing tax-deferred savings: Solo 401(k) wins.</strong> The elective deferral ($23,500) layered on top of the 20%/25% employer contribution lets you stack more than SEP at most income levels. Setup is more complex (one-time custodian agreement) but the ceiling is higher and Roth contributions are available.</li>
+      <li><strong>If you want the simplest possible setup: SEP-IRA.</strong> One-page IRS Form 5305-SEP, no annual filings (vs Form 5500 for Solo 401(k) over $250K assets), contributions vary year-to-year. Tradeoff: no Roth option, no catch-up provision, no elective deferral.</li>
+      <li><strong>If you have a few employees you want to include: SIMPLE IRA.</strong> The setup is easy AND covers employees with an automatic match — Solo 401(k) is off the table once you have non-spouse employees. SEP-IRA also works but requires the same % contribution for employees as for the owner.</li>
+      <li><strong>For S-Corp owner-employees: your contribution ceiling is your W-2 wages, not your S-Corp profit.</strong> If you pay yourself $50K W-2 and take $200K in distributions, your retirement contribution ceiling is based on the $50K — not the $250K of total comp. The Reasonable Compensation Calculator can help you find a defensible higher W-2 number, which directly raises this ceiling.</li>
+      <li><strong>The traditional/Roth split matters more than the plan choice.</strong> If you're in a high bracket now and expect lower in retirement: traditional (current deduction). If lower bracket now (early-career) and expect higher later: Roth (tax-free growth). The Solo 401(k) Roth option is underused — same contribution limits as traditional, just with the Roth tax treatment.</li>
+      <li><strong>The Backdoor Roth still works.</strong> If your income is above the Roth IRA direct-contribution phase-out ($146K–$161K single, $230K–$240K MFJ for 2025), you can still get money into Roth by making a non-deductible Traditional IRA contribution and converting. Note the pro-rata rule if you have other pre-tax IRA balances — discuss with your preparer.</li>
+    </ol>
+  </div>
+
+  <!-- RELATED -->
+  <div class="related-tools">
+    <div class="related-tools-label">Related Tools</div>
+    <a href="reasonable-compensation-calculator.html">→ <div><strong>Reasonable Compensation Calculator (S-Corp)</strong><span class="desc">— Find your defensible W-2 number; higher comp = higher retirement contribution ceiling</span></div></a>
+    <a href="s-corp-audit-exposure-calculator.html">→ <div><strong>S-Corp Audit Exposure Calculator</strong><span class="desc">— What underpaying yourself costs if the IRS reclassifies distributions</span></div></a>
+    <a href="se-tax-calculator.html">→ <div><strong>Self-Employment Tax Calculator</strong><span class="desc">— Schedule SE math: 15.3% on net SE income</span></div></a>
+    <a href="federal-tax-estimator.html">→ <div><strong>Federal Tax Estimator</strong><span class="desc">— Full 2025 federal tax computation</span></div></a>
+  </div>
+
+  <div class="disclaimer">
+    <div class="disclaimer-title">⚠️ Methodology &amp; 2025 limits</div>
+    <div class="disclaimer-text">
+      <strong>2025 IRS limits used:</strong> Defined-contribution maximum $70,000 (SEP-IRA, Solo 401(k) employer side). 401(k) elective deferral $23,500. SIMPLE IRA elective deferral $16,500. IRA contribution $7,000. Age-50 catch-up: $7,500 (401k), $3,500 (SIMPLE), $1,000 (IRA). Compensation cap $350,000.
+      <br><br>
+      <strong>SEP-IRA math:</strong> For sole proprietors / partnerships, contribution = (Net SE income − ½ SE tax) × 20% = effectively 18.587% of net SE earnings. For S-Corp shareholder-employees, contribution = 25% of W-2 wages (because no SE tax adjustment). Capped at $70K.
+      <br><br>
+      <strong>Solo 401(k) math:</strong> Employee elective deferral $23,500 + employer-side contribution at 20% (sole prop) or 25% (S-Corp W-2). Total cap $70K. Plan eligibility requires no non-spouse employees.
+      <br><br>
+      This calculator is a planning estimate. For your specific situation, especially with W-2 employees, Backdoor Roth conversions, or after-tax 401(k) "mega backdoor" contributions, consult your tax professional. Plan administrators handle the actual paperwork (Form 5500 for Solo 401(k), Form 5305-SEP for SEP-IRA, Form 5305-SIMPLE for SIMPLE IRA).
+    </div>
+  </div>
+
+</div>
+
+<footer>
+  <div class="footer-left">© 2026 <a href="index.html">TaxPreparerTools.com</a> · Contribution limits from IRS Notice 2024-80 (2025 cost-of-living adjustments). Not legal or financial advice.</div>
+  <div class="footer-links"><a href="privacy.html">Privacy</a><a href="terms.html">Terms</a><a href="about.html">About</a><a href="sitemap.html">Sitemap</a><a href="https://www.irs.gov/retirement-plans/cost-of-living-adjustments-for-retirement-items" target="_blank" rel="noopener">IRS COLA ↗</a></div>
+</footer>
+
+<script>
+/* =========================================================================
+   SELF-EMPLOYED RETIREMENT PLAN CALCULATOR — Calculation logic + UI
+========================================================================= */
+
+const $ = (id) => document.getElementById(id);
+const fmt = (n) => '$' + Math.round(n).toLocaleString();
+
+// 2025 IRS limits
+const LIMITS_2025 = {
+  dc_max: 70000,                    // Total defined contribution maximum
+  k401_deferral: 23500,            // 401(k) elective deferral
+  k401_catchup: 7500,              // 401(k) age 50+ catch-up
+  ira_limit: 7000,                 // Traditional/Roth IRA limit
+  ira_catchup: 1000,               // IRA age 50+ catch-up
+  simple_deferral: 16500,          // SIMPLE IRA elective deferral
+  simple_catchup: 3500,            // SIMPLE catch-up
+  comp_cap: 350000,                // Compensation cap for plan purposes
+  ss_wage_base: 176100,            // For SE tax computation
+  ira_phaseout_single_low: 77000,  // Trad IRA deduction phase-out (covered by plan)
+  ira_phaseout_single_high: 87000,
+  roth_phaseout_single_low: 146000, // Roth income phase-out
+  roth_phaseout_single_high: 161000
+};
+
+let state = {
+  incomeType: 'solo',
+  hasW2: false,
+  hasEmployees: false,
+  catchUp: true
+};
+
+// Segmented controls
+$('incomeType').querySelectorAll('button').forEach((b, idx) => {
+  b.addEventListener('click', () => {
+    $('incomeType').querySelectorAll('button').forEach(x => x.classList.remove('active'));
+    b.classList.add('active');
+    state.incomeType = b.dataset.type;
+    // Update labels and hints based on income type
+    updateIncomeLabel();
+    render();
+  });
+});
+
+function updateIncomeLabel() {
+  const map = {
+    solo: { label: 'Net SE income (Schedule C profit)', hint: 'Schedule C / SE income' },
+    scorp: { label: 'Your W-2 wages from the S-Corp', hint: 'S-Corp Form W-2, box 1' },
+    partnership: { label: 'Net SE income (your K-1 share)', hint: 'Partnership K-1 SE earnings' }
+  };
+  $('incomeLabel').firstChild.nodeValue = map[state.incomeType].label + ' ';
+  $('incomeTypeHint').textContent = map[state.incomeType].hint;
+}
+
+// Toggles
+['hasW2', 'hasEmployees', 'incCatchUp'].forEach(id => {
+  $(id).addEventListener('click', () => {
+    const el = $(id);
+    el.classList.toggle('on');
+    const key = id === 'incCatchUp' ? 'catchUp' : id;
+    state[key] = el.classList.contains('on');
+    if (id === 'hasW2') {
+      $('w2DeferralField').style.display = state.hasW2 ? 'block' : 'none';
+    }
+    render();
+  });
+});
+
+// Other inputs
+['income', 'age', 'rate', 'w2Deferral'].forEach(id => {
+  $(id).addEventListener('input', () => {
+    if (id === 'age') $('ageVal').textContent = $('age').value;
+    if (id === 'rate') $('rateVal').textContent = (parseFloat($('rate').value) * 100).toFixed(0) + '%';
+    render();
+  });
+});
+
+// ─── Calculations ───
+function computeContributions(income, age, marginalRate, opts) {
+  const eligibleForCatchup = (age >= 50) && opts.catchUp;
+  const cappedIncome = Math.min(income, LIMITS_2025.comp_cap);
+
+  // Estimated SE tax (only for sole prop / partnership)
+  let netSEForBase = cappedIncome;
+  if (opts.incomeType === 'solo' || opts.incomeType === 'partnership') {
+    const seBase = cappedIncome * 0.9235; // 92.35%
+    const ssPortion = Math.min(seBase, LIMITS_2025.ss_wage_base) * 0.124;
+    const medPortion = seBase * 0.029;
+    const seTax = ssPortion + medPortion;
+    netSEForBase = cappedIncome - seTax / 2; // subtract ½ SE tax
+  }
+
+  // ─── SEP-IRA ───
+  let sepContrib;
+  if (opts.incomeType === 'scorp') {
+    sepContrib = cappedIncome * 0.25;
+  } else {
+    sepContrib = netSEForBase * 0.20; // 20% of net SE income (after ½ SE tax)
+  }
+  sepContrib = Math.min(sepContrib, LIMITS_2025.dc_max);
+
+  // ─── Solo 401(k) ───
+  let employeeDeferral = LIMITS_2025.k401_deferral;
+  if (eligibleForCatchup) employeeDeferral += LIMITS_2025.k401_catchup;
+  // If has W-2, subtract amount already deferred there (shared limit)
+  if (opts.hasW2 && opts.w2Deferral) {
+    employeeDeferral = Math.max(0, employeeDeferral - opts.w2Deferral);
+  }
+  // Employer-side contribution (same as SEP math)
+  let employerContrib;
+  if (opts.incomeType === 'scorp') {
+    employerContrib = cappedIncome * 0.25;
+  } else {
+    employerContrib = netSEForBase * 0.20;
+  }
+  // Cap deferral at compensation
+  employeeDeferral = Math.min(employeeDeferral, cappedIncome);
+  let solo401k = employeeDeferral + employerContrib;
+  let solo401kCap = LIMITS_2025.dc_max + (eligibleForCatchup ? LIMITS_2025.k401_catchup : 0);
+  solo401k = Math.min(solo401k, solo401kCap);
+
+  // ─── SIMPLE IRA ───
+  let simpleDeferral = LIMITS_2025.simple_deferral;
+  if (eligibleForCatchup) simpleDeferral += LIMITS_2025.simple_catchup;
+  simpleDeferral = Math.min(simpleDeferral, cappedIncome);
+  const simpleMatch = cappedIncome * 0.03; // 3% employer match
+  const simpleTotal = simpleDeferral + simpleMatch;
+
+  // ─── Traditional IRA ───
+  let traditional = LIMITS_2025.ira_limit;
+  if (eligibleForCatchup) traditional += LIMITS_2025.ira_catchup;
+  // Deductibility depends on income + having an employer plan. For simplicity assume deductible.
+
+  // ─── Roth IRA ───
+  let roth = LIMITS_2025.ira_limit;
+  if (eligibleForCatchup) roth += LIMITS_2025.ira_catchup;
+  // Roth phase-out for single filers ($146K-$161K AGI 2025)
+  let rothPhaseOut = false;
+  if (income >= LIMITS_2025.roth_phaseout_single_low) {
+    if (income >= LIMITS_2025.roth_phaseout_single_high) {
+      roth = 0;
+    } else {
+      const phaseRatio = 1 - (income - LIMITS_2025.roth_phaseout_single_low) / 15000;
+      roth = roth * phaseRatio;
+      rothPhaseOut = true;
+    }
+  }
+
+  return {
+    sep: { contrib: sepContrib, savings: sepContrib * marginalRate, eligible: !opts.hasEmployees || opts.includeEmployees },
+    solo401k: {
+      contrib: opts.hasEmployees ? 0 : solo401k,
+      employerPortion: employerContrib,
+      employeeDeferral: employeeDeferral,
+      savings: (opts.hasEmployees ? 0 : solo401k) * marginalRate,
+      eligible: !opts.hasEmployees,
+      catchup: eligibleForCatchup
+    },
+    simple: {
+      contrib: simpleTotal,
+      employeeDeferral: simpleDeferral,
+      employerMatch: simpleMatch,
+      savings: simpleTotal * marginalRate,
+      eligible: true
+    },
+    traditional: { contrib: traditional, savings: traditional * marginalRate, eligible: true },
+    roth: { contrib: roth, savings: 0, eligible: roth > 0, phaseOut: rothPhaseOut }
+  };
+}
+
+function buildPlanCard(plan, name, subtitle, recommended, ineligible, breakdown, notes, notesClass) {
+  return `
+    <div class="plan-card ${recommended ? 'recommended' : ''} ${ineligible ? 'ineligible' : ''}">
+      <div class="plan-name">${name}</div>
+      <div class="plan-subtitle">${subtitle}</div>
+      <div class="plan-max">${ineligible ? '—' : fmt(plan.contrib)}</div>
+      <div class="plan-max-label">max contribution</div>
+      ${breakdown ? `<div class="plan-breakdown">${breakdown}</div>` : ''}
+      ${!ineligible && plan.savings > 0 ? `<div class="plan-tax-savings">Tax savings: <strong>${fmt(plan.savings)}</strong></div>` : ''}
+      ${notes ? `<div class="plan-notes ${notesClass || ''}">${notes}</div>` : ''}
+    </div>
+  `;
+}
+
+function render() {
+  const income = parseFloat($('income').value) || 0;
+  const age = parseInt($('age').value);
+  const rate = parseFloat($('rate').value);
+  const w2Deferral = parseFloat($('w2Deferral').value) || 0;
+
+  const result = computeContributions(income, age, rate, {
+    incomeType: state.incomeType,
+    hasW2: state.hasW2,
+    hasEmployees: state.hasEmployees,
+    catchUp: state.catchUp,
+    w2Deferral
+  });
+
+  // Pick the winner (highest contribution among eligible plans)
+  const candidates = [
+    { name: 'Solo 401(k)', plan: result.solo401k, eligible: result.solo401k.eligible },
+    { name: 'SEP-IRA', plan: result.sep, eligible: true },
+    { name: 'SIMPLE IRA', plan: result.simple, eligible: result.simple.eligible }
+  ].filter(c => c.eligible && c.plan.contrib > 0);
+  candidates.sort((a, b) => b.plan.contrib - a.plan.contrib);
+  const winner = candidates[0];
+
+  // Winner reasoning
+  let winnerReason = '';
+  if (winner) {
+    if (winner.name === 'Solo 401(k)') {
+      winnerReason = `Solo 401(k) wins at this income level because the employee deferral (${fmt(result.solo401k.employeeDeferral)}) stacks on top of the employer-side contribution (${fmt(result.solo401k.employerPortion)}). At lower incomes, SEP-IRA matches; at higher incomes, Solo 401(k) pulls ahead.`;
+    } else if (winner.name === 'SEP-IRA') {
+      winnerReason = `SEP-IRA matches Solo 401(k) at this income level — simpler setup with no annual filing requirement. ${state.hasEmployees ? 'Note that you\'d have to contribute the same % for all eligible employees.' : ''}`;
+    } else if (winner.name === 'SIMPLE IRA') {
+      winnerReason = `SIMPLE IRA wins given your situation (likely because you have employees or low SE income). Simple setup with automatic employer match obligation.`;
+    }
+  }
+
+  const winnerCard = winner ? `
+    <div class="winner-card">
+      <div class="winner-eyebrow">RECOMMENDED PLAN</div>
+      <div class="winner-name">${winner.name}</div>
+      <div class="winner-contrib">${fmt(winner.plan.contrib)} max · ${fmt(winner.plan.savings)} tax savings</div>
+      <div class="winner-reason">${winnerReason}</div>
+    </div>
+  ` : `
+    <div class="winner-card" style="border-color:rgba(248,113,113,0.3);">
+      <div class="winner-eyebrow" style="color:#f87171;">Insufficient Income</div>
+      <div class="winner-name" style="color:#f87171;">No plan recommended</div>
+      <div class="winner-reason">Increase your income input to see plan options.</div>
+    </div>
+  `;
+
+  // Build each plan card
+  const soloBreakdown = result.solo401k.eligible ? `
+    <div class="plan-line"><span>Employee deferral</span><span>${fmt(result.solo401k.employeeDeferral)}</span></div>
+    <div class="plan-line"><span>Employer-side</span><span>${fmt(result.solo401k.employerPortion)}</span></div>
+    ${result.solo401k.catchup ? '<div class="plan-line"><span>Age 50+ catch-up</span><span>Applied</span></div>' : ''}
+  ` : '';
+
+  const sepBreakdown = `
+    <div class="plan-line"><span>${state.incomeType === 'scorp' ? '25% × W-2 wages' : '20% × Net SE Income'}</span><span>${fmt(result.sep.contrib)}</span></div>
+    <div class="plan-line"><span>No catch-up provision</span><span>—</span></div>
+  `;
+
+  const simpleBreakdown = `
+    <div class="plan-line"><span>Employee deferral</span><span>${fmt(result.simple.employeeDeferral)}</span></div>
+    <div class="plan-line"><span>3% employer match</span><span>${fmt(result.simple.employerMatch)}</span></div>
+  `;
+
+  const traditionalBreakdown = `
+    <div class="plan-line"><span>Base limit</span><span>${fmt(LIMITS_2025.ira_limit)}</span></div>
+    ${(age >= 50 && state.catchUp) ? `<div class="plan-line"><span>Catch-up (50+)</span><span>+${fmt(LIMITS_2025.ira_catchup)}</span></div>` : ''}
+  `;
+
+  const rothBreakdown = result.roth.contrib > 0 ? `
+    <div class="plan-line"><span>Base limit</span><span>${fmt(LIMITS_2025.ira_limit)}</span></div>
+    ${(age >= 50 && state.catchUp) ? `<div class="plan-line"><span>Catch-up (50+)</span><span>+${fmt(LIMITS_2025.ira_catchup)}</span></div>` : ''}
+    ${result.roth.phaseOut ? `<div class="plan-line" style="color:var(--orange);"><span>Phase-out applied</span><span>Reduced</span></div>` : ''}
+  ` : '';
+
+  const plansGrid = `
+    <div class="plans-grid">
+      ${buildPlanCard(result.solo401k, 'Solo 401(k)', 'Highest ceiling for solo operators',
+        winner && winner.name === 'Solo 401(k)', !result.solo401k.eligible,
+        soloBreakdown,
+        !result.solo401k.eligible ? 'Disqualified: you have non-spouse employees. SEP-IRA or SIMPLE IRA instead.' :
+        (state.hasW2 && w2Deferral >= LIMITS_2025.k401_deferral) ? 'Note: W-2 401(k) already at limit. Only the employer-side contribution is available here.' : '',
+        !result.solo401k.eligible ? 'disabled' : (state.hasW2 ? 'warning' : ''))}
+
+      ${buildPlanCard(result.sep, 'SEP-IRA', 'Simplest setup, single Form 5305',
+        winner && winner.name === 'SEP-IRA', false,
+        sepBreakdown,
+        state.hasEmployees ? 'Note: must contribute same % for all eligible employees (over age 21, $750+ comp, 3 of last 5 years).' : '',
+        state.hasEmployees ? 'warning' : '')}
+
+      ${buildPlanCard(result.simple, 'SIMPLE IRA', 'For small employers (≤100 employees)',
+        winner && winner.name === 'SIMPLE IRA', false,
+        simpleBreakdown,
+        'Employer match obligation is 3% of every employee\'s comp (or 2% non-elective for all eligible).')}
+
+      ${buildPlanCard(result.traditional, 'Traditional IRA', 'On top of any of the above',
+        false, false,
+        traditionalBreakdown,
+        income > LIMITS_2025.ira_phaseout_single_high && (state.hasW2 || state.incomeType === 'scorp') ?
+          'Deductibility may be phased out at your income level if you\'re covered by another employer plan.' : '',
+        income > LIMITS_2025.ira_phaseout_single_high ? 'warning' : '')}
+
+      ${buildPlanCard(result.roth, 'Roth IRA', 'Tax-free growth, after-tax contribution',
+        false, result.roth.contrib === 0,
+        rothBreakdown,
+        result.roth.contrib === 0 ?
+          `Income above ${fmt(LIMITS_2025.roth_phaseout_single_high)} phase-out — consider Backdoor Roth conversion.` :
+          (result.roth.phaseOut ? 'Partial contribution due to income phase-out. Backdoor Roth gives full $7K access.' : 'No income tax deduction now, but withdrawals in retirement are tax-free.'),
+        result.roth.contrib === 0 ? 'disabled' : (result.roth.phaseOut ? 'warning' : ''))}
+    </div>
+  `;
+
+  // Roth vs Traditional decision card
+  const rothCard = `
+    <div class="roth-card">
+      <h3>Traditional vs Roth — which side of $${(LIMITS_2025.ira_limit / 1000).toFixed(0)}K?</h3>
+      <p style="font-size:0.88rem;color:var(--muted);line-height:1.65;">The decision is about marginal tax rate now vs. expected in retirement. Most Solo 401(k) plans also offer a Roth option with the same contribution limits.</p>
+      <div class="roth-grid">
+        <div class="roth-col trad">
+          <div class="roth-col-title">Traditional (pre-tax)</div>
+          <ul>
+            <li>Tax deduction now at your ${(rate * 100).toFixed(0)}% marginal rate</li>
+            <li>Withdrawals in retirement taxed at then-current rate</li>
+            <li>Required Minimum Distributions starting at 73</li>
+            <li><strong>Best if:</strong> you expect a LOWER tax rate in retirement</li>
+          </ul>
+        </div>
+        <div class="roth-col roth">
+          <div class="roth-col-title">Roth (after-tax)</div>
+          <ul>
+            <li>No deduction now — pay tax at ${(rate * 100).toFixed(0)}% on the contribution</li>
+            <li>Withdrawals in retirement are 100% tax-free</li>
+            <li>No RMDs during your lifetime (Roth IRA)</li>
+            <li><strong>Best if:</strong> you expect a HIGHER tax rate in retirement</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  `;
+
+  $('output').innerHTML = winnerCard + plansGrid + rothCard;
+}
+
+// Initialize
+render();
+
+// Hamburger
+(function(){
+  const btn = $('navHamburger');
+  const ul = document.querySelector('nav .nav-links');
+  if(!btn || !ul) return;
+  btn.addEventListener('click', () => {
+    btn.classList.toggle('open');
+    ul.classList.toggle('mobile-open');
+  });
+})();
+</script>
+</body>
+</html>
