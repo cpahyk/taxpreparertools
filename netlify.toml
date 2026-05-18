@@ -107,6 +107,76 @@
   to   = "/acronyms.html"
   status = 200
 
+[[redirects]]
+  from = "/decoders"
+  to   = "/decoders.html"
+  status = 200
+
+[[redirects]]
+  from = "/irs-notice-decoder"
+  to   = "/irs-notice-decoder.html"
+  status = 200
+
+[[redirects]]
+  from = "/irs-transcript-decoder"
+  to   = "/irs-transcript-decoder.html"
+  status = 200
+
+[[redirects]]
+  from = "/irs-efile-reject-decoder"
+  to   = "/irs-efile-reject-decoder.html"
+  status = 200
+
+[[redirects]]
+  from = "/property-tax-search"
+  to   = "/property-tax-search.html"
+  status = 200
+
+[[redirects]]
+  from = "/reasonable-compensation-calculator"
+  to   = "/reasonable-compensation-calculator.html"
+  status = 200
+
+[[redirects]]
+  from = "/s-corp-audit-exposure-calculator"
+  to   = "/s-corp-audit-exposure-calculator.html"
+  status = 200
+
+[[redirects]]
+  from = "/self-employed-retirement-calculator"
+  to   = "/self-employed-retirement-calculator.html"
+  status = 200
+
+[[redirects]]
+  from = "/qbi-deduction-calculator"
+  to   = "/qbi-deduction-calculator.html"
+  status = 200
+
+[[redirects]]
+  from = "/about"
+  to   = "/about.html"
+  status = 200
+
+[[redirects]]
+  from = "/blog/2025-bonus-depreciation"
+  to   = "/blog/2025-bonus-depreciation.html"
+  status = 200
+
+[[redirects]]
+  from = "/blog/first-time-penalty-abatement"
+  to   = "/blog/first-time-penalty-abatement.html"
+  status = 200
+
+[[redirects]]
+  from = "/blog/qbi-sstb-phase-out-2025"
+  to   = "/blog/qbi-sstb-phase-out-2025.html"
+  status = 200
+
+[[redirects]]
+  from = "/sitemap"
+  to   = "/sitemap.xml"
+  status = 200
+
 # Security headers
 [[headers]]
   for = "/*"
