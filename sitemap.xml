@@ -76,4 +76,10 @@
     <changefreq>monthly</changefreq>
     <priority>0.95</priority>
   </url>
+  <url>
+    <loc>https://taxpreparertools.com/blog/obbba-section-199a-qbi-2026</loc>
+    <lastmod>2026-05-17</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.85</priority>
+  </url>
 </urlset>

@@ -177,6 +177,11 @@
   to   = "/sitemap.xml"
   status = 200
 
+[[redirects]]
+  from = "/blog/obbba-section-199a-qbi-2026"
+  to   = "/blog/obbba-section-199a-qbi-2026.html"
+  status = 200
+
 # Security headers
 [[headers]]
   for = "/*"
