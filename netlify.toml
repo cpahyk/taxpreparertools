@@ -102,6 +102,11 @@
   to   = "/forgot-password.html"
   status = 200
 
+[[redirects]]
+  from = "/acronyms"
+  to   = "/acronyms.html"
+  status = 200
+
 # Security headers
 [[headers]]
   for = "/*"
