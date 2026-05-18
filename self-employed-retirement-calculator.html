@@ -721,5 +721,15 @@ render();
   });
 })();
 </script>
+<!-- Tax acronym tooltips (definitions on hover for related terms) -->
+<script src="assets/js/tax-acronyms.js" defer></script>
+<script>
+document.addEventListener('DOMContentLoaded', () => {
+  TaxAcronyms.init({
+    onlyAcronyms: ['SEP','ESOP','RMD','QCD','NUA','HSA','SE','QBI','AGI','MAGI','TCJA','OBBBA','HCE'],
+    baseUrl: 'acronyms.html',
+  });
+});
+</script>
 </body>
 </html>

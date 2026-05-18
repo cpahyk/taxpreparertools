@@ -942,5 +942,15 @@ window.showDetail = showDetail;
 
 filterAndSearch();
 </script>
+<!-- Tax acronym tooltips (definitions on hover for related terms) -->
+<script src="assets/js/tax-acronyms.js" defer></script>
+<script>
+document.addEventListener('DOMContentLoaded', () => {
+  TaxAcronyms.init({
+    onlyAcronyms: ['MeF','AGI','SSN','EIN','ITIN','DCN','EFW','EFTPS','EA','CPA','PTIN','EFIN'],
+    baseUrl: 'acronyms.html',
+  });
+});
+</script>
 </body>
 </html>

@@ -738,5 +738,15 @@ render();
   });
 })();
 </script>
+<!-- Tax acronym tooltips (definitions on hover for related terms) -->
+<script src="assets/js/tax-acronyms.js" defer></script>
+<script>
+document.addEventListener('DOMContentLoaded', () => {
+  TaxAcronyms.init({
+    onlyAcronyms: ['AGI','CPA','EA','FICA','OASDI','QBI','SE','TCJA','OBBBA','MAGI'],
+    baseUrl: 'acronyms.html',
+  });
+});
+</script>
 </body>
 </html>
