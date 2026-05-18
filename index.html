@@ -523,6 +523,7 @@
   }
 
   .tag-pro { background: rgba(200,168,75,0.15); color: var(--gold); }
+  .tag-ref { background: rgba(120,200,200,0.13); color: #80d8d8; }
   .tag-calc { background: rgba(100,180,255,0.12); color: #7cc4fa; }
   .tag-individual { background: rgba(120,220,150,0.12); color: #7de0a0; }
   .tag-deadline { background: rgba(255,140,100,0.12); color: #ff9f7a; }
@@ -1158,7 +1159,7 @@
 <section class="tools-section" id="tools">
   <div class="section-header">
     <div class="section-tag">The Toolkit</div>
-    <h2>40+ Tax Tools, All in One Place</h2>
+    <h2>50+ Tax Tools, All in One Place</h2>
     <p class="section-sub">From simple calculators to advanced professional utilities — always current, always free for core features.</p>
   </div>
 
@@ -1169,6 +1170,7 @@
     <button class="filter-btn" onclick="filterTools('individual', this)">Individual</button>
     <button class="filter-btn" onclick="filterTools('business', this)">Business</button>
     <button class="filter-btn" onclick="filterTools('deadline', this)">Deadlines</button>
+    <button class="filter-btn" onclick="filterTools('ref', this)">Reference</button>
   </div>
 
   <div class="tools-grid" id="toolsGrid">
@@ -1400,6 +1402,7 @@ const tools = [
   { name: "Child Tax Credit Estimator", icon: "👨‍👩‍👧", cat: "individual", tag: "tag-individual", label: "Individual", desc: "Calculate your CTC and ACTC based on number of qualifying children and income level.", url: "/tools/ctc", coming_soon: true },
   { name: "Business Entity Comparison", icon: "⚖️", cat: "business", tag: "tag-business", label: "Business", desc: "Side-by-side comparison of LLC, S-Corp, C-Corp, and Sole Prop for tax planning.", url: "/tools/entity-comparison", coming_soon: true },
   { name: "Extension Toolkit", icon: "🕐", cat: "deadline", tag: "tag-deadline", label: "Deadlines", desc: "File Form 4868 or 7004 properly — includes payment due with extension calculator.", url: "deadlines.html" },
+  { name: "Tax Acronym Decoder", icon: "🔤", cat: "ref", tag: "tag-ref", label: "Reference", desc: "Searchable glossary of 136 US tax acronyms — AGI, MAGI, QBI, SSTB, AOTC, EITC, RMD, FBAR, TFRP, OBBBA and more. Definitions, context, and form references.", url: "acronyms.html" },
 ];
 
 function renderTools(filter = 'all') {
