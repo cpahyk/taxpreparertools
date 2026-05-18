@@ -70,4 +70,10 @@
     <priority>0.90</priority>
   </url>
   <url><loc>https://taxpreparertools.com/property-tax-search</loc><lastmod>2026-05-14</lastmod><changefreq>yearly</changefreq><priority>0.8</priority></url>
+  <url>
+    <loc>https://taxpreparertools.com/acronyms</loc>
+    <lastmod>2026-05-17</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.95</priority>
+  </url>
 </urlset>

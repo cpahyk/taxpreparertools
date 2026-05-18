@@ -14,7 +14,7 @@
   <meta name="msapplication-config" content="/browserconfig.xml">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Tax Tools Directory | TaxPreparerTools.com</title>
-<meta name="description" content="40+ free tax tools for CPAs, Enrolled Agents, Tax Preparers and individuals. Calculators, deadline trackers, form guides and more.">
+<meta name="description" content="50+ free tax tools for CPAs, Enrolled Agents, Tax Preparers and individuals. Calculators, deadline trackers, form guides and more.">
 <link rel="canonical" href="https://taxpreparertools.com/tools" />
 <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700;900&family=DM+Sans:wght@300;400;500;600&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
 <style>
@@ -395,7 +395,7 @@
     <h1>The Complete Tax Tools<br>Directory</h1>
     <p class="header-sub">40+ purpose-built tools for CPAs, Enrolled Agents, tax preparers, and individuals. Free to use, always current.</p>
     <div class="header-meta">
-      <div class="meta-pill"><span class="dot dot-green"></span>42 Tools Available</div>
+      <div class="meta-pill"><span class="dot dot-green"></span>51 Tools Available</div>
       <div class="meta-pill"><span class="dot dot-gold"></span>Updated for 2025 Tax Year</div>
       <div class="meta-pill"><span class="dot dot-blue"></span>8 New Tools Added</div>
     </div>
@@ -432,19 +432,19 @@
   <aside class="sidebar">
     <div class="sidebar-section">
       <div class="sidebar-label">Categories</div>
-      <div class="sidebar-item on" data-cat="all" onclick="sidebarFilter(this)">All Tools <span class="count">42</span></div>
+      <div class="sidebar-item on" data-cat="all" onclick="sidebarFilter(this)">All Tools <span class="count">51</span></div>
       <div class="sidebar-item" data-cat="calc" onclick="sidebarFilter(this)">Calculators <span class="count">12</span></div>
-      <div class="sidebar-item" data-cat="pro" onclick="sidebarFilter(this)">CPA / EA Pro <span class="count">10</span></div>
-      <div class="sidebar-item" data-cat="ind" onclick="sidebarFilter(this)">Individual <span class="count">9</span></div>
+      <div class="sidebar-item" data-cat="pro" onclick="sidebarFilter(this)">CPA / EA Pro <span class="count">17</span></div>
+      <div class="sidebar-item" data-cat="ind" onclick="sidebarFilter(this)">Individual <span class="count">10</span></div>
       <div class="sidebar-item" data-cat="biz" onclick="sidebarFilter(this)">Business <span class="count">7</span></div>
       <div class="sidebar-item" data-cat="dead" onclick="sidebarFilter(this)">Deadlines <span class="count">3</span></div>
-      <div class="sidebar-item" data-cat="ref" onclick="sidebarFilter(this)">Reference <span class="count">1</span></div>
+      <div class="sidebar-item" data-cat="ref" onclick="sidebarFilter(this)">Reference <span class="count">2</span></div>
     </div>
     <div class="sidebar-section">
       <div class="sidebar-label">Availability</div>
-      <div class="sidebar-item on" data-avail="all" onclick="availFilter(this)">All <span class="count">42</span></div>
-      <div class="sidebar-item" data-avail="free" onclick="availFilter(this)">Free <span class="count">34</span></div>
-      <div class="sidebar-item" data-avail="pro" onclick="availFilter(this)">Pro Only <span class="count">8</span></div>
+      <div class="sidebar-item on" data-avail="all" onclick="availFilter(this)">All <span class="count">51</span></div>
+      <div class="sidebar-item" data-avail="free" onclick="availFilter(this)">Free <span class="count">41</span></div>
+      <div class="sidebar-item" data-avail="pro" onclick="availFilter(this)">Pro Only <span class="count">10</span></div>
     </div>
     <div class="sidebar-section">
       <div class="sidebar-label">Quick Links</div>
@@ -457,7 +457,7 @@
   <!-- TOOLS GRID -->
   <div class="tools-content">
     <div class="results-bar">
-      <div class="results-count">Showing <strong id="resultCount">42</strong> tools</div>
+      <div class="results-count">Showing <strong id="resultCount">51</strong> tools</div>
       <select class="sort-sel" onchange="applyFilters()">
         <option>Most Popular</option>
         <option>Newest First</option>
@@ -547,7 +547,8 @@ const ALL_TOOLS = [
   { id:47, emoji:"💼", name:"Reasonable Compensation Calculator (S-Corp)", desc:"Free calculator for determining reasonable compensation for S-Corp shareholder-employees. BLS-based wage benchmarks across 40+ occupations with geographic, experience, hours, and specialty adjustments. Includes IRS audit risk gauge based on Watson v. US framework. Saves $300-500/yr vs RCReports.", cat:"pro", catLabel:"CPA / EA Pro", avail:"free", isNew:true, url:"reasonable-compensation-calculator.html", tags:["reasonable compensation","S-Corp","S corp","owner comp","officer comp","Watson v United States","Rev Rul 59-60","RCReports alternative","BLS","audit defense","shareholder employee","officer wages","calculator"] },
   { id:48, emoji:"⚠️", name:"S-Corp Audit Exposure Calculator", desc:"Calculate IRS audit exposure if S-Corp distributions get reclassified as wages. Multi-year FICA/Medicare tax + FTF/FTP/§6662 penalties + compound interest at federal short-term + 3%. Companion to the Reasonable Compensation Calculator.", cat:"pro", catLabel:"CPA / EA Pro", avail:"free", isNew:true, url:"s-corp-audit-exposure-calculator.html", tags:["S-Corp","audit","reclassification","reasonable comp","FICA","Medicare","penalty","interest","Watson","6662","exposure","calculator"] },
   { id:49, emoji:"🌱", name:"Self-Employed Retirement Plan Calculator", desc:"Free 2025 retirement plan comparison for sole proprietors, S-Corp owner-employees, and partnership members. Side-by-side comparison of SEP-IRA, Solo 401(k), SIMPLE IRA, Traditional and Roth IRA with max contributions and tax savings at your marginal rate.", cat:"pro", catLabel:"CPA / EA Pro", avail:"free", isNew:true, url:"self-employed-retirement-calculator.html", tags:["retirement","Solo 401k","SEP-IRA","SIMPLE IRA","Roth","Traditional IRA","self-employed","sole prop","S-Corp","retirement plan","contribution limit","2025"] },
-  { id:50, emoji:"📊", name:"QBI Deduction Calculator (§199A)", desc:"Free Section 199A QBI deduction calculator for 2025 and 2026 tax years. Handles below-threshold simple calc, phase-in range with SSTB rules, and above-phase-out wages/UBIA test. Updated for the One Big Beautiful Bill Act (OBBBA): permanent §199A, expanded phase-in ranges, and $400 minimum deduction effective 2026.", cat:"pro", catLabel:"CPA / EA Pro", avail:"free", isNew:true, url:"qbi-deduction-calculator.html", tags:["QBI","Section 199A","199A","pass-through","S-Corp","sole proprietor","partnership","SSTB","OBBBA","wages cap","UBIA","Form 8995","Form 8995-A","2026","phase-out"] },
+  { id:50, emoji:"📊", name:"QBI Deduction Calculator (§199A)", desc:"Free Section 199A QBI deduction calculator for 2025 and 2026 tax years. Handles below-threshold simple calc, phase-in range with SSTB rules, and above-phase-out wages/UBIA test. Updated for the One Big Beautiful Bill Act (OBBBA): permanent §199A, expanded phase-in ranges, and $400 minimum deduction effective 2026.", cat:"pro", catLabel:"CPA / EA Pro", avail:"free", isNew:true, url:"qbi-deduction-calculator.html", tags:["QBI","Section 199A","199A","pass-through","S-Corp","sole proprietor","partnership","SSTB","OBBBA","wages cap","UBIA","Form 8995","Form 8995-A","2026","phase-out"] },,
+    { id:51, emoji:"🔤", name:"Tax Acronym Decoder", desc:"Searchable glossary of 136 US tax acronyms — AGI, MAGI, QBI, SSTB, AOTC, EITC, RMD, FBAR, TFRP, OBBBA and more. Definitions, context, and form references for every term a tax preparer encounters.", cat:"ref", catLabel:"Reference", avail:"free", isNew:true, url:"acronyms.html", tags:["acronym","glossary","definitions","reference","terminology","abbreviations","AGI","QBI","SSTB","MAGI","decoder","tax terms"] }
 ];
 
 let currentCat = "all";
