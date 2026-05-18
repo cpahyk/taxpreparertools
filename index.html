@@ -131,6 +131,159 @@
     transform: translateY(-1px);
   }
 
+
+  /* ─── JUST LAUNCHED HIGHLIGHT ─── */
+  .launch-section {
+    padding: 0 60px 80px;
+    position: relative;
+  }
+  .launch-card {
+    max-width: 1100px;
+    margin: 0 auto;
+    background: linear-gradient(135deg, rgba(200,168,75,0.08), rgba(30,51,88,0.4));
+    border: 1px solid rgba(200,168,75,0.25);
+    border-radius: 18px;
+    padding: 40px 48px;
+    display: grid;
+    grid-template-columns: 1fr auto;
+    gap: 40px;
+    align-items: center;
+    position: relative;
+    overflow: hidden;
+  }
+  .launch-card::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    right: 0;
+    width: 280px;
+    height: 280px;
+    background: radial-gradient(circle, rgba(200,168,75,0.12) 0%, transparent 70%);
+    pointer-events: none;
+  }
+  .launch-eyebrow {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    font-family: 'DM Mono', monospace;
+    font-size: 0.72rem;
+    font-weight: 700;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--gold);
+    margin-bottom: 14px;
+  }
+  .launch-eyebrow::before {
+    content: "";
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: var(--gold);
+    box-shadow: 0 0 12px var(--gold);
+    animation: launchPulse 2.4s ease-in-out infinite;
+  }
+  @keyframes launchPulse {
+    0%, 100% { opacity: 1; transform: scale(1); }
+    50% { opacity: 0.5; transform: scale(1.4); }
+  }
+  .launch-title {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(1.6rem, 3vw, 2.2rem);
+    font-weight: 700;
+    color: var(--white);
+    line-height: 1.2;
+    margin-bottom: 14px;
+  }
+  .launch-title span { color: var(--gold); }
+  .launch-desc {
+    color: var(--muted);
+    font-size: 1rem;
+    line-height: 1.7;
+    margin-bottom: 22px;
+    max-width: 560px;
+  }
+  .launch-stats {
+    display: flex;
+    gap: 28px;
+    margin-bottom: 26px;
+    flex-wrap: wrap;
+  }
+  .launch-stat {
+    display: flex;
+    flex-direction: column;
+  }
+  .launch-stat-num {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: var(--gold);
+    line-height: 1;
+  }
+  .launch-stat-label {
+    font-family: 'DM Mono', monospace;
+    font-size: 0.66rem;
+    color: var(--muted);
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    margin-top: 4px;
+  }
+  .launch-cta {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    background: var(--gold);
+    color: var(--navy);
+    padding: 12px 24px;
+    border-radius: 8px;
+    font-weight: 700;
+    font-size: 0.92rem;
+    text-decoration: none;
+    transition: all 0.2s;
+  }
+  .launch-cta:hover { background: var(--gold-light); transform: translateX(4px); }
+  .launch-cards {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    perspective: 600px;
+  }
+  .launch-mini {
+    background: rgba(10, 22, 40, 0.7);
+    border: 1px solid rgba(200,168,75,0.18);
+    border-radius: 10px;
+    padding: 12px 16px;
+    min-width: 220px;
+    transition: transform 0.3s;
+    transform-origin: right center;
+  }
+  .launch-mini:nth-child(1) { transform: rotateY(-6deg) translateX(0); }
+  .launch-mini:nth-child(2) { transform: rotateY(-6deg) translateX(-8px); margin-left: -8px; }
+  .launch-mini:nth-child(3) { transform: rotateY(-6deg) translateX(-16px); margin-left: -16px; }
+  .launch-card:hover .launch-mini { transform: rotateY(-2deg) translateX(0); margin-left: 0; }
+  .launch-mini-acro {
+    font-family: 'DM Mono', monospace;
+    font-size: 0.92rem;
+    font-weight: 700;
+    color: var(--gold);
+  }
+  .launch-mini-name {
+    font-family: 'Playfair Display', serif;
+    font-size: 0.85rem;
+    color: var(--white);
+    margin-top: 2px;
+  }
+  .launch-mini-def {
+    font-size: 0.7rem;
+    color: var(--muted);
+    margin-top: 6px;
+    line-height: 1.45;
+  }
+  @media(max-width: 768px) {
+    .launch-section { padding: 0 24px 60px; }
+    .launch-card { grid-template-columns: 1fr; padding: 28px 24px; gap: 28px; }
+    .launch-cards { display: none; }
+  }
+
   /* ─── HERO ─── */
   .hero {
     position: relative;
@@ -1116,6 +1269,41 @@
     </div>
   </div>
 </div>
+
+<!-- JUST LAUNCHED -->
+<section class="launch-section">
+  <div class="launch-card">
+    <div class="launch-content">
+      <div class="launch-eyebrow">Just Launched</div>
+      <h2 class="launch-title">Tax Acronym Decoder — <span>136 terms</span><br>every tax preparer encounters</h2>
+      <p class="launch-desc">AGI, MAGI, QBI, SSTB, UBIA, TCJA, OBBBA, TFRP, AOTC, NIIT, FBAR, CSED — searchable glossary with practitioner context, form references, and deep links you can paste in client emails. Free, no signup.</p>
+      <div class="launch-stats">
+        <div class="launch-stat"><div class="launch-stat-num">136</div><div class="launch-stat-label">Acronyms</div></div>
+        <div class="launch-stat"><div class="launch-stat-num">14</div><div class="launch-stat-label">Categories</div></div>
+        <div class="launch-stat"><div class="launch-stat-num">A&ndash;Z</div><div class="launch-stat-label">Jump Rail</div></div>
+        <div class="launch-stat"><div class="launch-stat-num">∞</div><div class="launch-stat-label">Deep Links</div></div>
+      </div>
+      <a href="acronyms.html" class="launch-cta">Open the decoder <span>→</span></a>
+    </div>
+    <div class="launch-cards" aria-hidden="true">
+      <div class="launch-mini">
+        <div class="launch-mini-acro">QBI</div>
+        <div class="launch-mini-name">Qualified Business Income</div>
+        <div class="launch-mini-def">Pass-through deduction under §199A — made permanent by OBBBA.</div>
+      </div>
+      <div class="launch-mini">
+        <div class="launch-mini-acro">SSTB</div>
+        <div class="launch-mini-name">Specified Service Trade or Business</div>
+        <div class="launch-mini-def">SSTB phase-out hits law, health, accounting, consulting.</div>
+      </div>
+      <div class="launch-mini">
+        <div class="launch-mini-acro">OBBBA</div>
+        <div class="launch-mini-name">One Big Beautiful Bill Act</div>
+        <div class="launch-mini-def">P.L. 119-21 — permanent §199A, expanded phase-ins, $400 minimum.</div>
+      </div>
+    </div>
+  </div>
+</section>
 
 <!-- WHO IT'S FOR -->
 <section class="who-section">
