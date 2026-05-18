@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+  <!-- ═══ Favicons & App Icons ═══ -->
+  <link rel="icon" type="image/x-icon" href="/favicon.ico">
+  <link rel="icon" type="image/svg+xml" href="/assets/favicon.svg">
+  <link rel="icon" type="image/png" sizes="32x32" href="/assets/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/assets/favicon-16x16.png">
+  <link rel="apple-touch-icon" sizes="180x180" href="/assets/apple-touch-icon.png">
+  <link rel="manifest" href="/site.webmanifest">
+  <meta name="theme-color" content="#c8a84b">
+  <meta name="msapplication-TileColor" content="#08152a">
+  <meta name="msapplication-config" content="/browserconfig.xml">
+<link rel="canonical" href="https://taxpreparertools.com/blog" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Tax Professional Blog — IRS Updates, Guides & Planning Tips | TaxPreparerTools</title>
+<meta name="description" content="Expert tax articles for CPAs, Enrolled Agents, and tax preparers. IRS guidance updates, planning strategies, calculator guides, and tax law changes explained clearly." />
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700;900&family=DM+Sans:wght@300;400;500;600&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+<meta property="og:type" content="website" />
+<meta property="og:url" content="https://taxpreparertools.com/blog" />
+<meta property="og:title" content="Tax Professional Blog | TaxPreparerTools" />
+<meta property="og:description" content="Expert tax articles for CPAs, EAs, and tax preparers. IRS updates, planning strategies, and practical guides." />
+<meta property="og:image" content="https://taxpreparertools.com/assets/og-image.png" />
+<meta name="twitter:card" content="summary_large_image" />
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Blog",
+  "name": "TaxPreparerTools Blog",
+  "url": "https://taxpreparertools.com/blog",
+  "description": "Expert tax articles for CPAs, Enrolled Agents, and tax preparers covering IRS updates, planning strategies, and tax law changes.",
+  "publisher": {
+    "@type": "Organization",
+    "name": "TaxPreparerTools",
+    "url": "https://taxpreparertools.com/"
+  },
+  "blogPost": [
+    {"@type": "BlogPosting", "headline": "Reading an IRS Notice: What CP14, CP2000, CP3219A, and Letter 226-J Actually Mean (2026)", "url": "https://taxpreparertools.com/blog/irs-notices-decoded-cp14-cp2000-2026"},
+    {"@type": "BlogPosting", "headline": "OBBBA & §199A: Permanent QBI, Expanded Phase-Ins, and the New $400 Minimum (2026)", "url": "https://taxpreparertools.com/blog/obbba-section-199a-qbi-2026"},
+    {"@type": "BlogPosting", "headline": "2025 Bonus Depreciation Phase-Down: What CPAs Need to Know", "url": "https://taxpreparertools.com/blog/2025-bonus-depreciation"},
+    {"@type": "BlogPosting", "headline": "IRS First-Time Penalty Abatement: A Step-by-Step Guide for Tax Professionals", "url": "https://taxpreparertools.com/blog/first-time-penalty-abatement"},
+    {"@type": "BlogPosting", "headline": "QBI Deduction Phase-Out: Calculating the SSTB Limitation for 2025", "url": "https://taxpreparertools.com/blog/qbi-sstb-phase-out-2025"}
+  ]
+}
+</script>
+<style>
+  :root { --navy:#0a1628;--navy-mid:#122040;--slate:#1e3358;--gold:#c8a84b;--gold-light:#e8c96a;--white:#ffffff;--muted:#8a9bb5;--text:#e8edf5;--border:rgba(200,168,75,0.18);--card-bg:rgba(255,255,255,0.04); }
+  *,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+  html{scroll-behavior:smooth;}
+  body{font-family:'DM Sans',sans-serif;background:var(--navy);color:var(--text);line-height:1.6;}
+  nav{position:fixed;top:0;left:0;right:0;z-index:100;padding:20px 60px;display:flex;align-items:center;justify-content:space-between;background:rgba(10,22,40,0.92);backdrop-filter:blur(16px);border-bottom:1px solid var(--border);}
+  .logo{display:flex;align-items:center;gap:10px;text-decoration:none;}
+  .logo-icon{width:36px;height:36px;background:var(--gold);border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:18px;}
+  .logo-text{font-weight:600;font-size:1.1rem;color:var(--white);}
+  .logo-text span{color:var(--gold);}
+  nav ul{list-style:none;display:flex;gap:32px;}
+  nav ul li a{color:var(--muted);text-decoration:none;font-size:0.9rem;font-weight:500;transition:color 0.2s;}
+  nav ul li a:hover{color:var(--gold);}
+  .nav-cta{background:var(--gold);color:var(--navy)!important;padding:8px 20px;border-radius:6px;font-weight:600!important;}
+  .hero{padding:140px 60px 60px;max-width:860px;margin:0 auto;}
+  .hero-eyebrow{font-family:'DM Mono',monospace;font-size:0.75rem;font-weight:700;letter-spacing:0.12em;text-transform:uppercase;color:var(--gold);margin-bottom:16px;}
+  .hero h1{font-family:'Playfair Display',serif;font-size:clamp(1.8rem,3.5vw,2.6rem);font-weight:700;color:var(--white);line-height:1.25;margin-bottom:14px;}
+  .hero p{font-size:1rem;color:var(--muted);}
+  .posts{max-width:860px;margin:0 auto;padding:0 60px 80px;}
+  .post-card{display:grid;grid-template-columns:1fr auto;gap:16px;align-items:start;background:var(--card-bg);border:1px solid var(--border);border-radius:12px;padding:28px;margin-bottom:20px;text-decoration:none;transition:border-color 0.2s;}
+  .post-card:hover{border-color:var(--gold);}
+  .post-tag{font-family:'DM Mono',monospace;font-size:0.65rem;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;color:var(--gold);margin-bottom:8px;}
+  .post-title{font-family:'Playfair Display',serif;font-size:1.25rem;font-weight:700;color:var(--white);margin-bottom:8px;line-height:1.3;}
+  .post-excerpt{font-size:0.9rem;color:var(--muted);line-height:1.65;}
+  .post-meta{font-family:'DM Mono',monospace;font-size:0.7rem;color:var(--muted);white-space:nowrap;margin-top:4px;}
+  .post-arrow{font-size:1.2rem;color:var(--gold);align-self:center;}
+  footer{padding:28px 60px;display:flex;align-items:center;justify-content:space-between;border-top:1px solid var(--border);flex-wrap:wrap;gap:12px;}
+  .footer-copy{font-size:0.8rem;color:var(--muted);}
+  .footer-links{display:flex;gap:20px;}
+  .footer-links a{color:var(--muted);text-decoration:none;font-size:0.8rem;}
+  .footer-links a:hover{color:var(--gold);}
+  @media(max-width:768px){nav{padding:16px 24px;}nav ul{display:none;}.hero,.posts{padding-left:24px;padding-right:24px;}footer{padding:24px;flex-direction:column;text-align:center;}}
+</style>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    {"@type": "ListItem", "position": 1, "name": "Home", "item": "https://taxpreparertools.com/"},
+    {"@type": "ListItem", "position": 2, "name": "Blog", "item": "https://taxpreparertools.com/blog"}
+  ]
+}
+</script>
+</head>
+<body>
+<nav>
+  <a href="../index.html" class="logo">
+    <div class="logo-icon">⚖</div>
+    <span class="logo-text">TaxPreparer<span>Tools</span></span>
+  </a>
+  <ul>
+    <li><a href="../tools.html">Tools</a></li>
+    <li><a href="../deadlines.html">Deadlines</a></li>
+    <li><a href="../resources.html">Resources</a></li>
+    <li><a href="../blog/" style="color:var(--gold)">Blog</a></li>
+    <li><a href="../signup.html" class="nav-cta">Get Started Free</a></li>
+  </ul>
+</nav>
+
+<div class="hero">
+  <div class="hero-eyebrow">Tax Professional Blog</div>
+  <h1>Guides, IRS Updates &amp;<br>Planning Strategies</h1>
+  <p>Written for CPAs, Enrolled Agents, and tax preparers — reviewed for accuracy against current IRS guidance.</p>
+</div>
+
+<div class="posts">
+
+  <a href="irs-notices-decoded-cp14-cp2000-2026.html" class="post-card">
+    <div>
+      <div class="post-tag">IRS Notices · Collections · Practitioner Reference</div>
+      <div class="post-title">Reading an IRS Notice: What CP14, CP2000, CP3219A, and Letter 226-J Actually Mean (2026)</div>
+      <div class="post-excerpt">The IRS sends roughly 200 million notices a year. Most are routine; a few signal something serious. This guide walks through the most common notices, what each one means, the response window it opens, and where it sits in the collections sequence.</div>
+      <div class="post-meta">May 2026 · 10 min read · Reviewed by K. Reynolds, CPA</div>
+    </div>
+    <div class="post-arrow">→</div>
+  </a>
+
+  <a href="obbba-section-199a-qbi-2026.html" class="post-card">
+    <div>
+      <div class="post-tag">OBBBA · §199A · Pass-Through Planning</div>
+      <div class="post-title">OBBBA &amp; §199A: Permanent QBI, Expanded Phase-Ins, and the New $400 Minimum (2026)</div>
+      <div class="post-excerpt">The One Big Beautiful Bill Act made §199A permanent and widened the phase-in ranges starting 2026. Here's what changed, the new $400 minimum deduction for active small business owners, and the planning conversations to be having with pass-through clients now.</div>
+      <div class="post-meta">May 2026 · 11 min read · Reviewed by K. Reynolds, CPA</div>
+    </div>
+    <div class="post-arrow">→</div>
+  </a>
+
+  <a href="2025-bonus-depreciation.html" class="post-card">
+    <div>
+      <div class="post-tag">Depreciation · Tax Planning</div>
+      <div class="post-title">2025 Bonus Depreciation Phase-Down: What CPAs Need to Know Now</div>
+      <div class="post-excerpt">Bonus depreciation dropped to 40% in 2025, down from 60% last year. Here's exactly how that changes asset planning conversations with business clients — and when Section 179 becomes the smarter choice.</div>
+      <div class="post-meta">May 2026 · 8 min read · Reviewed by K. Reynolds, CPA</div>
+    </div>
+    <div class="post-arrow">→</div>
+  </a>
+
+  <a href="first-time-penalty-abatement.html" class="post-card">
+    <div>
+      <div class="post-tag">IRS Penalties · Representation</div>
+      <div class="post-title">IRS First-Time Penalty Abatement: A Step-by-Step Guide for Tax Professionals</div>
+      <div class="post-excerpt">First-time penalty abatement is one of the most underused IRS relief options available. If a client has a clean 3-year compliance history, you may be able to eliminate failure-to-file or failure-to-pay penalties with a single phone call.</div>
+      <div class="post-meta">April 2026 · 10 min read · Reviewed by M. Larson, EA</div>
+    </div>
+    <div class="post-arrow">→</div>
+  </a>
+
+  <a href="qbi-sstb-phase-out-2025.html" class="post-card">
+    <div>
+      <div class="post-tag">QBI Deduction · Pass-Through Planning</div>
+      <div class="post-title">QBI Deduction Phase-Out: Calculating the SSTB Limitation for 2025</div>
+      <div class="post-excerpt">The Section 199A phase-out for specified service trades or businesses (SSTBs) catches a lot of clients — lawyers, doctors, consultants, accountants — by surprise. Here's a clear walkthrough of the 2025 thresholds and how to calculate the limitation.</div>
+      <div class="post-meta">March 2026 · 12 min read · Reviewed by K. Reynolds, CPA</div>
+    </div>
+    <div class="post-arrow">→</div>
+  </a>
+
+</div>
+
+<footer>
+  <div class="footer-copy">© 2026 TaxPreparerTools.com · Not affiliated with the IRS · For informational use only</div>
+  <div class="footer-links">
+    <a href="../privacy.html">Privacy</a>
+    <a href="../terms.html">Terms</a>
+    <a href="../contact.html">Contact</a>
+    <a href="../about.html">About</a>
+    <a href="https://irs.gov" target="_blank" rel="noopener">IRS.gov ↗</a>
+  </div>
+</footer>
+</body>
+</html>
