@@ -507,5 +507,15 @@ function calculate(){
   });
 })();
 </script>
+<!-- Tax acronym tooltips (definitions on hover for related terms) -->
+<script src="assets/js/tax-acronyms.js" defer></script>
+<script>
+document.addEventListener('DOMContentLoaded', () => {
+  TaxAcronyms.init({
+    onlyAcronyms: ['AGI','MAGI','SE','EFTPS','EFW','TCJA','OBBBA','FICA'],
+    baseUrl: 'acronyms.html',
+  });
+});
+</script>
 </body>
 </html>

@@ -554,5 +554,15 @@ function calculate() {
   });
 })();
 </script>
+<!-- Tax acronym tooltips (definitions on hover for related terms) -->
+<script src="assets/js/tax-acronyms.js" defer></script>
+<script>
+document.addEventListener('DOMContentLoaded', () => {
+  TaxAcronyms.init({
+    onlyAcronyms: ['AGI','MAGI','FICA','OASDI','FUTA','SUTA','QBI','SEP','IRA','LLC','TCJA','OBBBA','HSA'],
+    baseUrl: 'acronyms.html',
+  });
+});
+</script>
 </body>
 </html>

@@ -685,5 +685,15 @@ function updateCalc() {}
   });
 })();
 </script>
+<!-- Tax acronym tooltips (definitions on hover for related terms) -->
+<script src="assets/js/tax-acronyms.js" defer></script>
+<script>
+document.addEventListener('DOMContentLoaded', () => {
+  TaxAcronyms.init({
+    onlyAcronyms: ['AGI','MAGI','AMT','NIIT','QBI','SSTB','SALT','HSA','CTC','EITC','IRA','TCJA','OBBBA','FICA','SE'],
+    baseUrl: 'acronyms.html',
+  });
+});
+</script>
 </body>
 </html>

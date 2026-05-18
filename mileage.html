@@ -432,5 +432,15 @@ calc();
   });
 })();
 </script>
+<!-- Tax acronym tooltips (definitions on hover for related terms) -->
+<script src="assets/js/tax-acronyms.js" defer></script>
+<script>
+document.addEventListener('DOMContentLoaded', () => {
+  TaxAcronyms.init({
+    onlyAcronyms: ['AGI','SE','QBI','TCJA'],
+    baseUrl: 'acronyms.html',
+  });
+});
+</script>
 </body>
 </html>
