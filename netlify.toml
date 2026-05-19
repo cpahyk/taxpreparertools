@@ -187,6 +187,36 @@
   to   = "/blog/irs-notices-decoded-cp14-cp2000-2026.html"
   status = 200
 
+[[redirects]]
+  from = "/state-tax-rates"
+  to   = "/state-tax-rates.html"
+  status = 200
+
+[[redirects]]
+  from = "/amended-return"
+  to   = "/amended-return-checklist.html"
+  status = 200
+
+[[redirects]]
+  from = "/refund-tracker"
+  to   = "/refund-tracker.html"
+  status = 200
+
+[[redirects]]
+  from = "/amt"
+  to   = "/amt-calculator.html"
+  status = 200
+
+[[redirects]]
+  from = "/deadline-calendar"
+  to   = "/deadline-calendar.html"
+  status = 200
+
+[[redirects]]
+  from = "/extensions"
+  to   = "/extension-toolkit.html"
+  status = 200
+
 # Security headers
 [[headers]]
   for = "/*"

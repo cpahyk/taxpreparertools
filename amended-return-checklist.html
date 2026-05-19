@@ -1,0 +1,380 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<link rel="icon" type="image/x-icon" href="/favicon.ico">
+<link rel="icon" type="image/svg+xml" href="/assets/favicon.svg">
+<link rel="apple-touch-icon" sizes="180x180" href="/assets/apple-touch-icon.png">
+<link rel="manifest" href="/site.webmanifest">
+<meta name="theme-color" content="#c8a84b">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Amended Return Checklist — Form 1040-X Step-by-Step (2026) | TaxPreparerTools</title>
+<meta name="description" content="Interactive checklist for preparing Form 1040-X. Common triggers, timing rules (3-year RSED window), required attachments, and how to handle the most frequent amendment scenarios.">
+<link rel="canonical" href="https://taxpreparertools.com/amended-return" />
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700;900&family=DM+Sans:wght@300;400;500;600;700&family=DM+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<meta property="og:type" content="website" />
+<meta property="og:url" content="https://taxpreparertools.com/amended-return" />
+<meta property="og:title" content="Amended Return Checklist — Form 1040-X Step-by-Step" />
+<meta property="og:description" content="Interactive checklist with common triggers, timing rules, and required attachments for Form 1040-X." />
+<meta property="og:image" content="https://taxpreparertools.com/assets/og-image.png" />
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "HowTo",
+  "name": "Prepare and File Form 1040-X (Amended Return)",
+  "description": "Step-by-step preparation checklist for filing an amended individual federal tax return.",
+  "url": "https://taxpreparertools.com/amended-return"
+}
+</script>
+<style>
+:root{--navy:#08152a;--navy-mid:#0f1f3d;--slate:#1a2f52;--gold:#c8a84b;--gold-light:#e8c96a;--white:#fff;--muted:#7a8fac;--text:#dde4f0;--border:rgba(200,168,75,0.14);--card:rgba(255,255,255,0.04);--green:#4ade80;--blue:#60a5fa;--purple:#a78bfa;--red:#f87171;--orange:#fb923c;}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+html{scroll-behavior:smooth;}
+body{font-family:'DM Sans',sans-serif;background:var(--navy);color:var(--text);min-height:100vh;}
+nav{position:sticky;top:0;z-index:200;padding:14px 48px;display:flex;align-items:center;justify-content:space-between;background:rgba(8,21,42,0.95);backdrop-filter:blur(20px);border-bottom:1px solid var(--border);}
+.logo{display:flex;align-items:center;gap:10px;text-decoration:none;}
+.logo-mark{width:32px;height:32px;background:var(--gold);border-radius:7px;display:flex;align-items:center;justify-content:center;font-size:15px;}
+.logo-name{font-family:'Playfair Display',serif;font-size:1.1rem;font-weight:700;color:var(--white);}
+.logo-name span{color:var(--gold);}
+.logo-domain{font-size:.62rem;color:var(--muted);font-family:'DM Mono',monospace;display:block;}
+.nav-links{display:flex;gap:24px;list-style:none;}
+.nav-links a{color:var(--muted);font-size:.82rem;font-weight:500;text-decoration:none;}
+.nav-links a:hover,.nav-links a.active{color:var(--gold);}
+.nav-right{display:flex;gap:10px;align-items:center;}
+.btn-sm{padding:7px 16px;border-radius:6px;font-size:.8rem;font-weight:700;cursor:pointer;text-decoration:none;border:none;font-family:'DM Sans',sans-serif;}
+.btn-ghost{background:transparent;color:var(--muted);border:1px solid var(--border);}
+.btn-ghost:hover{color:var(--gold);border-color:var(--gold);}
+.btn-gold{background:var(--gold);color:var(--navy);}
+.btn-gold:hover{background:var(--gold-light);}
+.nav-hamburger{display:none;flex-direction:column;gap:5px;cursor:pointer;padding:6px;border:none;background:transparent;}
+.nav-hamburger span{display:block;width:22px;height:2px;background:var(--gold);}
+
+.pw{max-width:1160px;margin:0 auto;padding:40px 48px 80px;}
+.bc{font-size:.73rem;font-family:'DM Mono',monospace;color:var(--muted);margin-bottom:20px;display:flex;gap:7px;flex-wrap:wrap;}
+.bc a{color:var(--gold);text-decoration:none;}
+.th{display:flex;gap:22px;align-items:flex-start;margin-bottom:32px;}
+.t-icon{width:58px;height:58px;background:linear-gradient(135deg,rgba(200,168,75,.13),rgba(200,168,75,.02));border:1px solid rgba(200,168,75,.28);border-radius:15px;display:flex;align-items:center;justify-content:center;font-size:26px;flex-shrink:0;}
+.badge{font-size:.63rem;font-family:'DM Mono',monospace;font-weight:700;text-transform:uppercase;letter-spacing:.08em;padding:3px 10px;border-radius:50px;}
+.bf{background:rgba(74,222,128,.12);color:var(--green);}
+.bu{background:rgba(96,165,250,.1);color:var(--blue);}
+.bp{background:rgba(167,139,250,.1);color:var(--purple);}
+h1{font-family:'Playfair Display',serif;font-size:clamp(1.5rem,3vw,2.2rem);font-weight:900;color:var(--white);letter-spacing:-0.03em;line-height:1.1;margin-bottom:8px;}
+.td{color:var(--muted);font-size:.88rem;line-height:1.7;max-width:680px;}
+
+.progress-card{background:linear-gradient(135deg,var(--navy-mid),var(--slate));border:1px solid var(--gold);border-radius:14px;padding:20px 26px;margin-bottom:22px;}
+.pc-row{display:flex;align-items:center;justify-content:space-between;gap:14px;flex-wrap:wrap;}
+.pc-stat{font-family:'Playfair Display',serif;font-size:1.4rem;color:var(--white);}
+.pc-stat span{color:var(--gold);}
+.pc-bar{flex:1;min-width:200px;height:8px;background:rgba(255,255,255,.08);border-radius:4px;overflow:hidden;}
+.pc-fill{height:100%;background:linear-gradient(90deg,var(--gold),var(--gold-light));transition:width .3s;}
+.pc-reset{background:transparent;border:1px solid var(--border);color:var(--muted);padding:6px 12px;border-radius:6px;font-size:.72rem;cursor:pointer;font-family:'DM Sans',sans-serif;}
+.pc-reset:hover{border-color:var(--gold);color:var(--gold);}
+
+.lay{display:grid;grid-template-columns:1fr 320px;gap:22px;align-items:start;}
+
+.section{background:var(--navy-mid);border:1px solid var(--border);border-radius:14px;padding:24px 28px;margin-bottom:14px;}
+.section h2{font-family:'Playfair Display',serif;font-size:1.1rem;font-weight:700;color:var(--white);margin-bottom:6px;}
+.section .step-cap{font-family:'DM Mono',monospace;font-size:.65rem;font-weight:700;text-transform:uppercase;letter-spacing:.1em;color:var(--gold);margin-bottom:10px;}
+.section p{color:var(--muted);font-size:.85rem;line-height:1.65;margin-bottom:12px;}
+.section p:last-of-type{margin-bottom:0;}
+
+.check-list{list-style:none;margin:0;padding:0;}
+.check-item{display:flex;gap:11px;padding:10px 0;border-bottom:1px solid rgba(255,255,255,.04);cursor:pointer;align-items:flex-start;}
+.check-item:last-child{border-bottom:none;}
+.check-item input[type=checkbox]{appearance:none;width:18px;height:18px;border:2px solid rgba(200,168,75,.35);border-radius:5px;flex-shrink:0;margin-top:1px;cursor:pointer;position:relative;transition:all .15s;}
+.check-item input[type=checkbox]:checked{background:var(--gold);border-color:var(--gold);}
+.check-item input[type=checkbox]:checked::after{content:'✓';position:absolute;color:var(--navy);font-weight:700;left:2px;top:-3px;font-size:13px;}
+.check-text{flex:1;font-size:.86rem;line-height:1.55;color:var(--text);}
+.check-item.done .check-text{color:var(--muted);text-decoration:line-through;text-decoration-color:rgba(200,168,75,.4);}
+.check-text strong{color:var(--gold);font-weight:600;}
+.check-sub{font-size:.74rem;color:var(--muted);margin-top:3px;line-height:1.5;}
+
+.callout{background:rgba(200,168,75,.07);border:1px solid var(--border);border-left:3px solid var(--gold);border-radius:8px;padding:14px 18px;margin:14px 0;}
+.callout strong{color:var(--gold);}
+.callout p{font-size:.84rem;color:var(--text);line-height:1.65;margin:0;}
+
+.warn{background:rgba(248,113,113,.06);border:1px solid rgba(248,113,113,.18);border-left:3px solid var(--red);border-radius:8px;padding:14px 18px;margin:14px 0;}
+.warn strong{color:var(--red);}
+.warn p{font-size:.84rem;color:var(--text);line-height:1.65;margin:0;}
+
+.timing-table{width:100%;border-collapse:collapse;margin:14px 0;font-size:.82rem;}
+.timing-table th{background:var(--slate);color:var(--gold);font-family:'DM Mono',monospace;font-size:.66rem;text-transform:uppercase;padding:9px 12px;text-align:left;letter-spacing:.06em;}
+.timing-table td{padding:9px 12px;border-bottom:1px solid rgba(200,168,75,.06);color:var(--muted);}
+.timing-table td:first-child{color:var(--text);font-weight:600;}
+
+.sc{background:var(--navy-mid);border:1px solid var(--border);border-radius:14px;padding:18px;margin-bottom:14px;}
+.sct{font-family:'Playfair Display',serif;font-size:.93rem;font-weight:700;color:var(--white);margin-bottom:11px;}
+.scr{display:flex;justify-content:space-between;padding:7px 0;border-bottom:1px solid rgba(255,255,255,.05);font-size:.76rem;}
+.scr:last-child{border-bottom:none;}
+.sck{color:var(--muted);}
+.scv{font-family:'DM Mono',monospace;font-weight:600;color:var(--text);}
+.scv.gold{color:var(--gold);}
+
+.rl-item{display:flex;align-items:center;gap:10px;padding:8px 0;border-bottom:1px solid rgba(255,255,255,.05);text-decoration:none;}
+.rl-item:last-child{border-bottom:none;}
+.rl-item:hover .rln{color:var(--gold);}
+.rli{font-size:1rem;width:32px;text-align:center;}
+.rln{font-size:.78rem;font-weight:600;color:var(--text);}
+.rld{font-size:.65rem;color:var(--muted);}
+.rla{margin-left:auto;color:var(--muted);font-size:.8rem;}
+.rl-item:hover .rla{color:var(--gold);}
+
+footer{border-top:1px solid var(--border);padding:26px 48px;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:12px;background:var(--navy-mid);}
+.fl{font-size:.72rem;color:var(--muted);}
+.fl a{color:var(--gold);text-decoration:none;}
+.flk{display:flex;gap:18px;}
+.flk a{font-size:.72rem;color:var(--muted);text-decoration:none;}
+.flk a:hover{color:var(--gold);}
+
+@media(max-width:960px){nav{padding:13px 18px;}.pw{padding:26px 18px 60px;}.lay{grid-template-columns:1fr;}footer{padding:18px;flex-direction:column;}}
+@media(max-width:768px){.nav-hamburger{display:flex;}.nav-links,.nav-right{display:none!important;}}
+</style>
+</head>
+<body>
+<nav>
+<a href="index.html" class="logo">
+<div class="logo-mark">⚖</div>
+<div><span class="logo-name">TaxPreparer<span>Tools</span></span><span class="logo-domain">taxpreparertools.com</span></div>
+</a>
+<button id="navHamburger" class="nav-hamburger" aria-label="Menu"><span></span><span></span><span></span></button>
+<ul class="nav-links">
+<li><a href="tools.html" class="active">Tools</a></li>
+<li><a href="deadlines.html">Deadlines</a></li>
+<li><a href="ai-assistant.html">AI Assistant</a></li>
+<li><a href="resources.html">Resources</a></li>
+</ul>
+<div class="nav-right">
+<a href="login.html" class="btn-sm btn-ghost">Log In</a>
+<a href="signup.html" class="btn-sm btn-gold">Get Pro Free</a>
+</div>
+</nav>
+
+<div class="pw">
+<div class="bc">
+<a href="index.html">Home</a><span>/</span>
+<a href="tools.html">Tools</a><span>/</span>
+Amended Return Checklist
+</div>
+
+<div class="th">
+<div class="t-icon">📝</div>
+<div>
+<div style="display:flex;gap:7px;margin-bottom:9px;flex-wrap:wrap;">
+<span class="badge bf">Free</span>
+<span class="badge bu">Form 1040-X</span>
+<span class="badge bp">Step-by-Step</span>
+</div>
+<h1>Amended Return Checklist</h1>
+<p class="td">Interactive step-by-step preparation for Form 1040-X. Common triggers, the 3-year RSED window for refund claims, required attachments, e-file rules, and when an amendment isn't actually needed.</p>
+</div>
+</div>
+
+<div class="progress-card">
+<div class="pc-row">
+<div><div style="font-size:.7rem;color:var(--muted);font-family:'DM Mono',monospace;text-transform:uppercase;letter-spacing:.06em;margin-bottom:4px;">Progress</div><div class="pc-stat"><span id="doneCount">0</span> / <span id="totalCount">0</span> steps complete</div></div>
+<div class="pc-bar"><div class="pc-fill" id="progFill" style="width:0%"></div></div>
+<button class="pc-reset" onclick="resetChecklist()">Reset</button>
+</div>
+</div>
+
+<div class="lay">
+<div>
+
+<div class="section">
+<div class="step-cap">Step 1 of 5</div>
+<h2>Determine whether you actually need to amend</h2>
+<p>Many situations that taxpayers think require an amendment actually don't. The IRS corrects most simple math errors automatically and will send a notice rather than expecting a 1040-X. Filing an unnecessary amendment slows things down.</p>
+<ul class="check-list">
+<li class="check-item"><input type="checkbox" class="track"><div><div class="check-text">The change <strong>increases tax owed</strong> — amendment required to avoid accuracy penalties</div><div class="check-sub">Pay the additional tax with the 1040-X to limit interest accrual.</div></div></li>
+<li class="check-item"><input type="checkbox" class="track"><div><div class="check-text">The change <strong>increases your refund</strong> — amendment required to claim it (within RSED)</div><div class="check-sub">Refund Statute Expiration Date is generally 3 years from filing or 2 years from payment, whichever is later.</div></div></li>
+<li class="check-item"><input type="checkbox" class="track"><div><div class="check-text">Filing status change (Single → MFJ, MFJ → MFS, etc.)</div><div class="check-sub">MFJ to MFS only allowed if both spouses agree and the original deadline hasn't passed.</div></div></li>
+<li class="check-item"><input type="checkbox" class="track"><div><div class="check-text">Dependent claim corrections — added or removed</div></div></li>
+<li class="check-item"><input type="checkbox" class="track"><div><div class="check-text">Income, deductions, or credits omitted or misreported</div></div></li>
+</ul>
+<div class="callout"><p><strong>You probably don't need to amend if:</strong> the IRS already sent a CP2000 proposing the change (respond to that instead), it's a simple math error (the IRS auto-corrects), or you forgot to attach a W-2 (the IRS already has it via third-party reporting).</p></div>
+</div>
+
+<div class="section">
+<div class="step-cap">Step 2 of 5</div>
+<h2>Confirm you're within the RSED / ASED window</h2>
+<p>The Refund Statute Expiration Date (RSED) caps when refunds can be claimed; the Assessment Statute Expiration Date (ASED) caps when the IRS can assess more tax. For amendments, the controlling deadline depends on whether the change increases or decreases tax.</p>
+<table class="timing-table">
+<thead><tr><th>Scenario</th><th>Filing Window</th></tr></thead>
+<tbody>
+<tr><td>Claim a refund</td><td>3 years from original filing OR 2 years from payment — later</td></tr>
+<tr><td>Pay additional tax</td><td>Generally 3 years from filing (ASED), 6 years if substantial omission (&gt;25%)</td></tr>
+<tr><td>Bad debt / worthless securities</td><td>7 years from original filing</td></tr>
+<tr><td>Foreign tax credit (FTC)</td><td>10 years from original filing</td></tr>
+<tr><td>NOL or capital loss carryback</td><td>3 years from the year the loss arose</td></tr>
+</tbody>
+</table>
+<ul class="check-list">
+<li class="check-item"><input type="checkbox" class="track"><div><div class="check-text">Original return filing date confirmed (April 15 or actual filing if later)</div></div></li>
+<li class="check-item"><input type="checkbox" class="track"><div><div class="check-text">Within the applicable statute window for your amendment reason</div></div></li>
+<li class="check-item"><input type="checkbox" class="track"><div><div class="check-text">Confirmed which tax year is being amended (one 1040-X per year, no combined amendments)</div></div></li>
+</ul>
+</div>
+
+<div class="section">
+<div class="step-cap">Step 3 of 5</div>
+<h2>Gather your documents</h2>
+<p>1040-X requires both the original return and corrected figures. You can't reconstruct from memory — pull every supporting document before starting.</p>
+<ul class="check-list">
+<li class="check-item"><input type="checkbox" class="track"><div><div class="check-text">Original return — your filed copy or IRS account transcript</div><div class="check-sub">Get free transcript at irs.gov/individuals/get-transcript if you don't have the original.</div></div></li>
+<li class="check-item"><input type="checkbox" class="track"><div><div class="check-text">Documents supporting the changes — corrected W-2/1099, missing K-1, additional 1098, etc.</div></div></li>
+<li class="check-item"><input type="checkbox" class="track"><div><div class="check-text">Any IRS correspondence about the year being amended (CP2000, prior notices)</div></div></li>
+<li class="check-item"><input type="checkbox" class="track"><div><div class="check-text">Updated schedules — any Schedule A, B, C, D, E that's changing</div><div class="check-sub">Attach only the schedules that have changed. Write "As Amended" at the top.</div></div></li>
+<li class="check-item"><input type="checkbox" class="track"><div><div class="check-text">State return — most state amendments must follow within a specified window</div></div></li>
+</ul>
+</div>
+
+<div class="section">
+<div class="step-cap">Step 4 of 5</div>
+<h2>Complete Form 1040-X</h2>
+<p>The 1040-X uses a three-column layout: Column A (original or last adjusted figures), Column B (net change), Column C (corrected). Every change must reconcile across the three columns.</p>
+<ul class="check-list">
+<li class="check-item"><input type="checkbox" class="track"><div><div class="check-text">Check the correct tax-year box at the top of Form 1040-X</div></div></li>
+<li class="check-item"><input type="checkbox" class="track"><div><div class="check-text">Column A: enter figures from original return (or most recent IRS adjustment)</div><div class="check-sub">If the IRS already adjusted via a CP2000 or audit, use the adjusted amounts as Column A.</div></div></li>
+<li class="check-item"><input type="checkbox" class="track"><div><div class="check-text">Column C: enter the new correct figures (recomputed return)</div></div></li>
+<li class="check-item"><input type="checkbox" class="track"><div><div class="check-text">Column B: column C minus column A (the net change, can be negative)</div></div></li>
+<li class="check-item"><input type="checkbox" class="track"><div><div class="check-text">Part III explanation — describe the change in plain English with reasoning and code citations as needed</div><div class="check-sub">This is the most important narrative section. Be specific: which lines changed, why, and what supporting documents exist.</div></div></li>
+<li class="check-item"><input type="checkbox" class="track"><div><div class="check-text">Sign and date — both spouses if MFJ</div></div></li>
+</ul>
+<div class="warn"><p><strong>Common error:</strong> entering original return amounts in Column C instead of the corrected amounts. Column C is always the new, correct number — what the return <em>should</em> have shown.</p></div>
+</div>
+
+<div class="section">
+<div class="step-cap">Step 5 of 5</div>
+<h2>File and track</h2>
+<p>1040-X is now e-fileable for tax years 2019 and later (with some restrictions). Earlier years must be paper-filed. Processing takes 16-20 weeks regardless of filing method.</p>
+<ul class="check-list">
+<li class="check-item"><input type="checkbox" class="track"><div><div class="check-text">Decide e-file vs paper</div><div class="check-sub">E-file is available for tax years 2019+ via supported software. Paper file required for older years, MFJ-to-MFS changes, and certain other exceptions.</div></div></li>
+<li class="check-item"><input type="checkbox" class="track"><div><div class="check-text">If owing tax: pay with the 1040-X to limit interest</div><div class="check-sub">Interest accrues from the original due date, not the amendment date. Pay as soon as possible.</div></div></li>
+<li class="check-item"><input type="checkbox" class="track"><div><div class="check-text">If claiming refund: confirm direct deposit info or expect paper check</div></div></li>
+<li class="check-item"><input type="checkbox" class="track"><div><div class="check-text">Mail to the correct IRS service center if paper-filing</div><div class="check-sub">Addresses vary by state — check current Form 1040-X instructions.</div></div></li>
+<li class="check-item"><input type="checkbox" class="track"><div><div class="check-text">Keep proof of timely filing — certified mail receipt or e-file acknowledgment</div></div></li>
+<li class="check-item"><input type="checkbox" class="track"><div><div class="check-text">Track status at irs.gov/wheres-my-amended-return (updates ~3 weeks after filing)</div></div></li>
+<li class="check-item"><input type="checkbox" class="track"><div><div class="check-text">File corresponding state amendment within state's timing window</div></div></li>
+</ul>
+<div class="callout"><p><strong>Processing reality:</strong> The IRS officially quotes 16 weeks for 1040-X processing, but real-world processing often runs 16-20+ weeks. Don't expect updates before week 3. If 20+ weeks pass without status change, call the IRS or contact the Taxpayer Advocate Service (TAS) via Form 911.</p></div>
+</div>
+
+</div>
+
+<div>
+
+<div class="sc">
+<div class="sct">⚡ Critical Deadlines</div>
+<div class="scr"><span class="sck">RSED (refund)</span><span class="scv gold">3 yr / 2 yr</span></div>
+<div class="scr"><span class="sck">ASED (assessment)</span><span class="scv">3 yr / 6 yr</span></div>
+<div class="scr"><span class="sck">Bad debt</span><span class="scv">7 years</span></div>
+<div class="scr"><span class="sck">FTC</span><span class="scv">10 years</span></div>
+<div class="scr"><span class="sck">Processing time</span><span class="scv">16–20 weeks</span></div>
+</div>
+
+<div class="sc">
+<div class="sct">💡 Common Amendment Triggers</div>
+<div style="font-size:.78rem;color:var(--muted);line-height:1.65;">
+<div style="padding:5px 0;border-bottom:1px solid rgba(255,255,255,.05);">📄 Missed W-2 or 1099</div>
+<div style="padding:5px 0;border-bottom:1px solid rgba(255,255,255,.05);">🔄 Filing status change</div>
+<div style="padding:5px 0;border-bottom:1px solid rgba(255,255,255,.05);">👨‍👩‍👧 Dependent corrections</div>
+<div style="padding:5px 0;border-bottom:1px solid rgba(255,255,255,.05);">💰 Missed credits (EITC, CTC, AOTC)</div>
+<div style="padding:5px 0;border-bottom:1px solid rgba(255,255,255,.05);">📊 Cost basis errors on 1099-B</div>
+<div style="padding:5px 0;border-bottom:1px solid rgba(255,255,255,.05);">🌍 FEIE election late</div>
+<div style="padding:5px 0;">📑 Schedule K-1 corrections</div>
+</div>
+</div>
+
+<div class="sc">
+<div class="sct">📚 Official IRS Resources</div>
+<a href="https://www.irs.gov/forms-pubs/about-form-1040x" target="_blank" rel="noopener" class="rl-item"><span class="rli">📄</span><div><div class="rln">Form 1040-X</div><div class="rld">Latest version + instructions</div></div><span class="rla">↗</span></a>
+<a href="https://www.irs.gov/filing/wheres-my-amended-return" target="_blank" rel="noopener" class="rl-item"><span class="rli">🔍</span><div><div class="rln">Where's My Amended Return?</div><div class="rld">Status tracker</div></div><span class="rla">↗</span></a>
+<a href="https://www.irs.gov/individuals/get-transcript" target="_blank" rel="noopener" class="rl-item"><span class="rli">📋</span><div><div class="rln">Get Transcript</div><div class="rld">Original return data</div></div><span class="rla">↗</span></a>
+</div>
+
+<div class="sc">
+<div class="sct">🔗 Related Tools</div>
+<a href="penalty-calculator.html" class="rl-item"><span class="rli">⚖️</span><div><div class="rln">Penalty Calculator</div><div class="rld">For additional tax owed</div></div><span class="rla">→</span></a>
+<a href="refund-tracker.html" class="rl-item"><span class="rli">⏱️</span><div><div class="rln">Refund Tracker</div><div class="rld">If claiming refund</div></div><span class="rla">→</span></a>
+<a href="irs-notice-decoder.html" class="rl-item"><span class="rli">📋</span><div><div class="rln">IRS Notice Decoder</div><div class="rld">Pre-existing notices</div></div><span class="rla">→</span></a>
+<a href="acronyms.html#acro-rsed" class="rl-item"><span class="rli">🔤</span><div><div class="rln">RSED in Acronym Decoder</div><div class="rld">Full definition</div></div><span class="rla">→</span></a>
+</div>
+
+</div>
+</div>
+</div>
+
+<footer>
+<div class="fl">© 2026 <a href="index.html">TaxPreparerTools.com</a> · General guidance only · Consult a CPA or EA for amendments involving substantial amounts</div>
+<div class="flk"><a href="privacy.html">Privacy</a><a href="terms.html">Terms</a><a href="https://irs.gov" target="_blank" rel="noopener">IRS.gov ↗</a></div>
+</footer>
+
+<script>
+const STORAGE_KEY = 'amendedReturnChecklist';
+const checks = document.querySelectorAll('.track');
+document.getElementById('totalCount').textContent = checks.length;
+
+function updateProgress() {
+  const done = document.querySelectorAll('.track:checked').length;
+  document.getElementById('doneCount').textContent = done;
+  document.getElementById('progFill').style.width = (done/checks.length*100) + '%';
+}
+function saveState() {
+  const state = Array.from(checks).map(c => c.checked);
+  try { localStorage.setItem(STORAGE_KEY, JSON.stringify(state)); } catch(e) {}
+}
+function loadState() {
+  try {
+    const saved = JSON.parse(localStorage.getItem(STORAGE_KEY) || '[]');
+    checks.forEach((c, i) => {
+      if (saved[i]) {
+        c.checked = true;
+        c.closest('.check-item').classList.add('done');
+      }
+    });
+  } catch(e) {}
+  updateProgress();
+}
+function resetChecklist() {
+  checks.forEach(c => {
+    c.checked = false;
+    c.closest('.check-item').classList.remove('done');
+  });
+  try { localStorage.removeItem(STORAGE_KEY); } catch(e) {}
+  updateProgress();
+}
+checks.forEach(c => {
+  c.addEventListener('change', () => {
+    c.closest('.check-item').classList.toggle('done', c.checked);
+    updateProgress();
+    saveState();
+  });
+});
+// Click handler on the whole row
+document.querySelectorAll('.check-item').forEach(item => {
+  item.addEventListener('click', e => {
+    if (e.target.tagName !== 'INPUT') {
+      const cb = item.querySelector('.track');
+      cb.checked = !cb.checked;
+      cb.dispatchEvent(new Event('change'));
+    }
+  });
+});
+loadState();
+
+(function(){
+  var btn=document.getElementById('navHamburger'),ul=document.querySelector('.nav-links');
+  if(btn&&ul)btn.addEventListener('click',function(){btn.classList.toggle('open');ul.classList.toggle('mobile-open');});
+})();
+</script>
+<script src="assets/js/tax-acronyms.js" defer></script>
+<script>
+document.addEventListener('DOMContentLoaded', () => {
+  TaxAcronyms.init({
+    onlyAcronyms: ['AGI','MAGI','RSED','ASED','CSED','EITC','CTC','AOTC','FTC','NOL','FEIE','EA','CPA','TAS','LITC','POA','OIC','IA'],
+    baseUrl: 'acronyms.html',
+  });
+});
+</script>
+</body>
+</html>

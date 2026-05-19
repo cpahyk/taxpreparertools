@@ -1,0 +1,344 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<link rel="icon" type="image/x-icon" href="/favicon.ico">
+<link rel="icon" type="image/svg+xml" href="/assets/favicon.svg">
+<link rel="apple-touch-icon" sizes="180x180" href="/assets/apple-touch-icon.png">
+<link rel="manifest" href="/site.webmanifest">
+<meta name="theme-color" content="#c8a84b">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>State Tax Rate Lookup — Income, Sales &amp; Property Rates for All 50 States (2025) | TaxPreparerTools</title>
+<meta name="description" content="Quick-reference tax rates for all 50 states and DC — top individual income tax rate, state sales tax base rate, median effective property tax. Sourced from 2025 Tax Foundation data with links to each state revenue department.">
+<link rel="canonical" href="https://taxpreparertools.com/state-tax-rates" />
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700;900&family=DM+Sans:wght@300;400;500;600;700&family=DM+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<meta property="og:type" content="website" />
+<meta property="og:url" content="https://taxpreparertools.com/state-tax-rates" />
+<meta property="og:title" content="State Tax Rate Lookup — All 50 States" />
+<meta property="og:description" content="Income, sales, and property tax rates for every US state." />
+<meta property="og:image" content="https://taxpreparertools.com/assets/og-image.png" />
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "WebApplication",
+  "name": "State Tax Rate Lookup",
+  "description": "Reference table of individual income, sales, and property tax rates across all 50 states plus DC.",
+  "url": "https://taxpreparertools.com/state-tax-rates",
+  "applicationCategory": "FinanceApplication",
+  "operatingSystem": "Any",
+  "offers": {"@type": "Offer", "price": "0"}
+}
+</script>
+<style>
+:root{--navy:#08152a;--navy-mid:#0f1f3d;--slate:#1a2f52;--gold:#c8a84b;--gold-light:#e8c96a;--white:#fff;--muted:#7a8fac;--text:#dde4f0;--border:rgba(200,168,75,0.14);--card:rgba(255,255,255,0.04);--green:#4ade80;--blue:#60a5fa;--purple:#a78bfa;--red:#f87171;--orange:#fb923c;}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+html{scroll-behavior:smooth;}
+body{font-family:'DM Sans',sans-serif;background:var(--navy);color:var(--text);min-height:100vh;}
+nav{position:sticky;top:0;z-index:200;padding:14px 48px;display:flex;align-items:center;justify-content:space-between;background:rgba(8,21,42,0.95);backdrop-filter:blur(20px);border-bottom:1px solid var(--border);}
+.logo{display:flex;align-items:center;gap:10px;text-decoration:none;}
+.logo-mark{width:32px;height:32px;background:var(--gold);border-radius:7px;display:flex;align-items:center;justify-content:center;font-size:15px;}
+.logo-name{font-family:'Playfair Display',serif;font-size:1.1rem;font-weight:700;color:var(--white);}
+.logo-name span{color:var(--gold);}
+.logo-domain{font-size:.62rem;color:var(--muted);font-family:'DM Mono',monospace;display:block;}
+.nav-links{display:flex;gap:24px;list-style:none;}
+.nav-links a{color:var(--muted);font-size:.82rem;font-weight:500;text-decoration:none;}
+.nav-links a:hover,.nav-links a.active{color:var(--gold);}
+.nav-right{display:flex;gap:10px;align-items:center;}
+.btn-sm{padding:7px 16px;border-radius:6px;font-size:.8rem;font-weight:700;text-decoration:none;border:none;font-family:'DM Sans',sans-serif;}
+.btn-ghost{background:transparent;color:var(--muted);border:1px solid var(--border);}
+.btn-ghost:hover{color:var(--gold);border-color:var(--gold);}
+.btn-gold{background:var(--gold);color:var(--navy);}
+.btn-gold:hover{background:var(--gold-light);}
+.nav-hamburger{display:none;flex-direction:column;gap:5px;cursor:pointer;padding:6px;border:none;background:transparent;}
+.nav-hamburger span{display:block;width:22px;height:2px;background:var(--gold);}
+
+.pw{max-width:1160px;margin:0 auto;padding:40px 48px 80px;}
+.bc{font-size:.73rem;font-family:'DM Mono',monospace;color:var(--muted);margin-bottom:20px;display:flex;gap:7px;flex-wrap:wrap;}
+.bc a{color:var(--gold);text-decoration:none;}
+.th{display:flex;gap:22px;align-items:flex-start;margin-bottom:24px;}
+.t-icon{width:58px;height:58px;background:linear-gradient(135deg,rgba(200,168,75,.13),rgba(200,168,75,.02));border:1px solid rgba(200,168,75,.28);border-radius:15px;display:flex;align-items:center;justify-content:center;font-size:26px;flex-shrink:0;}
+.badge{font-size:.63rem;font-family:'DM Mono',monospace;font-weight:700;text-transform:uppercase;letter-spacing:.08em;padding:3px 10px;border-radius:50px;}
+.bf{background:rgba(74,222,128,.12);color:var(--green);}
+.bu{background:rgba(96,165,250,.1);color:var(--blue);}
+.bp{background:rgba(167,139,250,.1);color:var(--purple);}
+h1{font-family:'Playfair Display',serif;font-size:clamp(1.5rem,3vw,2.2rem);font-weight:900;color:var(--white);letter-spacing:-0.03em;line-height:1.1;margin-bottom:8px;}
+.td{color:var(--muted);font-size:.88rem;line-height:1.7;max-width:680px;}
+
+.disclaimer{background:rgba(251,146,60,.06);border:1px solid rgba(251,146,60,.18);border-left:3px solid var(--orange);border-radius:9px;padding:13px 16px;margin-bottom:22px;font-size:.79rem;color:var(--text);line-height:1.55;}
+.disclaimer strong{color:var(--orange);font-family:'DM Mono',monospace;font-size:.66rem;text-transform:uppercase;letter-spacing:.08em;display:block;margin-bottom:3px;}
+
+.controls{background:var(--navy-mid);border:1px solid var(--border);border-radius:14px;padding:18px 22px;margin-bottom:18px;display:flex;gap:16px;align-items:center;flex-wrap:wrap;}
+.search-box{flex:1;min-width:240px;position:relative;}
+.search-box input{width:100%;background:rgba(255,255,255,.05);border:1px solid rgba(200,168,75,.17);border-radius:8px;padding:10px 14px 10px 36px;color:var(--white);font-size:.88rem;font-family:'DM Sans',sans-serif;outline:none;}
+.search-box input:focus{border-color:var(--gold);}
+.search-box::before{content:'🔍';position:absolute;left:12px;top:50%;transform:translateY(-50%);font-size:.85rem;opacity:.6;}
+.tabs{display:flex;gap:5px;background:rgba(255,255,255,.04);border-radius:8px;padding:3px;}
+.tab{padding:7px 14px;border-radius:6px;font-size:.78rem;font-weight:600;color:var(--muted);background:transparent;border:none;cursor:pointer;font-family:'DM Sans',sans-serif;transition:all .15s;}
+.tab.on{background:var(--gold);color:var(--navy);}
+.tab:hover:not(.on){color:var(--text);}
+
+.results-bar{font-family:'DM Mono',monospace;font-size:.72rem;color:var(--muted);margin-bottom:12px;}
+.results-bar strong{color:var(--gold);font-weight:600;}
+
+.lay{display:grid;grid-template-columns:1fr 320px;gap:22px;align-items:start;}
+
+.state-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:10px;}
+.state-card{background:var(--navy-mid);border:1px solid var(--border);border-radius:11px;padding:14px 16px;transition:all .15s;}
+.state-card:hover{border-color:rgba(200,168,75,.3);transform:translateY(-1px);}
+.state-card.hidden{display:none;}
+.state-head{display:flex;justify-content:space-between;align-items:center;margin-bottom:10px;}
+.state-name{font-family:'Playfair Display',serif;font-size:1.02rem;font-weight:700;color:var(--white);}
+.state-abbr{font-family:'DM Mono',monospace;font-size:.66rem;color:var(--muted);background:rgba(255,255,255,.04);border:1px solid var(--border);padding:2px 7px;border-radius:50px;}
+.state-rate{display:flex;align-items:baseline;gap:6px;margin-bottom:3px;}
+.rate-num{font-family:'DM Mono',monospace;font-size:1.3rem;font-weight:700;color:var(--gold);}
+.rate-num.none{color:var(--green);font-size:1rem;}
+.rate-label{font-size:.72rem;color:var(--muted);font-family:'DM Mono',monospace;text-transform:uppercase;letter-spacing:.05em;}
+.state-note{font-size:.7rem;color:var(--muted);margin-top:6px;line-height:1.5;}
+.state-dor{display:inline-block;margin-top:8px;font-size:.7rem;color:var(--gold);text-decoration:none;font-weight:500;}
+.state-dor:hover{text-decoration:underline;}
+
+.sc{background:var(--navy-mid);border:1px solid var(--border);border-radius:14px;padding:18px;margin-bottom:14px;}
+.sct{font-family:'Playfair Display',serif;font-size:.93rem;font-weight:700;color:var(--white);margin-bottom:11px;}
+.scr{display:flex;justify-content:space-between;padding:7px 0;border-bottom:1px solid rgba(255,255,255,.05);font-size:.76rem;}
+.scr:last-child{border-bottom:none;}
+.sck{color:var(--muted);}
+.scv{font-family:'DM Mono',monospace;font-weight:600;color:var(--text);}
+.scv.gold{color:var(--gold);}
+.scv.green{color:var(--green);}
+
+.rl-item{display:flex;align-items:center;gap:10px;padding:8px 0;border-bottom:1px solid rgba(255,255,255,.05);text-decoration:none;}
+.rl-item:last-child{border-bottom:none;}
+.rl-item:hover .rln{color:var(--gold);}
+.rli{font-size:1rem;width:32px;text-align:center;}
+.rln{font-size:.78rem;font-weight:600;color:var(--text);}
+.rld{font-size:.65rem;color:var(--muted);}
+.rla{margin-left:auto;color:var(--muted);font-size:.8rem;}
+.rl-item:hover .rla{color:var(--gold);}
+
+footer{border-top:1px solid var(--border);padding:26px 48px;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:12px;background:var(--navy-mid);}
+.fl{font-size:.72rem;color:var(--muted);}
+.fl a{color:var(--gold);text-decoration:none;}
+.flk{display:flex;gap:18px;}
+.flk a{font-size:.72rem;color:var(--muted);text-decoration:none;}
+.flk a:hover{color:var(--gold);}
+
+@media(max-width:960px){nav{padding:13px 18px;}.pw{padding:26px 18px 60px;}.lay{grid-template-columns:1fr;}.state-grid{grid-template-columns:repeat(auto-fill,minmax(220px,1fr));}footer{padding:18px;flex-direction:column;}}
+@media(max-width:768px){.nav-hamburger{display:flex;}.nav-links,.nav-right{display:none!important;}.controls{flex-direction:column;align-items:stretch;}.tabs{justify-content:center;}}
+</style>
+</head>
+<body>
+<nav>
+<a href="index.html" class="logo">
+<div class="logo-mark">⚖</div>
+<div><span class="logo-name">TaxPreparer<span>Tools</span></span><span class="logo-domain">taxpreparertools.com</span></div>
+</a>
+<button id="navHamburger" class="nav-hamburger" aria-label="Menu"><span></span><span></span><span></span></button>
+<ul class="nav-links">
+<li><a href="tools.html" class="active">Tools</a></li>
+<li><a href="deadlines.html">Deadlines</a></li>
+<li><a href="ai-assistant.html">AI Assistant</a></li>
+<li><a href="resources.html">Resources</a></li>
+</ul>
+<div class="nav-right">
+<a href="login.html" class="btn-sm btn-ghost">Log In</a>
+<a href="signup.html" class="btn-sm btn-gold">Get Pro Free</a>
+</div>
+</nav>
+
+<div class="pw">
+<div class="bc">
+<a href="index.html">Home</a><span>/</span>
+<a href="tools.html">Tools</a><span>/</span>
+State Tax Rate Lookup
+</div>
+
+<div class="th">
+<div class="t-icon">🗺️</div>
+<div>
+<div style="display:flex;gap:7px;margin-bottom:9px;flex-wrap:wrap;">
+<span class="badge bf">Free</span>
+<span class="badge bu">2025 Data</span>
+<span class="badge bp">50 States + DC</span>
+</div>
+<h1>State Tax Rate Lookup</h1>
+<p class="td">Quick reference for top individual income tax rate, state sales tax base, and median effective property tax across all 50 states plus DC. Use the tabs to switch between tax types and the search to filter by state name.</p>
+</div>
+</div>
+
+<div class="disclaimer">
+<strong>⚠ Reference only</strong>
+Rates compiled from 2025 Tax Foundation, state revenue department publications, and US Census Bureau data. Local taxes, special rates, and bracket structures vary widely — these figures show the top statewide rate and most common consumer rates. <strong>Always verify against the state's Department of Revenue before relying on this data for filings.</strong>
+</div>
+
+<div class="controls">
+<div class="search-box">
+<input id="searchInput" type="text" placeholder="Search by state name (e.g. California, Texas, NY)..." autocomplete="off">
+</div>
+<div class="tabs">
+<button class="tab on" data-tab="income" onclick="switchTab(this)">Income</button>
+<button class="tab" data-tab="sales" onclick="switchTab(this)">Sales</button>
+<button class="tab" data-tab="property" onclick="switchTab(this)">Property</button>
+</div>
+</div>
+
+<div class="results-bar">Showing <strong id="visibleCount">51</strong> of <strong>51</strong> states &amp; DC · <span id="tabLabel">Top individual income tax rate</span></div>
+
+<div class="lay">
+<div class="state-grid" id="stateGrid"></div>
+
+<div>
+<div class="sc">
+<div class="sct">📊 At a Glance — Income Tax</div>
+<div class="scr"><span class="sck">No income tax states</span><span class="scv green">9</span></div>
+<div class="scr"><span class="sck">Flat-rate states</span><span class="scv">~13</span></div>
+<div class="scr"><span class="sck">Progressive states</span><span class="scv">~29</span></div>
+<div class="scr"><span class="sck">Highest top rate</span><span class="scv gold">CA 13.3%</span></div>
+<div class="scr"><span class="sck">Lowest progressive top</span><span class="scv">PA 3.07%</span></div>
+</div>
+
+<div class="sc">
+<div class="sct">💡 Important Notes</div>
+<div style="font-size:.78rem;color:var(--text);line-height:1.6;">
+<p style="margin-bottom:8px;color:var(--muted);"><strong style="color:var(--gold)">Income tax:</strong> Top marginal rate shown. Many states have progressive brackets — this is the rate applied to the highest income tier.</p>
+<p style="margin-bottom:8px;color:var(--muted);"><strong style="color:var(--gold)">Sales tax:</strong> Statewide base rate only. Local sales taxes can add 1–5% in most jurisdictions. AK, DE, MT, NH, OR have no statewide sales tax (local may apply in AK and MT).</p>
+<p style="color:var(--muted);"><strong style="color:var(--gold)">Property tax:</strong> Median effective rate as % of home value. Actual rates vary by county and municipality.</p>
+</div>
+</div>
+
+<div class="sc">
+<div class="sct">🔗 Related Tools</div>
+<a href="federal-tax-estimator.html" class="rl-item"><span class="rli">🧮</span><div><div class="rln">Federal Tax Estimator</div><div class="rld">Federal liability calc</div></div><span class="rla">→</span></a>
+<a href="capital-gains.html" class="rl-item"><span class="rli">📈</span><div><div class="rln">Capital Gains Tax</div><div class="rld">Federal + NIIT</div></div><span class="rla">→</span></a>
+<a href="quarterly-payments.html" class="rl-item"><span class="rli">📅</span><div><div class="rln">Quarterly Payments</div><div class="rld">Estimated tax</div></div><span class="rla">→</span></a>
+<a href="acronyms.html" class="rl-item"><span class="rli">🔤</span><div><div class="rln">Tax Acronym Decoder</div><div class="rld">136 terms</div></div><span class="rla">→</span></a>
+</div>
+</div>
+</div>
+</div>
+
+<footer>
+<div class="fl">© 2026 <a href="index.html">TaxPreparerTools.com</a> · Reference table sourced from 2025 publicly available data · Verify rates with state revenue departments before relying on this data</div>
+<div class="flk"><a href="privacy.html">Privacy</a><a href="terms.html">Terms</a><a href="https://irs.gov" target="_blank" rel="noopener">IRS.gov ↗</a></div>
+</footer>
+
+<script>
+const STATES = [
+  {n:"Alabama",a:"AL",inc:5.0,sales:4.0,prop:0.41,dor:"https://revenue.alabama.gov",incNote:"Top bracket starts at $3,000 (single)",salesNote:"Local rates avg ~4% additional"},
+  {n:"Alaska",a:"AK",inc:null,sales:null,prop:1.04,dor:"https://tax.alaska.gov",incNote:"No state income tax",salesNote:"No statewide; local up to 7.5%"},
+  {n:"Arizona",a:"AZ",inc:2.5,sales:5.6,prop:0.62,dor:"https://azdor.gov",incNote:"Flat rate effective 2023",salesNote:"Local TPT adds ~2.7%"},
+  {n:"Arkansas",a:"AR",inc:3.9,sales:6.5,prop:0.62,dor:"https://www.dfa.arkansas.gov",incNote:"Top bracket; progressive below"},
+  {n:"California",a:"CA",inc:13.3,sales:7.25,prop:0.75,dor:"https://www.ftb.ca.gov",incNote:"Includes 1% mental health surtax >$1M",salesNote:"Highest statewide; local up to 10.75%"},
+  {n:"Colorado",a:"CO",inc:4.40,sales:2.9,prop:0.55,dor:"https://tax.colorado.gov",incNote:"Flat rate",salesNote:"State 2.9%; local can add 4–6%"},
+  {n:"Connecticut",a:"CT",inc:6.99,sales:6.35,prop:1.79,dor:"https://portal.ct.gov/drs",incNote:"Top marginal; progressive brackets"},
+  {n:"Delaware",a:"DE",inc:6.6,sales:null,prop:0.61,dor:"https://revenue.delaware.gov",salesNote:"No statewide sales tax"},
+  {n:"District of Columbia",a:"DC",inc:10.75,sales:6.0,prop:0.62,dor:"https://otr.cfo.dc.gov",incNote:"Top bracket >$1M"},
+  {n:"Florida",a:"FL",inc:null,sales:6.0,prop:0.91,dor:"https://floridarevenue.com",incNote:"No state income tax",salesNote:"Local can add 0.5–1.5%"},
+  {n:"Georgia",a:"GA",inc:5.39,sales:4.0,prop:0.92,dor:"https://dor.georgia.gov",incNote:"Flat rate (transitioning from 5.49% in 2025)",salesNote:"Local typically adds 2–4%"},
+  {n:"Hawaii",a:"HI",inc:11.0,sales:4.0,prop:0.32,dor:"https://tax.hawaii.gov",incNote:"Top bracket; lowest property tax in US"},
+  {n:"Idaho",a:"ID",inc:5.8,sales:6.0,prop:0.69,dor:"https://tax.idaho.gov",incNote:"Flat rate effective 2023"},
+  {n:"Illinois",a:"IL",inc:4.95,sales:6.25,prop:2.08,dor:"https://tax.illinois.gov",incNote:"Flat rate (constitutional)",salesNote:"High local additions in Chicago"},
+  {n:"Indiana",a:"IN",inc:3.05,sales:7.0,prop:0.84,dor:"https://www.in.gov/dor",incNote:"Flat rate; local county tax adds ~1–3%"},
+  {n:"Iowa",a:"IA",inc:3.8,sales:6.0,prop:1.57,dor:"https://tax.iowa.gov",incNote:"Flat rate effective 2025"},
+  {n:"Kansas",a:"KS",inc:5.7,sales:6.5,prop:1.41,dor:"https://www.ksrevenue.gov",incNote:"Top bracket"},
+  {n:"Kentucky",a:"KY",inc:4.0,sales:6.0,prop:0.83,dor:"https://revenue.ky.gov",incNote:"Flat rate"},
+  {n:"Louisiana",a:"LA",inc:3.0,sales:5.0,prop:0.55,dor:"https://revenue.louisiana.gov",incNote:"Flat rate effective 2025",salesNote:"Highest combined US state+local average"},
+  {n:"Maine",a:"ME",inc:7.15,sales:5.5,prop:1.24,dor:"https://www.maine.gov/revenue",incNote:"Top bracket"},
+  {n:"Maryland",a:"MD",inc:5.75,sales:6.0,prop:1.05,dor:"https://www.marylandtaxes.gov",incNote:"State only; counties add 1.75–3.2%"},
+  {n:"Massachusetts",a:"MA",inc:9.0,sales:6.25,prop:1.14,dor:"https://www.mass.gov/dor",incNote:"5% base + 4% surtax above $1M (Fair Share Amendment)"},
+  {n:"Michigan",a:"MI",inc:4.25,sales:6.0,prop:1.38,dor:"https://www.michigan.gov/treasury",incNote:"Flat rate; local income tax in 20+ cities"},
+  {n:"Minnesota",a:"MN",inc:9.85,sales:6.875,prop:1.05,dor:"https://www.revenue.state.mn.us",incNote:"Top bracket"},
+  {n:"Mississippi",a:"MS",inc:4.7,sales:7.0,prop:0.79,dor:"https://www.dor.ms.gov",incNote:"Flat rate effective 2026 (transitioning)"},
+  {n:"Missouri",a:"MO",inc:4.7,sales:4.225,prop:0.97,dor:"https://dor.mo.gov",incNote:"Top bracket; recent reductions"},
+  {n:"Montana",a:"MT",inc:5.9,sales:null,prop:0.74,dor:"https://mtrevenue.gov",incNote:"Top bracket",salesNote:"No statewide sales tax"},
+  {n:"Nebraska",a:"NE",inc:5.84,sales:5.5,prop:1.61,dor:"https://revenue.nebraska.gov",incNote:"Top bracket; reductions planned through 2027"},
+  {n:"Nevada",a:"NV",inc:null,sales:6.85,prop:0.55,dor:"https://tax.nv.gov",incNote:"No state income tax"},
+  {n:"New Hampshire",a:"NH",inc:null,sales:null,prop:1.93,dor:"https://www.revenue.nh.gov",incNote:"No wage tax; I&D tax fully repealed for 2025+",salesNote:"No statewide sales tax"},
+  {n:"New Jersey",a:"NJ",inc:10.75,sales:6.625,prop:2.49,dor:"https://www.state.nj.us/treasury/taxation",incNote:"Top bracket >$1M; highest property tax in US"},
+  {n:"New Mexico",a:"NM",inc:5.9,sales:5.125,prop:0.55,dor:"https://www.tax.newmexico.gov",incNote:"Top bracket"},
+  {n:"New York",a:"NY",inc:10.9,sales:4.0,prop:1.40,dor:"https://www.tax.ny.gov",incNote:"State only; NYC adds 3.078–3.876%",salesNote:"State 4%; NYC combined 8.875%"},
+  {n:"North Carolina",a:"NC",inc:4.50,sales:4.75,prop:0.82,dor:"https://www.ncdor.gov",incNote:"Flat rate (transitioning down)"},
+  {n:"North Dakota",a:"ND",inc:2.9,sales:5.0,prop:0.97,dor:"https://www.tax.nd.gov",incNote:"Lowest top rate among progressive states"},
+  {n:"Ohio",a:"OH",inc:3.5,sales:5.75,prop:1.52,dor:"https://tax.ohio.gov",incNote:"Top bracket; municipal income taxes common"},
+  {n:"Oklahoma",a:"OK",inc:4.75,sales:4.5,prop:0.90,dor:"https://oklahoma.gov/tax",incNote:"Top bracket"},
+  {n:"Oregon",a:"OR",inc:9.9,sales:null,prop:0.93,dor:"https://www.oregon.gov/dor",incNote:"Top bracket",salesNote:"No statewide sales tax"},
+  {n:"Pennsylvania",a:"PA",inc:3.07,sales:6.0,prop:1.49,dor:"https://www.revenue.pa.gov",incNote:"Flat rate; local EIT typically adds 1%"},
+  {n:"Rhode Island",a:"RI",inc:5.99,sales:7.0,prop:1.53,dor:"https://tax.ri.gov",incNote:"Top bracket"},
+  {n:"South Carolina",a:"SC",inc:6.2,sales:6.0,prop:0.57,dor:"https://dor.sc.gov",incNote:"Top bracket; reductions ongoing"},
+  {n:"South Dakota",a:"SD",inc:null,sales:4.2,prop:1.17,dor:"https://dor.sd.gov",incNote:"No state income tax"},
+  {n:"Tennessee",a:"TN",inc:null,sales:7.0,prop:0.66,dor:"https://www.tn.gov/revenue",incNote:"No state income tax (Hall tax repealed 2021)"},
+  {n:"Texas",a:"TX",inc:null,sales:6.25,prop:1.74,dor:"https://comptroller.texas.gov",incNote:"No state income tax"},
+  {n:"Utah",a:"UT",inc:4.55,sales:6.10,prop:0.57,dor:"https://tax.utah.gov",incNote:"Flat rate"},
+  {n:"Vermont",a:"VT",inc:8.75,sales:6.0,prop:1.86,dor:"https://tax.vermont.gov",incNote:"Top bracket"},
+  {n:"Virginia",a:"VA",inc:5.75,sales:5.3,prop:0.82,dor:"https://www.tax.virginia.gov",incNote:"Top bracket"},
+  {n:"Washington",a:"WA",inc:null,sales:6.5,prop:0.93,dor:"https://dor.wa.gov",incNote:"No income tax; 7% capital gains tax on gains over $270k (2025)"},
+  {n:"West Virginia",a:"WV",inc:5.12,sales:6.0,prop:0.58,dor:"https://tax.wv.gov",incNote:"Top bracket; reductions ongoing"},
+  {n:"Wisconsin",a:"WI",inc:7.65,sales:5.0,prop:1.61,dor:"https://www.revenue.wi.gov",incNote:"Top bracket"},
+  {n:"Wyoming",a:"WY",inc:null,sales:4.0,prop:0.55,dor:"https://revenue.wyo.gov",incNote:"No state income tax"},
+];
+
+let activeTab = 'income';
+const TAB_LABELS = {
+  income: 'Top individual income tax rate',
+  sales: 'State sales tax (statewide base)',
+  property: 'Median effective property tax rate'
+};
+
+function fmtRate(value, suffix='%') {
+  if (value === null) return '<span class="rate-num none">None</span>';
+  return `<span class="rate-num">${value}<span style="font-size:.7rem">${suffix}</span></span>`;
+}
+
+function renderCards() {
+  const grid = document.getElementById('stateGrid');
+  grid.innerHTML = STATES.map(s => {
+    const val = s[activeTab === 'income' ? 'inc' : activeTab === 'sales' ? 'sales' : 'prop'];
+    const note = activeTab === 'income' ? (s.incNote||'') : activeTab === 'sales' ? (s.salesNote||'') : '';
+    return `<div class="state-card" data-name="${s.n.toLowerCase()}" data-abbr="${s.a.toLowerCase()}">
+      <div class="state-head"><div class="state-name">${s.n}</div><span class="state-abbr">${s.a}</span></div>
+      <div class="state-rate">${fmtRate(val)}<span class="rate-label">${activeTab}</span></div>
+      ${note ? `<div class="state-note">${note}</div>` : ''}
+      <a href="${s.dor}" target="_blank" rel="noopener" class="state-dor">Verify with state DOR ↗</a>
+    </div>`;
+  }).join('');
+  document.getElementById('tabLabel').textContent = TAB_LABELS[activeTab];
+  applyFilter();
+}
+
+function switchTab(btn) {
+  document.querySelectorAll('.tab').forEach(t => t.classList.remove('on'));
+  btn.classList.add('on');
+  activeTab = btn.dataset.tab;
+  renderCards();
+}
+
+function applyFilter() {
+  const q = document.getElementById('searchInput').value.trim().toLowerCase();
+  const cards = document.querySelectorAll('.state-card');
+  let visible = 0;
+  cards.forEach(c => {
+    const show = !q || c.dataset.name.includes(q) || c.dataset.abbr.includes(q);
+    c.classList.toggle('hidden', !show);
+    if (show) visible++;
+  });
+  document.getElementById('visibleCount').textContent = visible;
+}
+
+document.getElementById('searchInput').addEventListener('input', applyFilter);
+renderCards();
+
+(function(){
+  var btn=document.getElementById('navHamburger'),ul=document.querySelector('.nav-links');
+  if(btn&&ul)btn.addEventListener('click',function(){btn.classList.toggle('open');ul.classList.toggle('mobile-open');});
+})();
+</script>
+<script src="assets/js/tax-acronyms.js" defer></script>
+<script>
+document.addEventListener('DOMContentLoaded', () => {
+  TaxAcronyms.init({
+    onlyAcronyms: ['SALT','AGI','MAGI','NIIT','QBI','EA','CPA','PTE','PTET'],
+    baseUrl: 'acronyms.html',
+  });
+});
+</script>
+</body>
+</html>

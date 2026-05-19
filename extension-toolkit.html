@@ -1,0 +1,295 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<link rel="icon" type="image/x-icon" href="/favicon.ico">
+<link rel="icon" type="image/svg+xml" href="/assets/favicon.svg">
+<link rel="apple-touch-icon" sizes="180x180" href="/assets/apple-touch-icon.png">
+<link rel="manifest" href="/site.webmanifest">
+<meta name="theme-color" content="#c8a84b">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Tax Extension Toolkit — Form 4868 &amp; 7004 with Payment Calculator | TaxPreparerTools</title>
+<meta name="description" content="Complete extension guide. File Form 4868 (individual) or 7004 (business), estimate your payment due with extension, and avoid the most common mistakes.">
+<link rel="canonical" href="https://taxpreparertools.com/extensions" />
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700;900&family=DM+Sans:wght@300;400;500;600;700&family=DM+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{--navy:#08152a;--navy-mid:#0f1f3d;--slate:#1a2f52;--gold:#c8a84b;--gold-light:#e8c96a;--white:#fff;--muted:#7a8fac;--text:#dde4f0;--border:rgba(200,168,75,0.14);--card:rgba(255,255,255,0.04);--green:#4ade80;--blue:#60a5fa;--purple:#a78bfa;--red:#f87171;--orange:#fb923c;}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+body{font-family:'DM Sans',sans-serif;background:var(--navy);color:var(--text);min-height:100vh;}
+nav{position:sticky;top:0;z-index:200;padding:14px 48px;display:flex;align-items:center;justify-content:space-between;background:rgba(8,21,42,0.95);backdrop-filter:blur(20px);border-bottom:1px solid var(--border);}
+.logo{display:flex;align-items:center;gap:10px;text-decoration:none;}
+.logo-mark{width:32px;height:32px;background:var(--gold);border-radius:7px;display:flex;align-items:center;justify-content:center;font-size:15px;}
+.logo-name{font-family:'Playfair Display',serif;font-size:1.1rem;font-weight:700;color:var(--white);}
+.logo-name span{color:var(--gold);}
+.logo-domain{font-size:.62rem;color:var(--muted);font-family:'DM Mono',monospace;display:block;}
+.nav-links{display:flex;gap:24px;list-style:none;}
+.nav-links a{color:var(--muted);font-size:.82rem;text-decoration:none;}
+.nav-links a:hover,.nav-links a.active{color:var(--gold);}
+.nav-right{display:flex;gap:10px;align-items:center;}
+.btn-sm{padding:7px 16px;border-radius:6px;font-size:.8rem;font-weight:700;text-decoration:none;border:none;font-family:'DM Sans',sans-serif;}
+.btn-ghost{background:transparent;color:var(--muted);border:1px solid var(--border);}
+.btn-gold{background:var(--gold);color:var(--navy);}
+.nav-hamburger{display:none;flex-direction:column;gap:5px;cursor:pointer;padding:6px;border:none;background:transparent;}
+.nav-hamburger span{display:block;width:22px;height:2px;background:var(--gold);}
+.pw{max-width:1160px;margin:0 auto;padding:40px 48px 80px;}
+.bc{font-size:.73rem;font-family:'DM Mono',monospace;color:var(--muted);margin-bottom:20px;display:flex;gap:7px;flex-wrap:wrap;}
+.bc a{color:var(--gold);text-decoration:none;}
+.th{display:flex;gap:22px;align-items:flex-start;margin-bottom:28px;}
+.t-icon{width:58px;height:58px;background:linear-gradient(135deg,rgba(200,168,75,.13),rgba(200,168,75,.02));border:1px solid rgba(200,168,75,.28);border-radius:15px;display:flex;align-items:center;justify-content:center;font-size:26px;flex-shrink:0;}
+.badge{font-size:.63rem;font-family:'DM Mono',monospace;font-weight:700;text-transform:uppercase;letter-spacing:.08em;padding:3px 10px;border-radius:50px;}
+.bf{background:rgba(74,222,128,.12);color:var(--green);}
+.bu{background:rgba(96,165,250,.1);color:var(--blue);}
+.bp{background:rgba(167,139,250,.1);color:var(--purple);}
+h1{font-family:'Playfair Display',serif;font-size:clamp(1.5rem,3vw,2.2rem);font-weight:900;color:var(--white);letter-spacing:-0.03em;line-height:1.1;margin-bottom:8px;}
+.td{color:var(--muted);font-size:.88rem;line-height:1.7;max-width:680px;}
+.warn-banner{background:rgba(248,113,113,.07);border:1px solid rgba(248,113,113,.25);border-left:3px solid var(--red);border-radius:10px;padding:14px 18px;margin-bottom:22px;}
+.warn-banner strong{color:var(--red);font-family:'DM Mono',monospace;font-size:.66rem;text-transform:uppercase;letter-spacing:.08em;display:block;margin-bottom:4px;}
+.warn-banner p{font-size:.85rem;line-height:1.6;color:var(--text);margin:0;}
+.lay{display:grid;grid-template-columns:1fr 320px;gap:22px;align-items:start;}
+.section{background:var(--navy-mid);border:1px solid var(--border);border-radius:14px;padding:24px 28px;margin-bottom:14px;}
+.section h2{font-family:'Playfair Display',serif;font-size:1.1rem;font-weight:700;color:var(--white);margin-bottom:12px;}
+.section h3{font-size:.95rem;color:var(--gold);margin:18px 0 8px;}
+.section p{color:var(--muted);font-size:.85rem;line-height:1.7;margin-bottom:10px;}
+.section ul,.section ol{color:var(--muted);font-size:.85rem;line-height:1.7;margin:8px 0 12px 22px;}
+.section li{margin-bottom:5px;}
+.section strong{color:var(--text);}
+
+.form-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin:14px 0;}
+.form-card{background:var(--slate);border:1px solid var(--border);border-radius:11px;padding:18px;}
+.fc-tag{font-family:'DM Mono',monospace;font-size:.66rem;font-weight:700;color:var(--gold);text-transform:uppercase;letter-spacing:.07em;margin-bottom:6px;}
+.fc-title{font-family:'Playfair Display',serif;font-size:1.05rem;color:var(--white);margin-bottom:8px;}
+.fc-for{font-size:.78rem;color:var(--text);line-height:1.55;margin-bottom:10px;}
+.fc-meta{font-family:'DM Mono',monospace;font-size:.72rem;color:var(--muted);}
+.fc-meta div{padding:3px 0;}
+
+.calc-box{background:linear-gradient(135deg,var(--navy-mid),var(--slate));border:1px solid var(--gold);border-radius:14px;padding:22px 26px;margin:14px 0;}
+.calc-box h3{color:var(--gold)!important;margin-top:0!important;margin-bottom:12px!important;}
+.calc-row{display:flex;justify-content:space-between;gap:14px;align-items:center;padding:10px 0;border-bottom:1px solid rgba(255,255,255,.06);}
+.calc-row:last-of-type{border-bottom:none;}
+.calc-row label{font-size:.84rem;color:var(--text);flex:1;}
+.calc-row input{width:160px;background:rgba(255,255,255,.05);border:1px solid var(--border);border-radius:6px;padding:7px 10px;color:var(--white);font-size:.88rem;font-family:'DM Mono',monospace;text-align:right;outline:none;}
+.calc-row input:focus{border-color:var(--gold);}
+.calc-result{background:rgba(200,168,75,.08);border:1px solid rgba(200,168,75,.25);border-radius:9px;padding:14px 16px;margin-top:14px;font-family:'DM Mono',monospace;}
+.calc-result-line{display:flex;justify-content:space-between;padding:5px 0;font-size:.85rem;color:var(--text);}
+.calc-result-line.total{border-top:1px solid var(--border);margin-top:6px;padding-top:10px;font-size:.95rem;font-weight:700;color:var(--gold);}
+
+.callout{background:rgba(200,168,75,.07);border:1px solid var(--border);border-left:3px solid var(--gold);border-radius:8px;padding:14px 18px;margin:14px 0;}
+.callout strong{color:var(--gold);}
+.callout p{font-size:.83rem;color:var(--text);line-height:1.6;margin:0;}
+
+.sc{background:var(--navy-mid);border:1px solid var(--border);border-radius:14px;padding:18px;margin-bottom:14px;}
+.sct{font-family:'Playfair Display',serif;font-size:.93rem;font-weight:700;color:var(--white);margin-bottom:11px;}
+.scr{display:flex;justify-content:space-between;padding:7px 0;border-bottom:1px solid rgba(255,255,255,.05);font-size:.76rem;}
+.scr:last-child{border-bottom:none;}
+.sck{color:var(--muted);}
+.scv{font-family:'DM Mono',monospace;font-weight:600;color:var(--text);}
+.scv.gold{color:var(--gold);}
+.rl-item{display:flex;align-items:center;gap:10px;padding:8px 0;border-bottom:1px solid rgba(255,255,255,.05);text-decoration:none;}
+.rl-item:last-child{border-bottom:none;}
+.rl-item:hover .rln{color:var(--gold);}
+.rli{font-size:1rem;width:32px;text-align:center;}
+.rln{font-size:.78rem;font-weight:600;color:var(--text);}
+.rld{font-size:.65rem;color:var(--muted);}
+.rla{margin-left:auto;color:var(--muted);font-size:.8rem;}
+.rl-item:hover .rla{color:var(--gold);}
+footer{border-top:1px solid var(--border);padding:26px 48px;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:12px;background:var(--navy-mid);}
+.fl{font-size:.72rem;color:var(--muted);}
+.fl a{color:var(--gold);text-decoration:none;}
+.flk{display:flex;gap:18px;}
+.flk a{font-size:.72rem;color:var(--muted);text-decoration:none;}
+@media(max-width:960px){nav{padding:13px 18px;}.pw{padding:26px 18px 60px;}.lay{grid-template-columns:1fr;}.form-grid{grid-template-columns:1fr;}footer{padding:18px;flex-direction:column;}}
+@media(max-width:768px){.nav-hamburger{display:flex;}.nav-links,.nav-right{display:none!important;}.calc-row input{width:120px;}}
+</style>
+</head>
+<body>
+<nav>
+<a href="index.html" class="logo">
+<div class="logo-mark">⚖</div>
+<div><span class="logo-name">TaxPreparer<span>Tools</span></span><span class="logo-domain">taxpreparertools.com</span></div>
+</a>
+<button id="navHamburger" class="nav-hamburger" aria-label="Menu"><span></span><span></span><span></span></button>
+<ul class="nav-links">
+<li><a href="tools.html" class="active">Tools</a></li>
+<li><a href="deadlines.html">Deadlines</a></li>
+<li><a href="ai-assistant.html">AI Assistant</a></li>
+<li><a href="resources.html">Resources</a></li>
+</ul>
+<div class="nav-right">
+<a href="login.html" class="btn-sm btn-ghost">Log In</a>
+<a href="signup.html" class="btn-sm btn-gold">Get Pro Free</a>
+</div>
+</nav>
+
+<div class="pw">
+<div class="bc"><a href="index.html">Home</a><span>/</span><a href="tools.html">Tools</a><span>/</span>Extension Toolkit</div>
+<div class="th">
+<div class="t-icon">⏳</div>
+<div>
+<div style="display:flex;gap:7px;margin-bottom:9px;flex-wrap:wrap;">
+<span class="badge bf">Free</span><span class="badge bu">Form 4868 / 7004</span><span class="badge bp">2025–2026</span></div>
+<h1>Tax Extension Toolkit</h1>
+<p class="td">Complete guide to filing for an extension — Form 4868 for individuals, Form 7004 for businesses. Includes a payment calculator and a confirmation checklist so you don't get hit with the failure-to-pay penalty.</p>
+</div>
+</div>
+
+<div class="warn-banner">
+<strong>⚠ Read this first</strong>
+<p>An extension extends <em>filing</em>, not <em>paying</em>. If you owe tax, payment is still due on the original deadline (April 15 for individuals). Underpayment triggers the failure-to-pay penalty plus interest, even with a valid extension on file.</p>
+</div>
+
+<div class="lay">
+<div>
+
+<div class="section">
+<h2>Which form do you need?</h2>
+<div class="form-grid">
+<div class="form-card">
+<div class="fc-tag">Form 4868</div>
+<div class="fc-title">Individual Extension</div>
+<div class="fc-for">Form 1040 filers — single, married filing jointly, married filing separately, head of household. Auto-extends 6 months to October 15.</div>
+<div class="fc-meta">
+<div>Original due: <strong style="color:var(--text)">April 15</strong></div>
+<div>Extended due: <strong style="color:var(--text)">October 15</strong></div>
+<div>Length: <strong style="color:var(--text)">6 months</strong></div>
+</div>
+</div>
+<div class="form-card">
+<div class="fc-tag">Form 7004</div>
+<div class="fc-title">Business Extension</div>
+<div class="fc-for">C-Corp (1120), S-Corp (1120-S), Partnership (1065), Trust/Estate (1041), and most other business returns. Length varies by return type.</div>
+<div class="fc-meta">
+<div>C-Corp: <strong style="color:var(--text)">6 months</strong></div>
+<div>S-Corp/Partnership: <strong style="color:var(--text)">6 months</strong></div>
+<div>Trust/Estate: <strong style="color:var(--text)">5½ months</strong></div>
+</div>
+</div>
+</div>
+<p style="margin-top:14px;">Other forms exist for specific situations: <strong>Form 8868</strong> for tax-exempt organizations (Form 990 series), <strong>Form 2350</strong> for citizens/residents abroad who need extra time to qualify for the Foreign Earned Income Exclusion (FEIE).</p>
+</div>
+
+<div class="section">
+<h2>Payment estimator (Form 4868)</h2>
+<p>Estimate what you'll owe so you can pay it with the extension. Rough math is better than no math — the IRS just needs a good-faith estimate.</p>
+<div class="calc-box">
+<h3>Quick Estimate</h3>
+<div class="calc-row">
+<label>Estimated total tax for 2025 (rough)</label>
+<input type="number" id="totalTax" placeholder="0" oninput="calc()">
+</div>
+<div class="calc-row">
+<label>Federal income tax already withheld (W-2 box 2 + 1099 withholdings)</label>
+<input type="number" id="withholding" placeholder="0" oninput="calc()">
+</div>
+<div class="calc-row">
+<label>Estimated payments already made for 2025</label>
+<input type="number" id="estPayments" placeholder="0" oninput="calc()">
+</div>
+<div class="calc-row">
+<label>Other refundable credits (CTC, EITC, etc.)</label>
+<input type="number" id="credits" placeholder="0" oninput="calc()">
+</div>
+<div class="calc-result" id="calcResult">
+<div class="calc-result-line"><span>Total tax</span><span id="rTotal">$0</span></div>
+<div class="calc-result-line"><span>Less: withholding + payments + credits</span><span id="rPaid">$0</span></div>
+<div class="calc-result-line total"><span>Balance due with extension</span><span id="rDue">$0</span></div>
+</div>
+</div>
+<div class="callout">
+<p><strong>Pay this amount with your extension</strong> via IRS Direct Pay, EFTPS, debit/credit card, or check with Form 4868. Paying at least 90% of total tax owed with the extension avoids the failure-to-pay penalty (interest still accrues on any unpaid balance).</p>
+</div>
+</div>
+
+<div class="section">
+<h2>How to file Form 4868 (3 methods)</h2>
+<ol>
+<li><strong>E-file with payment</strong> — fastest. Use tax software (TurboTax, H&amp;R Block, FreeTaxUSA) or IRS Free File. Select "request extension" and pay electronically. Confirmation arrives within 24-48 hours.</li>
+<li><strong>IRS Direct Pay</strong> — go to <a href="https://www.irs.gov/payments/direct-pay" target="_blank" rel="noopener" style="color:var(--gold)">irs.gov/payments/direct-pay</a>, select "Extension" as the reason. Paying through Direct Pay automatically files the extension — no separate Form 4868 needed.</li>
+<li><strong>Paper file</strong> — mail Form 4868 with payment by check to the IRS address for your state. Must be postmarked by April 15. Use certified mail for proof.</li>
+</ol>
+</div>
+
+<div class="section">
+<h2>How to file Form 7004 (business)</h2>
+<ol>
+<li><strong>E-file via tax software</strong> — required for many business filers and recommended for everyone. Most professional software (CCH Axcess, Drake, ProSystem fx) supports F7004 e-file.</li>
+<li><strong>EFTPS</strong> — for paying the estimated tax due with the extension. Free, secure, must be enrolled in advance (allow 5-7 business days for first-time enrollment).</li>
+<li><strong>Mail</strong> — paper Form 7004 to the IRS address for your entity type and location. Address varies; check current Form 7004 instructions.</li>
+</ol>
+<p>For S-Corps and partnerships, the original deadline is <strong>March 15</strong>; the extended deadline is <strong>September 15</strong>. For C-Corps, March 15 doesn't apply — the original is <strong>April 15</strong>, extended to <strong>October 15</strong>.</p>
+</div>
+
+<div class="section">
+<h2>State extensions</h2>
+<p>Most states accept the federal extension and don't require a separate state filing. <strong>But some require their own form</strong>, and some require it even if you don't owe state tax. Common state-specific forms include CA Form 3519, NY Form IT-370, MA Form M-4868.</p>
+<p>If your state doesn't piggy-back on the federal extension, the state extension is usually required by the same April 15 deadline. Check your state Department of Revenue website before filing.</p>
+</div>
+
+<div class="section">
+<h2>Common extension mistakes</h2>
+<ul>
+<li><strong>Treating extension as payment deferral</strong> — the #1 mistake. The extension only extends filing, not paying. Pay your estimated balance with the extension to avoid the failure-to-pay penalty (0.5% per month).</li>
+<li><strong>Missing the original deadline anyway</strong> — Form 4868 must be filed <em>by</em> April 15, not after. Late-filed extensions are invalid; you're treated as having no extension.</li>
+<li><strong>Underestimating tax owed</strong> — if your estimate is significantly off and you owe substantially more on the actual return, the failure-to-pay penalty applies to the shortfall.</li>
+<li><strong>Forgetting state-specific extensions</strong> — if your state doesn't auto-accept federal, you can owe state late penalties.</li>
+<li><strong>Not keeping confirmation</strong> — keep the e-file acknowledgment, Direct Pay confirmation, or certified mail receipt. You may need to prove timely filing.</li>
+<li><strong>S-Corp/partnership owners missing the March 15 deadline</strong> — flow-through K-1s won't be ready for owner-level returns until the entity files. Both the entity and the owner often need extensions.</li>
+</ul>
+</div>
+
+</div>
+
+<div>
+<div class="sc">
+<div class="sct">📅 Key Dates 2026</div>
+<div class="scr"><span class="sck">S-Corp/Partnership original</span><span class="scv">Mar 15</span></div>
+<div class="scr"><span class="sck">S-Corp/Partnership extended</span><span class="scv gold">Sep 15</span></div>
+<div class="scr"><span class="sck">Individual original</span><span class="scv">Apr 15</span></div>
+<div class="scr"><span class="sck">Individual extended</span><span class="scv gold">Oct 15</span></div>
+<div class="scr"><span class="sck">C-Corp original</span><span class="scv">Apr 15</span></div>
+<div class="scr"><span class="sck">C-Corp extended</span><span class="scv gold">Oct 15</span></div>
+</div>
+
+<div class="sc">
+<div class="sct">📄 IRS Forms</div>
+<a href="https://www.irs.gov/forms-pubs/about-form-4868" target="_blank" rel="noopener" class="rl-item"><span class="rli">📋</span><div><div class="rln">Form 4868</div><div class="rld">Individual extension</div></div><span class="rla">↗</span></a>
+<a href="https://www.irs.gov/forms-pubs/about-form-7004" target="_blank" rel="noopener" class="rl-item"><span class="rli">📋</span><div><div class="rln">Form 7004</div><div class="rld">Business extension</div></div><span class="rla">↗</span></a>
+<a href="https://www.irs.gov/payments/direct-pay" target="_blank" rel="noopener" class="rl-item"><span class="rli">💳</span><div><div class="rln">IRS Direct Pay</div><div class="rld">Pay extension online</div></div><span class="rla">↗</span></a>
+<a href="https://www.eftps.gov" target="_blank" rel="noopener" class="rl-item"><span class="rli">🏦</span><div><div class="rln">EFTPS</div><div class="rld">Business payments</div></div><span class="rla">↗</span></a>
+</div>
+
+<div class="sc">
+<div class="sct">🔗 Related Tools</div>
+<a href="federal-tax-estimator.html" class="rl-item"><span class="rli">🧮</span><div><div class="rln">Federal Tax Estimator</div><div class="rld">For total tax estimate</div></div><span class="rla">→</span></a>
+<a href="penalty-calculator.html" class="rl-item"><span class="rli">⚖️</span><div><div class="rln">Penalty Calculator</div><div class="rld">If you miss the deadline</div></div><span class="rla">→</span></a>
+<a href="deadline-calendar.html" class="rl-item"><span class="rli">📅</span><div><div class="rln">Deadline Calendar</div><div class="rld">All 2025–2026 dates</div></div><span class="rla">→</span></a>
+<a href="quarterly-payments.html" class="rl-item"><span class="rli">💰</span><div><div class="rln">Quarterly Payments</div><div class="rld">Estimated tax</div></div><span class="rla">→</span></a>
+</div>
+</div>
+</div>
+</div>
+
+<footer>
+<div class="fl">© 2026 <a href="index.html">TaxPreparerTools.com</a> · Calculator provides estimates only · Always verify current IRS forms and instructions</div>
+<div class="flk"><a href="privacy.html">Privacy</a><a href="terms.html">Terms</a><a href="https://irs.gov" target="_blank" rel="noopener">IRS.gov ↗</a></div>
+</footer>
+
+<script>
+function calc() {
+  const tot = parseFloat(document.getElementById('totalTax').value) || 0;
+  const wh = parseFloat(document.getElementById('withholding').value) || 0;
+  const est = parseFloat(document.getElementById('estPayments').value) || 0;
+  const cr = parseFloat(document.getElementById('credits').value) || 0;
+  const paid = wh + est + cr;
+  const due = Math.max(0, tot - paid);
+  const f = v => '$' + v.toLocaleString('en-US',{maximumFractionDigits:0});
+  document.getElementById('rTotal').textContent = f(tot);
+  document.getElementById('rPaid').textContent = f(paid);
+  document.getElementById('rDue').textContent = f(due);
+}
+calc();
+(function(){var btn=document.getElementById('navHamburger'),ul=document.querySelector('.nav-links');if(btn&&ul)btn.addEventListener('click',function(){btn.classList.toggle('open');ul.classList.toggle('mobile-open');});})();
+</script>
+<script src="assets/js/tax-acronyms.js" defer></script>
+<script>document.addEventListener('DOMContentLoaded',()=>{TaxAcronyms.init({onlyAcronyms:['AGI','MAGI','CTC','EITC','FEIE','SE','EFTPS','EFW'],baseUrl:'acronyms.html'});});</script>
+</body>
+</html>
