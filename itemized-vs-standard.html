@@ -1,0 +1,310 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<link rel="icon" type="image/x-icon" href="/favicon.ico">
+<link rel="icon" type="image/svg+xml" href="/assets/favicon.svg">
+<link rel="apple-touch-icon" sizes="180x180" href="/assets/apple-touch-icon.png">
+<link rel="manifest" href="/site.webmanifest">
+<meta name="theme-color" content="#c8a84b">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Itemized vs Standard Deduction Calculator — 2025 &amp; 2026 | TaxPreparerTools</title>
+<meta name="description" content="Compare itemizing on Schedule A against the standard deduction for 2025 and 2026. Includes SALT cap ($10K through 2025, $40K under OBBBA for 2026), mortgage interest, charitable, and medical deductions.">
+<link rel="canonical" href="https://taxpreparertools.com/itemized-vs-standard" />
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700;900&family=DM+Sans:wght@300;400;500;600;700&family=DM+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{--navy:#08152a;--navy-mid:#0f1f3d;--slate:#1a2f52;--gold:#c8a84b;--gold-light:#e8c96a;--white:#fff;--muted:#7a8fac;--text:#dde4f0;--border:rgba(200,168,75,0.14);--green:#4ade80;--blue:#60a5fa;--purple:#a78bfa;--red:#f87171;--orange:#fb923c;}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+body{font-family:'DM Sans',sans-serif;background:var(--navy);color:var(--text);min-height:100vh;}
+nav{position:sticky;top:0;z-index:200;padding:14px 48px;display:flex;align-items:center;justify-content:space-between;background:rgba(8,21,42,0.95);backdrop-filter:blur(20px);border-bottom:1px solid var(--border);}
+.logo{display:flex;align-items:center;gap:10px;text-decoration:none;}
+.logo-mark{width:32px;height:32px;background:var(--gold);border-radius:7px;display:flex;align-items:center;justify-content:center;font-size:15px;}
+.logo-name{font-family:'Playfair Display',serif;font-size:1.1rem;font-weight:700;color:var(--white);}
+.logo-name span{color:var(--gold);}
+.logo-domain{font-size:.62rem;color:var(--muted);font-family:'DM Mono',monospace;display:block;}
+.nav-links{display:flex;gap:24px;list-style:none;}
+.nav-links a{color:var(--muted);font-size:.82rem;text-decoration:none;}
+.nav-links a:hover,.nav-links a.active{color:var(--gold);}
+.nav-right{display:flex;gap:10px;align-items:center;}
+.btn-sm{padding:7px 16px;border-radius:6px;font-size:.8rem;font-weight:700;text-decoration:none;border:none;font-family:'DM Sans',sans-serif;}
+.btn-ghost{background:transparent;color:var(--muted);border:1px solid var(--border);}
+.btn-gold{background:var(--gold);color:var(--navy);}
+.nav-hamburger{display:none;flex-direction:column;gap:5px;cursor:pointer;padding:6px;border:none;background:transparent;}
+.nav-hamburger span{display:block;width:22px;height:2px;background:var(--gold);}
+.pw{max-width:1160px;margin:0 auto;padding:40px 48px 80px;}
+.bc{font-size:.73rem;font-family:'DM Mono',monospace;color:var(--muted);margin-bottom:20px;}
+.bc a{color:var(--gold);text-decoration:none;}
+.th{display:flex;gap:22px;align-items:flex-start;margin-bottom:28px;}
+.t-icon{width:58px;height:58px;background:linear-gradient(135deg,rgba(200,168,75,.13),rgba(200,168,75,.02));border:1px solid rgba(200,168,75,.28);border-radius:15px;display:flex;align-items:center;justify-content:center;font-size:26px;flex-shrink:0;}
+.badge{font-size:.63rem;font-family:'DM Mono',monospace;font-weight:700;text-transform:uppercase;letter-spacing:.08em;padding:3px 10px;border-radius:50px;}
+.bf{background:rgba(74,222,128,.12);color:var(--green);}
+.bu{background:rgba(96,165,250,.1);color:var(--blue);}
+.bp{background:rgba(167,139,250,.1);color:var(--purple);}
+h1{font-family:'Playfair Display',serif;font-size:clamp(1.5rem,3vw,2.2rem);font-weight:900;color:var(--white);letter-spacing:-0.03em;line-height:1.1;margin-bottom:8px;}
+.td{color:var(--muted);font-size:.88rem;line-height:1.7;max-width:680px;}
+.lay{display:grid;grid-template-columns:1fr 320px;gap:22px;align-items:start;}
+.calc-section{background:var(--navy-mid);border:1px solid var(--border);border-radius:14px;padding:24px 28px;margin-bottom:14px;}
+.calc-section h2{font-family:'Playfair Display',serif;font-size:1.1rem;font-weight:700;color:var(--white);margin-bottom:14px;}
+.input-row{display:flex;justify-content:space-between;align-items:center;gap:14px;padding:10px 0;border-bottom:1px solid rgba(255,255,255,.05);}
+.input-row:last-of-type{border-bottom:none;}
+.input-label{flex:1;font-size:.85rem;color:var(--text);}
+.input-hint{font-size:.7rem;color:var(--muted);margin-top:2px;display:block;}
+.input-field{background:rgba(255,255,255,.05);border:1px solid var(--border);border-radius:6px;padding:7px 12px;color:var(--white);font-size:.88rem;font-family:'DM Mono',monospace;width:160px;text-align:right;outline:none;}
+.input-field:focus{border-color:var(--gold);}
+.input-select{background:rgba(255,255,255,.05);border:1px solid var(--border);border-radius:6px;padding:7px 12px;color:var(--white);font-size:.85rem;width:160px;outline:none;}
+.section-cap{font-family:'DM Mono',monospace;font-size:.66rem;font-weight:700;text-transform:uppercase;letter-spacing:.1em;color:var(--gold);margin-bottom:10px;}
+.compare-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px;}
+.compare-card{background:var(--slate);border:1px solid var(--border);border-radius:11px;padding:20px;}
+.compare-card.winner{border-color:var(--gold);box-shadow:0 0 0 1px var(--gold);}
+.cc-header{display:flex;justify-content:space-between;align-items:baseline;margin-bottom:10px;}
+.cc-name{font-family:'Playfair Display',serif;font-size:1.05rem;color:var(--white);font-weight:700;}
+.cc-tag{font-family:'DM Mono',monospace;font-size:.62rem;color:var(--gold);text-transform:uppercase;letter-spacing:.07em;}
+.cc-amount{font-family:'DM Mono',monospace;font-size:1.9rem;font-weight:700;color:var(--gold);line-height:1;margin-bottom:14px;}
+.cc-row{display:flex;justify-content:space-between;padding:5px 0;font-size:.78rem;border-bottom:1px solid rgba(255,255,255,.04);}
+.cc-row:last-child{border-bottom:none;}
+.cc-row .l{color:var(--muted);}
+.cc-row .v{color:var(--text);font-family:'DM Mono',monospace;}
+.winner-badge{display:inline-block;background:var(--gold);color:var(--navy);font-family:'DM Mono',monospace;font-size:.6rem;padding:2px 7px;border-radius:30px;font-weight:700;text-transform:uppercase;letter-spacing:.08em;margin-bottom:6px;}
+.callout{background:rgba(200,168,75,.07);border:1px solid var(--border);border-left:3px solid var(--gold);border-radius:8px;padding:14px 18px;margin:14px 0;}
+.callout strong{color:var(--gold);}
+.callout p{font-size:.84rem;color:var(--text);line-height:1.6;margin:0;}
+.sc{background:var(--navy-mid);border:1px solid var(--border);border-radius:14px;padding:18px;margin-bottom:14px;}
+.sct{font-family:'Playfair Display',serif;font-size:.93rem;font-weight:700;color:var(--white);margin-bottom:11px;}
+.scr{display:flex;justify-content:space-between;padding:7px 0;border-bottom:1px solid rgba(255,255,255,.05);font-size:.76rem;}
+.scr:last-child{border-bottom:none;}
+.sck{color:var(--muted);}
+.scv{font-family:'DM Mono',monospace;font-weight:600;color:var(--text);}
+.scv.gold{color:var(--gold);}
+.rl-item{display:flex;align-items:center;gap:10px;padding:8px 0;border-bottom:1px solid rgba(255,255,255,.05);text-decoration:none;}
+.rl-item:last-child{border-bottom:none;}
+.rl-item:hover .rln{color:var(--gold);}
+.rli{font-size:1rem;width:32px;text-align:center;}
+.rln{font-size:.78rem;font-weight:600;color:var(--text);}
+.rld{font-size:.65rem;color:var(--muted);}
+.rla{margin-left:auto;color:var(--muted);font-size:.8rem;}
+.rl-item:hover .rla{color:var(--gold);}
+footer{border-top:1px solid var(--border);padding:26px 48px;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:12px;background:var(--navy-mid);}
+.fl{font-size:.72rem;color:var(--muted);}
+.fl a{color:var(--gold);text-decoration:none;}
+.flk{display:flex;gap:18px;}
+.flk a{font-size:.72rem;color:var(--muted);text-decoration:none;}
+@media(max-width:960px){nav{padding:13px 18px;}.pw{padding:26px 18px 60px;}.lay{grid-template-columns:1fr;}.compare-grid{grid-template-columns:1fr;}footer{padding:18px;flex-direction:column;}.input-field,.input-select{width:130px;}}
+@media(max-width:768px){.nav-hamburger{display:flex;}.nav-links,.nav-right{display:none!important;}}
+</style>
+</head>
+<body>
+<nav>
+<a href="index.html" class="logo">
+<div class="logo-mark">⚖</div>
+<div><span class="logo-name">TaxPreparer<span>Tools</span></span><span class="logo-domain">taxpreparertools.com</span></div>
+</a>
+<button id="navHamburger" class="nav-hamburger" aria-label="Menu"><span></span><span></span><span></span></button>
+<ul class="nav-links">
+<li><a href="tools.html" class="active">Tools</a></li>
+<li><a href="deadlines.html">Deadlines</a></li>
+<li><a href="ai-assistant.html">AI Assistant</a></li>
+<li><a href="resources.html">Resources</a></li>
+</ul>
+<div class="nav-right">
+<a href="login.html" class="btn-sm btn-ghost">Log In</a>
+<a href="signup.html" class="btn-sm btn-gold">Get Pro Free</a>
+</div>
+</nav>
+
+<div class="pw">
+<div class="bc"><a href="index.html">Home</a> / <a href="tools.html">Tools</a> / Itemized vs Standard</div>
+<div class="th">
+<div class="t-icon">⚖️</div>
+<div>
+<div style="display:flex;gap:7px;margin-bottom:9px;flex-wrap:wrap;">
+<span class="badge bf">Free</span><span class="badge bu">TY 2025 / 2026</span><span class="badge bp">Schedule A</span></div>
+<h1>Itemized vs Standard Deduction</h1>
+<p class="td">Compare your itemized deductions on Schedule A against the standard deduction. Includes the SALT cap (still $10K for 2025; $40K under OBBBA for taxpayers under $500K starting 2026), mortgage interest, charitable, and medical with the 7.5%-AGI floor.</p>
+</div>
+</div>
+
+<div class="lay">
+<div>
+
+<div class="calc-section">
+<div class="section-cap">Inputs</div>
+<h2>Your filing &amp; deduction details</h2>
+<div class="input-row">
+<div class="input-label">Tax year</div>
+<select class="input-select" id="taxYear" onchange="recalc()">
+<option value="2025">2025</option>
+<option value="2026">2026 (OBBBA)</option>
+</select>
+</div>
+<div class="input-row">
+<div class="input-label">Filing status</div>
+<select class="input-select" id="filing" onchange="recalc()">
+<option value="single">Single</option>
+<option value="mfj">Married Filing Jointly</option>
+<option value="mfs">Married Filing Separately</option>
+<option value="hoh">Head of Household</option>
+</select>
+</div>
+<div class="input-row">
+<div class="input-label">AGI (for medical floor)<span class="input-hint">Adjusted Gross Income — needed for the 7.5% medical threshold</span></div>
+<input type="number" class="input-field" id="agi" placeholder="0" oninput="recalc()">
+</div>
+</div>
+
+<div class="calc-section">
+<div class="section-cap">Itemized components</div>
+<h2>Schedule A inputs</h2>
+<div class="input-row">
+<div class="input-label">State income tax + property tax + sales tax (total)<span class="input-hint">SALT — subject to cap ($10K for 2025; up to $40K for 2026 under OBBBA if AGI under $500K)</span></div>
+<input type="number" class="input-field" id="salt" placeholder="0" oninput="recalc()">
+</div>
+<div class="input-row">
+<div class="input-label">Home mortgage interest<span class="input-hint">Acquisition debt up to $750K ($1M for pre-Dec-2017 mortgages, grandfathered)</span></div>
+<input type="number" class="input-field" id="mortgage" placeholder="0" oninput="recalc()">
+</div>
+<div class="input-row">
+<div class="input-label">Charitable contributions<span class="input-hint">Cash + non-cash; cash limited to 60% of AGI, non-cash 30%</span></div>
+<input type="number" class="input-field" id="charity" placeholder="0" oninput="recalc()">
+</div>
+<div class="input-row">
+<div class="input-label">Total medical / dental expenses<span class="input-hint">Out-of-pocket only; subject to 7.5% AGI floor — only excess counts</span></div>
+<input type="number" class="input-field" id="medical" placeholder="0" oninput="recalc()">
+</div>
+<div class="input-row">
+<div class="input-label">Federally-declared disaster casualty loss<span class="input-hint">Only federal disaster losses deductible under TCJA; minus $100 + 10% AGI floor</span></div>
+<input type="number" class="input-field" id="casualty" placeholder="0" oninput="recalc()">
+</div>
+</div>
+
+</div>
+
+<div>
+<div class="calc-section">
+<div class="section-cap">Comparison</div>
+<h2>Which is bigger?</h2>
+<div class="compare-grid" id="compareGrid"></div>
+<div style="margin-top:18px;padding:14px 16px;background:rgba(74,222,128,.06);border:1px solid rgba(74,222,128,.22);border-left:3px solid var(--green);border-radius:8px;">
+<div style="font-family:'DM Mono',monospace;font-size:.66rem;font-weight:700;color:var(--green);text-transform:uppercase;letter-spacing:.08em;margin-bottom:5px;">Recommendation</div>
+<div id="recommendation" style="font-size:.85rem;color:var(--text);line-height:1.55;"></div>
+</div>
+</div>
+
+<div class="sc">
+<div class="sct">📊 Standard Deduction</div>
+<div class="scr"><span class="sck">2025 Single / MFS</span><span class="scv">$15,000</span></div>
+<div class="scr"><span class="sck">2025 MFJ</span><span class="scv">$30,000</span></div>
+<div class="scr"><span class="sck">2025 HoH</span><span class="scv">$22,500</span></div>
+<div class="scr"><span class="sck">2026 Single (OBBBA)</span><span class="scv gold">$15,750</span></div>
+<div class="scr"><span class="sck">2026 MFJ (OBBBA)</span><span class="scv gold">$31,500</span></div>
+<div class="scr"><span class="sck">2026 HoH (OBBBA)</span><span class="scv">$23,625</span></div>
+</div>
+
+<div class="sc">
+<div class="sct">💡 SALT Cap Reality</div>
+<div style="font-size:.76rem;color:var(--muted);line-height:1.6;">
+<p style="margin-bottom:8px;"><strong style="color:var(--gold)">2025</strong>: SALT capped at $10,000 ($5,000 MFS).</p>
+<p style="margin-bottom:8px;"><strong style="color:var(--gold)">2026-2029 (OBBBA)</strong>: $40,000 cap for taxpayers with AGI under $500,000. Reverts to $10,000 for 2030+.</p>
+<p>If your state income + property + sales tax exceeds the cap, the excess simply doesn't deduct.</p>
+</div>
+</div>
+
+<div class="sc">
+<div class="sct">🔗 Related Tools</div>
+<a href="federal-tax-estimator.html" class="rl-item"><span class="rli">🧮</span><div><div class="rln">Federal Tax Estimator</div></div><span class="rla">→</span></a>
+<a href="state-tax-rates.html" class="rl-item"><span class="rli">🗺️</span><div><div class="rln">State Tax Rate Lookup</div></div><span class="rla">→</span></a>
+<a href="acronyms.html#acro-salt" class="rl-item"><span class="rli">🔤</span><div><div class="rln">SALT in Acronym Decoder</div></div><span class="rla">→</span></a>
+</div>
+</div>
+</div>
+</div>
+
+<footer>
+<div class="fl">© 2026 <a href="index.html">TaxPreparerTools.com</a> · Schedule A simplified · Verify with actual return</div>
+<div class="flk"><a href="privacy.html">Privacy</a><a href="terms.html">Terms</a><a href="https://irs.gov" target="_blank" rel="noopener">IRS.gov ↗</a></div>
+</footer>
+
+<script>
+const STD_DEDUCTION = {
+  2025: {single:15000, mfj:30000, mfs:15000, hoh:22500},
+  2026: {single:15750, mfj:31500, mfs:15750, hoh:23625}, // OBBBA inflation-adjusted
+};
+
+function num(id){return parseFloat(document.getElementById(id).value)||0;}
+function fmt(v){return '$'+Math.round(v).toLocaleString('en-US');}
+
+function recalc() {
+  const year = document.getElementById('taxYear').value;
+  const fs = document.getElementById('filing').value;
+  const agi = num('agi');
+  const salt = num('salt');
+  const mortgage = num('mortgage');
+  const charity = num('charity');
+  const medical = num('medical');
+  const casualty = num('casualty');
+
+  // SALT cap
+  let saltCap;
+  if (year === '2025') {
+    saltCap = fs === 'mfs' ? 5000 : 10000;
+  } else { // 2026 OBBBA: $40K for AGI under $500K, else $10K
+    if (agi < 500000) {
+      saltCap = fs === 'mfs' ? 20000 : 40000;
+    } else {
+      saltCap = fs === 'mfs' ? 5000 : 10000;
+    }
+  }
+  const saltAllowed = Math.min(salt, saltCap);
+
+  // Medical: only amount above 7.5% AGI
+  const medicalFloor = agi * 0.075;
+  const medicalAllowed = Math.max(0, medical - medicalFloor);
+
+  // Casualty (federal disaster): minus $100 + 10% AGI floor
+  const casualtyAllowed = Math.max(0, casualty - 100 - agi * 0.10);
+
+  // Sum itemized
+  const itemized = saltAllowed + mortgage + charity + medicalAllowed + casualtyAllowed;
+  const standard = STD_DEDUCTION[year][fs];
+
+  const itemizedWins = itemized > standard;
+  const difference = Math.abs(itemized - standard);
+
+  document.getElementById('compareGrid').innerHTML = `
+    <div class="compare-card${itemizedWins ? ' winner' : ''}">
+      ${itemizedWins ? '<div class="winner-badge">Better choice</div>' : ''}
+      <div class="cc-header"><div class="cc-name">Itemized</div><div class="cc-tag">Schedule A</div></div>
+      <div class="cc-amount">${fmt(itemized)}</div>
+      <div class="cc-row"><span class="l">SALT (capped)</span><span class="v">${fmt(saltAllowed)}</span></div>
+      <div class="cc-row"><span class="l">Mortgage interest</span><span class="v">${fmt(mortgage)}</span></div>
+      <div class="cc-row"><span class="l">Charitable</span><span class="v">${fmt(charity)}</span></div>
+      <div class="cc-row"><span class="l">Medical (over 7.5% AGI)</span><span class="v">${fmt(medicalAllowed)}</span></div>
+      <div class="cc-row"><span class="l">Casualty (post-floor)</span><span class="v">${fmt(casualtyAllowed)}</span></div>
+    </div>
+    <div class="compare-card${!itemizedWins ? ' winner' : ''}">
+      ${!itemizedWins ? '<div class="winner-badge">Better choice</div>' : ''}
+      <div class="cc-header"><div class="cc-name">Standard</div><div class="cc-tag">${year} ${fs.toUpperCase()}</div></div>
+      <div class="cc-amount">${fmt(standard)}</div>
+      <div class="cc-row"><span class="l">Filing status</span><span class="v">${fs.toUpperCase()}</span></div>
+      <div class="cc-row"><span class="l">Tax year</span><span class="v">${year}</span></div>
+      <div class="cc-row"><span class="l">No documentation needed</span><span class="v">—</span></div>
+      <div class="cc-row"><span class="l">Default election</span><span class="v">Yes</span></div>
+    </div>
+  `;
+
+  let rec;
+  if (itemized === 0 && agi === 0) {
+    rec = 'Enter your AGI and itemized deduction amounts above to see the comparison.';
+  } else if (itemizedWins) {
+    rec = `<strong>Itemize.</strong> Your Schedule A total of ${fmt(itemized)} exceeds the standard deduction by ${fmt(difference)}. At a marginal tax rate of 22%, that's roughly ${fmt(difference * 0.22)} in federal tax savings.`;
+  } else {
+    rec = `<strong>Take the standard deduction.</strong> Your itemized total (${fmt(itemized)}) is ${fmt(difference)} less than the standard (${fmt(standard)}). No Schedule A needed, and you skip the substantiation burden.`;
+  }
+  document.getElementById('recommendation').innerHTML = rec;
+}
+recalc();
+(function(){var btn=document.getElementById('navHamburger'),ul=document.querySelector('.nav-links');if(btn&&ul)btn.addEventListener('click',function(){btn.classList.toggle('open');ul.classList.toggle('mobile-open');});})();
+</script>
+<script src="assets/js/tax-acronyms.js" defer></script>
+<script>document.addEventListener('DOMContentLoaded',()=>{TaxAcronyms.init({onlyAcronyms:['AGI','MAGI','SALT','TCJA','OBBBA','QBI','AMT'],baseUrl:'acronyms.html'});});</script>
+</body>
+</html>

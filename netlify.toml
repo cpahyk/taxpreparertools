@@ -217,6 +217,21 @@
   to   = "/extension-toolkit.html"
   status = 200
 
+[[redirects]]
+  from = "/ctc-estimator"
+  to   = "/ctc-estimator.html"
+  status = 200
+
+[[redirects]]
+  from = "/education-credits"
+  to   = "/education-credits.html"
+  status = 200
+
+[[redirects]]
+  from = "/itemized-vs-standard"
+  to   = "/itemized-vs-standard.html"
+  status = 200
+
 # Security headers
 [[headers]]
   for = "/*"
