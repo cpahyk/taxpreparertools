@@ -147,7 +147,7 @@ You have breadcrumbs and the `tools.html` directory, which is a good base. Stren
 
 Existing posts: bonus depreciation, first‑time penalty abatement, IRS notices decoded, OBBBA §199A, QBI SSTB phase‑out. Strong start. The highest‑value gaps each **tie to a tool you already have** (so every article has a built‑in internal link + conversion path), prioritized by intent + freshness + low competition:
 
-1. **S‑Corp Reasonable Compensation: Setting a Defensible Salary (2025)** → links `/reasonable-compensation-calculator` + `/s-corp-audit-exposure-calculator`. High practitioner intent, ties two tools.
+1. **S‑Corp Reasonable Compensation: How to Set a Salary That Survives an Audit** → links `/reasonable-compensation-calculator` + `/s-corp-audit-exposure-calculator`. High practitioner intent, ties two tools. **✓ WRITTEN this session** — live at `/blog/s-corp-reasonable-compensation` (~1,500 words, BlogPosting + FAQPage schema, two tool CTAs, added to the sitemap and blog index).
 2. **The OBBBA $6,000 Senior Deduction: Who Qualifies and How to Claim It** → `/itemized-vs-standard`. Fresh OBBBA topic, very low competition right now.
 3. **2026 Estimated‑Tax Safe Harbor Rules for Clients** → `/quarterly-payments`. Evergreen + seasonal.
 4. **AOTC vs Lifetime Learning Credit: Which to Claim** → `/education-credits`.
@@ -156,7 +156,7 @@ Existing posts: bonus depreciation, first‑time penalty abatement, IRS notices 
 7. **1099‑NEC & W‑2 Filing Deadlines and Penalties (2026)** → `/deadlines` + `/penalty-calculator`.
 8. **Standard Mileage vs Actual Expenses (2025/2026 rates)** → `/mileage`.
 
-Start with #1, #2, #3. I can draft any of these as a publish‑ready post in your house style + byline.
+#1 is done. #2 and #3 are the next two I'd recommend — say the word and I'll draft either as a publish‑ready post in your house style + byline.
 
 ---
 
