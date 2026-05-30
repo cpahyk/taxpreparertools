@@ -31,6 +31,12 @@ Google shows ~150–160 characters of a meta description; the rest is truncated,
 The duplicate‑content finding proves Google had already crawled the `/tools/` pages; deleting them outright would leave 9 URLs returning 404 with no path to their replacements. GitHub Pages can't issue server 301s, so I recreated `/tools/<name>.html` as **lightweight `noindex,follow` redirect stubs** (canonical → root, meta‑refresh + JS redirect, **no AdSense, not in the sitemap**) — the same pattern already used for `deadline-calendar.html`.
 - These consolidate old links and crawler‑known URLs to the canonical root pages **without reintroducing duplicate content** (they're noindexed redirects, not copies). In Search Console they'll resolve as "Excluded by 'noindex'", which is the correct end state.
 
+### 5. Applied the 12 title rewrites (was Recommendation A)
+Shortened the 12 longest `<title>` tags — previously 76–105 chars and truncated in results — to **50–67 chars**, keeping the primary keyword front‑loaded and standardizing the suffix to `| TaxPreparerTools`. The before/after table is preserved under Recommendation A below. `og:title`/`twitter:title` were left as‑is where they were already written differently from the page title (a legitimate pattern).
+
+### 6. Consolidated the duplicate QBI pages (was Recommendation B)
+`/qbi-deduction-calculator` is the content **superset** of `/qbi` — same purpose (QBI §199A calculator) but materially more coverage (OBBBA 2025+2026 rules, the $400 minimum deduction, expanded phase‑in ranges, more inputs). I pointed `/qbi`'s `<link rel="canonical">` **and** `og:url` at it and removed `/qbi` from the sitemap (now 41 URLs). `rel=canonical` passes `/qbi`'s ranking signals — including any backlinks — to the stronger page, so this is **equity‑safe** even if `/qbi` is the older / more‑linked URL. `/qbi` stays live and usable; its internal nav links were left in place (Google follows the canonical), which also keeps the change **trivially reversible** — restore one canonical line plus the sitemap entry. *If Search Console shows `/qbi` is actually your stronger URL and you'd rather keep it as primary, tell me and I'll flip the direction and port the richer content onto it.*
+
 ---
 
 ## Current SEO health snapshot
@@ -47,19 +53,19 @@ The duplicate‑content finding proves Google had already crawled the `/tools/` 
 | Open Graph / Twitter cards | ✅ Present site‑wide |
 | Structured data coverage | ✅ 42/42 pages; `WebApplication` + `FAQPage` + `BreadcrumbList` on tools |
 | HTTPS / mobile / speed | ✅ Static site — fast by default (confirm mobile + PSI, below) |
-| Title length | ⚠️ ~20 titles exceed Google's ~60‑char display (recommendations below) |
-| Keyword cannibalization | ⚠️ Two QBI pages compete (below) |
+| Title length | ✅ 12 longest titles tightened to 50–67 chars (Rec A applied) |
+| Keyword cannibalization | ✅ QBI pages consolidated via canonical (Rec B applied, reversible) |
 | Legacy JSON‑LD validity | ⚠️ 9 older blocks use single quotes (below) |
 
 The foundation is genuinely strong. The remaining items are optimization and growth, not fixes.
 
 ---
 
-## Recommendation A — Title tightening (review & apply)
+## Recommendation A — Title tightening — ✓ APPLIED
 
-Titles are the single highest‑weight on‑page ranking element, and yours are keyword‑rich (good) but ~20 exceed the ~60‑char display width, so Google truncates the tail (usually the brand) in results. Front‑loaded keywords survive, so this is a polish item — but tighter titles read better and improve CTR. I did **not** auto‑apply these (wording is yours to own); here are ready‑to‑use rewrites for the worst offenders. Tell me to apply any subset and I will.
+**Done this session.** The 12 longest titles were truncating in results (~76–105 chars); they're now 50–67 chars with the keyword front‑loaded and a consistent `| TaxPreparerTools` suffix. Below is exactly what was applied — the prior wording is recoverable from git if you want any of it back.
 
-| Page | Suggested title (≤~62 chars) |
+| Page | Applied title (≤~67 chars) |
 |---|---|
 | `self-employed-retirement-calculator` | `SEP-IRA vs Solo 401(k) vs SIMPLE Calculator 2025 \| TaxPreparerTools` |
 | `state-tax-rates` | `State Tax Rate Lookup — All 50 States 2025 \| TaxPreparerTools` |
@@ -76,13 +82,13 @@ Titles are the single highest‑weight on‑page ranking element, and yours are 
 
 ---
 
-## Recommendation B — Resolve the QBI keyword cannibalization
+## Recommendation B — QBI keyword cannibalization — ✓ APPLIED (reversible)
 
-You have **two pages targeting the same query**: `/qbi` ("QBI Deduction Calculator 2025") and `/qbi-deduction-calculator` ("QBI Deduction Calculator §199A — 2025 + 2026 OBBBA Rules"). Google has to pick one, and they split each other's ranking signals. Options, best first:
-1. **Pick the stronger page** (likely `/qbi-deduction-calculator` — fuller, OBBBA‑aware) as the canonical QBI tool, and point the other's `<link rel="canonical">` at it (or 301‑stub the weaker one like the `/tools/` redirects). Consolidates all signal onto one URL.
-2. **Differentiate intent**: make one the *calculator* and the other a *guide/explainer* targeting a distinct query (e.g. `/qbi` → "what is the QBI deduction" informational; `/qbi-deduction-calculator` → the tool). Only worth it if you'll invest in genuinely different content.
+`/qbi` and `/qbi-deduction-calculator` were both targeting "QBI deduction calculator." Inspection confirmed they're the **same tool, not differentiated** — `/qbi-deduction-calculator` simply covers more (OBBBA 2025+2026 rules, the $400 minimum deduction, expanded phase‑in, more inputs; ~866 words / 7 fields vs ~732 / 6). So consolidation is the right call rather than differentiation.
 
-Say which page should win and I'll wire up the canonical/redirect.
+**What I did:** pointed `/qbi`'s `<link rel="canonical">` and `og:url` at `/qbi-deduction-calculator`, and dropped `/qbi` from the sitemap. Signals (incl. backlinks) now consolidate onto the stronger page; `/qbi` stays live for anyone who lands on it. Reversible by restoring the canonical line + sitemap entry.
+
+**The one case to flip it:** if your Search Console shows `/qbi` carries most of the QBI traffic/backlinks and you'd rather keep that shorter URL as primary, say so — I'll reverse the canonical direction and port the richer 2025/2026 content onto `/qbi` instead. As a follow‑up either way, repointing the 5 internal nav links to the chosen canonical URL is a nice‑to‑have.
 
 ---
 
@@ -172,7 +178,7 @@ On‑page is solid; rankings now need authority signals. In rough priority:
 3. **Rich Results Test** (`search.google.com/test/rich-results`) on `/mileage`, `/amt`, `/ctc`, `/depreciation` → confirm FAQ + WebApplication eligibility.
 4. **Bing Webmaster Tools**: add the site, submit the sitemap (~10% of search, often ignored).
 5. **PageSpeed Insights** + **Mobile‑Friendly Test**: a static site should score well; just confirm no surprises on mobile.
-6. *(Optional)* Resolve the QBI cannibalization (Rec. B) and convert the legacy single‑quote JSON‑LD (Rec. C).
+6. *(Optional)* Convert the legacy single‑quote JSON‑LD (Rec. C) — the only remaining hardening item; QBI consolidation (Rec B) and titles (Rec A) are already applied.
 
 ---
 
