@@ -465,6 +465,16 @@ footer { border-top:1px solid var(--border); padding:36px 48px; display:flex; al
       <div class="panel-title">Property Tax Search</div>
       <p class="panel-sub">Pick a state, then a county, then how you'd like to search. We'll hand you off to the official county portal &mdash; same data your local CPA would access, just faster to reach.</p>
 
+      <!-- Shortcut: ZIP -> county auto-resolver -->
+      <div id="ptZipBox" style="background:rgba(200,168,75,0.06);border:1px solid rgba(200,168,75,0.18);border-radius:12px;padding:16px 18px;margin-bottom:22px;">
+        <div style="font-size:0.72rem;font-family:'DM Mono',monospace;text-transform:uppercase;letter-spacing:0.1em;color:var(--gold,#c8a84b);margin-bottom:8px;">Shortcut &middot; Find by ZIP</div>
+        <div style="display:flex;gap:8px;flex-wrap:wrap;align-items:center;">
+          <input id="ptZipInput" type="text" inputmode="numeric" maxlength="5" placeholder="e.g. 30303" aria-label="Enter a 5-digit ZIP code to find the county" style="flex:1;min-width:130px;background:var(--navy-mid,#122040);border:1px solid rgba(200,168,75,0.25);border-radius:8px;color:var(--text,#e8edf5);padding:11px 14px;font-size:0.95rem;font-family:inherit;" />
+          <button id="ptZipBtn" type="button" style="background:var(--gold,#c8a84b);color:#0a1628;border:none;border-radius:8px;padding:11px 20px;font-weight:600;font-size:0.9rem;cursor:pointer;font-family:inherit;">Find county &rarr;</button>
+        </div>
+        <div id="ptZipMsg" role="status" aria-live="polite" style="font-size:0.82rem;color:var(--muted,#8a9bb5);margin-top:8px;min-height:1.1em;">Have the address but not the county? Enter the ZIP and we&rsquo;ll jump to the right state &amp; county for you.</div>
+      </div>
+
       <!-- Step 1: State -->
       <div class="step active" id="step1">
         <div class="step-header">
@@ -1547,5 +1557,89 @@ window.PROPERTY_TAX_DATA = {
   });
 })();
 </script>
+<!-- ZIP -> county resolver (additive; free no-key public APIs, client-side, graceful fallback) -->
+<script>
+(function(){
+  var input=document.getElementById('ptZipInput'),
+      btn=document.getElementById('ptZipBtn'),
+      msg=document.getElementById('ptZipMsg'),
+      stateSelect=document.getElementById('stateSelect'),
+      countyInput=document.getElementById('countyInput'),
+      countyList=document.getElementById('countyList');
+  if(!btn || !stateSelect) return;
+
+  function setMsg(t,kind){
+    msg.textContent=t;
+    msg.style.color = kind==='err' ? '#e8a0a0' : (kind==='ok' ? '#9fd5a0' : 'var(--muted,#8a9bb5)');
+  }
+  function stripSuffix(n){
+    return (n||'').replace(/\s+(County|Parish|Borough|Census Area|Municipality|City and Borough|City)$/i,'').trim();
+  }
+  function setState(abbr){
+    stateSelect.value=abbr;
+    stateSelect.dispatchEvent(new Event('change',{bubbles:true}));
+  }
+  function findCountyItem(name){
+    if(!countyList) return null;
+    var items=countyList.querySelectorAll('.county-item'), want=name.toLowerCase(), hit=null;
+    items.forEach(function(it){
+      var dn=(it.dataset&&it.dataset.name)?it.dataset.name.toLowerCase():'';
+      if(dn===want) hit=it;
+    });
+    if(!hit){
+      items.forEach(function(it){
+        var dn=(it.dataset&&it.dataset.name)?it.dataset.name.toLowerCase():'';
+        if(!hit && dn && (dn.indexOf(want)===0 || want.indexOf(dn)===0)) hit=it;
+      });
+    }
+    return hit;
+  }
+
+  function resolve(){
+    var zip=(input.value||'').trim();
+    if(!/^\d{5}$/.test(zip)){ setMsg('Please enter a valid 5-digit ZIP code.','err'); input.focus(); return; }
+    setMsg('Locating\u2026'); btn.disabled=true;
+    fetch('https://api.zippopotam.us/us/'+zip)
+      .then(function(r){ if(!r.ok) throw new Error('zip'); return r.json(); })
+      .then(function(z){
+        var p=z.places&&z.places[0];
+        if(!p) throw new Error('noplace');
+        var abbr=p['state abbreviation'], lat=p.latitude, lon=p.longitude;
+        return fetch('https://geo.fcc.gov/api/census/area?lat='+encodeURIComponent(lat)+'&lon='+encodeURIComponent(lon)+'&format=json')
+          .then(function(r){ return r.ok ? r.json() : {}; })
+          .then(function(a){
+            var res=a&&a.results&&a.results[0];
+            return { abbr:abbr, county: res ? stripSuffix(res.county_name) : '' };
+          });
+      })
+      .then(function(out){
+        if(!out.abbr) throw new Error('nostate');
+        setState(out.abbr);
+        if(out.county){
+          var hit=findCountyItem(out.county);
+          if(hit){
+            hit.click();
+            try{ document.getElementById('step3').scrollIntoView({behavior:'smooth',block:'nearest'}); }catch(e){}
+            setMsg('Found '+out.county+' County, '+out.abbr+' \u2014 portal ready below. \u2713','ok');
+          } else {
+            if(countyInput){ countyInput.value=out.county; countyInput.dispatchEvent(new Event('input',{bubbles:true})); }
+            setMsg('State set to '+out.abbr+'. No direct portal for '+out.county+' County yet \u2014 use the county list or the Google fallback below.','');
+          }
+        } else {
+          setMsg('State set to '+out.abbr+'. Pick your county from the list below.','');
+        }
+      })
+      .catch(function(){
+        setMsg('Couldn\u2019t auto-detect from that ZIP. Please select your state and county manually below.','err');
+      })
+      .then(function(){ btn.disabled=false; });
+  }
+
+  btn.addEventListener('click',resolve);
+  input.addEventListener('keydown',function(e){ if(e.key==='Enter'){ e.preventDefault(); resolve(); } });
+  input.addEventListener('input',function(){ var v=input.value.replace(/[^0-9]/g,'').slice(0,5); if(v!==input.value) input.value=v; });
+})();
+</script>
+
 </body>
 </html>
