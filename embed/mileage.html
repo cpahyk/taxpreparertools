@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en-US">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="robots" content="noindex, follow">
+<title>Mileage Deduction Calculator — TaxPreparerTools</title>
+<style>
+  *,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+  html,body{background:transparent;}
+  body{font-family:system-ui,-apple-system,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;color:#1e293b;line-height:1.5;padding:4px;}
+  .w{max-width:480px;margin:0 auto;background:#ffffff;border:1px solid #e2e8f0;border-radius:14px;box-shadow:0 1px 3px rgba(15,23,42,0.06);overflow:hidden;}
+  .w-head{padding:16px 18px 12px;border-bottom:1px solid #f1f5f9;}
+  .brand{display:flex;align-items:center;gap:7px;font-size:0.72rem;font-weight:700;letter-spacing:0.02em;color:#0a1628;text-transform:uppercase;}
+  .brand .dot{width:18px;height:18px;border-radius:5px;background:#c8a84b;display:flex;align-items:center;justify-content:center;font-size:11px;color:#0a1628;}
+  .w-title{font-size:1.15rem;font-weight:700;color:#0f172a;margin-top:8px;}
+  .w-sub{font-size:0.78rem;color:#64748b;margin-top:2px;}
+  .w-body{padding:16px 18px;}
+  .yr{display:flex;gap:6px;margin-bottom:16px;background:#f1f5f9;padding:4px;border-radius:9px;}
+  .yr button{flex:1;border:none;background:transparent;padding:7px 0;border-radius:6px;font-size:0.82rem;font-weight:600;color:#475569;cursor:pointer;font-family:inherit;}
+  .yr button.on{background:#fff;color:#0f172a;box-shadow:0 1px 2px rgba(15,23,42,0.1);}
+  .field{margin-bottom:13px;}
+  .field label{display:block;font-size:0.78rem;font-weight:600;color:#334155;margin-bottom:4px;}
+  .field .rate{font-weight:400;color:#94a3b8;font-size:0.72rem;}
+  .field input{width:100%;border:1px solid #cbd5e1;border-radius:8px;padding:9px 11px;font-size:0.95rem;font-family:inherit;color:#0f172a;}
+  .field input:focus{outline:none;border-color:#c8a84b;box-shadow:0 0 0 3px rgba(200,168,75,0.15);}
+  .res{margin-top:16px;border-top:1px solid #f1f5f9;padding-top:14px;}
+  .res-row{display:flex;justify-content:space-between;font-size:0.82rem;color:#475569;padding:3px 0;}
+  .res-row span:last-child{font-variant-numeric:tabular-nums;font-weight:600;color:#0f172a;}
+  .res-total{display:flex;justify-content:space-between;align-items:baseline;margin-top:10px;padding-top:10px;border-top:1px dashed #e2e8f0;}
+  .res-total .lbl{font-size:0.85rem;font-weight:700;color:#0f172a;}
+  .res-total .amt{font-size:1.6rem;font-weight:800;color:#0a1628;font-variant-numeric:tabular-nums;}
+  .w-foot{padding:11px 18px;background:#f8fafc;border-top:1px solid #f1f5f9;display:flex;align-items:center;justify-content:space-between;gap:10px;flex-wrap:wrap;}
+  .w-foot .src{font-size:0.68rem;color:#94a3b8;}
+  .w-foot a{font-size:0.76rem;font-weight:600;color:#a07e1e;text-decoration:none;white-space:nowrap;}
+  .w-foot a:hover{text-decoration:underline;}
+</style>
+</head>
+<body>
+<div class="w">
+  <div class="w-head">
+    <div class="brand"><span class="dot">⚖</span> TaxPreparerTools</div>
+    <div class="w-title">Mileage Deduction Calculator</div>
+    <div class="w-sub">IRS standard mileage rates for business, medical &amp; charity</div>
+  </div>
+  <div class="w-body">
+    <div class="yr" role="group" aria-label="Tax year">
+      <button type="button" data-yr="2025">2025</button>
+      <button type="button" data-yr="2026" class="on">2026</button>
+    </div>
+    <div class="field">
+      <label for="mBiz">Business miles <span class="rate" id="rBiz"></span></label>
+      <input id="mBiz" type="number" inputmode="decimal" min="0" placeholder="0" aria-label="Business miles">
+    </div>
+    <div class="field">
+      <label for="mMed">Medical / moving miles <span class="rate" id="rMed"></span></label>
+      <input id="mMed" type="number" inputmode="decimal" min="0" placeholder="0" aria-label="Medical or moving miles">
+    </div>
+    <div class="field">
+      <label for="mChar">Charitable miles <span class="rate" id="rChar"></span></label>
+      <input id="mChar" type="number" inputmode="decimal" min="0" placeholder="0" aria-label="Charitable miles">
+    </div>
+    <div class="res">
+      <div class="res-row"><span>Business</span><span id="oBiz">$0.00</span></div>
+      <div class="res-row"><span>Medical / moving</span><span id="oMed">$0.00</span></div>
+      <div class="res-row"><span>Charitable</span><span id="oChar">$0.00</span></div>
+      <div class="res-total"><span class="lbl">Total deduction</span><span class="amt" id="oTotal">$0.00</span></div>
+    </div>
+  </div>
+  <div class="w-foot">
+    <span class="src" id="src">Rates: IRS Notice 2026-10</span>
+    <a href="https://www.taxpreparertools.com/mileage" target="_blank" rel="noopener">Open full calculator ↗</a>
+  </div>
+</div>
+<script>
+(function(){
+  var RATES = {
+    "2025": {biz:0.70,  med:0.21,  char:0.14, src:"Rates: IRS Notice 2025-05"},
+    "2026": {biz:0.725, med:0.205, char:0.14, src:"Rates: IRS Notice 2026-10"}
+  };
+  var year = "2026";
+  var $ = function(id){ return document.getElementById(id); };
+  function money(n){ return "$" + (isFinite(n)?n:0).toLocaleString("en-US",{minimumFractionDigits:2,maximumFractionDigits:2}); }
+  function cents(r){ return (r*100).toFixed(r*100%1===0?0:1).replace(/\.0$/,"") + "¢/mi"; }
+  function num(id){ var v=parseFloat($(id).value); return (isFinite(v)&&v>0)?v:0; }
+  function render(){
+    var r = RATES[year];
+    $("rBiz").textContent  = "(" + cents(r.biz)  + ")";
+    $("rMed").textContent  = "(" + cents(r.med)  + ")";
+    $("rChar").textContent = "(" + cents(r.char) + ")";
+    $("src").textContent = r.src;
+    var b=num("mBiz")*r.biz, m=num("mMed")*r.med, c=num("mChar")*r.char;
+    $("oBiz").textContent=money(b); $("oMed").textContent=money(m); $("oChar").textContent=money(c);
+    $("oTotal").textContent=money(b+m+c);
+  }
+  document.querySelectorAll(".yr button").forEach(function(btn){
+    btn.addEventListener("click", function(){
+      year = btn.getAttribute("data-yr");
+      document.querySelectorAll(".yr button").forEach(function(b){ b.classList.toggle("on", b===btn); });
+      render();
+    });
+  });
+  ["mBiz","mMed","mChar"].forEach(function(id){ $(id).addEventListener("input", render); });
+  render();
+})();
+</script>
+</body>
+</html>
