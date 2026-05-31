@@ -467,12 +467,12 @@ footer { border-top:1px solid var(--border); padding:36px 48px; display:flex; al
 
       <!-- Shortcut: ZIP -> county auto-resolver -->
       <div id="ptZipBox" style="background:rgba(200,168,75,0.06);border:1px solid rgba(200,168,75,0.18);border-radius:12px;padding:16px 18px;margin-bottom:22px;">
-        <div style="font-size:0.72rem;font-family:'DM Mono',monospace;text-transform:uppercase;letter-spacing:0.1em;color:var(--gold,#c8a84b);margin-bottom:8px;">Shortcut &middot; Find by ZIP</div>
+        <div style="font-size:0.72rem;font-family:'DM Mono',monospace;text-transform:uppercase;letter-spacing:0.1em;color:var(--gold,#c8a84b);margin-bottom:8px;">Shortcut &middot; Find by ZIP or address</div>
         <div style="display:flex;gap:8px;flex-wrap:wrap;align-items:center;">
-          <input id="ptZipInput" type="text" inputmode="numeric" maxlength="5" placeholder="e.g. 30303" aria-label="Enter a 5-digit ZIP code to find the county" style="flex:1;min-width:130px;background:var(--navy-mid,#122040);border:1px solid rgba(200,168,75,0.25);border-radius:8px;color:var(--text,#e8edf5);padding:11px 14px;font-size:0.95rem;font-family:inherit;" />
+          <input id="ptZipInput" type="text" placeholder="ZIP or address (e.g. 123 Main St, Atlanta GA 30303)" aria-label="Enter a ZIP code or full address to find the county" style="flex:1;min-width:200px;background:var(--navy-mid,#122040);border:1px solid rgba(200,168,75,0.25);border-radius:8px;color:var(--text,#e8edf5);padding:11px 14px;font-size:0.95rem;font-family:inherit;" />
           <button id="ptZipBtn" type="button" style="background:var(--gold,#c8a84b);color:#0a1628;border:none;border-radius:8px;padding:11px 20px;font-weight:600;font-size:0.9rem;cursor:pointer;font-family:inherit;">Find county &rarr;</button>
         </div>
-        <div id="ptZipMsg" role="status" aria-live="polite" style="font-size:0.82rem;color:var(--muted,#8a9bb5);margin-top:8px;min-height:1.1em;">Have the address but not the county? Enter the ZIP and we&rsquo;ll jump to the right state &amp; county for you.</div>
+        <div id="ptZipMsg" role="status" aria-live="polite" style="font-size:0.82rem;color:var(--muted,#8a9bb5);margin-top:8px;min-height:1.1em;">Paste the client&rsquo;s address (or just the ZIP) and we&rsquo;ll jump to the right state &amp; county for you.</div>
       </div>
 
       <!-- Step 1: State -->
@@ -1596,8 +1596,10 @@ window.PROPERTY_TAX_DATA = {
   }
 
   function resolve(){
-    var zip=(input.value||'').trim();
-    if(!/^\d{5}$/.test(zip)){ setMsg('Please enter a valid 5-digit ZIP code.','err'); input.focus(); return; }
+    var raw=(input.value||'').trim();
+    var zips=raw.match(/\b\d{5}(?:-\d{4})?\b/g);
+    if(!zips){ setMsg('Enter a 5-digit ZIP code \u2014 or an address that includes one \u2014 so we can find the county.','err'); input.focus(); return; }
+    var zip=zips[zips.length-1].slice(0,5);
     setMsg('Locating\u2026'); btn.disabled=true;
     fetch('https://api.zippopotam.us/us/'+zip)
       .then(function(r){ if(!r.ok) throw new Error('zip'); return r.json(); })
@@ -1637,7 +1639,6 @@ window.PROPERTY_TAX_DATA = {
 
   btn.addEventListener('click',resolve);
   input.addEventListener('keydown',function(e){ if(e.key==='Enter'){ e.preventDefault(); resolve(); } });
-  input.addEventListener('input',function(){ var v=input.value.replace(/[^0-9]/g,'').slice(0,5); if(v!==input.value) input.value=v; });
 })();
 </script>
 
