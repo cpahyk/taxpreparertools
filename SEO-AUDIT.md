@@ -37,6 +37,9 @@ Shortened the 12 longest `<title>` tags — previously 76–105 chars and trunca
 ### 6. Consolidated the duplicate QBI pages (was Recommendation B)
 `/qbi-deduction-calculator` is the content **superset** of `/qbi` — same purpose (QBI §199A calculator) but materially more coverage (OBBBA 2025+2026 rules, the $400 minimum deduction, expanded phase‑in ranges, more inputs). I pointed `/qbi`'s `<link rel="canonical">` **and** `og:url` at it and removed `/qbi` from the sitemap (now 41 URLs). `rel=canonical` passes `/qbi`'s ranking signals — including any backlinks — to the stronger page, so this is **equity‑safe** even if `/qbi` is the older / more‑linked URL. `/qbi` stays live and usable; its internal nav links were left in place (Google follows the canonical), which also keeps the change **trivially reversible** — restore one canonical line plus the sitemap entry. *If Search Console shows `/qbi` is actually your stronger URL and you'd rather keep it as primary, tell me and I'll flip the direction and port the richer content onto it.*
 
+### 7. Strengthened internal linking (was Recommendation D)
+A link‑graph audit found 7 tools with no contextual inbound links and 10 "Related Tools" slots that pointed at the generic `/tools` hub despite being labeled as a specific tool. Repointed all 10 to their real pages and ensured every tool now has at least one topical inbound link, which also connected the previously siloed S‑corp/QBI calculators to the rest of the set. Details under Recommendation D below.
+
 ---
 
 ## Current SEO health snapshot
@@ -134,12 +137,16 @@ Assign one primary keyword per page so titles, H1s, and content stay focused. Cu
 
 ---
 
-## Recommendation D — Internal linking (hub‑and‑spoke)
+## Recommendation D — Internal linking (hub‑and‑spoke) — ✓ APPLIED (core pass)
 
-You have breadcrumbs and the `tools.html` directory, which is a good base. Strengthen the spokes:
-- **Cross‑link related tools** from each calculator's content section (2–3 contextual links). Natural clusters: SE‑tax ↔ QBI ↔ quarterly‑payments ↔ self‑employed‑retirement; CTC ↔ education‑credits ↔ federal‑estimator; reasonable‑comp ↔ s‑corp‑audit‑exposure ↔ se‑tax; itemized‑vs‑standard ↔ home‑office ↔ mileage; the three IRS decoders ↔ each other (the `/decoders` hub already does some of this).
-- **Blog → tool**, every post: penalty‑abatement post → `/penalty-calculator`; both QBI posts → `/qbi-deduction-calculator`; bonus‑depreciation post → `/depreciation`; notices post → `/irs-notice-decoder`. This passes authority to the money pages and lifts engagement.
-- **Tool → blog**, where a post adds depth (e.g. the depreciation calculator linking to the bonus‑depreciation explainer).
+**Audited and strengthened this session.** The foundation was already solid — most calculators had populated "Related Tools" sections and every tool is linked from the `tools.html` directory and the sitemap. A link‑graph audit surfaced two real gaps, both now fixed:
+
+- **7 tools had zero contextual inbound links** (education‑credits, amt‑calculator, mileage, itemized‑vs‑standard, extension‑toolkit, ctc‑estimator, amended‑return‑checklist). Each now has at least one, from a topically‑related page.
+- **10 "Related Tools" slots were labeled as a specific tool but linked to the generic `/tools` hub** (e.g. "Itemized vs Standard", "IRS Notice Decoder", "S‑Corp Payroll Optimizer"). All 10 are repointed to their real pages — four to existing exact matches, six relabeled to the most relevant real tool — which both fixes misleading links and routes link equity to real pages instead of the hub. This also connected the previously **siloed S‑corp/QBI cluster** to the broader tool set (reasonable‑comp inbound 3→5, audit‑exposure 3→4).
+
+Edits touched 5 source pages (federal‑tax‑estimator, se‑tax‑calculator, penalty‑calculator, qbi, capital‑gains), each preserving the page's existing markup; verified no broken links and one `<title>`/`<footer>` per page.
+
+**Still worth doing (didn't auto‑apply — lower priority):** the blog → tool and tool → blog links. The new S‑corp post already links both S‑corp calculators; extending the same pattern to the older posts (penalty‑abatement → `/penalty-calculator`, depreciation → `/depreciation`, notices → `/irs-notice-decoder`) is a quick follow‑up I can do on request.
 
 ---
 
@@ -148,7 +155,7 @@ You have breadcrumbs and the `tools.html` directory, which is a good base. Stren
 Existing posts: bonus depreciation, first‑time penalty abatement, IRS notices decoded, OBBBA §199A, QBI SSTB phase‑out. Strong start. The highest‑value gaps each **tie to a tool you already have** (so every article has a built‑in internal link + conversion path), prioritized by intent + freshness + low competition:
 
 1. **S‑Corp Reasonable Compensation: How to Set a Salary That Survives an Audit** → links `/reasonable-compensation-calculator` + `/s-corp-audit-exposure-calculator`. High practitioner intent, ties two tools. **✓ WRITTEN this session** — live at `/blog/s-corp-reasonable-compensation` (~1,500 words, BlogPosting + FAQPage schema, two tool CTAs, added to the sitemap and blog index).
-2. **The OBBBA $6,000 Senior Deduction: Who Qualifies and How to Claim It** → `/itemized-vs-standard`. Fresh OBBBA topic, very low competition right now.
+2. **The OBBBA $6,000 Senior Deduction: Who Qualifies and How to Claim It** → `/itemized-vs-standard`. Fresh OBBBA topic, very low competition right now. **✓ WRITTEN this session** — live at `/blog/obbba-senior-deduction-2025` (~1,130 words, BlogPosting + FAQPage schema, figures verified against current guidance, links `/itemized-vs-standard` + `/federal-tax-estimator` + `/quarterly-payments`; added to sitemap and blog index).
 3. **2026 Estimated‑Tax Safe Harbor Rules for Clients** → `/quarterly-payments`. Evergreen + seasonal.
 4. **AOTC vs Lifetime Learning Credit: Which to Claim** → `/education-credits`.
 5. **Home Office Deduction: Simplified vs Regular Method (2025)** → `/home-office`.
@@ -156,7 +163,7 @@ Existing posts: bonus depreciation, first‑time penalty abatement, IRS notices 
 7. **1099‑NEC & W‑2 Filing Deadlines and Penalties (2026)** → `/deadlines` + `/penalty-calculator`.
 8. **Standard Mileage vs Actual Expenses (2025/2026 rates)** → `/mileage`.
 
-#1 is done. #2 and #3 are the next two I'd recommend — say the word and I'll draft either as a publish‑ready post in your house style + byline.
+#1 and #2 are done. #3 (estimated‑tax safe harbor) is the natural next one — say the word and I'll draft it in your house style + byline.
 
 ---
 
