@@ -73,7 +73,10 @@
   .perks{display:flex;gap:22px;flex-wrap:wrap;margin:24px 0 8px;}
   .perk{font-size:0.85rem;color:var(--text);display:flex;align-items:center;gap:8px;}
   .perk .c{color:var(--gold);font-weight:700;}
-  .grid{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:32px;margin-top:48px;align-items:start;}
+  .grid{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:32px;margin-top:14px;align-items:start;}
+  .widget-block{margin-top:36px;padding-top:26px;border-top:1px solid var(--border);}
+  .widget-block.first{border-top:none;padding-top:0;margin-top:8px;}
+  .widget-name{font-family:'Playfair Display',serif;font-size:1.15rem;color:var(--white);font-weight:700;}
   @media(max-width:820px){.grid{grid-template-columns:1fr;}}
   .panel-label{font-family:'DM Mono',monospace;font-size:0.7rem;text-transform:uppercase;letter-spacing:0.08em;color:var(--muted);margin-bottom:12px;}
   .preview-frame{width:100%;border:1px solid var(--border);border-radius:14px;background:#fff;}
@@ -131,29 +134,61 @@
     <div class="perk"><span class="c">✓</span> Loads lazily — no speed hit</div>
   </div>
 
-  <div class="grid">
-    <div>
-      <div class="panel-label">Live preview</div>
-      <iframe class="preview-frame" src="embed/mileage.html" height="560" title="Mileage Deduction Calculator preview" loading="lazy"></iframe>
-    </div>
-    <div>
-      <div class="panel-label">Mileage Deduction Calculator — embed code</div>
-      <div class="code-card">
-        <div class="code-head">
-          <span>HTML</span>
-          <button class="copy-btn" type="button" onclick="tptCopy(this,'snippet-mileage')">Copy code</button>
-        </div>
-        <pre><code id="snippet-mileage">&lt;iframe src="https://www.taxpreparertools.com/embed/mileage"
+  <h2 style="margin-top:48px;">Available calculators</h2>
+
+  <div class="widget-block first">
+    <div class="widget-name">Mileage Deduction Calculator</div>
+    <div class="grid">
+      <div>
+        <div class="panel-label">Live preview</div>
+        <iframe class="preview-frame" src="embed/mileage.html" height="560" title="Mileage Deduction Calculator preview" loading="lazy"></iframe>
+      </div>
+      <div>
+        <div class="panel-label">Embed code</div>
+        <div class="code-card">
+          <div class="code-head">
+            <span>HTML</span>
+            <button class="copy-btn" type="button" onclick="tptCopy(this,'snippet-mileage')">Copy code</button>
+          </div>
+          <pre><code id="snippet-mileage">&lt;iframe src="https://www.taxpreparertools.com/embed/mileage"
         width="100%" height="560" loading="lazy"
         style="border:1px solid #e2e8f0;border-radius:14px;max-width:480px;"
         title="Mileage Deduction Calculator"&gt;&lt;/iframe&gt;
 &lt;p style="font:14px sans-serif;margin-top:6px;"&gt;Powered by
   &lt;a href="https://www.taxpreparertools.com/mileage"&gt;TaxPreparerTools — Free Mileage Deduction Calculator&lt;/a&gt;
 &lt;/p&gt;</code></pre>
+        </div>
       </div>
-      <p style="font-size:0.82rem;color:var(--muted);margin-top:12px;">Paste it anywhere on your page. Keep the attribution line — that small credit link is all we ask in exchange for the free, maintained widget.</p>
     </div>
   </div>
+
+  <div class="widget-block">
+    <div class="widget-name">Earned Income Credit (EITC) Calculator</div>
+    <div class="grid">
+      <div>
+        <div class="panel-label">Live preview</div>
+        <iframe class="preview-frame" src="embed/eitc.html" height="640" title="EITC Calculator preview" loading="lazy"></iframe>
+      </div>
+      <div>
+        <div class="panel-label">Embed code</div>
+        <div class="code-card">
+          <div class="code-head">
+            <span>HTML</span>
+            <button class="copy-btn" type="button" onclick="tptCopy(this,'snippet-eitc')">Copy code</button>
+          </div>
+          <pre><code id="snippet-eitc">&lt;iframe src="https://www.taxpreparertools.com/embed/eitc"
+        width="100%" height="640" loading="lazy"
+        style="border:1px solid #e2e8f0;border-radius:14px;max-width:480px;"
+        title="Earned Income Credit Calculator"&gt;&lt;/iframe&gt;
+&lt;p style="font:14px sans-serif;margin-top:6px;"&gt;Powered by
+  &lt;a href="https://www.taxpreparertools.com/eitc-calculator"&gt;TaxPreparerTools — Free EITC Calculator&lt;/a&gt;
+&lt;/p&gt;</code></pre>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <p style="font-size:0.82rem;color:var(--muted);margin-top:16px;">Paste either snippet anywhere on your page. Keep the attribution line — that small credit link is all we ask in exchange for the free, always-current widget.</p>
 
   <h2>How it works</h2>
   <div class="steps">
@@ -170,7 +205,7 @@
     <div class="faq-item"><div class="q">Can I change the width?</div><div class="a">Yes. The iframe is responsive and fills its container up to 480px. Adjust the width and height attributes in the code to fit your layout.</div></div>
   </div>
 
-  <div class="more"><strong>More calculators coming.</strong> The mileage calculator is the first widget in the embed program. Want a specific calculator — self-employment tax, capital gains, QBI — embeddable for your site? <a href="contact.html" style="color:var(--gold)">Let us know</a> and we'll prioritize it.</div>
+  <div class="more"><strong>More calculators on the way.</strong> Two widgets are available today — the mileage and EITC calculators. Want another embeddable for your site — self-employment tax, capital gains, or QBI? <a href="contact.html" style="color:var(--gold)">Let us know</a> and we'll prioritize it.</div>
 </div>
 
 <footer>

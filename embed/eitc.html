@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en-US">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="robots" content="noindex, follow">
+<title>Earned Income Credit Calculator — TaxPreparerTools</title>
+<style>
+  *,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+  html,body{background:transparent;}
+  body{font-family:system-ui,-apple-system,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;color:#1e293b;line-height:1.5;padding:4px;}
+  .w{max-width:480px;margin:0 auto;background:#fff;border:1px solid #e2e8f0;border-radius:14px;box-shadow:0 1px 3px rgba(15,23,42,0.06);overflow:hidden;}
+  .w-head{padding:16px 18px 12px;border-bottom:1px solid #f1f5f9;}
+  .brand{display:flex;align-items:center;gap:7px;font-size:0.72rem;font-weight:700;letter-spacing:0.02em;color:#0a1628;text-transform:uppercase;}
+  .brand .dot{width:18px;height:18px;border-radius:5px;background:#c8a84b;display:flex;align-items:center;justify-content:center;font-size:11px;color:#0a1628;}
+  .w-title{font-size:1.15rem;font-weight:700;color:#0f172a;margin-top:8px;}
+  .w-sub{font-size:0.78rem;color:#64748b;margin-top:2px;}
+  .w-body{padding:16px 18px;}
+  .seg{display:flex;gap:6px;margin-bottom:13px;background:#f1f5f9;padding:4px;border-radius:9px;}
+  .seg button{flex:1;border:none;background:transparent;padding:8px 0;border-radius:6px;font-size:0.8rem;font-weight:600;color:#475569;cursor:pointer;font-family:inherit;}
+  .seg button.on{background:#fff;color:#0f172a;box-shadow:0 1px 2px rgba(15,23,42,0.1);}
+  .field{margin-bottom:11px;}
+  .field label{display:block;font-size:0.76rem;font-weight:600;color:#334155;margin-bottom:4px;}
+  .field .hint{font-weight:400;color:#94a3b8;font-size:0.7rem;}
+  .field input,.field select{width:100%;border:1px solid #cbd5e1;border-radius:8px;padding:9px 11px;font-size:0.93rem;font-family:inherit;color:#0f172a;background:#fff;}
+  .field input:focus,.field select:focus{outline:none;border-color:#c8a84b;box-shadow:0 0 0 3px rgba(200,168,75,0.15);}
+  .pfx{position:relative;}
+  .pfx span{position:absolute;left:11px;top:50%;transform:translateY(-50%);color:#94a3b8;font-size:0.9rem;}
+  .pfx input{padding-left:24px;}
+  .res{margin-top:14px;background:linear-gradient(135deg,rgba(200,168,75,0.12),rgba(200,168,75,0.03));border:1px solid rgba(200,168,75,0.3);border-radius:10px;padding:16px;text-align:center;}
+  .res .rl{font-size:0.66rem;text-transform:uppercase;letter-spacing:0.06em;color:#94a3b8;font-weight:600;}
+  .res .amt{font-size:2rem;font-weight:800;color:#0a1628;margin:4px 0 2px;font-variant-numeric:tabular-nums;}
+  .res .note{font-size:0.78rem;color:#a07e1e;}
+  .res .note.warn{color:#c0392b;}
+  .w-foot{padding:10px 18px;background:#f8fafc;border-top:1px solid #f1f5f9;display:flex;align-items:center;justify-content:space-between;gap:10px;flex-wrap:wrap;}
+  .w-foot .src{font-size:0.66rem;color:#94a3b8;}
+  .w-foot a{font-size:0.74rem;font-weight:600;color:#a07e1e;text-decoration:none;white-space:nowrap;}
+  .w-foot a:hover{text-decoration:underline;}
+</style>
+</head>
+<body>
+<div class="w">
+  <div class="w-head">
+    <div class="brand"><span class="dot">⚖</span> TaxPreparerTools</div>
+    <div class="w-title">Earned Income Credit Calculator</div>
+    <div class="w-sub">Estimate your 2026 EITC</div>
+  </div>
+  <div class="w-body">
+    <div class="seg" id="segStatus" role="group" aria-label="Filing status">
+      <button type="button" data-v="single" class="on">Single / HoH</button>
+      <button type="button" data-v="mfj">Married Jointly</button>
+    </div>
+    <div class="field">
+      <label for="kids">Qualifying children</label>
+      <select id="kids" aria-label="Number of qualifying children">
+        <option value="0">0 — none</option>
+        <option value="1">1 child</option>
+        <option value="2">2 children</option>
+        <option value="3">3 or more</option>
+      </select>
+    </div>
+    <div class="field">
+      <label for="earned">Earned income <span class="hint">(wages + self-employment)</span></label>
+      <div class="pfx"><span>$</span><input id="earned" type="number" inputmode="numeric" min="0" placeholder="0" aria-label="Earned income"></div>
+    </div>
+    <div class="field">
+      <label for="agi">AGI <span class="hint">(optional)</span></label>
+      <div class="pfx"><span>$</span><input id="agi" type="number" inputmode="numeric" min="0" placeholder="same as earned" aria-label="Adjusted gross income"></div>
+    </div>
+    <div class="field">
+      <label for="invest">Investment income <span class="hint">(interest, dividends)</span></label>
+      <div class="pfx"><span>$</span><input id="invest" type="number" inputmode="numeric" min="0" placeholder="0" aria-label="Investment income"></div>
+    </div>
+    <div class="res">
+      <div class="rl">Estimated 2026 EITC</div>
+      <div class="amt" id="amt">$0</div>
+      <div class="note" id="note">Enter your earned income to estimate.</div>
+    </div>
+  </div>
+  <div class="w-foot">
+    <span class="src">Rates: IRS Rev. Proc. 2025-32</span>
+    <a href="https://www.taxpreparertools.com/eitc-calculator" target="_blank" rel="noopener">Open full calculator ↗</a>
+  </div>
+</div>
+<script>
+(function(){
+  var P = {
+    single:{0:{rate:0.0765,max:664,poBegin:10860,poRate:0.0765},1:{rate:0.34,max:4427,poBegin:23890,poRate:0.1598},2:{rate:0.40,max:7316,poBegin:23890,poRate:0.2106},3:{rate:0.45,max:8231,poBegin:23890,poRate:0.2106}},
+    mfj:{0:{rate:0.0765,max:664,poBegin:18140,poRate:0.0765},1:{rate:0.34,max:4427,poBegin:31160,poRate:0.1598},2:{rate:0.40,max:7316,poBegin:31160,poRate:0.2106},3:{rate:0.45,max:8231,poBegin:31160,poRate:0.2106}}
+  };
+  var INVEST_LIMIT=12200, status="single";
+  var $=function(id){return document.getElementById(id);};
+  function money(n){return "$"+Math.round(n).toLocaleString("en-US");}
+  function num(id){var v=parseFloat($(id).value);return (isFinite(v)&&v>0)?v:0;}
+  function compute(){
+    var kids=$("kids").value, earned=num("earned"), invest=num("invest");
+    var agiRaw=$("agi").value;
+    var agi=(agiRaw===""||!isFinite(parseFloat(agiRaw)))?earned:Math.max(0,parseFloat(agiRaw));
+    var p=P[status][kids], note=$("note"); note.classList.remove("warn");
+    if(invest>INVEST_LIMIT){ $("amt").textContent="$0"; note.textContent="Investment income over $12,200 — not eligible for 2026."; note.classList.add("warn"); return; }
+    if(earned<=0){ $("amt").textContent="$0"; note.textContent="Enter your earned income to estimate."; return; }
+    var po=Math.max(earned,agi), base=Math.min(p.rate*earned,p.max), credit=base, phasing=false;
+    if(po>p.poBegin){ credit=base-p.poRate*(po-p.poBegin); phasing=true; }
+    credit=Math.max(0,credit);
+    $("amt").textContent=money(credit);
+    if(credit<=0) note.textContent="Income above the 2026 limit for this family size.";
+    else if(!phasing && base>=p.max-0.5) note.textContent="Maximum credit for this family size.";
+    else if(!phasing) note.textContent="Phasing in as earned income rises.";
+    else note.textContent="Phasing out above the income threshold.";
+  }
+  document.querySelectorAll("#segStatus button").forEach(function(b){
+    b.addEventListener("click",function(){ status=b.getAttribute("data-v"); document.querySelectorAll("#segStatus button").forEach(function(x){x.classList.toggle("on",x===b);}); compute(); });
+  });
+  ["kids","earned","agi","invest"].forEach(function(id){ $(id).addEventListener("input",compute); });
+  compute();
+})();
+</script>
+</body>
+</html>
