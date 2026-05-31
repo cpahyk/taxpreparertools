@@ -1,0 +1,305 @@
+<!DOCTYPE html>
+<html lang="en-US">
+<head>
+<meta charset="UTF-8">
+<link rel="icon" type="image/x-icon" href="/favicon.ico">
+<link rel="icon" type="image/svg+xml" href="/assets/favicon.svg">
+<link rel="apple-touch-icon" sizes="180x180" href="/assets/apple-touch-icon.png">
+<link rel="manifest" href="/site.webmanifest">
+<meta name="theme-color" content="#c8a84b">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>EITC Calculator 2026 (Earned Income Credit) | TaxPreparerTools</title>
+<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-3930998832737959" crossorigin="anonymous"></script>
+<meta name="description" content="Free 2026 Earned Income Tax Credit calculator — estimate your EITC by filing status, children, earned income, and AGI, with the $12,200 investment-income check.">
+<link rel="canonical" href="https://www.taxpreparertools.com/eitc-calculator" />
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700;900&family=DM+Sans:wght@300;400;500;600;700&family=DM+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<meta property="og:type" content="website" />
+<meta property="og:url" content="https://www.taxpreparertools.com/eitc-calculator" />
+<meta property="og:title" content="2026 Earned Income Tax Credit (EITC) Calculator" />
+<meta property="og:description" content="Estimate your 2026 EITC in seconds — by filing status, number of children, earned income, and AGI." />
+<meta property="og:image" content="https://www.taxpreparertools.com/assets/og-image.png" />
+<meta name="twitter:card" content="summary_large_image" />
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "WebApplication",
+  "name": "2026 Earned Income Tax Credit (EITC) Calculator",
+  "url": "https://www.taxpreparertools.com/eitc-calculator",
+  "description": "Free calculator that estimates the 2026 federal Earned Income Tax Credit based on filing status, number of qualifying children, earned income, and AGI.",
+  "applicationCategory": "FinanceApplication",
+  "operatingSystem": "Any",
+  "offers": {"@type": "Offer", "price": "0", "priceCurrency": "USD"},
+  "publisher": {"@type": "Organization", "name": "TaxPreparerTools", "url": "https://www.taxpreparertools.com/"}
+}
+</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    {"@type": "ListItem", "position": 1, "name": "Home", "item": "https://www.taxpreparertools.com/"},
+    {"@type": "ListItem", "position": 2, "name": "Tools", "item": "https://www.taxpreparertools.com/tools"},
+    {"@type": "ListItem", "position": 3, "name": "EITC Calculator", "item": "https://www.taxpreparertools.com/eitc-calculator"}
+  ]
+}
+</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    {"@type":"Question","name":"How is the 2026 EITC calculated?","acceptedAnswer":{"@type":"Answer","text":"The credit phases in at a fixed percentage of earned income (7.65% with no children, up to 45% with three or more), reaches a maximum, then phases out as the greater of earned income or AGI rises above the threshold for your filing status. This calculator applies the 2026 parameters from IRS Revenue Procedure 2025-32."}},
+    {"@type":"Question","name":"Does investment income affect the EITC?","acceptedAnswer":{"@type":"Answer","text":"Yes. If your investment income exceeds $12,200 in 2026, you cannot claim the EITC at all, regardless of earned income. This calculator applies that cap."}},
+    {"@type":"Question","name":"Is this calculator exact?","acceptedAnswer":{"@type":"Answer","text":"It is a close estimate. The IRS computes the official credit from lookup tables rounded to $50 income bands, so a formula-based result may differ by a dollar or two. Use IRS Schedule EIC and the EITC tables for the filed amount."}}
+  ]
+}
+</script>
+<style>
+:root{--navy:#08152a;--navy-mid:#0f1f3d;--slate:#1a2f52;--gold:#c8a84b;--gold-light:#e8c96a;--white:#fff;--muted:#7a8fac;--text:#dde4f0;--border:rgba(200,168,75,0.14);--green:#4ade80;--blue:#60a5fa;--red:#f87171;--card:rgba(255,255,255,0.04);}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+body{font-family:'DM Sans',sans-serif;background:var(--navy);color:var(--text);min-height:100vh;line-height:1.6;}
+nav{position:sticky;top:0;z-index:200;padding:14px 48px;display:flex;align-items:center;justify-content:space-between;background:rgba(8,21,42,0.95);backdrop-filter:blur(20px);border-bottom:1px solid var(--border);}
+.logo{display:flex;align-items:center;gap:10px;text-decoration:none;}
+.logo-mark{width:32px;height:32px;background:var(--gold);border-radius:7px;display:flex;align-items:center;justify-content:center;font-size:15px;}
+.logo-name{font-family:'Playfair Display',serif;font-size:1.1rem;font-weight:700;color:var(--white);}
+.logo-name span{color:var(--gold);}
+.logo-domain{font-size:.62rem;color:var(--muted);font-family:'DM Mono',monospace;display:block;}
+.nav-links{display:flex;gap:24px;list-style:none;}
+.nav-links a{color:var(--muted);font-size:.82rem;text-decoration:none;}
+.nav-links a:hover,.nav-links a.active{color:var(--gold);}
+.btn-sm{padding:7px 16px;border-radius:6px;font-size:.8rem;font-weight:700;text-decoration:none;background:var(--gold);color:var(--navy);}
+.wrap{max-width:760px;margin:0 auto;padding:40px 24px 70px;}
+.breadcrumb{font-family:'DM Mono',monospace;font-size:.7rem;color:var(--muted);margin-bottom:18px;}
+.breadcrumb a{color:var(--muted);text-decoration:none;}
+.eyebrow{font-family:'DM Mono',monospace;font-size:.7rem;font-weight:600;letter-spacing:.1em;text-transform:uppercase;color:var(--gold);margin-bottom:10px;}
+h1{font-family:'Playfair Display',serif;font-size:clamp(1.7rem,3.4vw,2.3rem);font-weight:700;color:var(--white);line-height:1.2;margin-bottom:12px;}
+.sub{color:var(--muted);font-size:1rem;max-width:600px;margin-bottom:32px;}
+.calc{background:var(--card);border:1px solid var(--border);border-radius:16px;padding:26px;}
+.row{margin-bottom:18px;}
+.row label{display:block;font-size:.8rem;font-weight:600;color:var(--text);margin-bottom:7px;}
+.hint{font-weight:400;color:var(--muted);font-size:.72rem;}
+.seg{display:flex;gap:6px;background:rgba(0,0,0,0.2);padding:4px;border-radius:9px;}
+.seg button{flex:1;border:none;background:transparent;color:var(--muted);padding:9px 0;border-radius:6px;font-size:.85rem;font-weight:600;cursor:pointer;font-family:inherit;}
+.seg button.on{background:var(--gold);color:var(--navy);}
+select,input{width:100%;background:var(--navy-mid);border:1px solid var(--border);border-radius:8px;color:var(--text);padding:11px 13px;font-size:.95rem;font-family:inherit;}
+select:focus,input:focus{outline:none;border-color:var(--gold);}
+.with-prefix{position:relative;}
+.with-prefix span{position:absolute;left:12px;top:50%;transform:translateY(-50%);color:var(--muted);font-size:.95rem;}
+.with-prefix input{padding-left:26px;}
+.result{margin-top:24px;background:linear-gradient(135deg,rgba(200,168,75,0.12),rgba(200,168,75,0.03));border:1px solid rgba(200,168,75,0.3);border-radius:12px;padding:22px;text-align:center;}
+.result .rl{font-family:'DM Mono',monospace;font-size:.7rem;text-transform:uppercase;letter-spacing:.08em;color:var(--muted);}
+.result .amt{font-size:2.6rem;font-weight:800;color:var(--white);margin:6px 0 4px;font-variant-numeric:tabular-nums;}
+.result .note{font-size:.85rem;color:var(--gold-light);}
+.result .note.warn{color:var(--red);}
+.brk{margin-top:16px;font-size:.82rem;color:var(--muted);border-top:1px solid var(--border);padding-top:14px;display:none;}
+.brk.show{display:block;}
+.brk-row{display:flex;justify-content:space-between;padding:2px 0;}
+section.copy{margin-top:48px;}
+h2{font-family:'Playfair Display',serif;font-size:1.35rem;color:var(--white);margin:34px 0 12px;}
+p{color:var(--muted);margin-bottom:14px;}
+.data-table{width:100%;border-collapse:collapse;margin:16px 0;font-size:.86rem;}
+.data-table th{background:var(--slate);color:var(--gold);font-family:'DM Mono',monospace;font-size:.66rem;text-transform:uppercase;letter-spacing:.05em;padding:9px 11px;text-align:left;}
+.data-table td{padding:8px 11px;border-bottom:1px solid var(--border);color:var(--muted);}
+.data-table td:first-child{color:var(--text);font-weight:500;}
+.faq-item{border-top:1px solid var(--border);padding:14px 0;}
+.faq-item .q{font-weight:600;color:var(--text);margin-bottom:5px;}
+.faq-item .a{color:var(--muted);font-size:.92rem;}
+.related{margin-top:40px;padding-top:26px;border-top:1px solid var(--border);}
+.related a{display:block;color:var(--gold);text-decoration:none;font-size:.9rem;padding:5px 0;}
+.disclaimer{margin-top:30px;font-size:.78rem;color:var(--muted);background:rgba(0,0,0,0.15);border-radius:8px;padding:14px 16px;}
+footer{padding:26px 48px;display:flex;align-items:center;justify-content:space-between;border-top:1px solid var(--border);flex-wrap:wrap;gap:12px;}
+.footer-copy{font-size:.78rem;color:var(--muted);}
+.footer-links{display:flex;gap:18px;flex-wrap:wrap;}
+.footer-links a{color:var(--muted);text-decoration:none;font-size:.78rem;}
+@media(max-width:720px){nav{padding:12px 18px;}.nav-links{display:none;}.wrap{padding:28px 16px 50px;}footer{padding:20px;flex-direction:column;text-align:center;}}
+</style>
+</head>
+<body>
+<nav>
+  <a href="index.html" class="logo">
+    <div class="logo-mark">⚖</div>
+    <div><span class="logo-name">TaxPreparer<span>Tools</span></span><span class="logo-domain">taxpreparertools.com</span></div>
+  </a>
+  <ul class="nav-links">
+    <li><a href="tools.html" class="active">Tools</a></li>
+    <li><a href="deadlines.html">Deadlines</a></li>
+    <li><a href="resources.html">Resources</a></li>
+    <li><a href="blog/">Blog</a></li>
+  </ul>
+  <a href="signup.html" class="btn-sm">Get Started Free</a>
+</nav>
+
+<div class="wrap">
+  <div class="breadcrumb"><a href="index.html">Home</a> › <a href="tools.html">Tools</a> › EITC Calculator</div>
+  <div class="eyebrow">2026 Tax Year</div>
+  <h1>2026 Earned Income Tax Credit (EITC) Calculator</h1>
+  <p class="sub">Estimate your 2026 EITC. Enter your filing status, qualifying children, earned income, and AGI — the calculator applies the IRS Rev. Proc. 2025-32 parameters and the $12,200 investment-income cap.</p>
+
+  <div class="calc">
+    <div class="row">
+      <label>Filing status</label>
+      <div class="seg" id="segStatus">
+        <button type="button" data-v="single" class="on">Single / HoH</button>
+        <button type="button" data-v="mfj">Married Filing Jointly</button>
+      </div>
+    </div>
+    <div class="row">
+      <label for="kids">Qualifying children</label>
+      <select id="kids">
+        <option value="0">0 — none</option>
+        <option value="1">1 child</option>
+        <option value="2">2 children</option>
+        <option value="3">3 or more children</option>
+      </select>
+    </div>
+    <div class="row">
+      <label for="earned">Earned income <span class="hint">(wages + net self-employment)</span></label>
+      <div class="with-prefix"><span>$</span><input id="earned" type="number" inputmode="numeric" min="0" placeholder="0"></div>
+    </div>
+    <div class="row">
+      <label for="agi">Adjusted gross income (AGI) <span class="hint">(optional — defaults to earned income)</span></label>
+      <div class="with-prefix"><span>$</span><input id="agi" type="number" inputmode="numeric" min="0" placeholder="same as earned income"></div>
+    </div>
+    <div class="row">
+      <label for="invest">Investment income <span class="hint">(interest, dividends, gains)</span></label>
+      <div class="with-prefix"><span>$</span><input id="invest" type="number" inputmode="numeric" min="0" placeholder="0"></div>
+    </div>
+
+    <div class="result">
+      <div class="rl">Estimated 2026 EITC</div>
+      <div class="amt" id="amt">$0</div>
+      <div class="note" id="note">Enter your earned income to estimate your credit.</div>
+    </div>
+    <div class="brk" id="brk">
+      <div class="brk-row"><span>Maximum credit for your family size</span><span id="bMax">—</span></div>
+      <div class="brk-row"><span>Phase-out begins (your status)</span><span id="bBegin">—</span></div>
+      <div class="brk-row"><span>Income used for phase-out</span><span id="bPO">—</span></div>
+    </div>
+  </div>
+
+  <section class="copy">
+    <h2>2026 EITC at a glance</h2>
+    <table class="data-table">
+      <thead><tr><th>Children</th><th>Max credit</th><th>Max AGI — Single/HoH</th><th>Max AGI — MFJ</th></tr></thead>
+      <tbody>
+        <tr><td>None</td><td>$664</td><td>$19,540</td><td>$26,820</td></tr>
+        <tr><td>One</td><td>$4,427</td><td>$51,593</td><td>$58,863</td></tr>
+        <tr><td>Two</td><td>$7,316</td><td>$58,629</td><td>$65,899</td></tr>
+        <tr><td>Three or more</td><td>$8,231</td><td>$62,974</td><td>$70,224</td></tr>
+      </tbody>
+    </table>
+    <p>The credit phases in as a percentage of earned income (7.65% with no children, 34% for one, 40% for two, 45% for three or more), plateaus at the maximum, then phases out once the greater of your earned income or AGI passes the threshold for your filing status. You also need a valid SSN, U.S. citizen/resident status, and investment income of $12,200 or less. For the full rules, see our <a href="blog/earned-income-tax-credit-2026.html" style="color:var(--gold)">2026 EITC guide</a>.</p>
+
+    <h2>Questions</h2>
+    <div class="faq-item"><div class="q">How is the 2026 EITC calculated?</div><div class="a">The credit phases in at a fixed percentage of earned income (7.65%–45% by family size), reaches a maximum, then phases out as the greater of earned income or AGI rises past the threshold for your status. This tool applies the 2026 figures from Rev. Proc. 2025-32.</div></div>
+    <div class="faq-item"><div class="q">Does investment income affect the EITC?</div><div class="a">Yes — investment income over $12,200 in 2026 disqualifies you entirely, regardless of earned income. The calculator applies that cap.</div></div>
+    <div class="faq-item"><div class="q">Is this calculator exact?</div><div class="a">It's a close estimate. The IRS computes the official figure from $50-band lookup tables, so a formula result can differ by a dollar or two. Use Schedule EIC for the filed amount.</div></div>
+
+    <div class="related">
+      <a href="blog/earned-income-tax-credit-2026.html">→ The 2026 Earned Income Tax Credit, explained</a>
+      <a href="ctc-estimator.html">→ Child Tax Credit Calculator</a>
+      <a href="federal-tax-estimator.html">→ Federal Income Tax Estimator</a>
+      <a href="blog/2026-tax-brackets-standard-deduction.html">→ 2026 Tax Brackets &amp; Standard Deduction</a>
+    </div>
+
+    <div class="disclaimer">Estimate only, based on IRS Revenue Procedure 2025-32 and IRC §32. Not tax advice and not affiliated with the IRS. Confirm the filed amount using IRS Schedule EIC and the official EITC tables.</div>
+  </section>
+</div>
+
+<footer>
+  <div class="footer-copy">© 2026 TaxPreparerTools.com · Not affiliated with the IRS · For informational use only</div>
+  <div class="footer-links">
+    <a href="tools.html">Tools</a>
+    <a href="privacy.html">Privacy</a>
+    <a href="terms.html">Terms</a>
+    <a href="contact.html">Contact</a>
+    <a href="about.html">About</a>
+  </div>
+</footer>
+<script>
+(function(){
+  var P = {
+    single: {
+      0:{rate:0.0765,max:664, poBegin:10860,poRate:0.0765},
+      1:{rate:0.34,  max:4427,poBegin:23890,poRate:0.1598},
+      2:{rate:0.40,  max:7316,poBegin:23890,poRate:0.2106},
+      3:{rate:0.45,  max:8231,poBegin:23890,poRate:0.2106}
+    },
+    mfj: {
+      0:{rate:0.0765,max:664, poBegin:18140,poRate:0.0765},
+      1:{rate:0.34,  max:4427,poBegin:31160,poRate:0.1598},
+      2:{rate:0.40,  max:7316,poBegin:31160,poRate:0.2106},
+      3:{rate:0.45,  max:8231,poBegin:31160,poRate:0.2106}
+    }
+  };
+  var INVEST_LIMIT = 12200;
+  var status = "single";
+  var $ = function(id){ return document.getElementById(id); };
+  function money(n){ return "$" + Math.round(n).toLocaleString("en-US"); }
+  function num(id){ var v=parseFloat($(id).value); return (isFinite(v)&&v>0)?v:0; }
+
+  function compute(){
+    var kids = $("kids").value;
+    var earned = num("earned");
+    var agiRaw = $("agi").value;
+    var agi = (agiRaw===""||!isFinite(parseFloat(agiRaw))) ? earned : Math.max(0,parseFloat(agiRaw));
+    var invest = num("invest");
+    var p = P[status][kids];
+
+    $("bMax").textContent = money(p.max);
+    $("bBegin").textContent = money(p.poBegin);
+
+    var note=$("note"); note.classList.remove("warn");
+
+    if(invest > INVEST_LIMIT){
+      $("amt").textContent="$0";
+      note.textContent="Investment income over $12,200 — not eligible for the EITC in 2026.";
+      note.classList.add("warn");
+      $("bPO").textContent="—"; $("brk").classList.add("show");
+      return;
+    }
+    if(earned <= 0){
+      $("amt").textContent="$0";
+      note.textContent="Enter your earned income to estimate your credit.";
+      $("bPO").textContent="—"; $("brk").classList.remove("show");
+      return;
+    }
+
+    var phaseoutIncome = Math.max(earned, agi);
+    var base = Math.min(p.rate * earned, p.max);
+    var credit = base;
+    var phasing = false;
+    if(phaseoutIncome > p.poBegin){
+      credit = base - p.poRate * (phaseoutIncome - p.poBegin);
+      phasing = true;
+    }
+    credit = Math.max(0, credit);
+
+    $("amt").textContent = money(credit);
+    $("bPO").textContent = money(phaseoutIncome);
+    $("brk").classList.add("show");
+
+    if(credit <= 0){
+      note.textContent = "Income is above the 2026 limit for this family size — credit phases out to $0.";
+    } else if(!phasing && base >= p.max - 0.5){
+      note.textContent = "You're at the maximum credit for this family size.";
+    } else if(!phasing){
+      note.textContent = "Phasing in — the credit grows as earned income rises toward the maximum.";
+    } else {
+      note.textContent = "Phasing out — reduced because income exceeds the threshold for your filing status.";
+    }
+  }
+
+  document.querySelectorAll("#segStatus button").forEach(function(b){
+    b.addEventListener("click", function(){
+      status = b.getAttribute("data-v");
+      document.querySelectorAll("#segStatus button").forEach(function(x){ x.classList.toggle("on", x===b); });
+      compute();
+    });
+  });
+  ["kids","earned","agi","invest"].forEach(function(id){ $(id).addEventListener("input", compute); });
+  compute();
+})();
+</script>
+</body>
+</html>
