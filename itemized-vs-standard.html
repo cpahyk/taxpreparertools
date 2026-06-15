@@ -200,7 +200,7 @@ footer{border-top:1px solid var(--border);padding:26px 48px;display:flex;align-i
 <div style="display:flex;gap:7px;margin-bottom:9px;flex-wrap:wrap;">
 <span class="badge bf">Free</span><span class="badge bu">TY 2025 / 2026</span><span class="badge bp">Schedule A</span></div>
 <h1>Itemized vs Standard Deduction</h1>
-<p class="td">Compare your itemized deductions on Schedule A against the standard deduction. Includes the SALT cap (still $10K for 2025; $40K under OBBBA for taxpayers under $500K starting 2026), mortgage interest, charitable, and medical with the 7.5%-AGI floor.</p>
+<p class="td">Compare your itemized deductions on Schedule A against the standard deduction. Includes the OBBBA $40,000 SALT cap (2025–2029, phasing down above $500K MAGI), mortgage interest, charitable, and medical with the 7.5%-AGI floor.</p>
 </div>
 </div>
 
@@ -227,7 +227,7 @@ footer{border-top:1px solid var(--border);padding:26px 48px;display:flex;align-i
 </select>
 </div>
 <div class="input-row">
-<div class="input-label">AGI (for medical floor)<span class="input-hint">Adjusted Gross Income — needed for the 7.5% medical threshold</span></div>
+<div class="input-label">AGI / MAGI<span class="input-hint">Adjusted Gross Income — used for the 7.5% medical floor and the SALT phase-out</span></div>
 <input type="number" class="input-field" id="agi" placeholder="0" oninput="recalc()">
 </div>
 </div>
@@ -236,7 +236,7 @@ footer{border-top:1px solid var(--border);padding:26px 48px;display:flex;align-i
 <div class="section-cap">Itemized components</div>
 <h2>Schedule A inputs</h2>
 <div class="input-row">
-<div class="input-label">State income tax + property tax + sales tax (total)<span class="input-hint">SALT — subject to cap ($10K for 2025; up to $40K for 2026 under OBBBA if AGI under $500K)</span></div>
+<div class="input-label">State income tax + property tax + sales tax (total)<span class="input-hint">SALT — capped at $40,000 ($20,000 MFS) under OBBBA, phasing down above $500K MAGI to a $10K floor</span></div>
 <input type="number" class="input-field" id="salt" placeholder="0" oninput="recalc()">
 </div>
 <div class="input-row">
@@ -272,19 +272,19 @@ footer{border-top:1px solid var(--border);padding:26px 48px;display:flex;align-i
 
 <div class="sc">
 <div class="sct">📊 Standard Deduction</div>
-<div class="scr"><span class="sck">2025 Single / MFS</span><span class="scv">$15,000</span></div>
-<div class="scr"><span class="sck">2025 MFJ</span><span class="scv">$30,000</span></div>
-<div class="scr"><span class="sck">2025 HoH</span><span class="scv">$22,500</span></div>
-<div class="scr"><span class="sck">2026 Single (OBBBA)</span><span class="scv gold">$15,750</span></div>
-<div class="scr"><span class="sck">2026 MFJ (OBBBA)</span><span class="scv gold">$31,500</span></div>
-<div class="scr"><span class="sck">2026 HoH (OBBBA)</span><span class="scv">$23,625</span></div>
+<div class="scr"><span class="sck">2025 Single / MFS</span><span class="scv">$15,750</span></div>
+<div class="scr"><span class="sck">2025 MFJ</span><span class="scv">$31,500</span></div>
+<div class="scr"><span class="sck">2025 HoH</span><span class="scv">$23,625</span></div>
+<div class="scr"><span class="sck">2026 Single / MFS</span><span class="scv gold">$16,100</span></div>
+<div class="scr"><span class="sck">2026 MFJ</span><span class="scv gold">$32,200</span></div>
+<div class="scr"><span class="sck">2026 HoH</span><span class="scv">$24,150</span></div>
 </div>
 
 <div class="sc">
 <div class="sct">💡 SALT Cap Reality</div>
 <div style="font-size:.76rem;color:var(--muted);line-height:1.6;">
-<p style="margin-bottom:8px;"><strong style="color:var(--gold)">2025</strong>: SALT capped at $10,000 ($5,000 MFS).</p>
-<p style="margin-bottom:8px;"><strong style="color:var(--gold)">2026-2029 (OBBBA)</strong>: $40,000 cap for taxpayers with AGI under $500,000. Reverts to $10,000 for 2030+.</p>
+<p style="margin-bottom:8px;"><strong style="color:var(--gold)">2025</strong>: SALT cap $40,000 ($20,000 MFS), up from $10,000 — phases down 30% of MAGI over $500,000 to a $10,000 floor (gone by ~$600K).</p>
+<p style="margin-bottom:8px;"><strong style="color:var(--gold)">2026</strong>: $40,400 ($20,200 MFS); phase-out starts at $505,000 MAGI. Cap reverts to $10,000 in 2030.</p>
 <p>If your state income + property + sales tax exceeds the cap, the excess simply doesn't deduct.</p>
 </div>
 </div>
@@ -321,8 +321,8 @@ footer{border-top:1px solid var(--border);padding:26px 48px;display:flex;align-i
 
 <script>
 const STD_DEDUCTION = {
-  2025: {single:15000, mfj:30000, mfs:15000, hoh:22500},
-  2026: {single:15750, mfj:31500, mfs:15750, hoh:23625}, // OBBBA inflation-adjusted
+  2025: {single:15750, mfj:31500, mfs:15750, hoh:23625}, // OBBBA-increased (P.L. 119-21)
+  2026: {single:16100, mfj:32200, mfs:16100, hoh:24150}, // IRS Rev. Proc. 2025-32
 };
 
 function num(id){return parseFloat(document.getElementById(id).value)||0;}
@@ -338,16 +338,18 @@ function recalc() {
   const medical = num('medical');
   const casualty = num('casualty');
 
-  // SALT cap
-  let saltCap;
-  if (year === '2025') {
-    saltCap = fs === 'mfs' ? 5000 : 10000;
-  } else { // 2026 OBBBA: $40K for AGI under $500K, else $10K
-    if (agi < 500000) {
-      saltCap = fs === 'mfs' ? 20000 : 40000;
-    } else {
-      saltCap = fs === 'mfs' ? 5000 : 10000;
-    }
+  // SALT cap (OBBBA §70120): base $40,000 for 2025 / $40,400 for 2026 ($20,000 / $20,200 MFS),
+  // phased down 30% of MAGI over $500,000 ($505,000 in 2026), floor $10,000 ($5,000 MFS).
+  // AGI is used here as a MAGI proxy.
+  const isMFS = fs === 'mfs';
+  const saltBase = year === '2026' ? 40400 : 40000;
+  const saltThresh = year === '2026' ? 505000 : 500000;
+  const baseCap = isMFS ? saltBase / 2 : saltBase;
+  const phaseThresh = isMFS ? saltThresh / 2 : saltThresh;
+  const saltFloor = isMFS ? 5000 : 10000;
+  let saltCap = baseCap;
+  if (agi > phaseThresh) {
+    saltCap = Math.max(saltFloor, baseCap - 0.30 * (agi - phaseThresh));
   }
   const saltAllowed = Math.min(salt, saltCap);
 
