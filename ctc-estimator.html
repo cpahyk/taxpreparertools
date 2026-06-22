@@ -205,7 +205,7 @@ footer{border-top:1px solid var(--border);padding:26px 48px;display:flex;align-i
 <h2>Your filing details</h2>
 <div class="input-row">
 <div class="input-label">Filing status</div>
-<select class="input-select" id="filing" onchange="recalc()">
+<select class="input-select" id="filing" onchange="recalc()" aria-label="Filing status">
 <option value="single">Single</option>
 <option value="mfj">Married Filing Jointly</option>
 <option value="mfs">Married Filing Separately</option>
@@ -214,23 +214,23 @@ footer{border-top:1px solid var(--border);padding:26px 48px;display:flex;align-i
 </div>
 <div class="input-row">
 <div class="input-label">Modified AGI (MAGI)<span class="input-hint">AGI + foreign earned income exclusion + Puerto Rico income</span></div>
-<input type="number" class="input-field" id="magi" placeholder="0" oninput="recalc()">
+<input type="number" class="input-field" id="magi" placeholder="0" oninput="recalc()" aria-label="Modified AGI (MAGI)">
 </div>
 <div class="input-row">
 <div class="input-label">Qualifying children under 17<span class="input-hint">U.S. citizen/resident with SSN, lived with you &gt;6 months, you provided &gt;50% support</span></div>
-<input type="number" class="input-field" id="children" placeholder="0" min="0" oninput="recalc()">
+<input type="number" class="input-field" id="children" placeholder="0" min="0" oninput="recalc()" aria-label="Qualifying children under 17">
 </div>
 <div class="input-row">
 <div class="input-label">Other dependents (ODC)<span class="input-hint">Adult dependents, kids 17+, ITIN holders — eligible for $500 ODC</span></div>
-<input type="number" class="input-field" id="odc" placeholder="0" min="0" oninput="recalc()">
+<input type="number" class="input-field" id="odc" placeholder="0" min="0" oninput="recalc()" aria-label="Other dependents (ODC)">
 </div>
 <div class="input-row">
 <div class="input-label">Earned income (W-2 wages + SE net earnings)<span class="input-hint">Needed for ACTC refundability calculation</span></div>
-<input type="number" class="input-field" id="earned" placeholder="0" oninput="recalc()">
+<input type="number" class="input-field" id="earned" placeholder="0" oninput="recalc()" aria-label="Earned income (W-2 wages + SE net earnings)">
 </div>
 <div class="input-row">
 <div class="input-label">Estimated tax liability before credits<span class="input-hint">Line 16 estimate — limits non-refundable portion</span></div>
-<input type="number" class="input-field" id="taxLiab" placeholder="0" oninput="recalc()">
+<input type="number" class="input-field" id="taxLiab" placeholder="0" oninput="recalc()" aria-label="Estimated tax liability before credits">
 </div>
 </div>
 

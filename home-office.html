@@ -230,20 +230,20 @@ footer{border-top:1px solid var(--border);padding:20px 48px;display:flex;justify
           <div class="field">
             <label class="f-label">Office Square Footage <span class="f-hint">Dedicated office use only</span></label>
             <div class="input-wrap">
-              <input type="number" id="officeSqft" value="200" min="1" max="300" oninput="calc()">
+              <input type="number" id="officeSqft" value="200" min="1" max="300" oninput="calc()" aria-label="Office Square Footage">
               <span class="sfx">sq ft</span>
             </div>
           </div>
           <div class="field">
             <label class="f-label">Total Home Square Footage</label>
             <div class="input-wrap">
-              <input type="number" id="homeSqft" value="1800" min="100" oninput="calc()">
+              <input type="number" id="homeSqft" value="1800" min="100" oninput="calc()" aria-label="Total Home Square Footage">
               <span class="sfx">sq ft</span>
             </div>
           </div>
           <div class="field">
             <label class="f-label">Use Type</label>
-            <select id="useType" onchange="calc()">
+            <select id="useType" onchange="calc()" aria-label="Use Type">
               <option value="exclusive">Exclusive and regular use</option>
               <option value="daycare">Day care facility (partial use)</option>
             </select>
@@ -251,7 +251,7 @@ footer{border-top:1px solid var(--border);padding:20px 48px;display:flex;justify
           <div class="field">
             <label class="f-label">Hours used for day care / week <span class="f-hint">Only if day care facility above</span></label>
             <div class="input-wrap">
-              <input type="number" id="dcHours" value="40" min="1" max="168" oninput="calc()">
+              <input type="number" id="dcHours" value="40" min="1" max="168" oninput="calc()" aria-label="Hours used for day care / week">
               <span class="sfx">hrs/wk</span>
             </div>
           </div>
@@ -261,49 +261,49 @@ footer{border-top:1px solid var(--border);padding:20px 48px;display:flex;justify
             <label class="f-label">Mortgage Interest / Rent</label>
             <div class="input-wrap">
               <span class="pfx">$</span>
-              <input type="number" id="mortgageRent" value="18000" min="0" oninput="calc()" style="padding-left:28px;">
+              <input type="number" id="mortgageRent" value="18000" min="0" oninput="calc()" style="padding-left:28px;" aria-label="Mortgage Interest / Rent">
             </div>
           </div>
           <div class="field">
             <label class="f-label">Real Estate Taxes</label>
             <div class="input-wrap">
               <span class="pfx">$</span>
-              <input type="number" id="reTax" value="4200" min="0" oninput="calc()" style="padding-left:28px;">
+              <input type="number" id="reTax" value="4200" min="0" oninput="calc()" style="padding-left:28px;" aria-label="Real Estate Taxes">
             </div>
           </div>
           <div class="field">
             <label class="f-label">Homeowner's Insurance</label>
             <div class="input-wrap">
               <span class="pfx">$</span>
-              <input type="number" id="insurance" value="1800" min="0" oninput="calc()" style="padding-left:28px;">
+              <input type="number" id="insurance" value="1800" min="0" oninput="calc()" style="padding-left:28px;" aria-label="Homeowner&#x27;s Insurance">
             </div>
           </div>
           <div class="field">
             <label class="f-label">Utilities (Electric, Gas, Internet)</label>
             <div class="input-wrap">
               <span class="pfx">$</span>
-              <input type="number" id="utilities" value="3600" min="0" oninput="calc()" style="padding-left:28px;">
+              <input type="number" id="utilities" value="3600" min="0" oninput="calc()" style="padding-left:28px;" aria-label="Utilities (Electric, Gas, Internet)">
             </div>
           </div>
           <div class="field">
             <label class="f-label">Repairs & Maintenance</label>
             <div class="input-wrap">
               <span class="pfx">$</span>
-              <input type="number" id="repairs" value="800" min="0" oninput="calc()" style="padding-left:28px;">
+              <input type="number" id="repairs" value="800" min="0" oninput="calc()" style="padding-left:28px;" aria-label="Repairs &amp; Maintenance">
             </div>
           </div>
           <div class="field">
             <label class="f-label">Home Depreciation (Annual)</label>
             <div class="input-wrap">
               <span class="pfx">$</span>
-              <input type="number" id="depreciation" value="3200" min="0" oninput="calc()" style="padding-left:28px;">
+              <input type="number" id="depreciation" value="3200" min="0" oninput="calc()" style="padding-left:28px;" aria-label="Home Depreciation (Annual)">
             </div>
           </div>
           <div class="field">
             <label class="f-label">Direct Office Expenses <span class="f-hint">Repairs, paint only for office</span></label>
             <div class="input-wrap">
               <span class="pfx">$</span>
-              <input type="number" id="directExp" value="0" min="0" oninput="calc()" style="padding-left:28px;">
+              <input type="number" id="directExp" value="0" min="0" oninput="calc()" style="padding-left:28px;" aria-label="Direct Office Expenses">
             </div>
           </div>
 
@@ -312,7 +312,7 @@ footer{border-top:1px solid var(--border);padding:20px 48px;display:flex;justify
             <label class="f-label">Net Business Income (before HO deduction)</label>
             <div class="input-wrap">
               <span class="pfx">$</span>
-              <input type="number" id="netIncome" value="85000" min="0" oninput="calc()" style="padding-left:28px;">
+              <input type="number" id="netIncome" value="85000" min="0" oninput="calc()" style="padding-left:28px;" aria-label="Net Business Income (before HO deduction)">
             </div>
           </div>
 

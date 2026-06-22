@@ -288,28 +288,28 @@ footer{border-top:1px solid var(--border);padding:26px 48px;display:flex;align-i
             <div class="sec">Tax Return Details</div>
             <div class="field">
               <div class="lbl">Tax Due on Return <span class="hint">Unpaid balance as of original due date</span></div>
-              <div class="iw"><span class="pfx">$</span><input type="number" id="ftf_taxDue" placeholder="0" min="0"/></div>
+              <div class="iw"><span class="pfx">$</span><input type="number" id="ftf_taxDue" placeholder="0" min="0" aria-label="Tax Due on Return"/></div>
             </div>
             <div class="frow">
               <div class="field" style="margin-bottom:0">
                 <div class="lbl">Original Due Date</div>
-                <input type="date" class="np" id="ftf_dueDate" value="2026-04-15"/>
+                <input type="date" class="np" id="ftf_dueDate" value="2026-04-15" aria-label="Original Due Date"/>
               </div>
               <div class="field" style="margin-bottom:0">
                 <div class="lbl">Date Filed (or today)</div>
-                <input type="date" class="np" id="ftf_filedDate" value="2026-05-03"/>
+                <input type="date" class="np" id="ftf_filedDate" value="2026-05-03" aria-label="Date Filed (or today)"/>
               </div>
             </div>
             <div class="field" style="margin-top:12px;">
               <div class="lbl">Extension Filed? <span class="hint">Form 4868 filed by original due date</span></div>
-              <select class="np" id="ftf_extension">
+              <select class="np" id="ftf_extension" aria-label="Extension Filed?">
                 <option value="no">No — No extension filed</option>
                 <option value="yes">Yes — Extension filed (6 months)</option>
               </select>
             </div>
             <div class="field">
               <div class="lbl">Prior Tax Compliance <span class="hint">For First-Time Abatement eligibility</span></div>
-              <select class="np" id="ftf_history">
+              <select class="np" id="ftf_history" aria-label="Prior Tax Compliance">
                 <option value="clean">Clean — No penalties in prior 3 years</option>
                 <option value="prior">Prior penalties exist</option>
               </select>
@@ -321,21 +321,21 @@ footer{border-top:1px solid var(--border);padding:26px 48px;display:flex;align-i
             <div class="sec">Payment Details</div>
             <div class="field">
               <div class="lbl">Tax Balance Unpaid <span class="hint">Amount still owed after withholding/credits</span></div>
-              <div class="iw"><span class="pfx">$</span><input type="number" id="ftp_balance" placeholder="0" min="0"/></div>
+              <div class="iw"><span class="pfx">$</span><input type="number" id="ftp_balance" placeholder="0" min="0" aria-label="Tax Balance Unpaid"/></div>
             </div>
             <div class="frow">
               <div class="field" style="margin-bottom:0">
                 <div class="lbl">Tax Due Date</div>
-                <input type="date" class="np" id="ftp_dueDate" value="2026-04-15"/>
+                <input type="date" class="np" id="ftp_dueDate" value="2026-04-15" aria-label="Tax Due Date"/>
               </div>
               <div class="field" style="margin-bottom:0">
                 <div class="lbl">Payment Date (or today)</div>
-                <input type="date" class="np" id="ftp_payDate" value="2026-05-03"/>
+                <input type="date" class="np" id="ftp_payDate" value="2026-05-03" aria-label="Payment Date (or today)"/>
               </div>
             </div>
             <div class="field" style="margin-top:12px;">
               <div class="lbl">Installment Agreement? <span class="hint">Reduces FTP to 0.25%/month if active</span></div>
-              <select class="np" id="ftp_ia">
+              <select class="np" id="ftp_ia" aria-label="Installment Agreement?">
                 <option value="no">No installment agreement</option>
                 <option value="yes">Active installment agreement</option>
               </select>
@@ -348,25 +348,25 @@ footer{border-top:1px solid var(--border);padding:26px 48px;display:flex;align-i
             <div class="frow">
               <div class="field" style="margin-bottom:0">
                 <div class="lbl">2025 Total Tax Liability <span class="hint">Form 1040, Line 24</span></div>
-                <div class="iw"><span class="pfx">$</span><input type="number" id="up_taxLiability" placeholder="0" min="0"/></div>
+                <div class="iw"><span class="pfx">$</span><input type="number" id="up_taxLiability" placeholder="0" min="0" aria-label="2025 Total Tax Liability"/></div>
               </div>
               <div class="field" style="margin-bottom:0">
                 <div class="lbl">2024 Tax Liability <span class="hint">Prior year — for safe harbor</span></div>
-                <div class="iw"><span class="pfx">$</span><input type="number" id="up_priorTax" placeholder="0" min="0"/></div>
+                <div class="iw"><span class="pfx">$</span><input type="number" id="up_priorTax" placeholder="0" min="0" aria-label="2024 Tax Liability"/></div>
               </div>
             </div>
             <div class="field" style="margin-top:12px;">
               <div class="lbl">Total Withholding + Est. Payments Made</div>
-              <div class="iw"><span class="pfx">$</span><input type="number" id="up_paid" placeholder="0" min="0"/></div>
+              <div class="iw"><span class="pfx">$</span><input type="number" id="up_paid" placeholder="0" min="0" aria-label="Total Withholding + Est. Payments Made"/></div>
             </div>
             <div class="frow">
               <div class="field" style="margin-bottom:0">
                 <div class="lbl">2024 AGI <span class="hint">For 110% safe harbor threshold</span></div>
-                <div class="iw"><span class="pfx">$</span><input type="number" id="up_priorAGI" placeholder="0" min="0"/></div>
+                <div class="iw"><span class="pfx">$</span><input type="number" id="up_priorAGI" placeholder="0" min="0" aria-label="2024 AGI"/></div>
               </div>
               <div class="field" style="margin-bottom:0">
                 <div class="lbl">Filing Status</div>
-                <select class="np" id="up_status">
+                <select class="np" id="up_status" aria-label="Filing Status">
                   <option value="single">Single / MFS / HOH</option>
                   <option value="mfj">Married Filing Jointly</option>
                 </select>
@@ -545,7 +545,7 @@ function calculate() {
       penalty = Math.max(penalty, min60);
     }
 
-    interest = taxDue * IRS_DAILY_RATE * days;
+    interest = taxDue * (Math.pow(1 + IRS_DAILY_RATE, days) - 1); // daily compounding (IRC §6622)
     penaltyLabel = 'Failure-to-File Penalty (FTF)';
 
     timelineItems = [
@@ -572,7 +572,7 @@ function calculate() {
 
     const ftpRate = ia === 'yes' ? 0.0025 : 0.005;
     penalty = Math.min(taxDue * ftpRate * months, taxDue * 0.25);
-    interest = taxDue * IRS_DAILY_RATE * days;
+    interest = taxDue * (Math.pow(1 + IRS_DAILY_RATE, days) - 1); // daily compounding (IRC §6622)
     penaltyLabel = `Failure-to-Pay Penalty (${ia==='yes'?'0.25%':'0.5%'}/mo)`;
     ftaEligible = true; // FTA applies to FTP too
 

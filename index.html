@@ -1395,7 +1395,7 @@
       <div class="calc-title">Quick Tax Estimate</div>
       <div class="calc-field">
         <label>Filing Status</label>
-        <select id="filingStatus">
+        <select id="filingStatus" aria-label="Filing Status">
           <option value="single">Single</option>
           <option value="mfj">Married Filing Jointly</option>
           <option value="mfs">Married Filing Separately</option>
@@ -1404,11 +1404,11 @@
       </div>
       <div class="calc-field">
         <label>Gross Income ($)</label>
-        <input type="number" id="grossIncome" placeholder="e.g. 85000" />
+        <input type="number" id="grossIncome" placeholder="e.g. 85000"  aria-label="Gross Income ($)"/>
       </div>
       <div class="calc-field">
         <label>Additional Deductions ($)</label>
-        <input type="number" id="extraDeductions" placeholder="e.g. 5000" />
+        <input type="number" id="extraDeductions" placeholder="e.g. 5000"  aria-label="Additional Deductions ($)"/>
       </div>
       <button class="calc-btn" onclick="calculateTax()">Calculate Tax →</button>
       <div class="calc-result" id="calcResult">
@@ -1597,7 +1597,7 @@
     <h2>Stay Ahead of Tax Season</h2>
     <p class="section-sub">Get deadline reminders, new tool alerts, and tax law updates delivered to your inbox.</p>
     <div class="input-group">
-      <input type="email" placeholder="your@email.com" />
+      <input type="email" placeholder="your@email.com"  aria-label="Email address"/>
       <a href="signup.html" class="btn-primary">Subscribe</a>
     </div>
   </div>

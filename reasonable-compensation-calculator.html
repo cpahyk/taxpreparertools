@@ -266,7 +266,7 @@ footer{border-top:1px solid var(--border);padding:28px 48px;display:flex;align-i
         <label class="field-label">Industry / Role
           <span class="field-hint">Closest match</span>
         </label>
-        <select id="industry">
+        <select id="industry" aria-label="Industry / Role">
           <optgroup label="Professional Services">
             <option value="lawyer_general" data-base="145760">Attorney — General Practice</option>
             <option value="lawyer_specialty" data-base="195000">Attorney — Tax/Corporate/IP</option>
@@ -329,7 +329,7 @@ footer{border-top:1px solid var(--border);padding:28px 48px;display:flex;align-i
         <label class="field-label">State (geographic adjustment)
           <span class="field-hint">Cost-of-labor</span>
         </label>
-        <select id="state">
+        <select id="state" aria-label="State (geographic adjustment)">
           <optgroup label="High cost (1.20×)">
             <option value="CA" data-mult="1.20">California</option>
             <option value="NY" data-mult="1.20">New York</option>
@@ -399,14 +399,14 @@ footer{border-top:1px solid var(--border);padding:28px 48px;display:flex;align-i
         <label class="field-label">Years of experience in this work
           <span class="field-value" id="experienceVal">10 years</span>
         </label>
-        <input type="range" id="experience" min="0" max="30" value="10" step="1" />
+        <input type="range" id="experience" min="0" max="30" value="10" step="1"  aria-label="Years of experience in this work 10 years"/>
       </div>
 
       <div class="field">
         <label class="field-label">Hours per week working in the S-Corp
           <span class="field-value" id="hoursVal">40 hrs/wk</span>
         </label>
-        <input type="range" id="hours" min="5" max="80" value="40" step="1" />
+        <input type="range" id="hours" min="5" max="80" value="40" step="1"  aria-label="Hours per week working in the S-Corp 40 hrs/wk"/>
       </div>
 
       <div class="field">
@@ -425,7 +425,7 @@ footer{border-top:1px solid var(--border);padding:28px 48px;display:flex;align-i
           <span class="field-hint">For audit risk</span>
         </label>
         <div class="input-currency">
-          <input type="number" id="profit" placeholder="e.g. 200000" min="0" step="1000" />
+          <input type="number" id="profit" placeholder="e.g. 200000" min="0" step="1000"  aria-label="S-Corp profit before owner comp (annual)"/>
         </div>
       </div>
 
@@ -434,7 +434,7 @@ footer{border-top:1px solid var(--border);padding:28px 48px;display:flex;align-i
           <span class="field-hint">Optional — for comparison</span>
         </label>
         <div class="input-currency">
-          <input type="number" id="currentComp" placeholder="e.g. 50000" min="0" step="1000" />
+          <input type="number" id="currentComp" placeholder="e.g. 50000" min="0" step="1000"  aria-label="Current W-2 wages you&#x27;re paying yourself"/>
         </div>
       </div>
     </div>

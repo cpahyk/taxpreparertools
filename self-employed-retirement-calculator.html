@@ -265,7 +265,7 @@ footer{border-top:1px solid var(--border);padding:28px 48px;display:flex;align-i
           <span class="field-hint">Annual</span>
         </label>
         <div class="input-currency">
-          <input type="number" id="income" value="100000" min="0" step="1000" />
+          <input type="number" id="income" value="100000" min="0" step="1000"  aria-label="Net SE income (Schedule C profit)"/>
         </div>
       </div>
 
@@ -273,7 +273,7 @@ footer{border-top:1px solid var(--border);padding:28px 48px;display:flex;align-i
         <label class="field-label">Your age
           <span class="field-value" id="ageVal">40</span>
         </label>
-        <input type="range" id="age" min="18" max="75" value="40" step="1" />
+        <input type="range" id="age" min="18" max="75" value="40" step="1"  aria-label="Your age 40"/>
         <div style="font-size:0.7rem;color:var(--muted);margin-top:6px;line-height:1.45;">Age 50+ unlocks catch-up contributions.</div>
       </div>
 
@@ -281,7 +281,7 @@ footer{border-top:1px solid var(--border);padding:28px 48px;display:flex;align-i
         <label class="field-label">Marginal tax rate
           <span class="field-value" id="rateVal">24%</span>
         </label>
-        <select id="rate">
+        <select id="rate" aria-label="Marginal tax rate 24%">
           <option value="0.10">10% (lowest bracket)</option>
           <option value="0.12">12%</option>
           <option value="0.22">22%</option>
@@ -306,7 +306,7 @@ footer{border-top:1px solid var(--border);padding:28px 48px;display:flex;align-i
           <span class="field-hint">YTD</span>
         </label>
         <div class="input-currency">
-          <input type="number" id="w2Deferral" value="0" min="0" max="23500" step="500" />
+          <input type="number" id="w2Deferral" value="0" min="0" max="23500" step="500"  aria-label="W-2 401(k) deferral already made"/>
         </div>
       </div>
 

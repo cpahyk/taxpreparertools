@@ -266,7 +266,7 @@ footer{border-top:1px solid var(--border);padding:28px 48px;display:flex;align-i
 
       <div class="field">
         <label class="field-label">Filing status</label>
-        <select id="filingStatus">
+        <select id="filingStatus" aria-label="Filing status">
           <option value="single">Single</option>
           <option value="hoh">Head of Household</option>
           <option value="mfj" selected>Married Filing Jointly</option>
@@ -281,7 +281,7 @@ footer{border-top:1px solid var(--border);padding:28px 48px;display:flex;align-i
           <span class="field-hint">After std/itemized</span>
         </label>
         <div class="input-currency">
-          <input type="number" id="taxableIncome" value="350000" min="0" step="1000" />
+          <input type="number" id="taxableIncome" value="350000" min="0" step="1000"  aria-label="Taxable income before QBI"/>
         </div>
       </div>
 
@@ -290,7 +290,7 @@ footer{border-top:1px solid var(--border);padding:28px 48px;display:flex;align-i
           <span class="field-hint">LTCG + qual div</span>
         </label>
         <div class="input-currency">
-          <input type="number" id="capGains" value="0" min="0" step="1000" />
+          <input type="number" id="capGains" value="0" min="0" step="1000"  aria-label="Net capital gains"/>
         </div>
       </div>
 
@@ -301,7 +301,7 @@ footer{border-top:1px solid var(--border);padding:28px 48px;display:flex;align-i
           <span class="field-hint">Net income</span>
         </label>
         <div class="input-currency">
-          <input type="number" id="qbi" value="200000" min="0" step="1000" />
+          <input type="number" id="qbi" value="200000" min="0" step="1000"  aria-label="QBI (qualified business income)"/>
         </div>
       </div>
 
@@ -310,7 +310,7 @@ footer{border-top:1px solid var(--border);padding:28px 48px;display:flex;align-i
           <span class="field-hint">For wages cap</span>
         </label>
         <div class="input-currency">
-          <input type="number" id="w2Wages" value="80000" min="0" step="1000" />
+          <input type="number" id="w2Wages" value="80000" min="0" step="1000"  aria-label="W-2 wages paid by the business"/>
         </div>
       </div>
 
@@ -319,7 +319,7 @@ footer{border-top:1px solid var(--border);padding:28px 48px;display:flex;align-i
           <span class="field-hint">Unadj. basis</span>
         </label>
         <div class="input-currency">
-          <input type="number" id="ubia" value="0" min="0" step="1000" />
+          <input type="number" id="ubia" value="0" min="0" step="1000"  aria-label="UBIA of qualified property"/>
         </div>
       </div>
 
@@ -345,7 +345,7 @@ footer{border-top:1px solid var(--border);padding:28px 48px;display:flex;align-i
         <label class="field-label">Marginal tax rate
           <span class="field-hint">For savings est.</span>
         </label>
-        <select id="marginalRate">
+        <select id="marginalRate" aria-label="Marginal tax rate">
           <option value="0.10">10%</option>
           <option value="0.12">12%</option>
           <option value="0.22">22%</option>

@@ -247,14 +247,14 @@ footer{border-top:1px solid var(--border);padding:26px 48px;display:flex;align-i
           <div class="frow">
             <div class="field" style="margin-bottom:0">
               <div class="lbl">Filing Status</div>
-              <select class="np" id="status" onchange="updateThresholds()">
+              <select class="np" id="status" onchange="updateThresholds()" aria-label="Filing Status">
                 <option value="single">Single / MFS / HOH</option>
                 <option value="mfj">Married Filing Jointly</option>
               </select>
             </div>
             <div class="field" style="margin-bottom:0">
               <div class="lbl">Taxable Income (before QBI) <span class="hint">Line 15 of 1040 before this deduction</span></div>
-              <div class="iw"><span class="pfx">$</span><input type="number" id="taxableIncome" placeholder="0" min="0" oninput="updateThresholds()"/></div>
+              <div class="iw"><span class="pfx">$</span><input type="number" id="taxableIncome" placeholder="0" min="0" oninput="updateThresholds()" aria-label="Taxable Income (before QBI)"/></div>
             </div>
           </div>
 
@@ -273,7 +273,7 @@ footer{border-top:1px solid var(--border);padding:26px 48px;display:flex;align-i
 
           <div class="field">
             <div class="lbl">Net Qualified Business Income (QBI) <span class="hint">Net profit from Schedule C, E, or K-1</span></div>
-            <div class="iw"><span class="pfx">$</span><input type="number" id="qbi" placeholder="0" min="0"/></div>
+            <div class="iw"><span class="pfx">$</span><input type="number" id="qbi" placeholder="0" min="0" aria-label="Net Qualified Business Income (QBI)"/></div>
           </div>
 
           <div class="sec" style="margin-top:4px;">W-2 Wage &amp; Property Limitation</div>
@@ -283,16 +283,16 @@ footer{border-top:1px solid var(--border);padding:26px 48px;display:flex;align-i
           <div class="frow">
             <div class="field" style="margin-bottom:0">
               <div class="lbl">W-2 Wages Paid by Business <span class="hint">Box 1 of W-2s issued to employees</span></div>
-              <div class="iw"><span class="pfx">$</span><input type="number" id="w2wages" placeholder="0" min="0"/></div>
+              <div class="iw"><span class="pfx">$</span><input type="number" id="w2wages" placeholder="0" min="0" aria-label="W-2 Wages Paid by Business"/></div>
             </div>
             <div class="field" style="margin-bottom:0">
               <div class="lbl">Qualified Property (UBIA) <span class="hint">Unadjusted basis of qualified property</span></div>
-              <div class="iw"><span class="pfx">$</span><input type="number" id="ubia" placeholder="0" min="0"/></div>
+              <div class="iw"><span class="pfx">$</span><input type="number" id="ubia" placeholder="0" min="0" aria-label="Qualified Property (UBIA)"/></div>
             </div>
           </div>
           <div class="field" style="margin-top:12px;">
             <div class="lbl">Net Capital Gains (subtract from taxable income)</div>
-            <div class="iw"><span class="pfx">$</span><input type="number" id="capGains" placeholder="0" min="0"/></div>
+            <div class="iw"><span class="pfx">$</span><input type="number" id="capGains" placeholder="0" min="0" aria-label="Net Capital Gains (subtract from taxable income)"/></div>
           </div>
 
           <div id="thresholdDisplay" style="margin-top:4px;padding:10px 14px;background:rgba(200,168,75,.06);border:1px solid rgba(200,168,75,.15);border-radius:8px;font-size:.75rem;color:var(--muted);"></div>

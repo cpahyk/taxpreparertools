@@ -241,16 +241,16 @@ footer{border-top:1px solid var(--border);padding:26px 48px;display:flex;align-i
             <div class="sec">2025 Tax Return (Prior Year)</div>
             <div class="field">
               <div class="lbl">2025 Total Tax Liability <span class="hint">Line 24 of your 2025 Form 1040</span></div>
-              <div class="iw"><span class="pfx">$</span><input type="number" id="priorYearTax" placeholder="0" min="0"/></div>
+              <div class="iw"><span class="pfx">$</span><input type="number" id="priorYearTax" placeholder="0" min="0" aria-label="2025 Total Tax Liability"/></div>
             </div>
             <div class="frow">
               <div class="field" style="margin-bottom:0">
                 <div class="lbl">2025 AGI <span class="hint">Line 11 of 2025 Form 1040</span></div>
-                <div class="iw"><span class="pfx">$</span><input type="number" id="priorYearAGI" placeholder="0" min="0"/></div>
+                <div class="iw"><span class="pfx">$</span><input type="number" id="priorYearAGI" placeholder="0" min="0" aria-label="2025 AGI"/></div>
               </div>
               <div class="field" style="margin-bottom:0">
                 <div class="lbl">Filing Status</div>
-                <select class="np" id="sh_status">
+                <select class="np" id="sh_status" aria-label="Filing Status">
                   <option value="single">Single / MFS / HOH</option>
                   <option value="mfj">Married Filing Jointly</option>
                 </select>
@@ -258,7 +258,7 @@ footer{border-top:1px solid var(--border);padding:26px 48px;display:flex;align-i
             </div>
             <div class="field" style="margin-top:12px;">
               <div class="lbl">Tax Already Withheld in 2026 <span class="hint">W-2 withholding YTD</span></div>
-              <div class="iw"><span class="pfx">$</span><input type="number" id="sh_withheld" placeholder="0" min="0"/></div>
+              <div class="iw"><span class="pfx">$</span><input type="number" id="sh_withheld" placeholder="0" min="0" aria-label="Tax Already Withheld in 2026"/></div>
             </div>
           </div>
 
@@ -267,20 +267,20 @@ footer{border-top:1px solid var(--border);padding:26px 48px;display:flex;align-i
             <div class="sec">2026 Income Projection</div>
             <div class="field">
               <div class="lbl">Expected W-2 / Wages</div>
-              <div class="iw"><span class="pfx">$</span><input type="number" id="cy_wages" placeholder="0" min="0"/></div>
+              <div class="iw"><span class="pfx">$</span><input type="number" id="cy_wages" placeholder="0" min="0" aria-label="Expected W-2 / Wages"/></div>
             </div>
             <div class="field">
               <div class="lbl">Expected Self-Employment Income (Net)</div>
-              <div class="iw"><span class="pfx">$</span><input type="number" id="cy_business" placeholder="0" min="0"/></div>
+              <div class="iw"><span class="pfx">$</span><input type="number" id="cy_business" placeholder="0" min="0" aria-label="Expected Self-Employment Income (Net)"/></div>
             </div>
             <div class="field">
               <div class="lbl">Other Income (interest, dividends, rental)</div>
-              <div class="iw"><span class="pfx">$</span><input type="number" id="cy_other" placeholder="0" min="0"/></div>
+              <div class="iw"><span class="pfx">$</span><input type="number" id="cy_other" placeholder="0" min="0" aria-label="Other Income (interest, dividends, rental)"/></div>
             </div>
             <div class="frow">
               <div class="field" style="margin-bottom:0">
                 <div class="lbl">Filing Status</div>
-                <select class="np" id="cy_status">
+                <select class="np" id="cy_status" aria-label="Filing Status">
                   <option value="single">Single</option>
                   <option value="mfj">Married Filing Jointly</option>
                   <option value="mfs">Married Filing Separately</option>
@@ -289,7 +289,7 @@ footer{border-top:1px solid var(--border);padding:26px 48px;display:flex;align-i
               </div>
               <div class="field" style="margin-bottom:0">
                 <div class="lbl">Expected W-2 Withholding</div>
-                <div class="iw"><span class="pfx">$</span><input type="number" id="cy_withheld" placeholder="0" min="0"/></div>
+                <div class="iw"><span class="pfx">$</span><input type="number" id="cy_withheld" placeholder="0" min="0" aria-label="Expected W-2 Withholding"/></div>
               </div>
             </div>
           </div>

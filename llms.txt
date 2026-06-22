@@ -1,0 +1,34 @@
+# TaxPreparerTools.com
+
+> Free, browser-based U.S. tax calculators and reference guides for tax professionals (CPAs, EAs, preparers) and taxpayers. Every tool runs client-side with no login or data collection. Figures reflect current IRS guidance and the One Big Beautiful Bill Act (OBBBA, Public Law 119-21) for tax years 2025–2026.
+
+## Calculators
+- [Federal Income Tax Estimator](https://www.taxpreparertools.com/federal-tax-estimator): Estimate federal income tax for 2025–2026.
+- [EITC Calculator](https://www.taxpreparertools.com/eitc-calculator): Earned Income Tax Credit eligibility and amount.
+- [Self-Employment Tax Calculator](https://www.taxpreparertools.com/se-tax-calculator): SE tax on freelance and business income.
+- [QBI Deduction Calculator](https://www.taxpreparertools.com/qbi-deduction-calculator): Section 199A qualified business income deduction.
+- [AMT Calculator](https://www.taxpreparertools.com/amt-calculator): Alternative Minimum Tax estimate.
+- [Itemized vs Standard Deduction](https://www.taxpreparertools.com/itemized-vs-standard): Compare Schedule A against the standard deduction, including the $40,000 OBBBA SALT cap.
+- [IRS Penalty & Interest Calculator](https://www.taxpreparertools.com/penalty-calculator): Failure-to-file and failure-to-pay penalties plus daily-compounded interest.
+- [No Tax on Tips Calculator](https://www.taxpreparertools.com/no-tax-on-tips-calculator): OBBBA qualified-tips deduction (2025–2028).
+- [No Tax on Overtime Calculator](https://www.taxpreparertools.com/no-tax-on-overtime-calculator): OBBBA overtime-premium deduction.
+- [Car Loan Interest Calculator](https://www.taxpreparertools.com/car-loan-interest-calculator): OBBBA new-vehicle loan interest deduction.
+
+## Reference guides
+- [OBBBA 2025 Tax Changes](https://www.taxpreparertools.com/blog/obbba-tax-changes-2025): Every One Big Beautiful Bill change for 2025–2026.
+- [1099-K Threshold 2026](https://www.taxpreparertools.com/blog/1099-k-threshold-2026): The restored $20,000 / 200-transaction threshold.
+- [2026 Tax Brackets & Standard Deduction](https://www.taxpreparertools.com/blog/2026-tax-brackets-standard-deduction): Rates and standard deduction amounts.
+- [Capital Gains Tax 2026](https://www.taxpreparertools.com/blog/capital-gains-tax-2026): Long-term rates, NIIT, and Section 121.
+- [Is Social Security Taxable? (2026)](https://www.taxpreparertools.com/blog/is-social-security-taxable-2026): Combined-income thresholds.
+- [IRS E-File Reject Codes](https://www.taxpreparertools.com/blog/irs-efile-reject-codes): Common MeF rejects and fixes.
+
+## Tools and decoders
+- [All Tools](https://www.taxpreparertools.com/tools): Full directory of 55+ calculators, decoders, and lookups.
+- [IRS Notice Decoder](https://www.taxpreparertools.com/irs-notice-decoder): Look up IRS notice and letter codes (CP/LTR).
+- [Tax Acronym Decoder](https://www.taxpreparertools.com/acronyms): Definitions of common U.S. tax acronyms.
+
+## About
+- [About](https://www.taxpreparertools.com/about): What this site is and who it serves.
+- [Contact](https://www.taxpreparertools.com/contact): Get in touch.
+
+Note: These tools provide informational estimates, not tax advice, and are not affiliated with the IRS. Always verify results against the filed return and current IRS instructions.

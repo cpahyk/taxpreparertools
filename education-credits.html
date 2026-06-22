@@ -213,33 +213,33 @@ footer{border-top:1px solid var(--border);padding:26px 48px;display:flex;align-i
 <h2>Student &amp; tax details</h2>
 <div class="input-row">
 <div class="input-label">Filing status</div>
-<select class="input-select" id="filing" onchange="recalc()">
+<select class="input-select" id="filing" onchange="recalc()" aria-label="Filing status">
 <option value="single">Single / HoH / MFS</option>
 <option value="mfj">Married Filing Jointly</option>
 </select>
 </div>
 <div class="input-row">
 <div class="input-label">Modified AGI (MAGI)<span class="input-hint">AGI + foreign earned income exclusion + similar add-backs</span></div>
-<input type="number" class="input-field" id="magi" placeholder="0" oninput="recalc()">
+<input type="number" class="input-field" id="magi" placeholder="0" oninput="recalc()" aria-label="Modified AGI (MAGI)">
 </div>
 <div class="input-row">
 <div class="input-label">Qualified education expenses paid<span class="input-hint">Tuition, required fees, course materials (for AOTC). Books/supplies for AOTC even if not paid to institution.</span></div>
-<input type="number" class="input-field" id="qee" placeholder="0" oninput="recalc()">
+<input type="number" class="input-field" id="qee" placeholder="0" oninput="recalc()" aria-label="Qualified education expenses paid">
 </div>
 <div class="input-row">
 <div class="input-label">Number of eligible students<span class="input-hint">AOTC is per-student; LLC is per-return regardless of count</span></div>
-<input type="number" class="input-field" id="students" placeholder="1" min="1" value="1" oninput="recalc()">
+<input type="number" class="input-field" id="students" placeholder="1" min="1" value="1" oninput="recalc()" aria-label="Number of eligible students">
 </div>
 <div class="input-row">
 <div class="input-label">AOTC eligibility per student<span class="input-hint">Must be in first 4 years of post-secondary, half-time minimum, no felony drug conviction, hasn't claimed AOTC for 4+ years prior</span></div>
-<select class="input-select" id="aotcEligible" onchange="recalc()">
+<select class="input-select" id="aotcEligible" onchange="recalc()" aria-label="AOTC eligibility per student">
 <option value="yes">Yes — eligible for AOTC</option>
 <option value="no">No — must use LLC</option>
 </select>
 </div>
 <div class="input-row">
 <div class="input-label">Estimated tax liability before credits<span class="input-hint">Limits non-refundable portion of either credit</span></div>
-<input type="number" class="input-field" id="taxLiab" placeholder="0" oninput="recalc()">
+<input type="number" class="input-field" id="taxLiab" placeholder="0" oninput="recalc()" aria-label="Estimated tax liability before credits">
 </div>
 </div>
 

@@ -408,7 +408,7 @@
   <div class="controls-inner">
     <div class="search-wrap">
       <span class="search-icon">🔍</span>
-      <input type="text" id="searchInput" placeholder="Search tools… e.g. 'depreciation', 'W-4', 'penalty'" oninput="applyFilters()" />
+      <input type="text" id="searchInput" placeholder="Search tools… e.g. 'depreciation', 'W-4', 'penalty'" oninput="applyFilters()"  aria-label="Search Input"/>
     </div>
     <div class="filter-row" id="chipRow">
       <button class="chip on" data-cat="all" onclick="setChip(this)">All</button>
@@ -459,7 +459,7 @@
   <div class="tools-content">
     <div class="results-bar">
       <div class="results-count">Showing <strong id="resultCount">51</strong> tools</div>
-      <select class="sort-sel" onchange="applyFilters()">
+      <select class="sort-sel" onchange="applyFilters()" aria-label="Sort tools">
         <option>Most Popular</option>
         <option>Newest First</option>
         <option>A → Z</option>

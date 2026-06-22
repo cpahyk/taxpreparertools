@@ -140,15 +140,15 @@ footer a:hover{color:var(--gold);}
       <div class="form-title">Send a Message</div>
       <div class="field">
         <label class="f-label">Your Name</label>
-        <input class="f-input" type="text" id="name" placeholder="Jane Smith, CPA" />
+        <input class="f-input" type="text" id="name" placeholder="Jane Smith, CPA"  aria-label="Your Name"/>
       </div>
       <div class="field">
         <label class="f-label">Email Address</label>
-        <input class="f-input" type="email" id="email" placeholder="jane@yourfirm.com" />
+        <input class="f-input" type="email" id="email" placeholder="jane@yourfirm.com"  aria-label="Email Address"/>
       </div>
       <div class="field">
         <label class="f-label">Topic</label>
-        <select class="f-input" id="topic">
+        <select class="f-input" id="topic" aria-label="Topic">
           <option value="">Select a topic…</option>
           <option>Tool feedback or bug report</option>
           <option>Billing or account question</option>
@@ -161,7 +161,7 @@ footer a:hover{color:var(--gold);}
       </div>
       <div class="field">
         <label class="f-label">Message</label>
-        <textarea class="f-input" id="message" placeholder="Tell us how we can help…"></textarea>
+        <textarea class="f-input" id="message" placeholder="Tell us how we can help…" aria-label="Message"></textarea>
       </div>
       <button class="submit-btn" onclick="submitForm()">Send Message →</button>
       <div class="success-msg" id="successMsg">✅ Message sent! We'll get back to you within 1 business day.</div>

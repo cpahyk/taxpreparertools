@@ -212,14 +212,14 @@ footer{border-top:1px solid var(--border);padding:26px 48px;display:flex;align-i
 <h2>Your filing &amp; deduction details</h2>
 <div class="input-row">
 <div class="input-label">Tax year</div>
-<select class="input-select" id="taxYear" onchange="recalc()">
+<select class="input-select" id="taxYear" onchange="recalc()" aria-label="Tax year">
 <option value="2025">2025</option>
 <option value="2026">2026 (OBBBA)</option>
 </select>
 </div>
 <div class="input-row">
 <div class="input-label">Filing status</div>
-<select class="input-select" id="filing" onchange="recalc()">
+<select class="input-select" id="filing" onchange="recalc()" aria-label="Filing status">
 <option value="single">Single</option>
 <option value="mfj">Married Filing Jointly</option>
 <option value="mfs">Married Filing Separately</option>
@@ -228,7 +228,7 @@ footer{border-top:1px solid var(--border);padding:26px 48px;display:flex;align-i
 </div>
 <div class="input-row">
 <div class="input-label">AGI / MAGI<span class="input-hint">Adjusted Gross Income — used for the 7.5% medical floor and the SALT phase-out</span></div>
-<input type="number" class="input-field" id="agi" placeholder="0" oninput="recalc()">
+<input type="number" class="input-field" id="agi" placeholder="0" oninput="recalc()" aria-label="AGI / MAGI">
 </div>
 </div>
 
@@ -237,23 +237,23 @@ footer{border-top:1px solid var(--border);padding:26px 48px;display:flex;align-i
 <h2>Schedule A inputs</h2>
 <div class="input-row">
 <div class="input-label">State income tax + property tax + sales tax (total)<span class="input-hint">SALT — capped at $40,000 ($20,000 MFS) under OBBBA, phasing down above $500K MAGI to a $10K floor</span></div>
-<input type="number" class="input-field" id="salt" placeholder="0" oninput="recalc()">
+<input type="number" class="input-field" id="salt" placeholder="0" oninput="recalc()" aria-label="State income tax + property tax + sales tax (total)">
 </div>
 <div class="input-row">
 <div class="input-label">Home mortgage interest<span class="input-hint">Acquisition debt up to $750K ($1M for pre-Dec-2017 mortgages, grandfathered)</span></div>
-<input type="number" class="input-field" id="mortgage" placeholder="0" oninput="recalc()">
+<input type="number" class="input-field" id="mortgage" placeholder="0" oninput="recalc()" aria-label="Home mortgage interest">
 </div>
 <div class="input-row">
 <div class="input-label">Charitable contributions<span class="input-hint">Cash + non-cash; cash limited to 60% of AGI, non-cash 30%</span></div>
-<input type="number" class="input-field" id="charity" placeholder="0" oninput="recalc()">
+<input type="number" class="input-field" id="charity" placeholder="0" oninput="recalc()" aria-label="Charitable contributions">
 </div>
 <div class="input-row">
 <div class="input-label">Total medical / dental expenses<span class="input-hint">Out-of-pocket only; subject to 7.5% AGI floor — only excess counts</span></div>
-<input type="number" class="input-field" id="medical" placeholder="0" oninput="recalc()">
+<input type="number" class="input-field" id="medical" placeholder="0" oninput="recalc()" aria-label="Total medical / dental expenses">
 </div>
 <div class="input-row">
 <div class="input-label">Federally-declared disaster casualty loss<span class="input-hint">Only federal disaster losses deductible under TCJA; minus $100 + 10% AGI floor</span></div>
-<input type="number" class="input-field" id="casualty" placeholder="0" oninput="recalc()">
+<input type="number" class="input-field" id="casualty" placeholder="0" oninput="recalc()" aria-label="Federally-declared disaster casualty loss">
 </div>
 </div>
 

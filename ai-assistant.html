@@ -451,7 +451,7 @@
     <div class="input-area">
       <div class="input-wrap">
         <div class="input-context" id="inputContext"></div>
-        <textarea id="chatInput" placeholder="Ask a tax question… e.g. 'What are the 2025 standard deduction amounts?'" rows="1" onkeydown="handleKey(event)" oninput="autoResize(this)"></textarea>
+        <textarea id="chatInput" placeholder="Ask a tax question… e.g. 'What are the 2025 standard deduction amounts?'" rows="1" onkeydown="handleKey(event)" oninput="autoResize(this)" aria-label="Tax Topics"></textarea>
         <div class="input-footer">
           <div class="input-hints">
             <button class="hint-btn" onclick="appendHint('for an S-Corp owner')">S-Corp</button>
@@ -473,7 +473,7 @@
       <div class="context-box">
         <div class="ctx-field">
           <label class="ctx-label">Filing Status</label>
-          <select class="ctx-select" onchange="updateContext()">
+          <select class="ctx-select" onchange="updateContext()" aria-label="Filing Status">
             <option>Not set</option>
             <option>Single</option>
             <option>Married Filing Jointly</option>
@@ -483,7 +483,7 @@
         </div>
         <div class="ctx-field">
           <label class="ctx-label">Entity Type</label>
-          <select class="ctx-select" onchange="updateContext()">
+          <select class="ctx-select" onchange="updateContext()" aria-label="Entity Type">
             <option>Not set</option>
             <option>Individual / W-2</option>
             <option>Sole Proprietor</option>
@@ -496,7 +496,7 @@
         </div>
         <div class="ctx-field">
           <label class="ctx-label">Approx. Income</label>
-          <select class="ctx-select" onchange="updateContext()">
+          <select class="ctx-select" onchange="updateContext()" aria-label="Approx. Income">
             <option>Not set</option>
             <option>Under $50k</option>
             <option>$50k – $100k</option>
@@ -507,7 +507,7 @@
         </div>
         <div class="ctx-field">
           <label class="ctx-label">Tax Year</label>
-          <select class="ctx-select">
+          <select class="ctx-select" aria-label="Tax Year">
             <option>2025</option>
             <option>2024</option>
             <option>2023</option>

@@ -323,7 +323,7 @@
           <div class="field-label">First Name</div>
           <div class="field-input-wrap">
             <span class="field-icon">👤</span>
-            <input type="text" id="firstName" placeholder="Jane" autocomplete="given-name"/>
+            <input type="text" id="firstName" placeholder="Jane" autocomplete="given-name" aria-label="First Name"/>
           </div>
           <div class="field-err" id="firstErr">Required.</div>
         </div>
@@ -331,7 +331,7 @@
           <div class="field-label">Last Name</div>
           <div class="field-input-wrap">
             <span class="field-icon">👤</span>
-            <input type="text" id="lastName" placeholder="Smith" autocomplete="family-name"/>
+            <input type="text" id="lastName" placeholder="Smith" autocomplete="family-name" aria-label="Last Name"/>
           </div>
           <div class="field-err" id="lastErr">Required.</div>
         </div>
@@ -341,7 +341,7 @@
         <div class="field-label">Email Address</div>
         <div class="field-input-wrap">
           <span class="field-icon">✉️</span>
-          <input type="email" id="signupEmail" placeholder="jane@example.com" autocomplete="email"/>
+          <input type="email" id="signupEmail" placeholder="jane@example.com" autocomplete="email" aria-label="Email Address"/>
         </div>
         <div class="field-err" id="signupEmailErr">Please enter a valid email.</div>
       </div>
@@ -350,7 +350,7 @@
         <div class="field-label">Role</div>
         <div class="field-input-wrap">
           <span class="field-icon">💼</span>
-          <select id="userRole">
+          <select id="userRole" aria-label="Role">
             <option value="">Select your role…</option>
             <option>CPA</option>
             <option>Enrolled Agent (EA)</option>
@@ -368,7 +368,7 @@
         <div class="field-label">Password</div>
         <div class="field-input-wrap">
           <span class="field-icon">🔒</span>
-          <input type="password" id="signupPassword" placeholder="Min. 8 characters" autocomplete="new-password" oninput="checkStrength(this.value)"/>
+          <input type="password" id="signupPassword" placeholder="Min. 8 characters" autocomplete="new-password" oninput="checkStrength(this.value)" aria-label="Password"/>
           <button class="pw-toggle" onclick="togglePw('signupPassword',this)" tabindex="-1">👁</button>
         </div>
         <div class="pw-strength">
@@ -379,7 +379,7 @@
       </div>
 
       <div class="terms-check">
-        <input type="checkbox" id="termsCheck"/>
+        <input type="checkbox" id="termsCheck" aria-label="Enter a password"/>
         <span>I agree to the <a href="terms.html">Terms of Service</a> and <a href="privacy.html">Privacy Policy</a>. I understand that TaxPreparerTools.com provides tools for informational purposes and is not a substitute for professional tax advice.</span>
       </div>
       <div class="field-err" id="termsErr" style="margin-bottom:14px;">Please accept the terms to continue.</div>

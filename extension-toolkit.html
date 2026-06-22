@@ -226,19 +226,19 @@ footer{border-top:1px solid var(--border);padding:26px 48px;display:flex;align-i
 <h3>Quick Estimate</h3>
 <div class="calc-row">
 <label>Estimated total tax for 2025 (rough)</label>
-<input type="number" id="totalTax" placeholder="0" oninput="calc()">
+<input type="number" id="totalTax" placeholder="0" oninput="calc()" aria-label="Estimated total tax for 2025 (rough)">
 </div>
 <div class="calc-row">
 <label>Federal income tax already withheld (W-2 box 2 + 1099 withholdings)</label>
-<input type="number" id="withholding" placeholder="0" oninput="calc()">
+<input type="number" id="withholding" placeholder="0" oninput="calc()" aria-label="Federal income tax already withheld (W-2 box 2 + 1099 withholdings)">
 </div>
 <div class="calc-row">
 <label>Estimated payments already made for 2025</label>
-<input type="number" id="estPayments" placeholder="0" oninput="calc()">
+<input type="number" id="estPayments" placeholder="0" oninput="calc()" aria-label="Estimated payments already made for 2025">
 </div>
 <div class="calc-row">
 <label>Other refundable credits (CTC, EITC, etc.)</label>
-<input type="number" id="credits" placeholder="0" oninput="calc()">
+<input type="number" id="credits" placeholder="0" oninput="calc()" aria-label="Other refundable credits (CTC, EITC, etc.)">
 </div>
 <div class="calc-result" id="calcResult">
 <div class="calc-result-line"><span>Total tax</span><span id="rTotal">$0</span></div>

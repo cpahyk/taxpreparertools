@@ -250,7 +250,7 @@ footer{border-top:1px solid var(--border);padding:26px 48px;display:flex;align-i
           <div class="frow">
             <div class="field" style="margin-bottom:0">
               <div class="lbl">Filing Status</div>
-              <select class="np" id="status">
+              <select class="np" id="status" aria-label="Filing Status">
                 <option value="single">Single</option>
                 <option value="mfj">Married Filing Jointly</option>
                 <option value="mfs">Married Filing Separately</option>
@@ -259,7 +259,7 @@ footer{border-top:1px solid var(--border);padding:26px 48px;display:flex;align-i
             </div>
             <div class="field" style="margin-bottom:0">
               <div class="lbl">Ordinary Income (before gains) <span class="hint">AGI from wages, etc.</span></div>
-              <div class="iw"><span class="pfx">$</span><input type="number" id="ordIncome" placeholder="0" min="0"/></div>
+              <div class="iw"><span class="pfx">$</span><input type="number" id="ordIncome" placeholder="0" min="0" aria-label="Ordinary Income (before gains)"/></div>
             </div>
           </div>
 
@@ -278,11 +278,11 @@ footer{border-top:1px solid var(--border);padding:26px 48px;display:flex;align-i
           <div class="frow">
             <div class="field" style="margin-bottom:0">
               <div class="lbl">Qualified Dividends</div>
-              <div class="iw"><span class="pfx">$</span><input type="number" id="qualDividends" placeholder="0" min="0"/></div>
+              <div class="iw"><span class="pfx">$</span><input type="number" id="qualDividends" placeholder="0" min="0" aria-label="Qualified Dividends"/></div>
             </div>
             <div class="field" style="margin-bottom:0">
               <div class="lbl">Prior Year Capital Loss Carryover</div>
-              <div class="iw"><span class="pfx">$</span><input type="number" id="lossCarryover" placeholder="0" min="0"/></div>
+              <div class="iw"><span class="pfx">$</span><input type="number" id="lossCarryover" placeholder="0" min="0" aria-label="Prior Year Capital Loss Carryover"/></div>
             </div>
           </div>
 

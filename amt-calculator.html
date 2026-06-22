@@ -225,7 +225,7 @@ footer{border-top:1px solid var(--border);padding:26px 48px;display:flex;align-i
 <h2>Your filing status &amp; base figures</h2>
 <div class="input-row">
 <div class="input-label">Filing status<span class="input-hint">Determines exemption amount and bracket thresholds</span></div>
-<select class="input-select" id="filing" onchange="recalc()">
+<select class="input-select" id="filing" onchange="recalc()" aria-label="Filing status">
 <option value="single">Single</option>
 <option value="mfj">Married Filing Jointly</option>
 <option value="mfs">Married Filing Separately</option>
@@ -234,11 +234,11 @@ footer{border-top:1px solid var(--border);padding:26px 48px;display:flex;align-i
 </div>
 <div class="input-row">
 <div class="input-label">Regular taxable income (Form 1040 line 15)<span class="input-hint">AGI minus standard or itemized deduction, before QBI</span></div>
-<input type="number" class="input-field" id="taxableIncome" placeholder="0" oninput="recalc()">
+<input type="number" class="input-field" id="taxableIncome" placeholder="0" oninput="recalc()" aria-label="Regular taxable income (Form 1040 line 15)">
 </div>
 <div class="input-row">
 <div class="input-label">Regular tax liability (Form 1040 line 16)<span class="input-hint">Calculated tax before credits</span></div>
-<input type="number" class="input-field" id="regularTax" placeholder="0" oninput="recalc()">
+<input type="number" class="input-field" id="regularTax" placeholder="0" oninput="recalc()" aria-label="Regular tax liability (Form 1040 line 16)">
 </div>
 </div>
 
@@ -248,57 +248,57 @@ footer{border-top:1px solid var(--border);padding:26px 48px;display:flex;align-i
 <p style="font-size:.82rem;color:var(--muted);line-height:1.6;margin-bottom:14px;">Add back the items disallowed for AMT. Check each that applies and enter the amount. Under TCJA (still in effect through 2025) several common pre-2018 preferences are suspended — they're noted below.</p>
 
 <div class="check-pref">
-<input type="checkbox" id="prefSalt" onchange="recalc()">
+<input type="checkbox" id="prefSalt" onchange="recalc()" aria-label="Pref SALT">
 <div class="check-pref-label">
 <div class="check-pref-name">State &amp; local taxes (SALT) deduction</div>
 <div class="check-pref-desc">Add back the SALT itemized deduction. Capped at $10K/$40K under TCJA/OBBBA — but still 100% added back for AMT.</div>
 </div>
-<input type="number" class="amount" id="amtSalt" placeholder="0" oninput="recalc()">
+<input type="number" class="amount" id="amtSalt" placeholder="0" oninput="recalc()" aria-label="AMT SALT">
 </div>
 
 <div class="check-pref">
-<input type="checkbox" id="prefISO" onchange="recalc()">
+<input type="checkbox" id="prefISO" onchange="recalc()" aria-label="Pref ISO">
 <div class="check-pref-label">
 <div class="check-pref-name">Incentive Stock Option (ISO) bargain element</div>
 <div class="check-pref-desc">FMV at exercise minus strike price, for ISOs exercised and held in 2025. Common AMT trigger.</div>
 </div>
-<input type="number" class="amount" id="amtISO" placeholder="0" oninput="recalc()">
+<input type="number" class="amount" id="amtISO" placeholder="0" oninput="recalc()" aria-label="AMT ISO">
 </div>
 
 <div class="check-pref">
-<input type="checkbox" id="prefDepl" onchange="recalc()">
+<input type="checkbox" id="prefDepl" onchange="recalc()" aria-label="Pref Depl">
 <div class="check-pref-label">
 <div class="check-pref-name">Excess depletion (oil &amp; gas)</div>
 <div class="check-pref-desc">Percentage depletion in excess of property basis</div>
 </div>
-<input type="number" class="amount" id="amtDepl" placeholder="0" oninput="recalc()">
+<input type="number" class="amount" id="amtDepl" placeholder="0" oninput="recalc()" aria-label="Excess depletion (oil &amp; gas) Percentage depletion in excess of property basis">
 </div>
 
 <div class="check-pref">
-<input type="checkbox" id="prefPAB" onchange="recalc()">
+<input type="checkbox" id="prefPAB" onchange="recalc()" aria-label="Pref PAB">
 <div class="check-pref-label">
 <div class="check-pref-name">Tax-exempt interest from private activity bonds</div>
 <div class="check-pref-desc">PAB interest is regular-tax-exempt but AMT-taxable for non-grandfathered bonds</div>
 </div>
-<input type="number" class="amount" id="amtPAB" placeholder="0" oninput="recalc()">
+<input type="number" class="amount" id="amtPAB" placeholder="0" oninput="recalc()" aria-label="AMT PAB">
 </div>
 
 <div class="check-pref">
-<input type="checkbox" id="prefDepr" onchange="recalc()">
+<input type="checkbox" id="prefDepr" onchange="recalc()" aria-label="Pref Depr">
 <div class="check-pref-label">
 <div class="check-pref-name">Depreciation difference</div>
 <div class="check-pref-desc">Excess of regular MACRS over AMT depreciation (typically ADS straight-line for AMT)</div>
 </div>
-<input type="number" class="amount" id="amtDepr" placeholder="0" oninput="recalc()">
+<input type="number" class="amount" id="amtDepr" placeholder="0" oninput="recalc()" aria-label="AMT Depr">
 </div>
 
 <div class="check-pref">
-<input type="checkbox" id="prefOther" onchange="recalc()">
+<input type="checkbox" id="prefOther" onchange="recalc()" aria-label="Pref Other">
 <div class="check-pref-label">
 <div class="check-pref-name">Other AMT adjustments</div>
 <div class="check-pref-desc">Net operating loss, passive activity, long-term contracts, etc.</div>
 </div>
-<input type="number" class="amount" id="amtOther" placeholder="0" oninput="recalc()">
+<input type="number" class="amount" id="amtOther" placeholder="0" oninput="recalc()" aria-label="AMT Other">
 </div>
 
 <div class="callout">

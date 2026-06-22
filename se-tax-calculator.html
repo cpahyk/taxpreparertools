@@ -251,26 +251,26 @@ footer{border-top:1px solid var(--border);padding:26px 48px;display:flex;align-i
           <div class="sec-title">Business Income</div>
           <div class="field">
             <div class="f-label">Gross Business Revenue <span class="f-hint">Total before any deductions</span></div>
-            <div class="input-wrap"><span class="pfx">$</span><input type="number" id="revenue" placeholder="0" oninput="liveCalc()" min="0"/></div>
+            <div class="input-wrap"><span class="pfx">$</span><input type="number" id="revenue" placeholder="0" oninput="liveCalc()" min="0" aria-label="Gross Business Revenue"/></div>
           </div>
           <div class="field-row">
             <div class="field" style="margin-bottom:0">
               <div class="f-label">Business Expenses <span class="f-hint">Schedule C deductions</span></div>
-              <div class="input-wrap"><span class="pfx">$</span><input type="number" id="expenses" placeholder="0" oninput="liveCalc()" min="0"/></div>
+              <div class="input-wrap"><span class="pfx">$</span><input type="number" id="expenses" placeholder="0" oninput="liveCalc()" min="0" aria-label="Business Expenses"/></div>
             </div>
             <div class="field" style="margin-bottom:0">
               <div class="f-label">Home Office Deduction</div>
-              <div class="input-wrap"><span class="pfx">$</span><input type="number" id="homeoffice" placeholder="0" oninput="liveCalc()" min="0"/></div>
+              <div class="input-wrap"><span class="pfx">$</span><input type="number" id="homeoffice" placeholder="0" oninput="liveCalc()" min="0" aria-label="Home Office Deduction"/></div>
             </div>
           </div>
           <div class="field-row" style="margin-top:12px;">
             <div class="field" style="margin-bottom:0">
               <div class="f-label">Vehicle Deduction</div>
-              <div class="input-wrap"><span class="pfx">$</span><input type="number" id="vehicle" placeholder="0" oninput="liveCalc()" min="0"/></div>
+              <div class="input-wrap"><span class="pfx">$</span><input type="number" id="vehicle" placeholder="0" oninput="liveCalc()" min="0" aria-label="Vehicle Deduction"/></div>
             </div>
             <div class="field" style="margin-bottom:0">
               <div class="f-label">Retirement Contributions <span class="f-hint">SEP, SIMPLE, Solo 401k</span></div>
-              <div class="input-wrap"><span class="pfx">$</span><input type="number" id="retirement" placeholder="0" oninput="liveCalc()" min="0"/></div>
+              <div class="input-wrap"><span class="pfx">$</span><input type="number" id="retirement" placeholder="0" oninput="liveCalc()" min="0" aria-label="Retirement Contributions"/></div>
             </div>
           </div>
 
@@ -278,11 +278,11 @@ footer{border-top:1px solid var(--border);padding:26px 48px;display:flex;align-i
           <div class="field-row">
             <div class="field" style="margin-bottom:0">
               <div class="f-label">W-2 Wages (if any)</div>
-              <div class="input-wrap"><span class="pfx">$</span><input type="number" id="w2wages" placeholder="0" oninput="liveCalc()" min="0"/></div>
+              <div class="input-wrap"><span class="pfx">$</span><input type="number" id="w2wages" placeholder="0" oninput="liveCalc()" min="0" aria-label="W-2 Wages (if any)"/></div>
             </div>
             <div class="field" style="margin-bottom:0">
               <div class="f-label">Filing Status</div>
-              <select class="no-pfx" id="filingStatus" onchange="liveCalc()">
+              <select class="no-pfx" id="filingStatus" onchange="liveCalc()" aria-label="Filing Status">
                 <option value="single">Single</option>
                 <option value="mfj">Married Filing Jointly</option>
                 <option value="mfs">Married Filing Separately</option>
@@ -302,7 +302,7 @@ footer{border-top:1px solid var(--border);padding:26px 48px;display:flex;align-i
           <div id="scorpField" style="display:none;margin-top:12px;">
             <div class="field" style="margin-bottom:0">
               <div class="f-label">Reasonable Compensation (Salary) <span class="f-hint">S-Corp owner salary</span></div>
-              <div class="input-wrap"><span class="pfx">$</span><input type="number" id="scorpSalary" placeholder="0" oninput="liveCalc()" min="0"/></div>
+              <div class="input-wrap"><span class="pfx">$</span><input type="number" id="scorpSalary" placeholder="0" oninput="liveCalc()" min="0" aria-label="Reasonable Compensation (Salary)"/></div>
             </div>
           </div>
 

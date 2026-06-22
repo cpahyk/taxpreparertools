@@ -229,7 +229,7 @@ footer{border-top:1px solid var(--border);padding:20px 48px;display:flex;justify
         <div class="cc-body">
           <div class="field">
             <label class="f-label">Asset Description</label>
-            <input type="text" id="assetName" value="Business Computer" style="width:100%;background:rgba(255,255,255,0.05);border:1px solid rgba(200,168,75,0.2);border-radius:10px;padding:10px 14px;color:var(--white);font-size:0.9rem;font-family:'DM Sans',sans-serif;">
+            <input type="text" id="assetName" value="Business Computer" style="width:100%;background:rgba(255,255,255,0.05);border:1px solid rgba(200,168,75,0.2);border-radius:10px;padding:10px 14px;color:var(--white);font-size:0.9rem;font-family:'DM Sans',sans-serif;" aria-label="Asset Description">
           </div>
 
           <div class="two-col">
@@ -237,12 +237,12 @@ footer{border-top:1px solid var(--border);padding:20px 48px;display:flex;justify
               <label class="f-label">Cost Basis</label>
               <div class="input-wrap">
                 <span class="pfx">$</span>
-                <input type="number" id="costBasis" value="5000" min="1" class="pfx-input" oninput="calc()">
+                <input type="number" id="costBasis" value="5000" min="1" class="pfx-input" oninput="calc()" aria-label="Cost Basis">
               </div>
             </div>
             <div class="field">
               <label class="f-label">Year Placed in Service</label>
-              <select id="yearPlaced" onchange="calc()">
+              <select id="yearPlaced" onchange="calc()" aria-label="Year Placed in Service">
                 <option value="2025" selected>2025</option>
                 <option value="2024">2024</option>
                 <option value="2023">2023</option>
@@ -252,7 +252,7 @@ footer{border-top:1px solid var(--border);padding:20px 48px;display:flex;justify
 
           <div class="field">
             <label class="f-label">Asset / Property Class</label>
-            <select id="assetClass" onchange="calc()">
+            <select id="assetClass" onchange="calc()" aria-label="Asset / Property Class">
               <option value="3">3-Year (e.g., racehorses, tractor units)</option>
               <option value="5" selected>5-Year (computers, cars, trucks, machinery)</option>
               <option value="7">7-Year (office furniture, fixtures, agricultural equipment)</option>
@@ -266,7 +266,7 @@ footer{border-top:1px solid var(--border);padding:20px 48px;display:flex;justify
 
           <div class="field">
             <label class="f-label">Depreciation Convention</label>
-            <select id="convention" onchange="calc()">
+            <select id="convention" onchange="calc()" aria-label="Depreciation Convention">
               <option value="half" selected>Half-Year Convention (most property)</option>
               <option value="mid-quarter">Mid-Quarter Convention (if >40% placed in Q4)</option>
               <option value="mid-month">Mid-Month Convention (real property only)</option>
@@ -276,7 +276,7 @@ footer{border-top:1px solid var(--border);padding:20px 48px;display:flex;justify
           <div class="field">
             <label class="f-label">Business Use % <span class="f-hint">For listed property (vehicles, computers)</span></label>
             <div class="input-wrap">
-              <input type="number" id="bizPct" value="100" min="1" max="100" oninput="calc()">
+              <input type="number" id="bizPct" value="100" min="1" max="100" oninput="calc()" aria-label="Business Use %">
               <span class="sfx">%</span>
             </div>
           </div>
@@ -295,7 +295,7 @@ footer{border-top:1px solid var(--border);padding:20px 48px;display:flex;justify
             <label class="f-label">Section 179 Amount</label>
             <div class="input-wrap">
               <span class="pfx">$</span>
-              <input type="number" id="sec179Amt" value="0" min="0" class="pfx-input" oninput="calc()">
+              <input type="number" id="sec179Amt" value="0" min="0" class="pfx-input" oninput="calc()" aria-label="Section 179 Amount">
             </div>
           </div>
 

@@ -322,7 +322,7 @@ footer{border-top:1px solid var(--border);padding:28px 48px;display:flex;align-i
               <div class="field">
                 <div class="label">Filing Status</div>
                 <div class="input-wrap">
-                  <select class="no-prefix" id="filingStatus" onchange="updateCalc()">
+                  <select class="no-prefix" id="filingStatus" onchange="updateCalc()" aria-label="Filing Status">
                     <option value="single">Single</option>
                     <option value="mfj">Married Filing Jointly</option>
                     <option value="mfs">Married Filing Separately</option>
@@ -332,7 +332,7 @@ footer{border-top:1px solid var(--border);padding:28px 48px;display:flex;align-i
               </div>
               <div class="field">
                 <div class="label">Tax Year</div>
-                <select class="no-prefix" disabled style="opacity:.6;padding:11px 13px;background:rgba(255,255,255,.05);border:1px solid rgba(200,168,75,.18);border-radius:9px;color:var(--muted);font-size:.9rem;font-family:'DM Sans',sans-serif;">
+                <select class="no-prefix" disabled style="opacity:.6;padding:11px 13px;background:rgba(255,255,255,.05);border:1px solid rgba(200,168,75,.18);border-radius:9px;color:var(--muted);font-size:.9rem;font-family:'DM Sans',sans-serif;" aria-label="Tax Year">
                   <option>2025</option>
                 </select>
               </div>
@@ -341,67 +341,67 @@ footer{border-top:1px solid var(--border);padding:28px 48px;display:flex;align-i
             <div class="section-title">Income</div>
             <div class="field" style="margin-bottom:16px;">
               <div class="label">W-2 / Wages & Salary <span class="label-hint">From employer(s)</span></div>
-              <div class="input-wrap"><span class="input-prefix">$</span><input type="number" id="wages" placeholder="0" oninput="updateCalc()" min="0"/></div>
+              <div class="input-wrap"><span class="input-prefix">$</span><input type="number" id="wages" placeholder="0" oninput="updateCalc()" min="0" aria-label="W-2 / Wages &amp; Salary"/></div>
             </div>
             <div class="field" style="margin-bottom:16px;">
               <div class="label">Business / Self-Employment Income <span class="label-hint">Net profit</span></div>
-              <div class="input-wrap"><span class="input-prefix">$</span><input type="number" id="businessIncome" placeholder="0" oninput="updateCalc()" min="0"/></div>
+              <div class="input-wrap"><span class="input-prefix">$</span><input type="number" id="businessIncome" placeholder="0" oninput="updateCalc()" min="0" aria-label="Business / Self-Employment Income"/></div>
             </div>
             <div class="field" style="margin-bottom:24px;">
               <div class="label">Other Income <span class="label-hint">Interest, dividends, rental, etc.</span></div>
-              <div class="input-wrap"><span class="input-prefix">$</span><input type="number" id="otherIncome" placeholder="0" oninput="updateCalc()" min="0"/></div>
+              <div class="input-wrap"><span class="input-prefix">$</span><input type="number" id="otherIncome" placeholder="0" oninput="updateCalc()" min="0" aria-label="Other Income"/></div>
             </div>
 
             <div class="section-title">Deductions & Adjustments</div>
             <div class="field-row">
               <div class="field">
                 <div class="label">Deduction Method</div>
-                <select class="no-prefix" id="deductionMethod" onchange="toggleItemized(); updateCalc()">
+                <select class="no-prefix" id="deductionMethod" onchange="toggleItemized(); updateCalc()" aria-label="Deduction Method">
                   <option value="standard">Standard (Auto)</option>
                   <option value="itemized">Itemized</option>
                 </select>
               </div>
               <div class="field" id="itemizedField" style="display:none">
                 <div class="label">Itemized Total</div>
-                <div class="input-wrap"><span class="input-prefix">$</span><input type="number" id="itemizedAmt" placeholder="0" oninput="updateCalc()" min="0"/></div>
+                <div class="input-wrap"><span class="input-prefix">$</span><input type="number" id="itemizedAmt" placeholder="0" oninput="updateCalc()" min="0" aria-label="Itemized Total"/></div>
               </div>
             </div>
             <div class="field" style="margin-bottom:24px;">
               <div class="label">Other Adjustments / Above-Line Deductions <span class="label-hint">IRA, student loan interest, etc.</span></div>
-              <div class="input-wrap"><span class="input-prefix">$</span><input type="number" id="adjustments" placeholder="0" oninput="updateCalc()" min="0"/></div>
+              <div class="input-wrap"><span class="input-prefix">$</span><input type="number" id="adjustments" placeholder="0" oninput="updateCalc()" min="0" aria-label="Other Adjustments / Above-Line Deductions"/></div>
             </div>
 
             <div class="section-title">Credits</div>
             <div class="field" style="margin-bottom:24px;">
               <div class="label">Total Tax Credits <span class="label-hint">CTC, education, child care, etc.</span></div>
-              <div class="input-wrap"><span class="input-prefix">$</span><input type="number" id="credits" placeholder="0" oninput="updateCalc()" min="0"/></div>
+              <div class="input-wrap"><span class="input-prefix">$</span><input type="number" id="credits" placeholder="0" oninput="updateCalc()" min="0" aria-label="Total Tax Credits"/></div>
             </div>
           </div>
 
           <!-- DETAILED TAB (hidden by default) -->
           <div id="tab-detailed" style="display:none">
             <div class="section-title">Detailed Income Breakdown</div>
-            <div class="field" style="margin-bottom:14px;"><div class="label">W-2 Wages</div><div class="input-wrap"><span class="input-prefix">$</span><input type="number" id="d_wages" placeholder="0" oninput="updateCalc()" min="0"/></div></div>
-            <div class="field" style="margin-bottom:14px;"><div class="label">Interest Income (taxable)</div><div class="input-wrap"><span class="input-prefix">$</span><input type="number" id="d_interest" placeholder="0" oninput="updateCalc()" min="0"/></div></div>
-            <div class="field" style="margin-bottom:14px;"><div class="label">Qualified Dividends</div><div class="input-wrap"><span class="input-prefix">$</span><input type="number" id="d_qdiv" placeholder="0" oninput="updateCalc()" min="0"/></div></div>
-            <div class="field" style="margin-bottom:14px;"><div class="label">Ordinary Dividends</div><div class="input-wrap"><span class="input-prefix">$</span><input type="number" id="d_odiv" placeholder="0" oninput="updateCalc()" min="0"/></div></div>
-            <div class="field" style="margin-bottom:14px;"><div class="label">Capital Gains (LT)</div><div class="input-wrap"><span class="input-prefix">$</span><input type="number" id="d_capgain" placeholder="0" oninput="updateCalc()" min="0"/></div></div>
-            <div class="field" style="margin-bottom:24px;"><div class="label">Rental / Passive Income</div><div class="input-wrap"><span class="input-prefix">$</span><input type="number" id="d_rental" placeholder="0" oninput="updateCalc()" min="0"/></div></div>
+            <div class="field" style="margin-bottom:14px;"><div class="label">W-2 Wages</div><div class="input-wrap"><span class="input-prefix">$</span><input type="number" id="d_wages" placeholder="0" oninput="updateCalc()" min="0" aria-label="W-2 Wages"/></div></div>
+            <div class="field" style="margin-bottom:14px;"><div class="label">Interest Income (taxable)</div><div class="input-wrap"><span class="input-prefix">$</span><input type="number" id="d_interest" placeholder="0" oninput="updateCalc()" min="0" aria-label="Interest Income (taxable)"/></div></div>
+            <div class="field" style="margin-bottom:14px;"><div class="label">Qualified Dividends</div><div class="input-wrap"><span class="input-prefix">$</span><input type="number" id="d_qdiv" placeholder="0" oninput="updateCalc()" min="0" aria-label="Qualified Dividends"/></div></div>
+            <div class="field" style="margin-bottom:14px;"><div class="label">Ordinary Dividends</div><div class="input-wrap"><span class="input-prefix">$</span><input type="number" id="d_odiv" placeholder="0" oninput="updateCalc()" min="0" aria-label="Ordinary Dividends"/></div></div>
+            <div class="field" style="margin-bottom:14px;"><div class="label">Capital Gains (LT)</div><div class="input-wrap"><span class="input-prefix">$</span><input type="number" id="d_capgain" placeholder="0" oninput="updateCalc()" min="0" aria-label="Capital Gains (LT)"/></div></div>
+            <div class="field" style="margin-bottom:24px;"><div class="label">Rental / Passive Income</div><div class="input-wrap"><span class="input-prefix">$</span><input type="number" id="d_rental" placeholder="0" oninput="updateCalc()" min="0" aria-label="Rental / Passive Income"/></div></div>
             <div class="section-title">Itemized Deductions</div>
-            <div class="field" style="margin-bottom:14px;"><div class="label">Mortgage Interest</div><div class="input-wrap"><span class="input-prefix">$</span><input type="number" id="d_mort" placeholder="0" oninput="updateCalc()" min="0"/></div></div>
-            <div class="field" style="margin-bottom:14px;"><div class="label">State & Local Taxes (SALT — max $10k)</div><div class="input-wrap"><span class="input-prefix">$</span><input type="number" id="d_salt" placeholder="0" oninput="updateCalc()" min="0"/></div></div>
-            <div class="field" style="margin-bottom:24px;"><div class="label">Charitable Contributions</div><div class="input-wrap"><span class="input-prefix">$</span><input type="number" id="d_charity" placeholder="0" oninput="updateCalc()" min="0"/></div></div>
+            <div class="field" style="margin-bottom:14px;"><div class="label">Mortgage Interest</div><div class="input-wrap"><span class="input-prefix">$</span><input type="number" id="d_mort" placeholder="0" oninput="updateCalc()" min="0" aria-label="Mortgage Interest"/></div></div>
+            <div class="field" style="margin-bottom:14px;"><div class="label">State & Local Taxes (SALT — max $10k)</div><div class="input-wrap"><span class="input-prefix">$</span><input type="number" id="d_salt" placeholder="0" oninput="updateCalc()" min="0" aria-label="State &amp; Local Taxes (SALT — max $10k)"/></div></div>
+            <div class="field" style="margin-bottom:24px;"><div class="label">Charitable Contributions</div><div class="input-wrap"><span class="input-prefix">$</span><input type="number" id="d_charity" placeholder="0" oninput="updateCalc()" min="0" aria-label="Charitable Contributions"/></div></div>
           </div>
 
           <!-- SELF-EMPLOYED TAB (hidden by default) -->
           <div id="tab-selfemployed" style="display:none">
             <div class="section-title">Self-Employment Income</div>
-            <div class="field" style="margin-bottom:14px;"><div class="label">Gross Business Revenue</div><div class="input-wrap"><span class="input-prefix">$</span><input type="number" id="se_revenue" placeholder="0" oninput="updateCalc()" min="0"/></div></div>
-            <div class="field" style="margin-bottom:14px;"><div class="label">Business Expenses</div><div class="input-wrap"><span class="input-prefix">$</span><input type="number" id="se_expenses" placeholder="0" oninput="updateCalc()" min="0"/></div></div>
-            <div class="field" style="margin-bottom:14px;"><div class="label">Home Office Deduction</div><div class="input-wrap"><span class="input-prefix">$</span><input type="number" id="se_homeoffice" placeholder="0" oninput="updateCalc()" min="0"/></div></div>
-            <div class="field" style="margin-bottom:14px;"><div class="label">Vehicle Deduction (mileage or actual)</div><div class="input-wrap"><span class="input-prefix">$</span><input type="number" id="se_vehicle" placeholder="0" oninput="updateCalc()" min="0"/></div></div>
-            <div class="field" style="margin-bottom:24px;"><div class="label">Other W-2 Income (if any)</div><div class="input-wrap"><span class="input-prefix">$</span><input type="number" id="se_wages" placeholder="0" oninput="updateCalc()" min="0"/></div></div>
-            <div class="field" style="margin-bottom:14px;"><div class="label">Filing Status</div><select class="no-prefix" id="se_status" onchange="updateCalc()"><option value="single">Single</option><option value="mfj">Married Filing Jointly</option><option value="hoh">Head of Household</option></select></div>
+            <div class="field" style="margin-bottom:14px;"><div class="label">Gross Business Revenue</div><div class="input-wrap"><span class="input-prefix">$</span><input type="number" id="se_revenue" placeholder="0" oninput="updateCalc()" min="0" aria-label="Gross Business Revenue"/></div></div>
+            <div class="field" style="margin-bottom:14px;"><div class="label">Business Expenses</div><div class="input-wrap"><span class="input-prefix">$</span><input type="number" id="se_expenses" placeholder="0" oninput="updateCalc()" min="0" aria-label="Business Expenses"/></div></div>
+            <div class="field" style="margin-bottom:14px;"><div class="label">Home Office Deduction</div><div class="input-wrap"><span class="input-prefix">$</span><input type="number" id="se_homeoffice" placeholder="0" oninput="updateCalc()" min="0" aria-label="Home Office Deduction"/></div></div>
+            <div class="field" style="margin-bottom:14px;"><div class="label">Vehicle Deduction (mileage or actual)</div><div class="input-wrap"><span class="input-prefix">$</span><input type="number" id="se_vehicle" placeholder="0" oninput="updateCalc()" min="0" aria-label="Vehicle Deduction (mileage or actual)"/></div></div>
+            <div class="field" style="margin-bottom:24px;"><div class="label">Other W-2 Income (if any)</div><div class="input-wrap"><span class="input-prefix">$</span><input type="number" id="se_wages" placeholder="0" oninput="updateCalc()" min="0" aria-label="Other W-2 Income (if any)"/></div></div>
+            <div class="field" style="margin-bottom:14px;"><div class="label">Filing Status</div><select class="no-prefix" id="se_status" onchange="updateCalc()" aria-label="Filing Status"><option value="single">Single</option><option value="mfj">Married Filing Jointly</option><option value="hoh">Head of Household</option></select></div>
           </div>
 
           <button class="calc-btn" onclick="calculate()">Calculate My 2025 Tax →</button>
