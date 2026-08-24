@@ -1,1308 +1,3320 @@
-"""
-TaxPreparerTools - PDF to QBO Converter
-Windows desktop application.
-
-Features:
-- PDF text extraction using PyMuPDF
-- Generic bank-statement transaction detection
-- Heuristics for common US bank layouts
-- Transaction review/editing
-- Duplicate detection
-- Validation
-- QBO/OFX-style export suitable for QuickBooks import workflows
-
-IMPORTANT:
-Bank PDFs vary significantly. The application intentionally requires
-transaction review before export rather than silently guessing.
-"""
-
-from __future__ import annotations
-
-import csv
-import hashlib
+import os
 import re
-import sys
-import traceback
-from dataclasses import dataclass
-from datetime import date, datetime
-from decimal import Decimal, InvalidOperation
-from pathlib import Path
-from typing import Optional
-
+import html
+import hashlib
+import datetime
+import webbrowser
 import tkinter as tk
-from tkinter import filedialog, messagebox, ttk
+from tkinter import ttk, filedialog, messagebox
 
 try:
-    import fitz  # PyMuPDF
+    from api_client import APIClient, APIError
+    from license_manager import LicenseManager
 except ImportError:
-    fitz = None
+    APIClient = None
+    APIError = Exception
+    LicenseManager = None
+
+# ============================================================
+# TAXPREPARERTOOLS.COM
+# PDF -> QBO CONVERTER
+#
+# Multi-bank PDF bank statement converter.
+#
+# Supported parsers:
+#   - Auto Detect
+#   - Fifth Third Bank
+#   - Climate First Bank
+#   - Generic Bank Statement
+#
+# Website:
+#   https://www.taxpreparertools.com/
+# ============================================================
 
 
 APP_NAME = "TaxPreparerTools PDF → QBO Converter"
-VERSION = "1.0.0"
+SITE_NAME = "TaxPreparerTools.com"
+SITE_URL = "https://www.taxpreparertools.com/"
 
-DATE_PATTERNS = [
-    re.compile(r"\b(?P<m>\d{1,2})/(?P<d>\d{1,2})/(?P<y>\d{2,4})\b"),
-    re.compile(r"\b(?P<m>\d{1,2})-(?P<d>\d{1,2})-(?P<y>\d{2,4})\b"),
-    re.compile(
-        r"\b(?P<m>\d{1,2})\s*[/\-]\s*(?P<d>\d{1,2})\b"
-    ),
-]
-
-AMOUNT_RE = re.compile(
-    r"""
-    (?<![\w$])
-    (?P<sign>-|\()?
-    \$?
-    (?P<number>\d{1,3}(?:,\d{3})*(?:\.\d{2})|\d+\.\d{2})
-    \)?
-    (?![\w])
-    """,
-    re.VERBOSE,
-)
-
-MONEY_ONLY_RE = re.compile(
-    r"(?P<sign>-|\()?\s*\$?(?P<number>\d[\d,]*\.\d{2})\)?"
-)
-
-BANK_HINTS = {
-    "chase": (
-        "chase",
-        "jpmorgan chase",
-        "jpmorgan",
-    ),
-    "bank_of_america": (
-        "bank of america",
-        "bankofamerica",
-        "bank of america, n.a.",
-    ),
-    "wells_fargo": (
-        "wells fargo",
-        "wellsfargo",
-    ),
-}
+APP_VERSION = "2.0"
+LICENSE_SERVER_URL = os.environ.get("TAXPREPARERTOOLS_LICENSE_API", "http://localhost:8000")
 
 
-@dataclass
-class Transaction:
-    transaction_date: date
-    description: str
-    amount: Decimal
-    transaction_type: str = "DEBIT"
-    balance: Optional[Decimal] = None
-    source_page: int = 0
-    confidence: str = "MEDIUM"
-    reviewed: bool = False
+# ============================================================
+# DEPENDENCY
+# ============================================================
 
-    @property
-    def debit(self) -> Decimal:
-        return abs(self.amount) if self.transaction_type == "DEBIT" else Decimal("0")
+try:
+    import pypdf
+except ImportError:
+    root = tk.Tk()
+    root.withdraw()
 
-    @property
-    def credit(self) -> Decimal:
-        return self.amount if self.transaction_type == "CREDIT" else Decimal("0")
-
-    @property
-    def transaction_id(self) -> str:
-        raw = (
-            f"{self.transaction_date.isoformat()}|"
-            f"{self.description.strip().upper()}|"
-            f"{self.amount}|"
-            f"{self.transaction_type}"
-        )
-        return hashlib.sha256(raw.encode("utf-8")).hexdigest()[:32]
-
-
-def clean_text(value: str) -> str:
-    return re.sub(r"\s+", " ", value or "").strip()
-
-
-def parse_decimal(value: str) -> Optional[Decimal]:
-    if not value:
-        return None
-
-    value = value.strip()
-    negative = value.startswith("-") or (
-        value.startswith("(") and value.endswith(")")
+    messagebox.showerror(
+        "Missing Dependency",
+        "This program requires pypdf.\n\n"
+        "Open Command Prompt / Terminal and run:\n\n"
+        "pip install --upgrade pypdf"
     )
 
-    value = value.replace("$", "").replace(",", "")
-    value = value.replace("(", "").replace(")", "")
+    raise SystemExit(1)
+
+
+# ============================================================
+# GENERAL HELPERS
+# ============================================================
+
+def clean_spaces(text):
+    return re.sub(r"\s+", " ", text or "").strip()
+
+
+def money_value(text):
+    """
+    Convert common bank statement money formats to float.
+
+    Examples:
+        1,234.56
+        $1,234.56
+        1,234.56-
+        (1,234.56)
+        $1,234.56-
+    """
+
+    if text is None:
+        return None
+
+    s = str(text).strip()
+
+    if not s:
+        return None
+
+    s = s.replace("$", "")
+    s = s.replace(",", "")
+    s = s.replace(" ", "")
+
+    negative = False
+
+    if s.endswith("-"):
+        negative = True
+        s = s[:-1]
+
+    if s.startswith("(") and s.endswith(")"):
+        negative = True
+        s = s[1:-1]
 
     try:
-        number = Decimal(value)
-    except InvalidOperation:
+        value = float(s)
+    except ValueError:
         return None
 
-    return -abs(number) if negative else abs(number)
+    if negative:
+        value = -value
+
+    return value
 
 
-def parse_date_from_match(match: re.Match, default_year: int) -> Optional[date]:
+def xml_escape(value):
+    return html.escape(
+        str(value or ""),
+        quote=False
+    )
+
+
+def normalize_date(date_text, year):
+    """
+    Convert MM/DD to YYYYMMDD.
+    """
+
     try:
-        month = int(match.group("m"))
-        day = int(match.group("d"))
-        year_text = match.groupdict().get("y")
+        month, day = date_text.split("/")
 
-        if year_text:
-            year = int(year_text)
-            if year < 100:
-                year += 2000
-        else:
-            year = default_year
-
-        return date(year, month, day)
-    except (ValueError, TypeError):
-        return None
-
-
-def find_date(text: str, default_year: int) -> Optional[date]:
-    for pattern in DATE_PATTERNS:
-        match = pattern.search(text)
-        if match:
-            result = parse_date_from_match(match, default_year)
-            if result:
-                return result
-    return None
-
-
-def extract_amounts(text: str) -> list[Decimal]:
-    values: list[Decimal] = []
-
-    for match in MONEY_ONLY_RE.finditer(text):
-        value = parse_decimal(match.group(0))
-        if value is not None:
-            values.append(value)
-
-    return values
-
-
-def detect_bank(text: str) -> str:
-    lowered = text.lower()
-
-    for bank, hints in BANK_HINTS.items():
-        if any(hint in lowered for hint in hints):
-            return bank
-
-    return "generic"
-
-
-def classify_amount(
-    line: str,
-    amounts: list[Decimal],
-) -> tuple[Optional[Decimal], str]:
-    """
-    Determines whether the amount appears to be a debit or credit.
-
-    This is intentionally conservative. Words such as CREDIT, DEPOSIT,
-    PAYMENT, REFUND, and DIVIDEND usually indicate money entering the account.
-    """
-    if not amounts:
-        return None, "DEBIT"
-
-    amount = amounts[-1]
-    lowered = line.lower()
-
-    credit_words = (
-        "credit",
-        "deposit",
-        "refund",
-        "interest",
-        "dividend",
-        "payment received",
-        "direct deposit",
-        "ach credit",
-    )
-
-    debit_words = (
-        "debit",
-        "withdrawal",
-        "purchase",
-        "payment",
-        "fee",
-        "charge",
-        "ach debit",
-        "check",
-        "atm",
-    )
-
-    if any(word in lowered for word in credit_words):
-        return abs(amount), "CREDIT"
-
-    if any(word in lowered for word in debit_words):
-        return abs(amount), "DEBIT"
-
-    if amount < 0:
-        return abs(amount), "DEBIT"
-
-    return abs(amount), "DEBIT"
-
-
-def looks_like_header(line: str) -> bool:
-    lowered = line.lower()
-
-    header_words = (
-        "beginning balance",
-        "ending balance",
-        "account summary",
-        "statement period",
-        "account number",
-        "routing number",
-        "transaction history",
-        "transaction date",
-        "posting date",
-        "description",
-        "debit",
-        "credit",
-        "balance",
-        "page ",
-        "total deposits",
-        "total withdrawals",
-    )
-
-    return any(word in lowered for word in header_words)
-
-
-def looks_like_transaction(line: str) -> bool:
-    if not line.strip():
-        return False
-
-    if looks_like_header(line):
-        return False
-
-    if not any(pattern.search(line) for pattern in DATE_PATTERNS):
-        return False
-
-    amounts = extract_amounts(line)
-
-    if not amounts:
-        return False
-
-    # A transaction generally needs some descriptive text.
-    date_match = None
-    for pattern in DATE_PATTERNS:
-        date_match = pattern.search(line)
-        if date_match:
-            break
-
-    if not date_match:
-        return False
-
-    remainder = line[date_match.end():]
-    remainder = MONEY_ONLY_RE.sub("", remainder)
-    remainder = clean_text(remainder)
-
-    return len(remainder) >= 2
-
-
-def extract_pdf_pages(pdf_path: Path) -> list[tuple[int, str]]:
-    if fitz is None:
-        raise RuntimeError(
-            "PyMuPDF is not installed.\n\n"
-            "Install it with:\n"
-            "py -m pip install PyMuPDF"
+        return (
+            f"{int(year):04d}"
+            f"{int(month):02d}"
+            f"{int(day):02d}"
         )
 
-    pages: list[tuple[int, str]] = []
-
-    document = fitz.open(pdf_path)
-
-    try:
-        for page_number, page in enumerate(document, start=1):
-            text = page.get_text("text") or ""
-            pages.append((page_number, text))
-    finally:
-        document.close()
-
-    return pages
+    except Exception:
+        return ""
 
 
-def parse_transaction_line(
-    line: str,
-    page_number: int,
-    statement_year: int,
-) -> Optional[Transaction]:
-    transaction_date = find_date(line, statement_year)
+def display_date(yyyymmdd):
+    if len(yyyymmdd) != 8:
+        return yyyymmdd
 
-    if transaction_date is None:
-        return None
+    return (
+        f"{yyyymmdd[4:6]}/"
+        f"{yyyymmdd[6:8]}/"
+        f"{yyyymmdd[:4]}"
+    )
 
-    amounts = extract_amounts(line)
 
-    if not amounts:
-        return None
+def normalize_description(text):
+    text = clean_spaces(text)
 
-    amount, transaction_type = classify_amount(line, amounts)
-
-    if amount is None:
-        return None
-
-    # Remove date and monetary values to obtain the description.
-    description = line
-
-    for pattern in DATE_PATTERNS:
-        description = pattern.sub("", description, count=1)
-        break
-
-    description = MONEY_ONLY_RE.sub("", description)
-    description = clean_text(description)
-
-    # Remove common statement-column artifacts.
-    description = re.sub(
-        r"\b(?:debit|credit|balance)\b",
+    text = re.sub(
+        r"\bPage\s+\d+\s+of\s+\d+\b",
         "",
-        description,
-        flags=re.IGNORECASE,
-    )
-    description = clean_text(description)
-
-    if len(description) < 2:
-        return None
-
-    confidence = "HIGH"
-
-    if len(amounts) > 2:
-        confidence = "LOW"
-    elif len(description) < 5:
-        confidence = "MEDIUM"
-
-    return Transaction(
-        transaction_date=transaction_date,
-        description=description,
-        amount=amount,
-        transaction_type=transaction_type,
-        source_page=page_number,
-        confidence=confidence,
+        text,
+        flags=re.I
     )
 
+    text = re.sub(
+        r"\bDaily Balance Summary\b.*$",
+        "",
+        text,
+        flags=re.I
+    )
 
-def parse_pdf(pdf_path: Path) -> tuple[list[Transaction], str, int]:
-    pages = extract_pdf_pages(pdf_path)
+    return clean_spaces(text)
 
-    if not pages:
-        raise ValueError("The PDF contains no readable pages.")
 
-    complete_text = "\n".join(text for _, text in pages)
-    bank = detect_bank(complete_text)
+# ============================================================
+# REGEX
+# ============================================================
 
-    statement_year = datetime.now().year
+DATE_RE = r"\d{1,2}/\d{1,2}"
 
-    # Try to infer a year from the document.
-    years = re.findall(r"\b(20\d{2})\b", complete_text)
-    if years:
-        try:
-            statement_year = int(years[0])
-        except ValueError:
-            pass
+MONEY_RE = (
+    r"(?:"
+    r"\$?\(?"
+    r"\d{1,3}(?:,\d{3})*"
+    r"(?:\.\d{2})"
+    r"\)?-?"
+    r")"
+)
 
-    transactions: list[Transaction] = []
+DATE_AMOUNT_RE = re.compile(
+    rf"(?P<date>{DATE_RE})\s+"
+    rf"(?P<amount>{MONEY_RE})"
+)
 
-    for page_number, text in pages:
-        lines = [
-            clean_text(line)
-            for line in text.splitlines()
-            if clean_text(line)
-        ]
 
-        for line in lines:
-            if not looks_like_transaction(line):
-                continue
+# ============================================================
+# BANK DETECTION
+# ============================================================
 
-            transaction = parse_transaction_line(
-                line,
-                page_number,
-                statement_year,
+class BankDetector:
+
+    BANKS = (
+        "Auto Detect",
+        "Fifth Third Bank",
+        "Climate First Bank",
+        "Generic Bank Statement",
+    )
+
+    @staticmethod
+    def detect(text):
+
+        s = text.lower()
+
+        if (
+            "fifth third bank" in s
+            or "fifth third" in s
+            or "53.com" in s
+        ):
+            return "Fifth Third Bank"
+
+        if (
+            "climate first bank" in s
+            or "climatefirstbank.com" in s
+        ):
+            return "Climate First Bank"
+
+        return "Generic Bank Statement"
+
+
+# ============================================================
+# BASE PARSER
+# ============================================================
+
+class BaseStatementParser:
+
+    def __init__(self):
+
+        self.pages = []
+        self.full_text = ""
+
+        self.year = str(
+            datetime.datetime.now().year
+        )
+
+        self.summary = {
+            "beginning_balance": None,
+            "ending_balance": None,
+
+            "checks_count": None,
+            "checks_total": None,
+
+            "debits_count": None,
+            "debits_total": None,
+
+            "credits_count": None,
+            "credits_total": None,
+        }
+
+    # --------------------------------------------------------
+    # READ PDF
+    # --------------------------------------------------------
+
+    def read_pdf(self, filename):
+
+        self.pages = []
+
+        with open(filename, "rb") as f:
+
+            reader = pypdf.PdfReader(f)
+
+            for page_number, page in enumerate(
+                reader.pages,
+                start=1
+            ):
+
+                try:
+
+                    text = page.extract_text(
+                        extraction_mode="layout",
+                        layout_mode_space_vertically=False
+                    )
+
+                except TypeError:
+
+                    try:
+                        text = page.extract_text()
+                    except Exception:
+                        text = ""
+
+                text = text or ""
+
+                self.pages.append({
+                    "page": page_number,
+                    "text": text
+                })
+
+        self.full_text = "\n".join(
+            p["text"]
+            for p in self.pages
+        )
+
+        if not self.full_text.strip():
+
+            raise RuntimeError(
+                "No text could be extracted from this PDF.\n\n"
+                "This may be a scanned/image-only PDF.\n\n"
+                "Try a text-based PDF statement."
             )
 
-            if transaction:
-                transactions.append(transaction)
+        return self.pages
 
-    # Remove exact duplicates.
-    unique: dict[str, Transaction] = {}
+    # --------------------------------------------------------
+    # YEAR
+    # --------------------------------------------------------
 
-    for transaction in transactions:
-        unique.setdefault(transaction.transaction_id, transaction)
+    def find_year(self):
 
-    transactions = list(unique.values())
+        patterns = [
 
-    transactions.sort(
-        key=lambda item: (
-            item.transaction_date,
-            item.source_page,
-            item.description.lower(),
-        )
-    )
+            r"Statement\s+Period\s+Date\s*:"
+            r"\s*\d{1,2}/\d{1,2}/"
+            r"(\d{4})",
 
-    return transactions, bank, len(pages)
+            r"Statement\s+Period.*?"
+            r"\d{1,2}/\d{1,2}/"
+            r"(\d{4})",
 
+            r"\d{1,2}/\d{1,2}/"
+            r"(20\d{2})",
+        ]
 
-def qbo_escape(value: str) -> str:
-    """
-    Escape text for the SGML-like format used by QBO/OFX files.
-    """
-    return (
-        str(value)
-        .replace("&", "&amp;")
-        .replace("<", "&lt;")
-        .replace(">", "&gt;")
-    )
+        for pattern in patterns:
 
+            match = re.search(
+                pattern,
+                self.full_text,
+                flags=re.I | re.S
+            )
 
-def qbo_date(value: date) -> str:
-    return value.strftime("%Y%m%d000000[-5:EST]")
+            if match:
 
+                self.year = match.group(1)
 
-def transaction_fitid(transaction: Transaction) -> str:
-    return transaction.transaction_id.upper()
+                return self.year
 
-
-def build_qbo(
-    transactions: list[Transaction],
-    bank_id: str,
-    account_id: str,
-    account_type: str = "CHECKING",
-) -> str:
-    if not transactions:
-        raise ValueError("There are no transactions to export.")
-
-    today = datetime.now().strftime("%Y%m%d%H%M%S")
-
-    start_date = min(t.transaction_date for t in transactions)
-    end_date = max(t.transaction_date for t in transactions)
-
-    lines: list[str] = []
-
-    lines.append("OFXHEADER:100")
-    lines.append("DATA:OFXSGML")
-    lines.append("VERSION:103")
-    lines.append("SECURITY:NONE")
-    lines.append("ENCODING:USASCII")
-    lines.append("CHARSET:1252")
-    lines.append("COMPRESSION:NONE")
-    lines.append("OLDFILEUID:NONE")
-    lines.append("NEWFILEUID:NONE")
-    lines.append("")
-    lines.append("<OFX>")
-    lines.append("<SIGNONMSGSRSV1>")
-    lines.append("<SONRS>")
-    lines.append("<STATUS>")
-    lines.append("<CODE>0")
-    lines.append("<SEVERITY>INFO")
-    lines.append("</STATUS>")
-    lines.append(f"<DTSERVER>{today}")
-    lines.append("<LANGUAGE>ENG")
-    lines.append("</SONRS>")
-    lines.append("</SIGNONMSGSRSV1>")
-
-    lines.append("<BANKMSGSRSV1>")
-    lines.append("<STMTTRNRS>")
-    lines.append("<TRNUID>0")
-    lines.append("<STATUS>")
-    lines.append("<CODE>0")
-    lines.append("<SEVERITY>INFO")
-    lines.append("</STATUS>")
-    lines.append("<STMTRS>")
-    lines.append("<CURDEF>USD")
-
-    lines.append("<BANKACCTFROM>")
-    lines.append(f"<BANKID>{qbo_escape(bank_id)}")
-    lines.append(f"<ACCTID>{qbo_escape(account_id)}")
-    lines.append(f"<ACCTTYPE>{qbo_escape(account_type)}")
-    lines.append("</BANKACCTFROM>")
-
-    lines.append("<BANKTRANLIST>")
-    lines.append(f"<DTSTART>{qbo_date(start_date)}")
-    lines.append(f"<DTEND>{qbo_date(end_date)}")
-
-    for transaction in transactions:
-        lines.append("<STMTTRN>")
-
-        # QBO/OFX convention:
-        # positive = credit/deposit
-        # negative = debit/withdrawal
-        signed_amount = (
-            transaction.credit
-            if transaction.transaction_type == "CREDIT"
-            else -transaction.debit
+        match = re.search(
+            r"\b(20\d{2})\b",
+            self.full_text
         )
 
-        lines.append(
-            f"<TRNTYPE>{transaction.transaction_type}"
+        if match:
+            self.year = match.group(1)
+
+        return self.year
+
+    # --------------------------------------------------------
+    # SUMMARY
+    # --------------------------------------------------------
+
+    def parse_summary(self):
+
+        text = clean_spaces(
+            self.full_text
         )
-        lines.append(
-            f"<DTPOSTED>{qbo_date(transaction.transaction_date)}"
+
+        # Beginning balance
+        for pattern in (
+            r"Beginning\s+Balance\s+\$?([\d,]+\.\d{2})",
+            r"Beginning\s+Balance.*?\$?([\d,]+\.\d{2})",
+        ):
+
+            m = re.search(
+                pattern,
+                text,
+                re.I
+            )
+
+            if m:
+
+                self.summary[
+                    "beginning_balance"
+                ] = abs(
+                    money_value(
+                        m.group(1)
+                    )
+                )
+
+                break
+
+        # Ending balance
+        for pattern in (
+            r"Ending\s+Balance\s+\$?([\d,]+\.\d{2})",
+            r"Ending\s+Balance.*?\$?([\d,]+\.\d{2})",
+        ):
+
+            m = re.search(
+                pattern,
+                text,
+                re.I
+            )
+
+            if m:
+
+                self.summary[
+                    "ending_balance"
+                ] = money_value(
+                    m.group(1)
+                )
+
+                break
+
+        # Fifth Third checks
+        m = re.search(
+            r"Checks\s+"
+            r"(\d+)\s+"
+            r"checks?\s+"
+            r"totaling\s+"
+            r"\$?([\d,]+\.\d{2})",
+            text,
+            re.I
         )
-        lines.append(f"<TRNAMT>{signed_amount:.2f}")
-        lines.append(f"<FITID>{transaction_fitid(transaction)}")
-        lines.append(
-            f"<NAME>{qbo_escape(transaction.description[:80])}"
+
+        if m:
+
+            self.summary[
+                "checks_count"
+            ] = int(
+                m.group(1)
+            )
+
+            self.summary[
+                "checks_total"
+            ] = abs(
+                money_value(
+                    m.group(2)
+                )
+            )
+
+        # Withdrawals / Debits
+        m = re.search(
+            r"Withdrawals\s*/?\s*Debits\s+"
+            r"(\d+)\s+"
+            r"items?\s+"
+            r"totaling\s+"
+            r"\$?([\d,]+\.\d{2})",
+            text,
+            re.I
         )
-        lines.append(
-            f"<MEMO>{qbo_escape(transaction.description)}"
+
+        if m:
+
+            self.summary[
+                "debits_count"
+            ] = int(
+                m.group(1)
+            )
+
+            self.summary[
+                "debits_total"
+            ] = abs(
+                money_value(
+                    m.group(2)
+                )
+            )
+
+        # Deposits / Credits
+        m = re.search(
+            r"Deposits\s*/?\s*Credits\s+"
+            r"(\d+)\s+"
+            r"items?\s+"
+            r"totaling\s+"
+            r"\$?([\d,]+\.\d{2})",
+            text,
+            re.I
         )
 
-        lines.append("</STMTTRN>")
+        if m:
 
-    lines.append("</BANKTRANLIST>")
+            self.summary[
+                "credits_count"
+            ] = int(
+                m.group(1)
+            )
 
-    lines.append("<LEDGERBAL>")
-    lines.append("<BALAMT>0.00")
-    lines.append(f"<DTASOF>{qbo_date(end_date)}")
-    lines.append("</LEDGERBAL>")
+            self.summary[
+                "credits_total"
+            ] = abs(
+                money_value(
+                    m.group(2)
+                )
+            )
 
-    lines.append("</STMTRS>")
-    lines.append("</STMTTRNRS>")
-    lines.append("</BANKMSGSRSV1>")
+    # --------------------------------------------------------
+    # CREATE TRANSACTION
+    # --------------------------------------------------------
 
-    lines.append("</OFX>")
+    def make_transaction(
+        self,
+        date_text,
+        amount,
+        description,
+        source,
+        year,
+        check_number=None
+    ):
 
-    return "\n".join(lines) + "\n"
+        date = normalize_date(
+            date_text,
+            year
+        )
+
+        if not date:
+            return None
+
+        if amount is None:
+            return None
+
+        description = normalize_description(
+            description
+        )
+
+        if not description:
+            description = "Transaction"
+
+        return {
+            "date": date,
+            "amount": round(
+                float(amount),
+                2
+            ),
+            "name": description[:255],
+            "check_num": (
+                str(check_number)
+                if check_number
+                else None
+            ),
+            "source": source,
+        }
+
+    # --------------------------------------------------------
+    # DEDUPLICATE
+    # --------------------------------------------------------
+
+    def dedupe(self, transactions):
+
+        result = []
+        seen = set()
+
+        for txn in transactions:
+
+            if txn.get("check_num"):
+
+                key = (
+                    "CHECK",
+                    txn["date"],
+                    txn["check_num"],
+                    round(
+                        txn["amount"],
+                        2
+                    )
+                )
+
+            else:
+
+                key = (
+                    txn["date"],
+                    round(
+                        txn["amount"],
+                        2
+                    ),
+                    clean_spaces(
+                        txn["name"]
+                    ).lower(),
+                    txn["source"]
+                )
+
+            if key in seen:
+                continue
+
+            seen.add(key)
+            result.append(txn)
+
+        result.sort(
+            key=lambda x: (
+                x["date"],
+                x["source"],
+                x["name"]
+            )
+        )
+
+        return result
+
+    # --------------------------------------------------------
+    # RECONCILE
+    # --------------------------------------------------------
+
+    def reconcile(self, transactions):
+
+        checks = [
+            t for t in transactions
+            if t["source"] == "Check"
+        ]
+
+        debits = [
+            t for t in transactions
+            if t["source"] == "Debit"
+        ]
+
+        credits = [
+            t for t in transactions
+            if t["source"] == "Credit"
+        ]
+
+        return {
+
+            "checks_count": len(checks),
+
+            "checks_total": round(
+                sum(
+                    abs(t["amount"])
+                    for t in checks
+                ),
+                2
+            ),
+
+            "debits_count": len(debits),
+
+            "debits_total": round(
+                sum(
+                    abs(t["amount"])
+                    for t in debits
+                ),
+                2
+            ),
+
+            "credits_count": len(credits),
+
+            "credits_total": round(
+                sum(
+                    abs(t["amount"])
+                    for t in credits
+                ),
+                2
+            ),
+        }
+
+    # --------------------------------------------------------
+    # PARSE
+    # --------------------------------------------------------
+
+    def parse(self, filename):
+
+        self.read_pdf(filename)
+
+        self.find_year()
+
+        self.parse_summary()
+
+        transactions = (
+            self.parse_transactions()
+        )
+
+        transactions = self.dedupe(
+            transactions
+        )
+
+        parsed = self.reconcile(
+            transactions
+        )
+
+        return {
+            "transactions": transactions,
+            "summary": self.summary,
+            "parsed": parsed,
+            "year": self.year,
+            "text": self.full_text,
+        }
+
+    def parse_transactions(self):
+        raise NotImplementedError
 
 
-class ConverterApp(tk.Tk):
-    def __init__(self) -> None:
+# ============================================================
+# SECTION PARSER
+# ============================================================
+
+class SectionParser(BaseStatementParser):
+
+    NONE = "NONE"
+    CHECKS = "CHECKS"
+    DEBIT = "DEBIT"
+    CREDIT = "CREDIT"
+
+    def __init__(self):
+
         super().__init__()
 
-        self.title(f"{APP_NAME} {VERSION}")
-        self.geometry("1250x760")
-        self.minsize(1000, 650)
+        self.section = self.NONE
 
-        self.pdf_path: Optional[Path] = None
-        self.transactions: list[Transaction] = []
-        self.detected_bank = "generic"
-        self.page_count = 0
+    # --------------------------------------------------------
+    # SECTION DETECTION
+    # --------------------------------------------------------
 
-        self.status_var = tk.StringVar(
-            value="Select a PDF bank statement to begin."
+    def detect_section(self, line):
+
+        s = clean_spaces(
+            line
+        ).lower()
+
+        # Checks
+        if (
+            "checks" in s
+            and (
+                "number" in s
+                or "date paid" in s
+                or "totaling" in s
+            )
+        ):
+
+            return self.CHECKS
+
+        # Withdrawals / Debits
+        if (
+            "withdrawals / debits" in s
+            or "withdrawals/debits" in s
+            or "withdrawals" in s
+            or "debits" in s
+        ):
+
+            return self.DEBIT
+
+        # Deposits / Credits
+        if (
+            "deposits / credits" in s
+            or "deposits/credits" in s
+            or "deposits" in s
+            or "credits" in s
+        ):
+
+            return self.CREDIT
+
+        # Stop transaction sections
+        if (
+            "daily balance" in s
+            or "account summary" in s
+            or "analysis period" in s
+            or "interest rate" in s
+            or "service charge" in s
+            or "beginning balance" in s
+            or "ending balance" in s
+        ):
+
+            return self.NONE
+
+        return None
+
+    # --------------------------------------------------------
+    # CHECK PARSER
+    # --------------------------------------------------------
+
+    def parse_check_line(self, line):
+
+        transactions = []
+
+        pattern = re.compile(
+            rf"(?P<number>\d{{3,7}})"
+            rf"\s+[is]?\s*"
+            rf"(?P<date>{DATE_RE})"
+            rf"\s+"
+            rf"(?P<amount>{MONEY_RE})",
+            re.I
         )
 
-        self.bank_var = tk.StringVar(value="generic")
-        self.account_id_var = tk.StringVar()
-        self.account_type_var = tk.StringVar(value="CHECKING")
-
-        self._configure_style()
-        self._build_ui()
-
-    def _configure_style(self) -> None:
-        style = ttk.Style(self)
-
-        try:
-            style.theme_use("vista")
-        except tk.TclError:
-            pass
-
-        style.configure(
-            "Title.TLabel",
-            font=("Segoe UI", 20, "bold"),
+        matches = list(
+            pattern.finditer(line)
         )
 
-        style.configure(
-            "Subtitle.TLabel",
-            font=("Segoe UI", 10),
-            foreground="#555555",
+        for match in matches:
+
+            number = match.group(
+                "number"
+            )
+
+            date_text = match.group(
+                "date"
+            )
+
+            amount = money_value(
+                match.group("amount")
+            )
+
+            if amount is None:
+                continue
+
+            txn = self.make_transaction(
+                date_text,
+                -abs(amount),
+                f"Check {number}",
+                "Check",
+                self.year,
+                number
+            )
+
+            if txn:
+                transactions.append(txn)
+
+        return transactions
+
+    # --------------------------------------------------------
+    # NORMAL TRANSACTION PARSER
+    # --------------------------------------------------------
+
+    def parse_transaction_line(
+        self,
+        line,
+        source
+    ):
+
+        transactions = []
+
+        matches = list(
+            DATE_AMOUNT_RE.finditer(
+                line
+            )
         )
 
-        style.configure(
-            "Status.TLabel",
-            font=("Segoe UI", 9),
+        if not matches:
+            return transactions
+
+        for index, match in enumerate(
+            matches
+        ):
+
+            date_text = match.group(
+                "date"
+            )
+
+            amount_text = match.group(
+                "amount"
+            )
+
+            amount = money_value(
+                amount_text
+            )
+
+            if amount is None:
+                continue
+
+            start = match.end()
+
+            if index + 1 < len(matches):
+
+                end = matches[
+                    index + 1
+                ].start()
+
+            else:
+
+                end = len(line)
+
+            description = line[
+                start:end
+            ]
+
+            description = normalize_description(
+                description
+            )
+
+            if not description:
+                continue
+
+            if source == "Debit":
+
+                final_amount = -abs(
+                    amount
+                )
+
+            else:
+
+                final_amount = abs(
+                    amount
+                )
+
+            txn = self.make_transaction(
+                date_text,
+                final_amount,
+                description,
+                source,
+                self.year
+            )
+
+            if txn:
+                transactions.append(
+                    txn
+                )
+
+        return transactions
+
+    # --------------------------------------------------------
+    # MAIN SECTION PARSER
+    # --------------------------------------------------------
+
+    def parse_transactions(self):
+
+        transactions = []
+
+        pending = None
+
+        for page in self.pages:
+
+            lines = page[
+                "text"
+            ].splitlines()
+
+            for raw_line in lines:
+
+                line = raw_line.rstrip()
+
+                stripped = clean_spaces(
+                    line
+                )
+
+                if not stripped:
+                    continue
+
+                new_section = (
+                    self.detect_section(
+                        stripped
+                    )
+                )
+
+                if new_section is not None:
+
+                    self.section = (
+                        new_section
+                    )
+
+                    pending = None
+
+                    continue
+
+                # ------------------------------------------------
+                # CHECKS
+                # ------------------------------------------------
+
+                if self.section == self.CHECKS:
+
+                    found = (
+                        self.parse_check_line(
+                            stripped
+                        )
+                    )
+
+                    if found:
+                        transactions.extend(
+                            found
+                        )
+
+                    continue
+
+                # ------------------------------------------------
+                # DEBITS / CREDITS
+                # ------------------------------------------------
+
+                if self.section in (
+                    self.DEBIT,
+                    self.CREDIT
+                ):
+
+                    source = (
+                        "Debit"
+                        if self.section
+                        == self.DEBIT
+                        else "Credit"
+                    )
+
+                    found = (
+                        self.parse_transaction_line(
+                            stripped,
+                            source
+                        )
+                    )
+
+                    if found:
+
+                        transactions.extend(
+                            found
+                        )
+
+                        pending = found[-1]
+
+                    else:
+
+                        # Description continuation
+                        if pending:
+
+                            continuation = (
+                                normalize_description(
+                                    stripped
+                                )
+                            )
+
+                            blocked_words = (
+                                "page ",
+                                "daily balance",
+                                "account summary",
+                                "beginning balance",
+                                "ending balance",
+                                "analysis period",
+                                "service charge"
+                            )
+
+                            if (
+                                continuation
+                                and not any(
+                                    x in
+                                    continuation.lower()
+                                    for x in
+                                    blocked_words
+                                )
+                            ):
+
+                                pending["name"] = (
+                                    pending["name"]
+                                    + " "
+                                    + continuation
+                                )[:255]
+
+        return transactions
+
+
+# ============================================================
+# FIFTH THIRD
+# ============================================================
+
+class FifthThirdParser(
+    SectionParser
+):
+    """
+    Fifth Third statements generally contain:
+
+        Checks
+
+        Withdrawals / Debits
+        Date Amount Description
+
+        Deposits / Credits
+        Date Amount Description
+
+    The parser intentionally does NOT rely on one giant regex.
+    """
+
+    pass
+
+
+# ============================================================
+# CLIMATE FIRST
+# ============================================================
+
+class ClimateFirstParser(
+    SectionParser
+):
+
+    def detect_section(self, line):
+
+        s = clean_spaces(
+            line
+        ).lower()
+
+        if (
+            "checks paid" in s
+            or "checks in number order" in s
+            or (
+                "checks" in s
+                and (
+                    "number" in s
+                    or "date" in s
+                )
+            )
+        ):
+
+            return self.CHECKS
+
+        if (
+            "deposits and additions" in s
+            or "deposits" in s
+            or "additions" in s
+        ):
+
+            return self.CREDIT
+
+        if (
+            "checks and withdrawals" in s
+            or "withdrawals" in s
+            or "debits" in s
+        ):
+
+            return self.DEBIT
+
+        if (
+            "daily balance" in s
+            or "interest rate summary" in s
+            or "account summary" in s
+        ):
+
+            return self.NONE
+
+        return None
+
+    def parse_check_line(self, line):
+
+        transactions = []
+
+        pattern = re.compile(
+            rf"(?P<date>{DATE_RE})"
+            rf"\s+"
+            rf"(?P<number>\d{{3,7}})\*?"
+            rf"\s+"
+            rf"(?P<amount>{MONEY_RE})",
+            re.I
         )
 
-    def _build_ui(self) -> None:
-        header = ttk.Frame(self, padding=(20, 18))
-        header.pack(fill="x")
+        for match in pattern.finditer(
+            line
+        ):
 
-        ttk.Label(
+            number = match.group(
+                "number"
+            )
+
+            date_text = match.group(
+                "date"
+            )
+
+            amount = money_value(
+                match.group("amount")
+            )
+
+            if amount is None:
+                continue
+
+            txn = self.make_transaction(
+                date_text,
+                -abs(amount),
+                f"Check {number}",
+                "Check",
+                self.year,
+                number
+            )
+
+            if txn:
+                transactions.append(
+                    txn
+                )
+
+        return transactions
+
+
+# ============================================================
+# GENERIC
+# ============================================================
+
+class GenericParser(
+    SectionParser
+):
+
+    def detect_section(self, line):
+
+        s = clean_spaces(
+            line
+        ).lower()
+
+        # Check section
+        if (
+            "checks paid" in s
+            or (
+                "checks" in s
+                and (
+                    "date" in s
+                    or "number" in s
+                )
+            )
+        ):
+
+            return self.CHECKS
+
+        # Debit section
+        if any(
+            term in s
+            for term in (
+                "withdrawals",
+                "withdrawal",
+                "debits",
+                "debit",
+                "payments",
+                "charges"
+            )
+        ):
+
+            return self.DEBIT
+
+        # Credit section
+        if any(
+            term in s
+            for term in (
+                "deposits",
+                "deposit",
+                "credits",
+                "credit",
+                "additions",
+                "receipts"
+            )
+        ):
+
+            return self.CREDIT
+
+        # Stop
+        if any(
+            term in s
+            for term in (
+                "daily balance",
+                "balance summary",
+                "account summary",
+                "beginning balance",
+                "ending balance",
+                "interest rate",
+                "service charge",
+                "analysis period"
+            )
+        ):
+
+            return self.NONE
+
+        return None
+
+
+# ============================================================
+# PARSER FACTORY
+# ============================================================
+
+def create_parser(bank):
+
+    if bank == "Fifth Third Bank":
+        return FifthThirdParser()
+
+    if bank == "Climate First Bank":
+        return ClimateFirstParser()
+
+    return GenericParser()
+
+
+# ============================================================
+# QBO GENERATOR
+# ============================================================
+
+class QBOGenerator:
+
+    def __init__(
+        self,
+        bank_name,
+        account_number,
+        fid="",
+        bid=""
+    ):
+
+        self.bank_name = clean_spaces(
+            bank_name
+        )
+
+        self.account_number = (
+            account_number.strip()
+        )
+
+        self.fid = fid.strip()
+        self.bid = bid.strip()
+
+    # --------------------------------------------------------
+    # FITID
+    # --------------------------------------------------------
+
+    def fitid(
+        self,
+        transaction,
+        index
+    ):
+
+        raw = "|".join([
+            transaction["date"],
+            str(
+                transaction["amount"]
+            ),
+            transaction["name"],
+            str(
+                transaction.get(
+                    "check_num",
+                    ""
+                ) or ""
+            ),
+            str(index)
+        ])
+
+        return hashlib.sha256(
+            raw.encode("utf-8")
+        ).hexdigest()[:32]
+
+    # --------------------------------------------------------
+    # GENERATE QBO / OFX
+    # --------------------------------------------------------
+
+    def generate(
+        self,
+        transactions,
+        beginning_balance=None,
+        ending_balance=None
+    ):
+
+        if not transactions:
+
+            raise ValueError(
+                "There are no transactions to export."
+            )
+
+        dates = [
+            t["date"]
+            for t in transactions
+        ]
+
+        start_date = min(dates)
+        end_date = max(dates)
+
+        now = datetime.datetime.now()
+
+        server_time = now.strftime(
+            "%Y%m%d%H%M%S"
+        )
+
+        lines = [
+
+            "OFXHEADER:100",
+            "DATA:OFXSGML",
+            "VERSION:103",
+            "SECURITY:NONE",
+            "ENCODING:USASCII",
+            "CHARSET:1252",
+            "COMPRESSION:NONE",
+            "OLDFILEUID:NONE",
+            "NEWFILEUID:NONE",
+            "",
+
+            "<OFX>",
+
+            "<SIGNONMSGSRSV1>",
+            "<SONRS>",
+
+            "<STATUS>",
+            "<CODE>0",
+            "<SEVERITY>INFO",
+            "</STATUS>",
+
+            f"<DTSERVER>{server_time}",
+            "<LANGUAGE>ENG",
+
+        ]
+
+        lines.extend([
+            "<FI>",
+            f"<ORG>{xml_escape(self.bank_name)}",
+            f"<FID>{xml_escape(self.fid or '0')}",
+            "</FI>",
+        ])
+
+        lines.extend([
+
+            "</SONRS>",
+            "</SIGNONMSGSRSV1>",
+
+            "<BANKMSGSRSV1>",
+            "<STMTTRNRS>",
+            "<TRNUID>0",
+
+            "<STATUS>",
+            "<CODE>0",
+            "<SEVERITY>INFO",
+            "</STATUS>",
+
+            "<STMTRS>",
+            "<CURDEF>USD",
+
+            "<BANKACCTFROM>",
+        ])
+
+        if self.bid:
+
+            lines.append(
+                f"<BANKID>{xml_escape(self.bid)}"
+            )
+
+        else:
+
+            lines.append(
+                "<BANKID>000000000"
+            )
+
+        lines.extend([
+
+            f"<ACCTID>"
+            f"{xml_escape(self.account_number)}",
+
+            "<ACCTTYPE>CHECKING",
+
+            "</BANKACCTFROM>",
+
+            "<BANKTRANLIST>",
+
+            f"<DTSTART>{start_date}",
+            f"<DTEND>{end_date}",
+        ])
+
+        # ----------------------------------------------------
+        # TRANSACTIONS
+        # ----------------------------------------------------
+
+        for index, transaction in enumerate(
+            transactions,
+            start=1
+        ):
+
+            amount = float(
+                transaction["amount"]
+            )
+
+            if transaction.get(
+                "check_num"
+            ):
+
+                trntype = "CHECK"
+
+            elif amount < 0:
+
+                trntype = "DEBIT"
+
+            else:
+
+                trntype = "CREDIT"
+
+            fid = self.fitid(
+                transaction,
+                index
+            )
+
+            lines.extend([
+
+                "<STMTTRN>",
+
+                f"<TRNTYPE>{trntype}",
+
+                f"<DTPOSTED>"
+                f"{transaction['date']}",
+
+                f"<TRNAMT>"
+                f"{amount:.2f}",
+
+                f"<FITID>{fid}",
+
+                f"<NAME>"
+                f"{xml_escape(transaction['name'])}",
+            ])
+
+            if transaction.get(
+                "check_num"
+            ):
+
+                lines.append(
+                    f"<CHECKNUM>"
+                    f"{xml_escape(transaction['check_num'])}"
+                )
+
+            lines.append(
+                "</STMTTRN>"
+            )
+
+        lines.append(
+            "</BANKTRANLIST>"
+        )
+
+        # ----------------------------------------------------
+        # ENDING BALANCE
+        # ----------------------------------------------------
+
+        if ending_balance is None:
+
+            if beginning_balance is not None:
+
+                ending_balance = (
+                    beginning_balance
+                    + sum(
+                        t["amount"]
+                        for t in transactions
+                    )
+                )
+
+            else:
+
+                ending_balance = sum(
+                    t["amount"]
+                    for t in transactions
+                )
+
+        ending_balance = round(
+            ending_balance,
+            2
+        )
+
+        lines.extend([
+
+            "<LEDGERBAL>",
+
+            f"<BALAMT>"
+            f"{ending_balance:.2f}",
+
+            f"<DTASOF>{end_date}",
+
+            "</LEDGERBAL>",
+
+            "</STMTRS>",
+            "</STMTTRNRS>",
+            "</BANKMSGSRSV1>",
+
+            "</OFX>",
+        ])
+
+        return (
+            "\r\n".join(lines)
+            + "\r\n"
+        )
+
+
+# ============================================================
+# GUI
+# ============================================================
+
+class ConverterApp:
+
+    def __init__(self, root):
+
+        self.root = root
+
+        self.root.title(
+            APP_NAME
+            + " | "
+            + SITE_NAME
+        )
+
+        self.root.geometry(
+            "1280x820"
+        )
+
+        self.root.minsize(
+            1000,
+            650
+        )
+
+        self.root.protocol(
+            "WM_DELETE_WINDOW",
+            self.on_close
+        )
+
+        self.pdf_file = None
+        self.data = None
+        self.transactions = []
+
+        if LicenseManager is None:
+            messagebox.showerror(
+                "License System Error",
+                "The license system could not be loaded.\n\n"
+                "Make sure api_client.py and license_manager.py "
+                "are in the same folder as this application."
+            )
+            self.root.destroy()
+            return
+
+        self.license_manager = LicenseManager(
+            api_client=APIClient(base_url=LICENSE_SERVER_URL),
+            version=APP_VERSION,
+        )
+        self.license_valid = False
+
+        self.build_ui()
+        self.root.after(100, self.check_license_on_startup)
+
+    # ========================================================
+    # UI
+    # ========================================================
+
+    def build_ui(self):
+
+        main = ttk.Frame(
+            self.root,
+            padding=10
+        )
+
+        main.pack(
+            fill=tk.BOTH,
+            expand=True
+        )
+
+        # ----------------------------------------------------
+        # BRAND HEADER
+        # ----------------------------------------------------
+
+        header = tk.Frame(
+            main,
+            bg="#17365D",
+            height=72
+        )
+
+        header.pack(
+            fill=tk.X,
+            pady=(0, 10)
+        )
+
+        header.pack_propagate(
+            False
+        )
+
+        title = tk.Label(
             header,
-            text="PDF → QBO Converter",
-            style="Title.TLabel",
-        ).pack(anchor="w")
+            text="TaxPreparerTools.com",
+            bg="#17365D",
+            fg="white",
+            font=(
+                "Segoe UI",
+                18,
+                "bold"
+            )
+        )
 
-        ttk.Label(
+        title.pack(
+            side=tk.LEFT,
+            padx=18
+        )
+
+        subtitle = tk.Label(
             header,
             text=(
-                "Convert bank-statement PDFs into QuickBooks-compatible "
-                "QBO/OFX transaction files."
+                "PDF → QBO Bank Statement Converter"
             ),
-            style="Subtitle.TLabel",
-        ).pack(anchor="w", pady=(4, 0))
+            bg="#17365D",
+            fg="#D9EAF7",
+            font=(
+                "Segoe UI",
+                11
+            )
+        )
 
-        controls = ttk.Frame(self, padding=(20, 5))
-        controls.pack(fill="x")
+        subtitle.pack(
+            side=tk.LEFT
+        )
+
+        website_btn = tk.Button(
+            header,
+            text="Visit TaxPreparerTools.com",
+            command=self.open_website,
+            bg="#2E75B6",
+            fg="white",
+            activebackground="#4F91C9",
+            activeforeground="white",
+            relief=tk.FLAT,
+            cursor="hand2",
+            font=(
+                "Segoe UI",
+                10,
+                "bold"
+            ),
+            padx=12
+        )
+
+        website_btn.pack(
+            side=tk.RIGHT,
+            padx=15
+        )
+
+        # ----------------------------------------------------
+        # TOOLBAR
+        # ----------------------------------------------------
+
+        top = ttk.Frame(
+            main
+        )
+
+        top.pack(
+            fill=tk.X,
+            pady=(0, 8)
+        )
 
         ttk.Button(
-            controls,
-            text="1. Select PDF",
-            command=self.select_pdf,
-        ).pack(side="left", padx=(0, 8))
+            top,
+            text="Open PDF",
+            command=self.open_pdf
+        ).pack(
+            side=tk.LEFT
+        )
 
         ttk.Button(
-            controls,
-            text="2. Analyze PDF",
-            command=self.analyze_pdf,
-        ).pack(side="left", padx=(0, 8))
+            top,
+            text="Save Extracted Text",
+            command=self.save_text
+        ).pack(
+            side=tk.LEFT,
+            padx=5
+        )
+
+        self.create_button = ttk.Button(
+            top,
+            text="Create QBO",
+            command=self.create_qbo,
+            state=tk.DISABLED
+        )
+
+        self.create_button.pack(
+            side=tk.LEFT,
+            padx=5
+        )
 
         ttk.Button(
-            controls,
-            text="Export QBO",
-            command=self.export_qbo,
-        ).pack(side="left")
-
-        ttk.Button(
-            controls,
+            top,
             text="Clear",
-            command=self.clear_all,
-        ).pack(side="right")
-
-        metadata = ttk.LabelFrame(
-            self,
-            text="Account Information",
-            padding=12,
+            command=self.clear
+        ).pack(
+            side=tk.LEFT,
+            padx=5
         )
-        metadata.pack(fill="x", padx=20, pady=10)
 
-        ttk.Label(
-            metadata,
-            text="Bank ID:",
-        ).grid(row=0, column=0, sticky="w")
-
-        ttk.Entry(
-            metadata,
-            textvariable=self.bank_var,
-            width=28,
-        ).grid(row=0, column=1, padx=(5, 20), sticky="w")
-
-        ttk.Label(
-            metadata,
-            text="Account ID:",
-        ).grid(row=0, column=2, sticky="w")
-
-        ttk.Entry(
-            metadata,
-            textvariable=self.account_id_var,
-            width=25,
-        ).grid(row=0, column=3, padx=(5, 20), sticky="w")
-
-        ttk.Label(
-            metadata,
-            text="Type:",
-        ).grid(row=0, column=4, sticky="w")
-
-        account_type = ttk.Combobox(
-            metadata,
-            textvariable=self.account_type_var,
-            values=[
-                "CHECKING",
-                "SAVINGS",
-                "MONEYMRKT",
-                "CREDITLINE",
-            ],
-            state="readonly",
-            width=15,
+        ttk.Button(
+            top,
+            text="License",
+            command=self.manage_license
+        ).pack(
+            side=tk.LEFT,
+            padx=5
         )
-        account_type.grid(row=0, column=5, padx=5)
 
-        file_frame = ttk.Frame(self, padding=(20, 0))
-        file_frame.pack(fill="x")
+        ttk.Button(
+            top,
+            text="More Tax Tools",
+            command=self.open_website
+        ).pack(
+            side=tk.RIGHT
+        )
 
         self.file_label = ttk.Label(
-            file_frame,
-            text="No PDF selected.",
+            top,
+            text="No PDF selected."
         )
-        self.file_label.pack(anchor="w")
 
-        table_frame = ttk.Frame(self, padding=(20, 10))
-        table_frame.pack(fill="both", expand=True)
+        self.file_label.pack(
+            side=tk.LEFT,
+            padx=15
+        )
+
+        # ----------------------------------------------------
+        # BANK
+        # ----------------------------------------------------
+
+        bank_frame = ttk.LabelFrame(
+            main,
+            text="Bank / Parser",
+            padding=8
+        )
+
+        bank_frame.pack(
+            fill=tk.X,
+            pady=(0, 8)
+        )
+
+        ttk.Label(
+            bank_frame,
+            text="Bank:"
+        ).pack(
+            side=tk.LEFT
+        )
+
+        self.bank_var = tk.StringVar(
+            value="Auto Detect"
+        )
+
+        self.bank_combo = ttk.Combobox(
+            bank_frame,
+            textvariable=self.bank_var,
+            values=[
+                "Auto Detect",
+                "Fifth Third Bank",
+                "Climate First Bank",
+                "Generic Bank Statement",
+            ],
+            state="readonly",
+            width=30
+        )
+
+        self.bank_combo.pack(
+            side=tk.LEFT,
+            padx=8
+        )
+
+        ttk.Label(
+            bank_frame,
+            text=(
+                "Auto Detect identifies the bank from "
+                "the PDF. You can also force a parser."
+            )
+        ).pack(
+            side=tk.LEFT
+        )
+
+        # ----------------------------------------------------
+        # ACCOUNT INFORMATION
+        # ----------------------------------------------------
+
+        account_frame = ttk.Frame(
+            main
+        )
+
+        account_frame.pack(
+            fill=tk.X,
+            pady=(0, 8)
+        )
+
+        ttk.Label(
+            account_frame,
+            text="Account ID:"
+        ).pack(
+            side=tk.LEFT
+        )
+
+        self.account_var = tk.StringVar()
+
+        ttk.Entry(
+            account_frame,
+            textvariable=self.account_var,
+            width=28
+        ).pack(
+            side=tk.LEFT,
+            padx=8
+        )
+
+        ttk.Label(
+            account_frame,
+            text="Bank ID / Routing:"
+        ).pack(
+            side=tk.LEFT,
+            padx=(20, 5)
+        )
+
+        self.bid_var = tk.StringVar()
+
+        ttk.Entry(
+            account_frame,
+            textvariable=self.bid_var,
+            width=18
+        ).pack(
+            side=tk.LEFT
+        )
+
+        ttk.Label(
+            account_frame,
+            text="Optional"
+        ).pack(
+            side=tk.LEFT,
+            padx=5
+        )
+
+        # ----------------------------------------------------
+        # QBO INFO
+        # ----------------------------------------------------
+
+        qbo_frame = ttk.Frame(
+            main
+        )
+
+        qbo_frame.pack(
+            fill=tk.X,
+            pady=(0, 8)
+        )
+
+        ttk.Label(
+            qbo_frame,
+            text="Financial Institution:"
+        ).pack(
+            side=tk.LEFT
+        )
+
+        self.fi_var = tk.StringVar()
+
+        ttk.Entry(
+            qbo_frame,
+            textvariable=self.fi_var,
+            width=30
+        ).pack(
+            side=tk.LEFT,
+            padx=8
+        )
+
+        ttk.Label(
+            qbo_frame,
+            text="FID:"
+        ).pack(
+            side=tk.LEFT,
+            padx=(15, 5)
+        )
+
+        self.fid_var = tk.StringVar()
+
+        ttk.Entry(
+            qbo_frame,
+            textvariable=self.fid_var,
+            width=15
+        ).pack(
+            side=tk.LEFT
+        )
+
+        ttk.Label(
+            qbo_frame,
+            text="Optional"
+        ).pack(
+            side=tk.LEFT,
+            padx=5
+        )
+
+        # ----------------------------------------------------
+        # RECONCILIATION
+        # ----------------------------------------------------
+
+        recon = ttk.LabelFrame(
+            main,
+            text="Statement Reconciliation",
+            padding=10
+        )
+
+        recon.pack(
+            fill=tk.X,
+            pady=(0, 8)
+        )
+
+        self.recon_var = tk.StringVar(
+            value="Open a PDF to begin."
+        )
+
+        self.recon_label = ttk.Label(
+            recon,
+            textvariable=self.recon_var,
+            justify=tk.LEFT,
+            font=(
+                "Segoe UI",
+                10
+            )
+        )
+
+        self.recon_label.pack(
+            anchor=tk.W
+        )
+
+        # ----------------------------------------------------
+        # TRANSACTION TABLE
+        # ----------------------------------------------------
+
+        table_frame = ttk.Frame(
+            main
+        )
+
+        table_frame.pack(
+            fill=tk.BOTH,
+            expand=True
+        )
 
         columns = (
             "date",
-            "description",
             "type",
             "amount",
-            "confidence",
-            "page",
-            "reviewed",
+            "check",
+            "description"
         )
 
         self.tree = ttk.Treeview(
             table_frame,
             columns=columns,
-            show="headings",
-            selectmode="extended",
+            show="headings"
         )
 
         headings = {
             "date": "Date",
-            "description": "Description",
             "type": "Type",
             "amount": "Amount",
-            "confidence": "Confidence",
-            "page": "Page",
-            "reviewed": "Reviewed",
+            "check": "Check #",
+            "description": "Description"
         }
 
         widths = {
             "date": 100,
-            "description": 430,
-            "type": 90,
-            "amount": 110,
-            "confidence": 100,
-            "page": 60,
-            "reviewed": 90,
+            "type": 100,
+            "amount": 120,
+            "check": 100,
+            "description": 700
         }
 
         for column in columns:
-            self.tree.heading(column, text=headings[column])
+
+            self.tree.heading(
+                column,
+                text=headings[column]
+            )
+
             self.tree.column(
                 column,
                 width=widths[column],
-                anchor="w",
+                anchor=(
+                    tk.E
+                    if column == "amount"
+                    else tk.W
+                )
             )
 
-        scrollbar_y = ttk.Scrollbar(
+        scroll_y = ttk.Scrollbar(
             table_frame,
-            orient="vertical",
-            command=self.tree.yview,
-        )
-
-        scrollbar_x = ttk.Scrollbar(
-            table_frame,
-            orient="horizontal",
-            command=self.tree.xview,
+            orient=tk.VERTICAL,
+            command=self.tree.yview
         )
 
         self.tree.configure(
-            yscrollcommand=scrollbar_y.set,
-            xscrollcommand=scrollbar_x.set,
+            yscrollcommand=scroll_y.set
         )
 
-        self.tree.grid(row=0, column=0, sticky="nsew")
-        scrollbar_y.grid(row=0, column=1, sticky="ns")
-        scrollbar_x.grid(row=1, column=0, sticky="ew")
-
-        table_frame.rowconfigure(0, weight=1)
-        table_frame.columnconfigure(0, weight=1)
-
-        self.tree.bind(
-            "<Double-1>",
-            self.edit_selected_transaction,
+        self.tree.pack(
+            side=tk.LEFT,
+            fill=tk.BOTH,
+            expand=True
         )
 
-        footer = ttk.Frame(self, padding=(20, 8))
-        footer.pack(fill="x")
-
-        ttk.Label(
-            footer,
-            textvariable=self.status_var,
-            style="Status.TLabel",
-        ).pack(side="left")
-
-        ttk.Label(
-            footer,
-            text="Double-click a transaction to edit it.",
-            style="Status.TLabel",
-        ).pack(side="right")
-
-    def select_pdf(self) -> None:
-        path = filedialog.askopenfilename(
-            title="Select bank statement PDF",
-            filetypes=[
-                ("PDF files", "*.pdf"),
-                ("All files", "*.*"),
-            ],
+        scroll_y.pack(
+            side=tk.RIGHT,
+            fill=tk.Y
         )
 
-        if not path:
-            return
+        # ----------------------------------------------------
+        # PROMOTIONAL FOOTER
+        # ----------------------------------------------------
 
-        self.pdf_path = Path(path)
-
-        self.file_label.config(
-            text=f"Selected: {self.pdf_path}"
+        promo = tk.Frame(
+            main,
+            bg="#F2F6FA",
+            bd=1,
+            relief=tk.SOLID,
+            padx=10,
+            pady=7
         )
 
-        self.status_var.set(
-            "PDF selected. Click Analyze PDF."
+        promo.pack(
+            fill=tk.X,
+            pady=(8, 0)
         )
 
-    def analyze_pdf(self) -> None:
-        if not self.pdf_path:
-            messagebox.showwarning(
-                APP_NAME,
-                "Select a PDF first.",
-            )
-            return
-
-        try:
-            self.status_var.set("Reading PDF...")
-            self.update_idletasks()
-
-            transactions, bank, page_count = parse_pdf(
-                self.pdf_path
-            )
-
-            self.transactions = transactions
-            self.detected_bank = bank
-            self.page_count = page_count
-
-            if bank != "generic":
-                self.bank_var.set(bank)
-
-            self._refresh_table()
-
-            if not transactions:
-                self.status_var.set(
-                    "No transactions detected."
-                )
-
-                messagebox.showwarning(
-                    APP_NAME,
-                    (
-                        "No transactions were detected.\n\n"
-                        "This may be a scanned/image-only PDF or an "
-                        "unsupported statement layout.\n\n"
-                        "OCR support can be added as a later module."
-                    ),
-                )
-                return
-
-            self.status_var.set(
-                f"Detected {len(transactions)} transactions "
-                f"across {page_count} pages. "
-                f"Detected bank: {bank}."
-            )
-
-        except Exception as exc:
-            self.status_var.set("PDF analysis failed.")
-
-            messagebox.showerror(
-                APP_NAME,
-                f"Could not analyze the PDF.\n\n{exc}",
-            )
-
-    def _refresh_table(self) -> None:
-        for item in self.tree.get_children():
-            self.tree.delete(item)
-
-        for index, transaction in enumerate(self.transactions):
-            self.tree.insert(
-                "",
-                "end",
-                iid=str(index),
-                values=(
-                    transaction.transaction_date.isoformat(),
-                    transaction.description,
-                    transaction.transaction_type,
-                    f"{transaction.amount:.2f}",
-                    transaction.confidence,
-                    transaction.source_page,
-                    "YES" if transaction.reviewed else "NO",
-                ),
-            )
-
-    def edit_selected_transaction(self, _event=None) -> None:
-        selection = self.tree.selection()
-
-        if len(selection) != 1:
-            return
-
-        index = int(selection[0])
-        transaction = self.transactions[index]
-
-        dialog = TransactionEditor(
-            self,
-            transaction,
-        )
-
-        self.wait_window(dialog)
-
-        if dialog.result is not None:
-            self.transactions[index] = dialog.result
-            self._refresh_table()
-
-    def export_qbo(self) -> None:
-        if not self.transactions:
-            messagebox.showwarning(
-                APP_NAME,
-                "Analyze a PDF before exporting.",
-            )
-            return
-
-        unreviewed = [
-            transaction
-            for transaction in self.transactions
-            if not transaction.reviewed
-        ]
-
-        low_confidence = [
-            transaction
-            for transaction in self.transactions
-            if transaction.confidence == "LOW"
-        ]
-
-        if unreviewed:
-            answer = messagebox.askyesno(
-                APP_NAME,
-                (
-                    f"{len(unreviewed)} transaction(s) have not been "
-                    "marked as reviewed.\n\n"
-                    "Export anyway?"
-                ),
-            )
-
-            if not answer:
-                return
-
-        if low_confidence:
-            answer = messagebox.askyesno(
-                APP_NAME,
-                (
-                    f"{len(low_confidence)} transaction(s) have LOW "
-                    "confidence.\n\n"
-                    "Reviewing them before export is strongly recommended.\n\n"
-                    "Continue?"
-                ),
-            )
-
-            if not answer:
-                return
-
-        account_id = self.account_id_var.get().strip()
-
-        if not account_id:
-            messagebox.showwarning(
-                APP_NAME,
-                (
-                    "Enter the bank account ID before exporting.\n\n"
-                    "Use the account number or another identifier "
-                    "appropriate for your QuickBooks import workflow."
-                ),
-            )
-            return
-
-        if not self._validate_transactions():
-            return
-
-        output_path = filedialog.asksaveasfilename(
-            title="Save QBO file",
-            defaultextension=".qbo",
-            filetypes=[
-                ("QBO files", "*.qbo"),
-                ("OFX files", "*.ofx"),
-                ("All files", "*.*"),
-            ],
-            initialfile=(
-                f"{self.pdf_path.stem}_converted.qbo"
-                if self.pdf_path
-                else "converted.qbo"
+        promo_left = tk.Label(
+            promo,
+            text=(
+                "TaxPreparerTools.com  •  "
+                "Free tax tools, calculators, "
+                "IRS references & professional resources"
             ),
+            bg="#F2F6FA",
+            fg="#17365D",
+            font=(
+                "Segoe UI",
+                9,
+                "bold"
+            )
         )
 
-        if not output_path:
+        promo_left.pack(
+            side=tk.LEFT
+        )
+
+        promo_link = tk.Label(
+            promo,
+            text="Explore 50+ Tax Tools →",
+            bg="#F2F6FA",
+            fg="#1769AA",
+            cursor="hand2",
+            font=(
+                "Segoe UI",
+                9,
+                "underline"
+            )
+        )
+
+        promo_link.pack(
+            side=tk.RIGHT
+        )
+
+        promo_link.bind(
+            "<Button-1>",
+            lambda event: self.open_website()
+        )
+
+        # ----------------------------------------------------
+        # STATUS
+        # ----------------------------------------------------
+
+        self.status_var = tk.StringVar(
+            value=(
+                "Ready. "
+                "Open a bank statement PDF to begin."
+            )
+        )
+
+        ttk.Label(
+            main,
+            textvariable=self.status_var,
+            relief=tk.SUNKEN,
+            anchor=tk.W
+        ).pack(
+            fill=tk.X,
+            pady=(8, 0)
+        )
+
+    # ========================================================
+    # LICENSE
+    # ========================================================
+
+    def check_license_on_startup(self):
+        key = self.license_manager.get_license_key()
+
+        if not key:
+            self.license_valid = False
+            self.create_button.config(state=tk.DISABLED)
+            self.show_license_dialog()
             return
 
         try:
-            qbo = build_qbo(
-                transactions=self.transactions,
-                bank_id=self.bank_var.get().strip()
-                or "UNKNOWN",
-                account_id=account_id,
-                account_type=self.account_type_var.get(),
-            )
-
-            Path(output_path).write_text(
-                qbo,
-                encoding="ascii",
-                errors="xmlcharrefreplace",
-            )
-
-            self.status_var.set(
-                f"Exported {len(self.transactions)} transactions."
-            )
-
-            messagebox.showinfo(
-                APP_NAME,
-                (
-                    "QBO file created successfully.\n\n"
-                    f"{output_path}\n\n"
-                    "Review the file in QuickBooks before relying "
-                    "on the imported transactions."
-                ),
-            )
-
+            self.license_manager.validate()
+            self.license_valid = True
+            self.status_var.set("License verified. Ready to convert PDFs.")
         except Exception as exc:
-            messagebox.showerror(
-                APP_NAME,
-                f"Could not create QBO file.\n\n{exc}",
+            self.license_valid = False
+            self.create_button.config(state=tk.DISABLED)
+            answer = messagebox.askyesno(
+                "License Validation Failed",
+                "Your license could not be validated.\n\n"
+                f"{exc}\n\n"
+                "Would you like to enter a license key?"
             )
+            if answer:
+                self.show_license_dialog()
+            else:
+                self.status_var.set("License required.")
 
-    def _validate_transactions(self) -> bool:
-        errors: list[str] = []
+    def show_license_dialog(self):
+        win = tk.Toplevel(self.root)
+        win.title("Activate PDF → QBO Converter")
+        win.geometry("520x300")
+        win.resizable(False, False)
+        win.transient(self.root)
+        win.grab_set()
 
-        for index, transaction in enumerate(self.transactions, start=1):
-            if not transaction.description.strip():
-                errors.append(
-                    f"Transaction {index}: missing description."
+        frame = ttk.Frame(win, padding=25)
+        frame.pack(fill=tk.BOTH, expand=True)
+
+        ttk.Label(
+            frame,
+            text="Activate Your License",
+            font=("Segoe UI", 18, "bold")
+        ).pack(pady=(0, 8))
+
+        ttk.Label(
+            frame,
+            text="Enter the license key purchased from TaxPreparerTools.com.",
+            wraplength=450,
+            justify=tk.CENTER
+        ).pack(pady=(0, 15))
+
+        key_var = tk.StringVar(
+            value=self.license_manager.get_license_key() or ""
+        )
+
+        entry = ttk.Entry(
+            frame,
+            textvariable=key_var,
+            width=48
+        )
+        entry.pack(pady=5)
+        entry.focus_set()
+
+        status = tk.StringVar(value="")
+        ttk.Label(
+            frame,
+            textvariable=status,
+            wraplength=450,
+            justify=tk.CENTER
+        ).pack(pady=8)
+
+        buttons = ttk.Frame(frame)
+        buttons.pack(pady=10)
+
+        def activate():
+            key = key_var.get().strip()
+            if not key:
+                status.set("Enter your license key.")
+                return
+
+            status.set("Activating license...")
+            win.update_idletasks()
+
+            try:
+                self.license_manager.activate(key)
+                self.license_valid = True
+                self.status_var.set("License activated. Ready to convert PDFs.")
+                messagebox.showinfo(
+                    "License Activated",
+                    "Your PDF → QBO Converter license is active on this computer.",
+                    parent=win
                 )
+                win.grab_release()
+                win.destroy()
+            except Exception as exc:
+                self.license_valid = False
+                status.set(str(exc))
 
-            if transaction.amount < 0:
-                errors.append(
-                    f"Transaction {index}: negative absolute amount."
-                )
+        ttk.Button(
+            buttons,
+            text="Activate",
+            command=activate
+        ).pack(side=tk.LEFT, padx=5)
 
-            if transaction.transaction_type not in (
-                "DEBIT",
-                "CREDIT",
-            ):
-                errors.append(
-                    f"Transaction {index}: invalid transaction type."
-                )
+        ttk.Button(
+            buttons,
+            text="Buy / Manage License",
+            command=self.open_website
+        ).pack(side=tk.LEFT, padx=5)
 
-        if errors:
-            messagebox.showerror(
-                APP_NAME,
-                "Validation failed:\n\n"
-                + "\n".join(errors[:20]),
+        def close_dialog():
+            win.grab_release()
+            win.destroy()
+
+        ttk.Button(
+            buttons,
+            text="Close",
+            command=close_dialog
+        ).pack(side=tk.LEFT, padx=5)
+
+    def require_valid_license(self):
+        if not self.license_valid:
+            self.check_license_on_startup()
+
+        if not self.license_valid:
+            messagebox.showwarning(
+                "License Required",
+                "A valid license is required to create QBO files."
             )
             return False
 
-        return True
+        try:
+            self.license_manager.validate()
+            return True
+        except Exception as exc:
+            self.license_valid = False
+            self.create_button.config(state=tk.DISABLED)
+            messagebox.showerror(
+                "License Validation Failed",
+                str(exc)
+            )
+            return False
 
-    def clear_all(self) -> None:
-        self.pdf_path = None
-        self.transactions.clear()
-        self.detected_bank = "generic"
-        self.page_count = 0
+    def manage_license(self):
+        self.show_license_dialog()
 
-        self.bank_var.set("generic")
-        self.account_id_var.set("")
-        self.account_type_var.set("CHECKING")
+    # ========================================================
+    # WEBSITE
+    # ========================================================
 
-        self.file_label.config(
-            text="No PDF selected."
+    def open_website(self):
+
+        try:
+            webbrowser.open(
+                SITE_URL,
+                new=2
+            )
+
+        except Exception:
+
+            messagebox.showinfo(
+                "TaxPreparerTools.com",
+                SITE_URL
+            )
+
+    # ========================================================
+    # ABOUT
+    # ========================================================
+
+    def show_about(self):
+
+        win = tk.Toplevel(
+            self.root
         )
 
-        self._refresh_table()
-
-        self.status_var.set(
-            "Select a PDF bank statement to begin."
+        win.title(
+            "About TaxPreparerTools PDF → QBO"
         )
 
-
-class TransactionEditor(tk.Toplevel):
-    def __init__(
-        self,
-        parent: tk.Misc,
-        transaction: Transaction,
-    ) -> None:
-        super().__init__(parent)
-
-        self.result: Optional[Transaction] = None
-        self.original = transaction
-
-        self.title("Edit Transaction")
-        self.geometry("560x360")
-        self.resizable(False, False)
-
-        self.date_var = tk.StringVar(
-            value=transaction.transaction_date.isoformat()
+        win.geometry(
+            "560x390"
         )
 
-        self.description_var = tk.StringVar(
-            value=transaction.description
+        win.resizable(
+            False,
+            False
         )
 
-        self.type_var = tk.StringVar(
-            value=transaction.transaction_type
+        frame = ttk.Frame(
+            win,
+            padding=25
         )
 
-        self.amount_var = tk.StringVar(
-            value=f"{transaction.amount:.2f}"
+        frame.pack(
+            fill=tk.BOTH,
+            expand=True
         )
-
-        self.reviewed_var = tk.BooleanVar(
-            value=True
-        )
-
-        self._build()
-
-        self.transient(parent)
-        self.grab_set()
-
-    def _build(self) -> None:
-        frame = ttk.Frame(self, padding=20)
-        frame.pack(fill="both", expand=True)
 
         ttk.Label(
             frame,
-            text="Date (YYYY-MM-DD)",
-        ).grid(row=0, column=0, sticky="w", pady=8)
-
-        ttk.Entry(
-            frame,
-            textvariable=self.date_var,
-            width=40,
-        ).grid(row=0, column=1, sticky="ew", pady=8)
-
-        ttk.Label(
-            frame,
-            text="Description",
-        ).grid(row=1, column=0, sticky="w", pady=8)
-
-        ttk.Entry(
-            frame,
-            textvariable=self.description_var,
-            width=40,
-        ).grid(row=1, column=1, sticky="ew", pady=8)
-
-        ttk.Label(
-            frame,
-            text="Type",
-        ).grid(row=2, column=0, sticky="w", pady=8)
-
-        ttk.Combobox(
-            frame,
-            textvariable=self.type_var,
-            values=("DEBIT", "CREDIT"),
-            state="readonly",
-            width=37,
-        ).grid(row=2, column=1, sticky="ew", pady=8)
-
-        ttk.Label(
-            frame,
-            text="Amount",
-        ).grid(row=3, column=0, sticky="w", pady=8)
-
-        ttk.Entry(
-            frame,
-            textvariable=self.amount_var,
-            width=40,
-        ).grid(row=3, column=1, sticky="ew", pady=8)
-
-        ttk.Checkbutton(
-            frame,
-            text="Mark as reviewed",
-            variable=self.reviewed_var,
-        ).grid(
-            row=4,
-            column=1,
-            sticky="w",
-            pady=12,
+            text="TaxPreparerTools.com",
+            font=(
+                "Segoe UI",
+                20,
+                "bold"
+            )
+        ).pack(
+            pady=(0, 5)
         )
 
         ttk.Label(
             frame,
             text=(
-                "Source page: "
-                f"{self.original.source_page}\n"
-                f"Original confidence: {self.original.confidence}"
+                "PDF → QBO Bank Statement Converter"
             ),
-        ).grid(
-            row=5,
-            column=1,
-            sticky="w",
-            pady=8,
+            font=(
+                "Segoe UI",
+                12
+            )
+        ).pack(
+            pady=(0, 15)
         )
 
-        buttons = ttk.Frame(frame)
-        buttons.grid(
-            row=6,
-            column=0,
-            columnspan=2,
-            sticky="e",
-            pady=(20, 0),
+        text = (
+            "Convert bank statement PDFs into "
+            "QuickBooks-compatible QBO files.\n\n"
+
+            "Features:\n"
+            "• Multiple bank parsers\n"
+            "• Automatic bank detection\n"
+            "• Check parsing\n"
+            "• Debit and credit parsing\n"
+            "• Statement reconciliation\n"
+            "• QBO export\n"
+            "• PDF text diagnostics\n\n"
+
+            "More free tax tools, calculators, "
+            "IRS resources and professional tools:\n\n"
+
+            "TaxPreparerTools.com"
+        )
+
+        ttk.Label(
+            frame,
+            text=text,
+            justify=tk.CENTER
+        ).pack(
+            pady=5
         )
 
         ttk.Button(
-            buttons,
-            text="Cancel",
-            command=self.destroy,
-        ).pack(side="right", padx=5)
+            frame,
+            text="Visit TaxPreparerTools.com",
+            command=self.open_website
+        ).pack(
+            pady=15
+        )
 
         ttk.Button(
-            buttons,
-            text="Save",
-            command=self.save,
-        ).pack(side="right", padx=5)
+            frame,
+            text="Close",
+            command=win.destroy
+        ).pack()
 
-        frame.columnconfigure(1, weight=1)
+    # ========================================================
+    # OPEN PDF
+    # ========================================================
 
-    def save(self) -> None:
+    def open_pdf(self):
+
+        filename = filedialog.askopenfilename(
+            title="Select Bank Statement PDF",
+            filetypes=[
+                (
+                    "PDF files",
+                    "*.pdf"
+                ),
+                (
+                    "All files",
+                    "*.*"
+                )
+            ]
+        )
+
+        if not filename:
+            return
+
+        self.status_var.set(
+            "Reading PDF..."
+        )
+
+        self.root.update_idletasks()
+
         try:
-            transaction_date = date.fromisoformat(
-                self.date_var.get().strip()
+
+            # Read first to detect bank.
+            detector_parser = (
+                BaseStatementParser()
             )
-        except ValueError:
+
+            detector_parser.read_pdf(
+                filename
+            )
+
+            selected_bank = (
+                self.bank_var.get()
+            )
+
+            if selected_bank == "Auto Detect":
+
+                selected_bank = (
+                    BankDetector.detect(
+                        detector_parser.full_text
+                    )
+                )
+
+                self.bank_var.set(
+                    selected_bank
+                )
+
+            parser = create_parser(
+                selected_bank
+            )
+
+            self.status_var.set(
+                f"Parsing as "
+                f"{selected_bank}..."
+            )
+
+            self.root.update_idletasks()
+
+            data = parser.parse(
+                filename
+            )
+
+            self.pdf_file = filename
+            self.data = data
+            self.transactions = (
+                data["transactions"]
+            )
+
+            self.file_label.config(
+                text=os.path.basename(
+                    filename
+                )
+            )
+
+            # Auto financial institution
+            if not self.fi_var.get().strip():
+
+                self.fi_var.set(
+                    selected_bank
+                )
+
+            self.populate_table()
+
+            self.update_reconciliation()
+
+            if self.transactions and self.license_valid:
+
+                self.create_button.config(
+                    state=tk.NORMAL
+                )
+
+            else:
+
+                self.create_button.config(
+                    state=tk.DISABLED
+                )
+
+            self.status_var.set(
+                f"Found "
+                f"{len(self.transactions)} "
+                f"transactions."
+            )
+
+        except Exception as exc:
+
+            self.status_var.set(
+                "Error parsing PDF."
+            )
+
             messagebox.showerror(
-                "Invalid date",
-                "Use YYYY-MM-DD.",
-                parent=self,
+                "PDF Parsing Error",
+                str(exc)
             )
+
+    # ========================================================
+    # RECONCILIATION
+    # ========================================================
+
+    def update_reconciliation(self):
+
+        if not self.data:
             return
 
-        description = self.description_var.get().strip()
+        summary = self.data[
+            "summary"
+        ]
 
-        if not description:
-            messagebox.showerror(
-                "Invalid description",
-                "Description cannot be empty.",
-                parent=self,
+        parsed = self.data[
+            "parsed"
+        ]
+
+        lines = []
+
+        # ----------------------------------------------------
+        # CHECKS
+        # ----------------------------------------------------
+
+        sc = summary[
+            "checks_count"
+        ]
+
+        st = summary[
+            "checks_total"
+        ]
+
+        pc = parsed[
+            "checks_count"
+        ]
+
+        pt = parsed[
+            "checks_total"
+        ]
+
+        if sc is not None:
+
+            check_line = (
+                f"CHECKS: "
+                f"{pc} parsed / "
+                f"{sc} on statement    "
+                f"${pt:,.2f} / "
+                f"${st:,.2f}"
             )
-            return
 
-        amount = parse_decimal(
-            self.amount_var.get()
+        else:
+
+            check_line = (
+                f"CHECKS: {pc} parsed"
+            )
+
+        lines.append(
+            check_line
         )
 
-        if amount is None or amount < 0:
-            messagebox.showerror(
-                "Invalid amount",
-                "Enter a valid non-negative amount.",
-                parent=self,
+        # ----------------------------------------------------
+        # DEBITS
+        # ----------------------------------------------------
+
+        dc = summary[
+            "debits_count"
+        ]
+
+        dt = summary[
+            "debits_total"
+        ]
+
+        pdc = parsed[
+            "debits_count"
+        ]
+
+        pdt = parsed[
+            "debits_total"
+        ]
+
+        if dc is not None:
+
+            debit_line = (
+                f"WITHDRAWALS / DEBITS: "
+                f"{pdc} parsed / "
+                f"{dc} on statement    "
+                f"${pdt:,.2f} / "
+                f"${dt:,.2f}"
             )
-            return
 
-        transaction_type = self.type_var.get()
+        else:
 
-        self.result = Transaction(
-            transaction_date=transaction_date,
-            description=description,
-            amount=amount,
-            transaction_type=transaction_type,
-            balance=self.original.balance,
-            source_page=self.original.source_page,
-            confidence=self.original.confidence,
-            reviewed=self.reviewed_var.get(),
+            debit_line = (
+                f"WITHDRAWALS / DEBITS: "
+                f"{pdc} parsed"
+            )
+
+        lines.append(
+            debit_line
         )
 
-        self.destroy()
+        # ----------------------------------------------------
+        # CREDITS
+        # ----------------------------------------------------
+
+        cc = summary[
+            "credits_count"
+        ]
+
+        ct = summary[
+            "credits_total"
+        ]
+
+        pcc = parsed[
+            "credits_count"
+        ]
+
+        pct = parsed[
+            "credits_total"
+        ]
+
+        if cc is not None:
+
+            credit_line = (
+                f"DEPOSITS / CREDITS: "
+                f"{pcc} parsed / "
+                f"{cc} on statement    "
+                f"${pct:,.2f} / "
+                f"${ct:,.2f}"
+            )
+
+        else:
+
+            credit_line = (
+                f"DEPOSITS / CREDITS: "
+                f"{pcc} parsed"
+            )
+
+        lines.append(
+            credit_line
+        )
+
+        # ----------------------------------------------------
+        # RECONCILIATION RESULT
+        # ----------------------------------------------------
+
+        checks_ok = True
+        debits_ok = True
+        credits_ok = True
+
+        if sc is not None:
+
+            checks_ok = (
+                pc == sc
+                and abs(
+                    pt - st
+                ) < 0.01
+            )
+
+        if dc is not None:
+
+            debits_ok = (
+                pdc == dc
+                and abs(
+                    pdt - dt
+                ) < 0.01
+            )
+
+        if cc is not None:
+
+            credits_ok = (
+                pcc == cc
+                and abs(
+                    pct - ct
+                ) < 0.01
+            )
+
+        lines.append("")
+
+        if (
+            checks_ok
+            and debits_ok
+            and credits_ok
+        ):
+
+            lines.append(
+                "✓ RECONCILED — "
+                "all statement transaction totals match."
+            )
+
+            self.recon_label.config(
+                foreground="#137333"
+            )
+
+        else:
+
+            lines.append(
+                "⚠ NOT RECONCILED — "
+                "review the transaction table before export."
+            )
+
+            self.recon_label.config(
+                foreground="#B00020"
+            )
+
+        self.recon_var.set(
+            "\n".join(lines)
+        )
+
+    # ========================================================
+    # POPULATE TABLE
+    # ========================================================
+
+    def populate_table(self):
+
+        for item in (
+            self.tree.get_children()
+        ):
+
+            self.tree.delete(
+                item
+            )
+
+        for txn in self.transactions:
+
+            if txn["source"] == "Check":
+
+                txn_type = "CHECK"
+
+            elif txn["amount"] < 0:
+
+                txn_type = "DEBIT"
+
+            else:
+
+                txn_type = "CREDIT"
+
+            self.tree.insert(
+                "",
+                tk.END,
+                values=(
+                    display_date(
+                        txn["date"]
+                    ),
+                    txn_type,
+                    f"{txn['amount']:,.2f}",
+                    txn.get(
+                        "check_num",
+                        ""
+                    ) or "",
+                    txn["name"]
+                )
+            )
+
+    # ========================================================
+    # SAVE EXTRACTED TEXT
+    # ========================================================
+
+    def save_text(self):
+
+        if not self.data:
+
+            messagebox.showwarning(
+                "No PDF",
+                "Open a PDF first."
+            )
+
+            return
+
+        output = filedialog.asksaveasfilename(
+            title="Save Extracted PDF Text",
+            defaultextension=".txt",
+            filetypes=[
+                (
+                    "Text files",
+                    "*.txt"
+                ),
+                (
+                    "All files",
+                    "*.*"
+                )
+            ]
+        )
+
+        if not output:
+            return
+
+        try:
+
+            with open(
+                output,
+                "w",
+                encoding="utf-8"
+            ) as f:
+
+                f.write(
+                    self.data["text"]
+                )
+
+            messagebox.showinfo(
+                "Saved",
+                "Extracted PDF text was saved.\n\n"
+                "This file is useful for diagnosing "
+                "new bank statement layouts."
+            )
+
+        except Exception as exc:
+
+            messagebox.showerror(
+                "Save Error",
+                str(exc)
+            )
+
+    # ========================================================
+    # CHECK RECONCILIATION BEFORE EXPORT
+    # ========================================================
+
+    def get_mismatches(self):
+
+        if not self.data:
+            return []
+
+        parsed = self.data[
+            "parsed"
+        ]
+
+        summary = self.data[
+            "summary"
+        ]
+
+        mismatches = []
+
+        # Checks
+        if (
+            summary["checks_count"]
+            is not None
+        ):
+
+            if (
+                parsed["checks_count"]
+                !=
+                summary["checks_count"]
+                or
+                abs(
+                    parsed["checks_total"]
+                    -
+                    summary["checks_total"]
+                ) >= 0.01
+            ):
+
+                mismatches.append(
+                    "Checks"
+                )
+
+        # Debits
+        if (
+            summary["debits_count"]
+            is not None
+        ):
+
+            if (
+                parsed["debits_count"]
+                !=
+                summary["debits_count"]
+                or
+                abs(
+                    parsed["debits_total"]
+                    -
+                    summary["debits_total"]
+                ) >= 0.01
+            ):
+
+                mismatches.append(
+                    "Withdrawals / Debits"
+                )
+
+        # Credits
+        if (
+            summary["credits_count"]
+            is not None
+        ):
+
+            if (
+                parsed["credits_count"]
+                !=
+                summary["credits_count"]
+                or
+                abs(
+                    parsed["credits_total"]
+                    -
+                    summary["credits_total"]
+                ) >= 0.01
+            ):
+
+                mismatches.append(
+                    "Deposits / Credits"
+                )
+
+        return mismatches
+
+    # ========================================================
+    # CREATE QBO
+    # ========================================================
+
+    def create_qbo(self):
+
+        if not self.require_valid_license():
+            return
+
+        if not self.transactions:
+
+            messagebox.showwarning(
+                "No Transactions",
+                "No transactions were found."
+            )
+
+            return
+
+        account = (
+            self.account_var.get().strip()
+        )
+
+        if not account:
+
+            messagebox.showwarning(
+                "Account ID Required",
+                "Enter the account number/ID "
+                "shown on the statement."
+            )
+
+            return
+
+        # ----------------------------------------------------
+        # RECONCILIATION SAFETY CHECK
+        # ----------------------------------------------------
+
+        mismatches = (
+            self.get_mismatches()
+        )
+
+        if mismatches:
+
+            answer = messagebox.askyesno(
+                "Statement Does Not Reconcile",
+
+                "The following sections do not "
+                "match the statement totals:\n\n"
+                + "\n".join(
+                    "• " + x
+                    for x in mismatches
+                )
+                + "\n\n"
+                "It is safer to correct the parser "
+                "before importing into QuickBooks.\n\n"
+                "Do you want to create the QBO anyway?"
+            )
+
+            if not answer:
+                return
+
+        # ----------------------------------------------------
+        # GENERATOR
+        # ----------------------------------------------------
+
+        generator = QBOGenerator(
+            bank_name=(
+                self.fi_var.get().strip()
+                or self.bank_var.get()
+            ),
+            account_number=account,
+            fid=self.fid_var.get(),
+            bid=self.bid_var.get()
+        )
+
+        try:
+
+            qbo = generator.generate(
+                self.transactions,
+
+                beginning_balance=(
+                    self.data[
+                        "summary"
+                    ][
+                        "beginning_balance"
+                    ]
+                ),
+
+                ending_balance=(
+                    self.data[
+                        "summary"
+                    ][
+                        "ending_balance"
+                    ]
+                )
+            )
+
+        except Exception as exc:
+
+            messagebox.showerror(
+                "QBO Generation Error",
+                str(exc)
+            )
+
+            return
+
+        # ----------------------------------------------------
+        # SAVE
+        # ----------------------------------------------------
+
+        base = os.path.splitext(
+            os.path.basename(
+                self.pdf_file
+            )
+        )[0]
+
+        output = filedialog.asksaveasfilename(
+            title="Save QBO File",
+            defaultextension=".qbo",
+            initialfile=(
+                base + ".qbo"
+            ),
+            filetypes=[
+                (
+                    "QuickBooks QBO",
+                    "*.qbo"
+                ),
+                (
+                    "All files",
+                    "*.*"
+                )
+            ]
+        )
+
+        if not output:
+            return
+
+        try:
+
+            with open(
+                output,
+                "w",
+                encoding="cp1252",
+                newline=""
+            ) as f:
+
+                f.write(qbo)
+
+        except Exception as exc:
+
+            messagebox.showerror(
+                "QBO Save Error",
+                str(exc)
+            )
+
+            return
+
+        self.status_var.set(
+            "QBO file created successfully."
+        )
+
+        # ----------------------------------------------------
+        # SUCCESS DIALOG
+        # ----------------------------------------------------
+
+        success = tk.Toplevel(
+            self.root
+        )
+
+        success.title(
+            "QBO Created"
+        )
+
+        success.geometry(
+            "600x430"
+        )
+
+        success.resizable(
+            False,
+            False
+        )
+
+        frame = ttk.Frame(
+            success,
+            padding=25
+        )
+
+        frame.pack(
+            fill=tk.BOTH,
+            expand=True
+        )
+
+        ttk.Label(
+            frame,
+            text="✓ QBO FILE CREATED",
+            foreground="#137333",
+            font=(
+                "Segoe UI",
+                18,
+                "bold"
+            )
+        ).pack(
+            pady=(0, 15)
+        )
+
+        ttk.Label(
+            frame,
+            text=(
+                f"{len(self.transactions)} transactions "
+                "were exported."
+            ),
+            font=(
+                "Segoe UI",
+                11
+            )
+        ).pack(
+            pady=(0, 8)
+        )
+
+        ttk.Label(
+            frame,
+            text=output,
+            wraplength=530,
+            justify=tk.CENTER
+        ).pack(
+            pady=(0, 20)
+        )
+
+        # ----------------------------------------------------
+        # PROMOTION
+        # ----------------------------------------------------
+
+        promo_box = tk.Frame(
+            frame,
+            bg="#F2F6FA",
+            bd=1,
+            relief=tk.SOLID,
+            padx=15,
+            pady=15
+        )
+
+        promo_box.pack(
+            fill=tk.X,
+            pady=5
+        )
+
+        tk.Label(
+            promo_box,
+            text="More tools for tax professionals",
+            bg="#F2F6FA",
+            fg="#17365D",
+            font=(
+                "Segoe UI",
+                12,
+                "bold"
+            )
+        ).pack(
+            pady=(0, 6)
+        )
+
+        tk.Label(
+            promo_box,
+            text=(
+                "Explore TaxPreparerTools.com for "
+                "tax calculators, IRS references, "
+                "deadlines, professional resources "
+                "and more."
+            ),
+            bg="#F2F6FA",
+            fg="#333333",
+            wraplength=500,
+            justify=tk.CENTER
+        ).pack(
+            pady=(0, 10)
+        )
+
+        tk.Button(
+            promo_box,
+            text="Explore TaxPreparerTools.com",
+            command=self.open_website,
+            bg="#2E75B6",
+            fg="white",
+            activebackground="#4F91C9",
+            activeforeground="white",
+            relief=tk.FLAT,
+            cursor="hand2",
+            padx=15,
+            pady=7,
+            font=(
+                "Segoe UI",
+                10,
+                "bold"
+            )
+        ).pack()
+
+        # ----------------------------------------------------
+        # CLOSE
+        # ----------------------------------------------------
+
+        ttk.Button(
+            frame,
+            text="Close",
+            command=success.destroy
+        ).pack(
+            pady=18
+        )
+
+    # ========================================================
+    # CLEAR
+    # ========================================================
+
+    def clear(self):
+
+        self.pdf_file = None
+        self.data = None
+        self.transactions = []
+
+        self.file_label.config(
+            text="No PDF selected."
+        )
+
+        self.recon_var.set(
+            "Open a PDF to begin."
+        )
+
+        self.recon_label.config(
+            foreground="black"
+        )
+
+        self.status_var.set(
+            "Ready. "
+            "Open a bank statement PDF to begin."
+        )
+
+        self.account_var.set("")
+        self.bid_var.set("")
+        self.fid_var.set("")
+        self.fi_var.set("")
+
+        self.bank_var.set(
+            "Auto Detect"
+        )
+
+        for item in (
+            self.tree.get_children()
+        ):
+
+            self.tree.delete(
+                item
+            )
+
+        self.create_button.config(
+            state=tk.DISABLED
+        )
+
+    # ========================================================
+    # CLOSE
+    # ========================================================
+
+    def on_close(self):
+
+        answer = messagebox.askyesno(
+            "Exit",
+            "Close the PDF → QBO Converter?"
+        )
+
+        if answer:
+
+            self.root.destroy()
 
 
-def show_startup_error(message: str) -> None:
+# ============================================================
+# MAIN
+# ============================================================
+
+def main():
+
     root = tk.Tk()
-    root.withdraw()
 
-    messagebox.showerror(
-        APP_NAME,
-        message,
+    try:
+
+        style = ttk.Style()
+
+        if "vista" in style.theme_names():
+
+            style.theme_use(
+                "vista"
+            )
+
+        elif "clam" in style.theme_names():
+
+            style.theme_use(
+                "clam"
+            )
+
+    except Exception:
+        pass
+
+    ConverterApp(
+        root
     )
 
-    root.destroy()
+    root.mainloop()
 
 
-def main() -> None:
-    try:
-        app = ConverterApp()
-        app.mainloop()
-    except Exception:
-        error = traceback.format_exc()
-
-        try:
-            show_startup_error(
-                "The converter could not start.\n\n"
-                + error
-            )
-        except Exception:
-            print(error, file=sys.stderr)
-
+# ============================================================
+# START
+# ============================================================
 
 if __name__ == "__main__":
     main()
