@@ -1,0 +1,42 @@
+services:
+
+  db:
+    image: postgres:17
+    container_name: taxpreparertools-db
+    restart: unless-stopped
+
+    environment:
+      POSTGRES_DB: taxpreparertools
+      POSTGRES_USER: taxpreparertools
+      POSTGRES_PASSWORD: 3b95a141f277eea32bb968fdf1169d82d0d9a90daa7de688fbe731251388162a
+
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+
+    healthcheck:
+      test:
+        [
+          "CMD-SHELL",
+          "pg_isready -U taxpreparertools -d taxpreparertools"
+        ]
+      interval: 5s
+      timeout: 5s
+      retries: 10
+
+  api:
+    build: .
+    container_name: taxpreparertools-api
+    restart: unless-stopped
+
+    depends_on:
+      db:
+        condition: service_healthy
+
+    env_file:
+      - .env
+
+    ports:
+      - "8000:8000"
+
+volumes:
+  postgres_data:
