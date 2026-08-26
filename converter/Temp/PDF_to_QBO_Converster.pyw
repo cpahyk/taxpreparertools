@@ -1537,7 +1537,10 @@ class QBOGenerator:
         # TRANSACTIONS
         # ----------------------------------------------------
 
-        for transaction in transactions:
+        for index, transaction in enumerate(
+            transactions,
+            start=1
+        ):
 
             amount = float(
                 transaction["amount"]
@@ -1558,7 +1561,8 @@ class QBOGenerator:
                 trntype = "CREDIT"
 
             fid = self.fitid(
-                transaction
+                transaction,
+                index
             )
 
             lines.extend([

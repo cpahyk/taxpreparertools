@@ -239,15 +239,6 @@ class BaseStatementParser:
             datetime.datetime.now().year
         )
 
-        # Populated by find_year() when a "Statement Period"
-        # range is found. Used by year_for_date() to assign the
-        # correct year to each transaction on statements whose
-        # period crosses a year boundary (e.g. 12/15 - 01/14).
-        self.start_month = None
-        self.start_year = None
-        self.end_month = None
-        self.end_year = None
-
         self.summary = {
             "beginning_balance": None,
             "ending_balance": None,
@@ -321,48 +312,6 @@ class BaseStatementParser:
 
     def find_year(self):
 
-        # Try a full "Statement Period" range first (start date
-        # AND end date) so a statement crossing a year boundary,
-        # e.g. 12/15/2025 - 01/14/2026, can have each side of the
-        # boundary dated correctly. See year_for_date().
-        period_patterns = [
-
-            r"Statement\s+Period\s*:?\s*"
-            r"(\d{1,2})/\d{1,2}/(\d{4})\s*"
-            r"(?:-|to|through)\s*"
-            r"(\d{1,2})/\d{1,2}/(\d{4})",
-
-            r"(\d{1,2})/\d{1,2}/(\d{4})\s*"
-            r"(?:-|to|through)\s*"
-            r"(\d{1,2})/\d{1,2}/(\d{4})",
-        ]
-
-        for pattern in period_patterns:
-
-            match = re.search(
-                pattern,
-                self.full_text,
-                flags=re.I | re.S
-            )
-
-            if match:
-
-                (
-                    start_month,
-                    start_year,
-                    end_month,
-                    end_year,
-                ) = match.groups()
-
-                self.start_month = int(start_month)
-                self.start_year = int(start_year)
-                self.end_month = int(end_month)
-                self.end_year = int(end_year)
-
-                self.year = end_year
-
-                return self.year
-
         patterns = [
 
             r"Statement\s+Period\s+Date\s*:"
@@ -398,36 +347,6 @@ class BaseStatementParser:
 
         if match:
             self.year = match.group(1)
-
-        return self.year
-
-    def year_for_date(self, date_text):
-        """
-        Pick the correct year for a MM/DD transaction date.
-
-        Most statements only need self.year. But when a "Statement
-        Period" range was found and it spans two different years,
-        a single blanket year is wrong for one side of the
-        boundary -- so pick per-transaction based on its month.
-        """
-
-        if (
-            self.start_year is None
-            or self.end_year is None
-            or self.start_year == self.end_year
-        ):
-            return self.year
-
-        try:
-            month = int(date_text.split("/")[0])
-        except (ValueError, IndexError):
-            return self.year
-
-        if month >= self.start_month:
-            return str(self.start_year)
-
-        if month <= self.end_month:
-            return str(self.end_year)
 
         return self.year
 
@@ -620,21 +539,9 @@ class BaseStatementParser:
     # --------------------------------------------------------
 
     def dedupe(self, transactions):
-        """
-        Collapse a transaction only when it is an exact repeat of
-        the one immediately before it in extraction order.
-
-        This intentionally does NOT collapse identical-looking
-        transactions found elsewhere in the statement (e.g. two
-        separate $20 vending-machine charges on the same day) --
-        only ones extracted back-to-back, which is the signature of
-        a PDF layout artifact (a line repeated across a page break,
-        or picked up twice during extraction) rather than two
-        genuinely different transactions that happen to match.
-        """
 
         result = []
-        previous_key = None
+        seen = set()
 
         for txn in transactions:
 
@@ -664,10 +571,10 @@ class BaseStatementParser:
                     txn["source"]
                 )
 
-            if key == previous_key:
+            if key in seen:
                 continue
 
-            previous_key = key
+            seen.add(key)
             result.append(txn)
 
         result.sort(
@@ -887,7 +794,7 @@ class SectionParser(BaseStatementParser):
                 -abs(amount),
                 f"Check {number}",
                 "Check",
-                self.year_for_date(date_text),
+                self.year,
                 number
             )
 
@@ -976,7 +883,7 @@ class SectionParser(BaseStatementParser):
                 final_amount,
                 description,
                 source,
-                self.year_for_date(date_text)
+                self.year
             )
 
             if txn:
@@ -1234,7 +1141,7 @@ class ClimateFirstParser(
                 -abs(amount),
                 f"Check {number}",
                 "Check",
-                self.year_for_date(date_text),
+                self.year,
                 number
             )
 
@@ -1364,40 +1271,21 @@ class QBOGenerator:
         self.fid = fid.strip()
         self.bid = bid.strip()
 
-        # Tracks how many times a given transaction's content has
-        # been seen so far in this generate() call. See fitid().
-        self._fitid_occurrences = {}
-
     # --------------------------------------------------------
     # FITID
     # --------------------------------------------------------
 
     def fitid(
         self,
-        transaction
+        transaction,
+        index
     ):
-        """
-        FITID is content-based, not position-based: hashing the
-        transaction's own fields (not its index in the list) means
-        re-exporting the same statement -- even with a different
-        date range or transaction count around it -- produces the
-        same FITID for the same transaction, so QuickBooks
-        correctly recognizes it as already-imported instead of
-        creating a duplicate.
 
-        Two transactions can have identical content (date, amount,
-        name, check number) and still both be genuine -- e.g. two
-        separate same-day charges of the same amount. An occurrence
-        counter keyed on that content keeps each one's FITID unique
-        within this export while remaining stable across runs, as
-        long as their relative order doesn't change (it won't: the
-        transaction list is always produced in the same sorted
-        order for the same input).
-        """
-
-        content_key = "|".join([
+        raw = "|".join([
             transaction["date"],
-            f"{transaction['amount']:.2f}",
+            str(
+                transaction["amount"]
+            ),
             transaction["name"],
             str(
                 transaction.get(
@@ -1405,16 +1293,8 @@ class QBOGenerator:
                     ""
                 ) or ""
             ),
+            str(index)
         ])
-
-        occurrence = (
-            self._fitid_occurrences.get(content_key, 0)
-            + 1
-        )
-
-        self._fitid_occurrences[content_key] = occurrence
-
-        raw = f"{content_key}|{occurrence}"
 
         return hashlib.sha256(
             raw.encode("utf-8")
@@ -1537,7 +1417,10 @@ class QBOGenerator:
         # TRANSACTIONS
         # ----------------------------------------------------
 
-        for transaction in transactions:
+        for index, transaction in enumerate(
+            transactions,
+            start=1
+        ):
 
             amount = float(
                 transaction["amount"]
@@ -1558,7 +1441,8 @@ class QBOGenerator:
                 trntype = "CREDIT"
 
             fid = self.fitid(
-                transaction
+                transaction,
+                index
             )
 
             lines.extend([
