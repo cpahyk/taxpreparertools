@@ -251,26 +251,77 @@
   /* ---------- PRICING ---------- */
 
   .pricing-card {
-    max-width: 440px; margin: 0 auto;
-    border: 1px solid var(--gold); border-radius: 14px; padding: 38px;
-    background: linear-gradient(160deg, var(--bg-card), var(--bg-raised));
-    text-align: center;
+    border: 1px solid var(--line-strong); border-radius: 14px; padding: 34px 28px;
+    background: var(--bg-card);
+    text-align: center; position: relative;
   }
+  .pricing-grid {
+    display: grid; grid-template-columns: repeat(2, 1fr); gap: 20px;
+    max-width: 760px; margin: 0 auto;
+  }
+  @media (max-width: 700px) { .pricing-grid { grid-template-columns: 1fr; max-width: 440px; } }
+
+  [hidden] { display: none !important; }
+
+  .billing-toggle {
+    display: flex; justify-content: center; gap: 4px;
+    max-width: 320px; margin: 0 auto 36px;
+    border: 1px solid var(--line-strong); border-radius: 10px; padding: 4px;
+  }
+  .toggle-btn {
+    flex: 1; padding: 9px 14px; border-radius: 7px; border: none;
+    background: transparent; color: var(--text-dim); font-family: 'Inter', sans-serif;
+    font-size: 14px; font-weight: 600; cursor: pointer;
+    display: flex; align-items: center; justify-content: center; gap: 8px;
+    transition: background 0.15s ease, color 0.15s ease;
+  }
+  .toggle-btn.active { background: var(--gold); color: #16110a; }
+  .toggle-save {
+    font-family: 'JetBrains Mono', monospace; font-size: 10.5px; font-weight: 600;
+    background: rgba(6, 20, 15, 0.18); padding: 2px 7px; border-radius: 10px;
+  }
+  .toggle-btn:not(.active) .toggle-save { background: rgba(79, 174, 143, 0.15); color: var(--teal); }
+
+  .pricing-card.featured {
+    border-color: var(--gold); position: relative;
+    background: linear-gradient(160deg, var(--bg-card), var(--bg-raised));
+  }
+  .pricing-card.pro {
+    border-color: var(--teal); position: relative;
+    background: linear-gradient(160deg, var(--bg-card), var(--bg-raised));
+  }
+
+  .plan-badge {
+    position: absolute; top: -13px; left: 50%; transform: translateX(-50%);
+    color: #06140f; font-size: 11px; font-weight: 700;
+    padding: 5px 14px; border-radius: 20px; letter-spacing: 0.05em;
+    font-family: 'JetBrains Mono', monospace; text-transform: uppercase;
+    white-space: nowrap;
+  }
+  .plan-badge.gold { background: var(--gold); color: #16110a; }
+  .plan-badge.teal { background: var(--teal); color: #06140f; }
+
   .pricing-card .plan-name {
     font-family: 'JetBrains Mono', monospace; font-size: 13px; color: var(--gold);
     text-transform: uppercase; letter-spacing: 0.08em;
   }
-  .pricing-card .price {
-    margin: 18px 0 4px; font-family: 'Space Grotesk', sans-serif;
-    font-size: 52px; font-weight: 700;
-  }
-  .pricing-card .price span { font-size: 16px; color: var(--text-dim); font-weight: 500; }
-  .pricing-card .price-note { color: var(--text-faint); font-size: 13px; margin-bottom: 26px; }
+  .pricing-card.pro .plan-name { color: var(--teal); }
 
-  .plan-list { list-style: none; padding: 0; margin: 0 0 30px; text-align: left; }
+  .plan-tagline {
+    display: block; font-size: 12.5px; color: var(--text-faint); margin-top: 6px;
+  }
+
+  .pricing-card .price {
+    margin: 16px 0 4px; font-family: 'Space Grotesk', sans-serif;
+    font-size: 40px; font-weight: 700;
+  }
+  .pricing-card .price span { font-size: 15px; color: var(--text-dim); font-weight: 500; }
+  .pricing-card .price-note { color: var(--text-faint); font-size: 13px; margin-bottom: 24px; min-height: 32px; }
+
+  .plan-list { list-style: none; padding: 0; margin: 0 0 28px; text-align: left; }
   .plan-list li {
-    padding: 10px 0; border-bottom: 1px solid var(--line);
-    font-size: 14.5px; color: var(--text-dim); display: flex; gap: 10px;
+    padding: 9px 0; border-bottom: 1px solid var(--line);
+    font-size: 14px; color: var(--text-dim); display: flex; gap: 10px;
   }
   .plan-list li:last-child { border-bottom: none; }
   .plan-list li::before { content: '✓'; color: var(--teal); font-weight: 600; }
@@ -434,22 +485,73 @@
   <section class="section" id="pricing">
     <div class="section-head">
       <span class="eyebrow">Pricing</span>
-      <h2>One plan. Cancel anytime.</h2>
+      <h2>Pick a plan. Cancel anytime.</h2>
     </div>
-    <div class="pricing-card">
-      <span class="plan-name">Converter — Monthly</span>
-      <div class="price mono">$<!-- TODO: set real price -->XX<span>/month</span></div>
-      <p class="price-note">Billed monthly via Stripe · cancel anytime</p>
-      <ul class="plan-list">
-        <li>Unlimited PDF-to-QBO conversions</li>
-        <li>All supported bank parsers, plus new ones as they ship</li>
-        <li>License covers one machine</li>
-        <li>Email support</li>
-      </ul>
-      <!-- TODO: replace with real Stripe Payment Link -->
-      <a class="btn btn-primary" href="#STRIPE_PAYMENT_LINK_HERE">Subscribe →</a>
+
+    <div class="billing-toggle" role="group" aria-label="Billing interval">
+      <button type="button" class="toggle-btn active" data-billing="monthly" aria-pressed="true">Monthly</button>
+      <button type="button" class="toggle-btn" data-billing="annual" aria-pressed="false">Annual <span class="toggle-save">Save up to 44%</span></button>
+    </div>
+
+    <div class="pricing-grid">
+
+      <div class="pricing-card">
+        <span class="plan-name">Basic</span>
+
+        <div data-when="monthly">
+          <div class="price mono">$19.99<span>/month</span></div>
+          <p class="price-note">≈ $2.00 per conversion</p>
+        </div>
+        <div data-when="annual" hidden>
+          <span class="plan-badge gold">Best value</span>
+          <div class="price mono">$149.95<span>/year</span></div>
+          <p class="price-note">≈ $1.25 per conversion · ~37% less than paying monthly</p>
+        </div>
+
+        <ul class="plan-list">
+          <li data-when="monthly">10 conversions per month</li>
+          <li data-when="annual" hidden>120 conversions per year</li>
+          <li>Unlimited support</li>
+          <li>License covers one machine</li>
+        </ul>
+
+        <!-- TODO: replace with real Stripe Payment Link (Basic monthly) -->
+        <a class="btn btn-ghost" data-when="monthly" href="#STRIPE_MONTHLY_LINK_HERE">Subscribe monthly →</a>
+        <!-- TODO: replace with real Stripe Payment Link (Basic annual) -->
+        <a class="btn btn-primary" data-when="annual" hidden href="#STRIPE_ANNUAL_LINK_HERE">Subscribe annually →</a>
+      </div>
+
+      <div class="pricing-card pro">
+        <span class="plan-badge teal">For firms</span>
+        <span class="plan-name">Pro</span>
+        <span class="plan-tagline">For accountants and bookkeepers</span>
+
+        <div data-when="monthly">
+          <div class="price mono">$89.95<span>/month</span></div>
+          <p class="price-note">≈ $0.75 per conversion</p>
+        </div>
+        <div data-when="annual" hidden>
+          <div class="price mono">$599.95<span>/year</span></div>
+          <p class="price-note">≈ $0.40 per conversion · ~44% less than paying monthly</p>
+        </div>
+
+        <ul class="plan-list">
+          <li data-when="monthly">120 conversions per month</li>
+          <li data-when="annual" hidden>1,500 conversions per year</li>
+          <li data-when="annual" hidden>Auto-refill available if you run out</li>
+          <li>Unlimited users</li>
+          <li>Priority support</li>
+        </ul>
+
+        <!-- TODO: replace with real Stripe Payment Link (Pro monthly) -->
+        <a class="btn btn-ghost" data-when="monthly" href="#STRIPE_PRO_MONTHLY_LINK_HERE">Subscribe to Pro →</a>
+        <!-- TODO: replace with real Stripe Payment Link (Pro annual) -->
+        <a class="btn btn-ghost" data-when="annual" hidden href="#STRIPE_PRO_ANNUAL_LINK_HERE">Subscribe to Pro →</a>
+      </div>
+
     </div>
   </section>
+
 
   <!-- ============ DOWNLOAD ============ -->
   <section class="section" id="download">
@@ -507,6 +609,28 @@
     <a href="https://www.taxpreparertools.com/about.html">About</a>
   </span>
 </footer>
+
+<script>
+  (function () {
+    var toggleBtns = document.querySelectorAll('.toggle-btn');
+
+    toggleBtns.forEach(function (btn) {
+      btn.addEventListener('click', function () {
+        var billing = btn.getAttribute('data-billing');
+
+        toggleBtns.forEach(function (b) {
+          var isActive = b === btn;
+          b.classList.toggle('active', isActive);
+          b.setAttribute('aria-pressed', String(isActive));
+        });
+
+        document.querySelectorAll('[data-when]').forEach(function (el) {
+          el.hidden = el.getAttribute('data-when') !== billing;
+        });
+      });
+    });
+  })();
+</script>
 
 </body>
 </html>
