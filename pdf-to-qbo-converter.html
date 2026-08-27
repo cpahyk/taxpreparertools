@@ -1,0 +1,512 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>PDF to QBO Converter — Bank Statements to QuickBooks in One Pass | TaxPreparerTools.com</title>
+<meta name="description" content="Turn any bank statement PDF into a clean, reconciled QBO file for QuickBooks import. Desktop app for bookkeepers and tax preparers. 100% local — your statement never leaves your machine.">
+<meta name="theme-color" content="#c8a84b">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #060d1c;
+    --bg-raised: #0e1a32;
+    --bg-card: #111f3c;
+    --line: rgba(232, 236, 244, 0.09);
+    --line-strong: rgba(232, 236, 244, 0.16);
+    --text: #e8ecf4;
+    --text-dim: #8b96ad;
+    --text-faint: #5c6883;
+    --gold: #c8a84b;
+    --gold-bright: #ddc074;
+    --teal: #4fae8f;
+    --red-soft: #c97b6a;
+    --radius: 10px;
+    --max: 1120px;
+  }
+
+  * { box-sizing: border-box; }
+
+  html { scroll-behavior: smooth; }
+
+  @media (prefers-reduced-motion: reduce) {
+    html { scroll-behavior: auto; }
+    * { animation-duration: 0.001ms !important; transition-duration: 0.001ms !important; }
+  }
+
+  body {
+    margin: 0;
+    background: var(--bg);
+    color: var(--text);
+    font-family: 'Inter', system-ui, sans-serif;
+    line-height: 1.55;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  h1, h2, h3 { font-family: 'Space Grotesk', 'Inter', sans-serif; margin: 0; }
+
+  .mono { font-family: 'JetBrains Mono', ui-monospace, monospace; }
+
+  a { color: inherit; }
+
+  :focus-visible {
+    outline: 2px solid var(--gold);
+    outline-offset: 3px;
+    border-radius: 4px;
+  }
+
+  .wrap { max-width: var(--max); margin: 0 auto; padding: 0 24px; }
+
+  /* ---------- NAV ---------- */
+
+  .nav {
+    position: sticky; top: 0; z-index: 50;
+    background: rgba(6, 13, 28, 0.88);
+    backdrop-filter: blur(10px);
+    border-bottom: 1px solid var(--line);
+  }
+
+  .nav-inner {
+    max-width: var(--max); margin: 0 auto; padding: 16px 24px;
+    display: flex; align-items: center; justify-content: space-between; gap: 24px;
+  }
+
+  .logo {
+    font-family: 'Space Grotesk', sans-serif;
+    font-weight: 700; font-size: 17px;
+    text-decoration: none; color: var(--text);
+    display: flex; align-items: center; gap: 8px;
+    white-space: nowrap;
+  }
+
+  .nav-links {
+    display: flex; gap: 28px; list-style: none; margin: 0; padding: 0;
+    font-size: 14px; color: var(--text-dim);
+  }
+
+  .nav-links a { text-decoration: none; }
+  .nav-links a:hover { color: var(--text); }
+
+  .nav-cta {
+    background: var(--gold); color: #16110a; font-weight: 600; font-size: 14px;
+    padding: 9px 18px; border-radius: 7px; text-decoration: none; white-space: nowrap;
+    transition: background 0.15s ease;
+  }
+  .nav-cta:hover { background: var(--gold-bright); }
+
+  @media (max-width: 780px) {
+    .nav-links { display: none; }
+  }
+
+  /* ---------- HERO ---------- */
+
+  .hero { padding: 76px 0 64px; }
+
+  .eyebrow {
+    display: inline-flex; align-items: center; gap: 8px;
+    font-size: 13px; letter-spacing: 0.02em; color: var(--gold);
+    font-family: 'JetBrains Mono', monospace;
+    margin-bottom: 22px;
+  }
+
+  .eyebrow::before { content: '●'; font-size: 8px; }
+
+  .hero h1 {
+    font-size: clamp(34px, 5.2vw, 54px);
+    font-weight: 600; letter-spacing: -0.01em; line-height: 1.08;
+    max-width: 780px;
+  }
+
+  .hero h1 em { font-style: normal; color: var(--gold); }
+
+  .hero p.sub {
+    margin-top: 22px; max-width: 560px;
+    font-size: 17px; color: var(--text-dim);
+  }
+
+  .hero-ctas { margin-top: 34px; display: flex; gap: 14px; flex-wrap: wrap; }
+
+  .btn {
+    display: inline-flex; align-items: center; gap: 8px;
+    padding: 13px 24px; border-radius: 8px; text-decoration: none;
+    font-weight: 600; font-size: 15px; border: 1px solid transparent;
+    transition: transform 0.12s ease, background 0.15s ease, border-color 0.15s ease;
+  }
+  .btn:active { transform: translateY(1px); }
+
+  .btn-primary { background: var(--gold); color: #16110a; }
+  .btn-primary:hover { background: var(--gold-bright); }
+
+  .btn-ghost { border-color: var(--line-strong); color: var(--text); }
+  .btn-ghost:hover { border-color: var(--gold); }
+
+  .hero-note { margin-top: 14px; font-size: 13px; color: var(--text-faint); }
+
+  /* ---------- TRANSFORM PANEL (signature element) ---------- */
+
+  .transform {
+    margin-top: 56px;
+    border: 1px solid var(--line); border-radius: var(--radius);
+    background: var(--bg-raised); overflow: hidden;
+  }
+
+  .transform-head {
+    display: flex; justify-content: space-between; align-items: center;
+    padding: 12px 18px; border-bottom: 1px solid var(--line);
+    font-family: 'JetBrains Mono', monospace; font-size: 12px; color: var(--text-faint);
+  }
+
+  .transform-grid {
+    display: grid; grid-template-columns: 1fr auto 1fr;
+    align-items: stretch;
+  }
+
+  @media (max-width: 760px) {
+    .transform-grid { grid-template-columns: 1fr; }
+    .transform-arrow { transform: rotate(90deg); padding: 10px 0 !important; }
+  }
+
+  .transform-pane { padding: 22px 24px; }
+  .transform-pane .label {
+    font-family: 'JetBrains Mono', monospace; font-size: 11px;
+    text-transform: uppercase; letter-spacing: 0.08em; color: var(--text-faint);
+    margin-bottom: 14px; display: block;
+  }
+
+  .transform-pane pre {
+    margin: 0; font-family: 'JetBrains Mono', monospace; font-size: 12.5px;
+    line-height: 1.85; white-space: pre-wrap; word-break: break-word;
+  }
+
+  .pane-raw { color: var(--text-faint); }
+  .pane-raw .glitch { color: var(--red-soft); }
+
+  .pane-clean { color: var(--text); background: rgba(79, 174, 143, 0.05); }
+  .pane-clean .tag { color: var(--teal); }
+  .pane-clean .val { color: var(--gold-bright); }
+
+  .transform-arrow {
+    display: flex; align-items: center; justify-content: center;
+    padding: 0 18px; color: var(--gold); font-size: 20px;
+    border-left: 1px solid var(--line); border-right: 1px solid var(--line);
+  }
+
+  /* ---------- STAT STRIP ---------- */
+
+  .stats {
+    display: grid; grid-template-columns: repeat(4, 1fr); gap: 1px;
+    background: var(--line); border: 1px solid var(--line); border-radius: var(--radius);
+    margin: 64px 0; overflow: hidden;
+  }
+  .stat { background: var(--bg); padding: 26px 18px; text-align: center; }
+  .stat .num {
+    font-family: 'JetBrains Mono', monospace; font-size: 26px; font-weight: 600;
+    color: var(--gold); display: block;
+  }
+  .stat .lbl { font-size: 12.5px; color: var(--text-dim); margin-top: 6px; display: block; }
+
+  @media (max-width: 700px) {
+    .stats { grid-template-columns: 1fr 1fr; }
+  }
+
+  /* ---------- SECTION HEADS ---------- */
+
+  .section { padding: 20px 0 64px; }
+  .section-head { max-width: 620px; margin-bottom: 42px; }
+  .section-head .eyebrow { margin-bottom: 14px; }
+  .section-head h2 { font-size: clamp(26px, 3.4vw, 34px); font-weight: 600; letter-spacing: -0.01em; }
+  .section-head p { margin-top: 14px; color: var(--text-dim); font-size: 16px; }
+
+  /* ---------- STEPS ---------- */
+
+  .steps { display: grid; grid-template-columns: repeat(3, 1fr); gap: 22px; }
+  @media (max-width: 800px) { .steps { grid-template-columns: 1fr; } }
+
+  .step {
+    border: 1px solid var(--line); border-radius: var(--radius); padding: 26px;
+    background: var(--bg-raised); position: relative;
+  }
+  .step .step-num {
+    font-family: 'JetBrains Mono', monospace; color: var(--gold); font-size: 13px;
+    margin-bottom: 14px; display: block;
+  }
+  .step h3 { font-size: 18px; font-weight: 600; margin-bottom: 8px; }
+  .step p { color: var(--text-dim); font-size: 14.5px; margin: 0; }
+
+  /* ---------- FEATURE GRID ---------- */
+
+  .features { display: grid; grid-template-columns: repeat(2, 1fr); gap: 18px; }
+  @media (max-width: 700px) { .features { grid-template-columns: 1fr; } }
+
+  .feature {
+    border: 1px solid var(--line); border-radius: var(--radius); padding: 24px;
+    background: var(--bg-card);
+  }
+  .feature .icon { font-size: 22px; margin-bottom: 12px; display: block; }
+  .feature h3 { font-size: 16.5px; font-weight: 600; margin-bottom: 8px; }
+  .feature p { color: var(--text-dim); font-size: 14.5px; margin: 0; }
+
+  /* ---------- PRICING ---------- */
+
+  .pricing-card {
+    max-width: 440px; margin: 0 auto;
+    border: 1px solid var(--gold); border-radius: 14px; padding: 38px;
+    background: linear-gradient(160deg, var(--bg-card), var(--bg-raised));
+    text-align: center;
+  }
+  .pricing-card .plan-name {
+    font-family: 'JetBrains Mono', monospace; font-size: 13px; color: var(--gold);
+    text-transform: uppercase; letter-spacing: 0.08em;
+  }
+  .pricing-card .price {
+    margin: 18px 0 4px; font-family: 'Space Grotesk', sans-serif;
+    font-size: 52px; font-weight: 700;
+  }
+  .pricing-card .price span { font-size: 16px; color: var(--text-dim); font-weight: 500; }
+  .pricing-card .price-note { color: var(--text-faint); font-size: 13px; margin-bottom: 26px; }
+
+  .plan-list { list-style: none; padding: 0; margin: 0 0 30px; text-align: left; }
+  .plan-list li {
+    padding: 10px 0; border-bottom: 1px solid var(--line);
+    font-size: 14.5px; color: var(--text-dim); display: flex; gap: 10px;
+  }
+  .plan-list li:last-child { border-bottom: none; }
+  .plan-list li::before { content: '✓'; color: var(--teal); font-weight: 600; }
+
+  .pricing-card .btn { width: 100%; justify-content: center; }
+
+  /* ---------- DOWNLOAD ---------- */
+
+  .download-box {
+    display: flex; justify-content: space-between; align-items: center; gap: 24px;
+    border: 1px solid var(--line); border-radius: var(--radius); padding: 28px 30px;
+    background: var(--bg-raised); flex-wrap: wrap;
+  }
+  .download-box h3 { font-size: 18px; font-weight: 600; margin-bottom: 6px; }
+  .download-box p { color: var(--text-dim); font-size: 14px; margin: 0; max-width: 480px; }
+
+  /* ---------- FAQ ---------- */
+
+  .faq-item { border-bottom: 1px solid var(--line); padding: 20px 0; }
+  .faq-item h3 { font-size: 15.5px; font-weight: 600; margin-bottom: 8px; }
+  .faq-item p { color: var(--text-dim); font-size: 14.5px; margin: 0; }
+
+  /* ---------- FOOTER ---------- */
+
+  footer {
+    border-top: 1px solid var(--line); padding: 34px 0; margin-top: 40px;
+    font-size: 13px; color: var(--text-faint);
+    display: flex; justify-content: space-between; flex-wrap: wrap; gap: 12px;
+  }
+  footer a { text-decoration: none; margin-left: 18px; }
+  footer a:hover { color: var(--text-dim); }
+  footer .foot-links a:first-child { margin-left: 0; }
+</style>
+</head>
+<body>
+
+<nav class="nav">
+  <div class="nav-inner">
+    <a class="logo" href="https://www.taxpreparertools.com/index.html">⚖ TaxPreparerTools</a>
+    <ul class="nav-links">
+      <li><a href="https://www.taxpreparertools.com/tools.html">Tools</a></li>
+      <li><a href="https://www.taxpreparertools.com/decoders.html">Decoders</a></li>
+      <li><a href="https://www.taxpreparertools.com/deadlines.html">Deadlines</a></li>
+      <li><a href="https://www.taxpreparertools.com/blog/">Blog</a></li>
+      <li><a href="https://www.taxpreparertools.com/about.html">About</a></li>
+    </ul>
+    <a class="nav-cta" href="#pricing">Get the Converter</a>
+  </div>
+</nav>
+
+<main class="wrap">
+
+  <!-- ============ HERO ============ -->
+  <section class="hero">
+    <span class="eyebrow">Desktop App · Windows</span>
+    <h1>Bank statement PDF in.<br><em>Clean QBO file out.</em></h1>
+    <p class="sub">
+      Stop retyping transactions by hand. Drop in a bank statement PDF,
+      the app parses every transaction, reconciles it against the
+      statement's own printed totals, and hands you a QuickBooks-ready
+      QBO file — in one pass, on your own machine.
+    </p>
+    <div class="hero-ctas">
+      <a class="btn btn-primary" href="#pricing">See pricing →</a>
+      <a class="btn btn-ghost" href="#download">Download free, try it first</a>
+    </div>
+    <p class="hero-note">Free to download and parse. A license unlocks QBO export.</p>
+
+    <div class="transform">
+      <div class="transform-head">
+        <span>SAMPLE_STATEMENT.pdf</span>
+        <span>→ FIRST_NATIONAL.QBO</span>
+      </div>
+      <div class="transform-grid">
+        <div class="transform-pane">
+          <span class="label">What a statement PDF looks like</span>
+          <pre class="pane-raw">03/12    ACH DEBIT <span class="glitch">CHASE  CRDCRD</span>
+             AUTOPAY      -142.<span class="glitch">7  9</span>
+03/12 03/13  CHECK  1042      -600.00
+03/1<span class="glitch">4</span>   DEPOSIT MOBILE    <span class="glitch">1,20</span>0.00
+             CK #<span class="glitch">88817</span>2</pre>
+        </div>
+        <div class="transform-arrow">→</div>
+        <div class="transform-pane pane-clean">
+          <span class="label">What QuickBooks imports</span>
+          <pre>&lt;<span class="tag">STMTTRN</span>&gt;
+  &lt;<span class="tag">TRNTYPE</span>&gt;<span class="val">DEBIT</span>
+  &lt;<span class="tag">DTPOSTED</span>&gt;<span class="val">20260312</span>
+  &lt;<span class="tag">TRNAMT</span>&gt;<span class="val">-142.79</span>
+  &lt;<span class="tag">NAME</span>&gt;<span class="val">CHASE CRDCRD AUTOPAY</span>
+&lt;/<span class="tag">STMTTRN</span>&gt;</pre>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ STATS ============ -->
+  <div class="stats">
+    <div class="stat"><span class="num">2+1</span><span class="lbl">Named bank parsers + universal fallback</span></div>
+    <div class="stat"><span class="num">0</span><span class="lbl">Statements ever uploaded — parsing is 100% local</span></div>
+    <div class="stat"><span class="num">1:1</span><span class="lbl">Every export cross-checked against statement totals</span></div>
+    <div class="stat"><span class="num">.QBO</span><span class="lbl">Standard OFX output, opens straight in QuickBooks</span></div>
+  </div>
+
+  <!-- ============ HOW IT WORKS ============ -->
+  <section class="section">
+    <div class="section-head">
+      <span class="eyebrow">The workflow</span>
+      <h2>Three steps. No re-typing.</h2>
+    </div>
+    <div class="steps">
+      <div class="step">
+        <span class="step-num">01</span>
+        <h3>Open the PDF</h3>
+        <p>Point the app at a bank statement PDF. It auto-detects the bank and reads every transaction line — checks, debits, and credits.</p>
+      </div>
+      <div class="step">
+        <span class="step-num">02</span>
+        <h3>Review & reconcile</h3>
+        <p>Every transaction lands in a review table, checked against the statement's own printed totals. Mismatches are flagged before you export, not after.</p>
+      </div>
+      <div class="step">
+        <span class="step-num">03</span>
+        <h3>Export the QBO</h3>
+        <p>One click writes a standard QBO file. Import it into QuickBooks Desktop or Online like any bank download.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ FEATURES ============ -->
+  <section class="section">
+    <div class="section-head">
+      <span class="eyebrow">Built for accuracy</span>
+      <h2>The details that matter in bookkeeping software</h2>
+    </div>
+    <div class="features">
+      <div class="feature">
+        <span class="icon">🏦</span>
+        <h3>Multi-bank parsing</h3>
+        <p>Dedicated parsers for Fifth Third and Climate First, plus a universal parser that handles standard statement layouts from other banks.</p>
+      </div>
+      <div class="feature">
+        <span class="icon">🔄</span>
+        <h3>Built-in reconciliation</h3>
+        <p>Parsed transactions are checked against the statement's own printed section totals before export — so a missed or misread line gets caught on your screen, not in QuickBooks.</p>
+      </div>
+      <div class="feature">
+        <span class="icon">🔒</span>
+        <h3>100% local processing</h3>
+        <p>Your bank statement is read and converted entirely on your machine. Only the license check talks to the network — the PDF and its contents never do.</p>
+      </div>
+      <div class="feature">
+        <span class="icon">📁</span>
+        <h3>QuickBooks-ready output</h3>
+        <p>Standard QBO/OFX formatting with stable transaction IDs, so re-importing the same statement doesn't create duplicate entries in QuickBooks.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ PRICING ============ -->
+  <section class="section" id="pricing">
+    <div class="section-head">
+      <span class="eyebrow">Pricing</span>
+      <h2>One plan. Cancel anytime.</h2>
+    </div>
+    <div class="pricing-card">
+      <span class="plan-name">Converter — Monthly</span>
+      <div class="price mono">$<!-- TODO: set real price -->XX<span>/month</span></div>
+      <p class="price-note">Billed monthly via Stripe · cancel anytime</p>
+      <ul class="plan-list">
+        <li>Unlimited PDF-to-QBO conversions</li>
+        <li>All supported bank parsers, plus new ones as they ship</li>
+        <li>License covers one machine</li>
+        <li>Email support</li>
+      </ul>
+      <!-- TODO: replace with real Stripe Payment Link -->
+      <a class="btn btn-primary" href="#STRIPE_PAYMENT_LINK_HERE">Subscribe →</a>
+    </div>
+  </section>
+
+  <!-- ============ DOWNLOAD ============ -->
+  <section class="section" id="download">
+    <div class="section-head">
+      <span class="eyebrow">Try before you buy</span>
+      <h2>Download free. See it parse your own statement.</h2>
+    </div>
+    <div class="download-box">
+      <div>
+        <h3>PDF to QBO Converter for Windows</h3>
+        <p>Free to download and run. Open any supported statement and watch it parse and reconcile — subscribing unlocks the QBO export.</p>
+      </div>
+      <!-- TODO: replace with real hosted download URL, e.g. a GitHub Releases asset link -->
+      <a class="btn btn-ghost" href="#DOWNLOAD_URL_HERE">Download .exe →</a>
+    </div>
+  </section>
+
+  <!-- ============ FAQ ============ -->
+  <section class="section">
+    <div class="section-head">
+      <span class="eyebrow">Questions</span>
+      <h2>Before you subscribe</h2>
+    </div>
+    <div class="faq-list">
+      <div class="faq-item">
+        <h3>Is my bank statement data safe?</h3>
+        <p>Yes — the PDF is parsed entirely on your computer. Nothing about its contents is sent anywhere. The only network call the app makes is a license check.</p>
+      </div>
+      <div class="faq-item">
+        <h3>Which banks are supported?</h3>
+        <p>Fifth Third and Climate First have dedicated parsers. Other banks are handled by a universal parser that reads standard statement layouts — review the output before exporting, as with any bank.</p>
+      </div>
+      <div class="faq-item">
+        <h3>Where do I get my license key?</h3>
+        <p>You'll receive it by email after subscribing. Paste it into the app's license screen the first time you run it.</p>
+      </div>
+      <div class="faq-item">
+        <h3>What happens if I cancel?</h3>
+        <p>Your license stays valid through the end of the billing period you already paid for. The app keeps working for parsing and review; exporting requires an active subscription.</p>
+      </div>
+      <div class="faq-item">
+        <h3>Is there a Mac version?</h3>
+        <p>Not yet — reach out and we'll let you know when one's available.</p>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<footer class="wrap">
+  <span>© 2026 TaxPreparerTools.com</span>
+  <span class="foot-links">
+    <a href="https://www.taxpreparertools.com/privacy.html">Privacy</a>
+    <a href="https://www.taxpreparertools.com/terms.html">Terms</a>
+    <a href="https://www.taxpreparertools.com/about.html">About</a>
+  </span>
+</footer>
+
+</body>
+</html>
