@@ -104,6 +104,22 @@ class APIClient:
             },
         )
 
+    def report_usage(
+        self,
+        license_key: str,
+        installation_id: str,
+    ) -> dict[str, Any]:
+
+        return self._request(
+            "POST",
+            "/v1/license/report-usage",
+            {
+                "license_key": license_key,
+                "installation_id": installation_id,
+                "product": "pdf-qbo-converter",
+            },
+        )
+
     def health(self) -> dict[str, Any]:
         return self._request(
             "GET",

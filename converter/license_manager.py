@@ -127,3 +127,20 @@ class LicenseManager:
         data = self._read()
         data.pop("license_key", None)
         self._write(data)
+
+    def report_conversion(self) -> dict[str, Any]:
+        """Call once per successful QBO export.
+
+        The quota is shared across every machine activated under
+        this license_key (not tracked per-installation), so this
+        must be called with the license_key, not just checked
+        locally -- the server does the atomic increment.
+        """
+        license_key = self.get_license_key()
+        if not license_key:
+            raise RuntimeError("No license is activated on this computer.")
+
+        return self.api.report_usage(
+            license_key=license_key,
+            installation_id=self.get_installation_id(),
+        )

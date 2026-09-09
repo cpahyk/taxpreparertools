@@ -5,10 +5,13 @@ services:
     container_name: taxpreparertools-db
     restart: unless-stopped
 
+    env_file:
+      - .env
+
     environment:
-      POSTGRES_DB: taxpreparertools
-      POSTGRES_USER: taxpreparertools
-      POSTGRES_PASSWORD: 3b95a141f277eea32bb968fdf1169d82d0d9a90daa7de688fbe731251388162a
+      POSTGRES_DB: ${POSTGRES_DB}
+      POSTGRES_USER: ${POSTGRES_USER}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
 
     volumes:
       - postgres_data:/var/lib/postgresql/data
@@ -17,7 +20,7 @@ services:
       test:
         [
           "CMD-SHELL",
-          "pg_isready -U taxpreparertools -d taxpreparertools"
+          "pg_isready -U ${POSTGRES_USER} -d ${POSTGRES_DB}"
         ]
       interval: 5s
       timeout: 5s

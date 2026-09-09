@@ -2,7 +2,7 @@ fastapi
 uvicorn[standard]
 sqlalchemy
 psycopg[binary]
-stripe
+dodopayments
 python-dotenv
 pydantic
 pydantic-settings
