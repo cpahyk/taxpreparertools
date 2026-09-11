@@ -618,21 +618,26 @@
   (function () {
     var toggleBtns = document.querySelectorAll('.toggle-btn');
 
+    function setBilling(billing) {
+      toggleBtns.forEach(function (b) {
+        var isActive = b.getAttribute('data-billing') === billing;
+        b.classList.toggle('active', isActive);
+        b.setAttribute('aria-pressed', String(isActive));
+      });
+
+      document.querySelectorAll('[data-when]').forEach(function (el) {
+        el.hidden = el.getAttribute('data-when') !== billing;
+      });
+    }
+
     toggleBtns.forEach(function (btn) {
       btn.addEventListener('click', function () {
-        var billing = btn.getAttribute('data-billing');
-
-        toggleBtns.forEach(function (b) {
-          var isActive = b === btn;
-          b.classList.toggle('active', isActive);
-          b.setAttribute('aria-pressed', String(isActive));
-        });
-
-        document.querySelectorAll('[data-when]').forEach(function (el) {
-          el.hidden = el.getAttribute('data-when') !== billing;
-        });
+        setBilling(btn.getAttribute('data-billing'));
       });
     });
+
+    // Default pricing view when the page first opens: Annual
+    setBilling('annual');
   })();
 </script>
 
