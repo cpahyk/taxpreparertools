@@ -420,19 +420,33 @@ async function extractLinesFromPDF(file){
   const buf = await file.arrayBuffer();
   const pdf = await pdfjsLib.getDocument({data: buf}).promise;
   let allLines = [];
+  const Y_TOLERANCE = 2.2; // points; groups items into a visual row without collapsing distinct nearby rows
   for(let p=1; p<=pdf.numPages; p++){
     const page = await pdf.getPage(p);
     const content = await page.getTextContent();
-    const rows = {};
-    content.items.forEach(item=>{
-      const y = Math.round(item.transform[5]);
-      const x = item.transform[4];
-      if(!rows[y]) rows[y] = [];
-      rows[y].push({x, str: item.str});
+    const items = content.items
+      .filter(item => item.str && item.str.trim())
+      .map(item => ({x: item.transform[4], y: item.transform[5], str: item.str}))
+      .sort((a,b) => b.y - a.y || a.x - b.x);
+
+    const rows = [];
+    let current = null;
+    items.forEach(item=>{
+      if(current && Math.abs(item.y - current.y) <= Y_TOLERANCE){
+        current.items.push(item);
+      } else {
+        current = {y: item.y, items:[item]};
+        rows.push(current);
+      }
     });
-    const ys = Object.keys(rows).map(Number).sort((a,b)=>b-a);
-    ys.forEach(y=>{
-      const line = rows[y].sort((a,b)=>a.x-b.x).map(i=>i.str).join(' ').replace(/\s+/g,' ').trim();
+
+    rows.forEach(row=>{
+      const line = row.items
+        .sort((a,b)=>a.x-b.x)
+        .map(i=>i.str)
+        .join(' ')
+        .replace(/\s+/g,' ')
+        .trim();
       if(line) allLines.push(line);
     });
   }
@@ -456,20 +470,57 @@ async function extractLinesFromImageOCR(imageSourceOrFile){
 }
 
 // ---------- transaction parsing ----------
+const DATE_RE = /^\d{1,2}\/\d{1,2}(?:\/\d{2,4})?$/;
+const MONEY_RE = /^-?\$?\(?[\d,]+\.\d{2}\)?$/;
+
 function parseTransactions(lines){
-  const lineRe = /(\d{1,2}\/\d{1,2}(?:\/\d{2,4})?)\s+(.+?)\s+(-?\$?\(?[\d,]+\.\d{2}\)?)(?:\s+(-?\$?\(?[\d,]+\.\d{2}\)?))?\s*$/;
   const txns = [];
   for(const raw of lines){
-    const m = raw.match(lineRe);
-    if(!m) continue;
-    const [, date, desc, amtStr, balStr] = m;
-    const amount = toNumber(amtStr);
-    const balance = balStr ? toNumber(balStr) : null;
-    if(amount === null) continue;
-    if(desc.replace(/[^a-zA-Z]/g,'').length < 2) continue; // skip junk lines
-    txns.push({date, desc: desc.trim(), amount, balance});
+    txns.push(...parseLine(raw));
   }
   return txns;
+}
+
+// Scans a single visual line token-by-token. Finds every date, and pairs it with
+// the next money-looking token. If a line holds a single date, a second trailing
+// money token is treated as a running balance (standard "date desc amt bal" row).
+// If a line holds several dates (multi-column check-register rows, e.g.
+// "1240  01/23  400.00   1241  01/23  2,500.00"), each date only claims one
+// amount, since there's no single running balance to assign per entry.
+function parseLine(line){
+  const tokens = line.split(/\s+/);
+  const dateIdxs = [];
+  tokens.forEach((t,i)=>{ if(DATE_RE.test(t)) dateIdxs.push(i); });
+  if(dateIdxs.length === 0) return [];
+
+  const multiDate = dateIdxs.length > 1;
+  const results = [];
+
+  dateIdxs.forEach((di, k)=>{
+    const nextDateIdx = k+1 < dateIdxs.length ? dateIdxs[k+1] : tokens.length;
+    // description = tokens between this date and the first money token after it
+    let j = di+1;
+    const descTokens = [];
+    while(j < nextDateIdx && !MONEY_RE.test(tokens[j])) { descTokens.push(tokens[j]); j++; }
+    if(j >= nextDateIdx || !MONEY_RE.test(tokens[j])) return; // no amount found for this date
+    const amount = toNumber(tokens[j]);
+    if(amount === null) return;
+    let balance = null;
+    let after = j+1;
+    if(!multiDate && after < nextDateIdx && MONEY_RE.test(tokens[after])){
+      balance = toNumber(tokens[after]);
+      after++;
+      // trailing description words that come after the balance (rare) get folded in
+      while(after < nextDateIdx){ descTokens.push(tokens[after]); after++; }
+    } else {
+      while(after < nextDateIdx){ descTokens.push(tokens[after]); after++; }
+    }
+    const desc = descTokens.join(' ').replace(/[^a-zA-Z0-9 .,#&'-]/g,'').trim();
+    if(desc.replace(/[^a-zA-Z]/g,'').length < 2 && !multiDate) return; // skip junk single lines
+    results.push({date: tokens[di], desc: desc || '(no description)', amount, balance});
+  });
+
+  return results;
 }
 
 function toNumber(str){
