@@ -1,0 +1,593 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>PDF Insights — Read every statement in seconds</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --paper:#F7F5F0;
+    --paper-dim:#EFEBE1;
+    --ink:#1C1F22;
+    --ink-soft:#585349;
+    --navy:#16283A;
+    --navy-soft:#25405A;
+    --teal:#3F6B5C;
+    --amber:#A9781F;
+    --red:#9C3B3B;
+    --rule:#D8D3C7;
+    --rule-dark:#3A4E60;
+    --serif: 'Fraunces', Georgia, serif;
+    --sans: 'Inter', -apple-system, sans-serif;
+    --mono: 'JetBrains Mono', ui-monospace, monospace;
+  }
+  *{box-sizing:border-box;}
+  body{margin:0;background:var(--paper);color:var(--ink);font-family:var(--sans);line-height:1.5;-webkit-font-smoothing:antialiased;}
+  a{color:inherit;}
+  img,svg{display:block;}
+
+  /* ---------- NAV ---------- */
+  .nav{
+    position:sticky;top:0;z-index:50;
+    display:flex;align-items:center;justify-content:space-between;
+    padding:20px 40px;background:var(--paper);
+    border-bottom:1px solid var(--rule);
+  }
+  .wordmark{font-family:var(--serif);font-size:20px;font-weight:600;letter-spacing:-0.01em;}
+  .wordmark span{color:var(--teal);}
+  .nav-links{display:flex;align-items:center;gap:28px;font-size:14px;}
+  .nav-tab{background:none;border:none;font:inherit;color:var(--ink-soft);cursor:pointer;padding:4px 0;border-bottom:2px solid transparent;}
+  .nav-tab.active{color:var(--ink);border-bottom-color:var(--teal);}
+  .nav-cta{
+    background:var(--navy);color:var(--paper);border:none;
+    padding:10px 18px;border-radius:3px;font-size:14px;font-family:var(--sans);font-weight:500;
+    cursor:pointer;
+  }
+  .nav-cta:hover{background:var(--navy-soft);}
+
+  section{max-width:920px;margin:0 auto;padding:0 40px;}
+  .view{display:none;}
+  .view.active{display:block;}
+
+  /* ---------- HERO ---------- */
+  .hero{padding:88px 40px 56px;}
+  .hero h1{
+    font-family:var(--serif);font-weight:500;font-size:clamp(36px,5.4vw,58px);
+    line-height:1.05;letter-spacing:-0.015em;max-width:14ch;margin:0 0 22px;
+  }
+  .hero p{font-size:18px;color:var(--ink-soft);max-width:52ch;margin:0 0 32px;}
+  .btn-primary{
+    background:var(--navy);color:var(--paper);border:none;
+    padding:14px 24px;border-radius:3px;font-size:15px;font-family:var(--sans);font-weight:500;
+    cursor:pointer;
+  }
+  .btn-primary:hover{background:var(--navy-soft);}
+  .btn-ghost{
+    background:none;border:1px solid var(--rule);color:var(--ink);
+    padding:13px 22px;border-radius:3px;font-size:15px;font-family:var(--sans);
+    cursor:pointer;margin-left:10px;
+  }
+  .btn-ghost:hover{border-color:var(--ink-soft);}
+
+  /* ---------- LEDGER STATS ---------- */
+  .ledger{border-top:1px solid var(--rule);margin-top:8px;}
+  .ledger-row{
+    display:grid;grid-template-columns:120px 1fr;gap:28px;
+    padding:22px 0;border-bottom:1px solid var(--rule);align-items:baseline;
+  }
+  .ledger-row .num{font-family:var(--mono);font-size:30px;font-weight:600;color:var(--teal);}
+  .ledger-row .desc{font-size:15px;color:var(--ink-soft);max-width:48ch;}
+
+  /* ---------- STEPS ---------- */
+  .band{background:var(--navy);color:var(--paper);padding:72px 0;margin-top:72px;}
+  .band section{max-width:920px;}
+  .band h2{font-family:var(--serif);font-weight:500;font-size:30px;margin:0 0 40px;letter-spacing:-0.01em;}
+  .steps{display:grid;grid-template-columns:repeat(3,1fr);gap:36px;}
+  .step .n{font-family:var(--mono);color:#7FA593;font-size:14px;margin-bottom:10px;}
+  .step h3{font-family:var(--sans);font-size:17px;font-weight:600;margin:0 0 8px;}
+  .step p{font-size:14.5px;color:#C7D0D6;margin:0;}
+
+  /* ---------- CHECKS LIST ---------- */
+  .checks{margin-top:72px;}
+  .checks h2{font-family:var(--serif);font-weight:500;font-size:30px;margin:0 0 6px;letter-spacing:-0.01em;}
+  .checks > p{color:var(--ink-soft);margin:0 0 30px;max-width:56ch;}
+  .check-row{
+    display:grid;grid-template-columns:190px 1fr;gap:24px;
+    padding:20px 0;border-top:1px solid var(--rule);
+  }
+  .check-row:last-child{border-bottom:1px solid var(--rule);}
+  .check-row .tag{font-family:var(--mono);font-size:12.5px;color:var(--ink-soft);letter-spacing:0.03em;padding-top:2px;}
+  .check-row .body h4{margin:0 0 4px;font-size:15.5px;font-weight:600;}
+  .check-row .body p{margin:0;font-size:14.5px;color:var(--ink-soft);}
+
+  /* ---------- CTA BANNER ---------- */
+  .cta-banner{
+    margin:80px 0 0;padding:56px 40px;background:var(--paper-dim);
+    border-top:1px solid var(--rule);border-bottom:1px solid var(--rule);
+    text-align:left;
+  }
+  .cta-inner{max-width:920px;margin:0 auto;display:flex;align-items:center;justify-content:space-between;gap:24px;flex-wrap:wrap;}
+  .cta-inner h3{font-family:var(--serif);font-size:24px;font-weight:500;margin:0;max-width:26ch;}
+  footer{padding:40px;text-align:center;font-size:13px;color:var(--ink-soft);}
+
+  /* ---------- DEMO VIEW ---------- */
+  .demo-hero{padding:64px 40px 8px;}
+  .demo-hero h1{font-family:var(--serif);font-weight:500;font-size:36px;margin:0 0 14px;letter-spacing:-0.01em;}
+  .demo-hero p{color:var(--ink-soft);font-size:16px;max-width:60ch;margin:0;}
+
+  .dropzone{
+    margin:36px 0 0;border:1.5px dashed var(--rule);border-radius:6px;
+    padding:56px 24px;text-align:center;cursor:pointer;transition:border-color .15s,background .15s;
+    background:var(--paper);
+  }
+  .dropzone.drag{border-color:var(--teal);background:#EFF4F1;}
+  .dropzone h3{font-family:var(--sans);font-weight:600;font-size:16px;margin:0 0 6px;}
+  .dropzone p{color:var(--ink-soft);font-size:14px;margin:0;}
+  .dropzone input{display:none;}
+
+  .status-line{
+    display:none;margin-top:24px;font-family:var(--mono);font-size:13.5px;color:var(--ink-soft);
+    padding:14px 16px;border:1px solid var(--rule);border-radius:4px;background:var(--paper-dim);
+  }
+  .status-line.show{display:block;}
+
+  .results{display:none;margin-top:40px;padding-bottom:80px;}
+  .results.show{display:block;}
+
+  .score-panel{
+    display:flex;align-items:center;gap:28px;padding:28px;border:1px solid var(--rule);
+    border-radius:6px;background:var(--paper-dim);margin-bottom:36px;
+  }
+  .score-circle{
+    width:96px;height:96px;border-radius:50%;flex:none;
+    display:flex;align-items:center;justify-content:center;
+    font-family:var(--mono);font-size:30px;font-weight:600;color:#fff;
+  }
+  .score-meta h3{margin:0 0 4px;font-family:var(--serif);font-size:19px;font-weight:500;}
+  .score-meta p{margin:0;font-size:14px;color:var(--ink-soft);}
+
+  .metrics{border-top:1px solid var(--rule);margin-bottom:8px;}
+  .metric-row{
+    display:grid;grid-template-columns:1fr auto;gap:20px;
+    padding:16px 0;border-bottom:1px solid var(--rule);align-items:baseline;
+  }
+  .metric-row .label{font-size:14.5px;color:var(--ink-soft);}
+  .metric-row .value{font-family:var(--mono);font-size:16px;font-weight:600;}
+  .metric-row .value.flagged{color:var(--red);}
+  .metric-row .value.ok{color:var(--teal);}
+
+  .flags-block{margin:32px 0;}
+  .flags-block h4{font-size:14px;font-weight:600;margin:0 0 10px;color:var(--red);}
+  .flags-block ul{margin:0;padding-left:18px;}
+  .flags-block li{font-size:14px;margin-bottom:6px;color:var(--ink-soft);}
+  .no-flags{font-size:14px;color:var(--teal);margin:32px 0;}
+
+  .txn-wrap{margin-top:36px;}
+  .txn-wrap h4{font-size:14px;font-weight:600;margin:0 0 10px;letter-spacing:0.02em;color:var(--ink-soft);text-transform:uppercase;font-family:var(--mono);font-size:12px;}
+  .txn-table{width:100%;border-collapse:collapse;font-size:13.5px;}
+  .txn-table th{
+    text-align:left;font-family:var(--mono);font-weight:500;font-size:11.5px;color:var(--ink-soft);
+    padding:8px 10px;border-bottom:1px solid var(--rule);text-transform:uppercase;letter-spacing:0.03em;
+  }
+  .txn-table td{padding:8px 10px;border-bottom:1px solid var(--rule);font-family:var(--mono);}
+  .txn-table td.desc{font-family:var(--sans);}
+  .txn-table tr.dup{background:#FBEFEF;}
+  .txn-scroll{max-height:380px;overflow-y:auto;border:1px solid var(--rule);border-radius:4px;}
+
+  .disclaimer{margin-top:28px;font-size:13px;color:var(--ink-soft);border-left:2px solid var(--rule);padding-left:14px;}
+  .reset-btn{margin-top:28px;background:none;border:1px solid var(--rule);padding:10px 18px;border-radius:3px;font-family:var(--sans);font-size:14px;cursor:pointer;}
+  .reset-btn:hover{border-color:var(--ink-soft);}
+
+  .error-box{margin-top:24px;padding:16px;border:1px solid var(--red);border-radius:4px;background:#FBEFEF;color:var(--red);font-size:14px;}
+
+  @media(max-width:720px){
+    .steps{grid-template-columns:1fr;}
+    .ledger-row{grid-template-columns:80px 1fr;}
+    .check-row{grid-template-columns:1fr;gap:6px;}
+    .nav{padding:16px 20px;}
+    section{padding:0 20px;}
+    .hero{padding:56px 20px 40px;}
+    .cta-inner{flex-direction:column;align-items:flex-start;}
+  }
+</style>
+</head>
+<body>
+
+<nav class="nav">
+  <div class="wordmark">Ledger<span>Scan</span></div>
+  <div class="nav-links">
+    <button class="nav-tab active" data-view="home">Overview</button>
+    <button class="nav-tab" data-view="demo">Live demo</button>
+    <button class="nav-cta" onclick="showView('demo')">Run a document</button>
+  </div>
+</nav>
+
+<!-- ================= HOME VIEW ================= -->
+<div class="view active" id="view-home">
+
+  <section class="hero">
+    <h1>Every statement, read in seconds.</h1>
+    <p>Upload a bank statement as a PDF or a photo of one. PDF Insights  pulls out the transactions, checks the balances against each other, and tells you what doesn't add up — before you underwrite it.</p>
+    <button class="btn-primary" onclick="showView('demo')">Try it on a real statement</button>
+    <button class="btn-ghost" onclick="document.getElementById('checks-anchor').scrollIntoView({behavior:'smooth'})">See what it checks</button>
+
+    <div class="ledger">
+      <div class="ledger-row">
+        <div class="num">95%</div>
+        <div class="desc">fewer files carrying bad debt after teams moved statement review off spreadsheets and onto automatic checks.</div>
+      </div>
+      <div class="ledger-row">
+        <div class="num">90%</div>
+        <div class="desc">less duplicate work — the same statement no longer gets re-keyed by underwriting and then again by risk.</div>
+      </div>
+      <div class="ledger-row">
+        <div class="num">3×</div>
+        <div class="desc">more files moved to approval in the same week, with fewer transcription errors slowing the file down.</div>
+      </div>
+    </div>
+  </section>
+
+  <div class="band">
+    <section>
+      <h2>How a statement gets read</h2>
+      <div class="steps">
+        <div class="step">
+          <div class="n">01</div>
+          <h3>Upload</h3>
+          <p>Drop in a PDF or a photo of a statement. There's no template to configure and no bank to pick from a list first.</p>
+        </div>
+        <div class="step">
+          <div class="n">02</div>
+          <h3>Extract</h3>
+          <p>Dates, descriptions, amounts, and running balances are pulled line by line and checked against each other for arithmetic that doesn't reconcile.</p>
+        </div>
+        <div class="step">
+          <div class="n">03</div>
+          <h3>Score</h3>
+          <p>A 1–100 score comes out the other side, with every flag that fed into it listed alongside — not just a number to trust blindly.</p>
+        </div>
+      </div>
+    </section>
+  </div>
+
+  <section class="checks" id="checks-anchor">
+    <h2>What it checks for</h2>
+    <p>The score isn't a black box. It's built from a short list of concrete checks run against the actual line items on the statement.</p>
+
+    <div class="check-row">
+      <div class="tag">RECONCILIATION</div>
+      <div class="body"><h4>Does the math tie out</h4><p>Each transaction's amount is checked against the change in balance from the line before it. Statements where the numbers don't chain together get flagged rather than trusted.</p></div>
+    </div>
+    <div class="check-row">
+      <div class="tag">TRUE REVENUE</div>
+      <div class="body"><h4>Revenue, not just deposits</h4><p>Transfers between accounts, loan proceeds, and other non-sales deposits are filtered out, so the revenue figure reflects money actually earned by the business.</p></div>
+    </div>
+    <div class="check-row">
+      <div class="tag">BALANCE HEALTH</div>
+      <div class="body"><h4>Negative and low-balance days</h4><p>Every day the account sat below zero, or below a thin cushion, is counted — a better read on cash-flow stress than a single point-in-time balance.</p></div>
+    </div>
+    <div class="check-row">
+      <div class="tag">DUPLICATE DETECTION</div>
+      <div class="body"><h4>Repeated line items</h4><p>The same date, description, and amount showing up more than once is a common sign of an edited or spliced document, and gets called out by line.</p></div>
+    </div>
+  </section>
+
+  <div class="cta-banner">
+    <div class="cta-inner">
+      <h3>See what your own statements say.</h3>
+      <button class="btn-primary" onclick="showView('demo')">Run a document</button>
+    </div>
+  </div>
+
+  <footer>PDF Insights is a demonstration tool. It is not affiliated with any bank or credit bureau.</footer>
+</div>
+
+<!-- ================= DEMO VIEW ================= -->
+<div class="view" id="view-demo">
+  <section class="demo-hero">
+    <h1>Run a statement</h1>
+    <p>Upload a bank statement PDF, or a clear photo/scan of one. Everything runs in your browser — nothing is uploaded to a server.</p>
+  </section>
+
+  <section>
+    <div class="dropzone" id="dropzone">
+      <input type="file" id="fileInput" accept=".pdf,image/png,image/jpeg,image/jpg">
+      <h3>Drop a statement here, or click to browse</h3>
+      <p>PDF, PNG, or JPG</p>
+    </div>
+
+    <div class="status-line" id="statusLine">Waiting for a file…</div>
+    <div class="error-box" id="errorBox" style="display:none;"></div>
+
+    <div class="results" id="results">
+
+      <div class="score-panel">
+        <div class="score-circle" id="scoreCircle">—</div>
+        <div class="score-meta">
+          <h3 id="scoreLabel">Creditworthiness score</h3>
+          <p id="scoreSub">Based on reconciliation, balance health, and revenue quality.</p>
+        </div>
+      </div>
+
+      <div class="metrics" id="metrics"></div>
+
+      <div id="flagsContainer"></div>
+
+      <div class="txn-wrap">
+        <h4>Extracted transactions (<span id="txnCount">0</span>)</h4>
+        <div class="txn-scroll">
+          <table class="txn-table">
+            <thead><tr><th>Date</th><th>Description</th><th>Amount</th><th>Balance</th></tr></thead>
+            <tbody id="txnBody"></tbody>
+          </table>
+        </div>
+      </div>
+
+      <p class="disclaimer">This demo parses the text layer of your document (or runs OCR on images) and applies a general-purpose line parser plus the checks described on the overview page. Statement layouts vary widely — treat results here as illustrative of the workflow, not as a production-grade underwriting engine.</p>
+
+      <button class="reset-btn" id="resetBtn">Run another document</button>
+    </div>
+  </section>
+</div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/tesseract.js/4.1.1/tesseract.min.js"></script>
+<script>
+if (window.pdfjsLib) {
+  pdfjsLib.GlobalWorkerOptions.workerSrc = "https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.worker.min.js";
+}
+
+// ---------- view switching ----------
+function showView(name){
+  document.querySelectorAll('.view').forEach(v=>v.classList.remove('active'));
+  document.getElementById('view-'+name).classList.add('active');
+  document.querySelectorAll('.nav-tab').forEach(t=>t.classList.toggle('active', t.dataset.view===name));
+  window.scrollTo({top:0,behavior:'instant'});
+}
+document.querySelectorAll('.nav-tab').forEach(t=>t.addEventListener('click',()=>showView(t.dataset.view)));
+
+// ---------- upload wiring ----------
+const dropzone = document.getElementById('dropzone');
+const fileInput = document.getElementById('fileInput');
+const statusLine = document.getElementById('statusLine');
+const errorBox = document.getElementById('errorBox');
+const resultsEl = document.getElementById('results');
+
+dropzone.addEventListener('click', ()=>fileInput.click());
+dropzone.addEventListener('dragover', e=>{e.preventDefault(); dropzone.classList.add('drag');});
+dropzone.addEventListener('dragleave', ()=>dropzone.classList.remove('drag'));
+dropzone.addEventListener('drop', e=>{
+  e.preventDefault(); dropzone.classList.remove('drag');
+  if(e.dataTransfer.files.length) handleFile(e.dataTransfer.files[0]);
+});
+fileInput.addEventListener('change', e=>{
+  if(e.target.files.length) handleFile(e.target.files[0]);
+});
+document.getElementById('resetBtn').addEventListener('click', ()=>{
+  resultsEl.classList.remove('show');
+  statusLine.classList.remove('show');
+  errorBox.style.display='none';
+  fileInput.value='';
+});
+
+function setStatus(msg){
+  statusLine.classList.add('show');
+  statusLine.textContent = msg;
+}
+function showError(msg){
+  errorBox.style.display='block';
+  errorBox.textContent = msg;
+}
+
+async function handleFile(file){
+  errorBox.style.display='none';
+  resultsEl.classList.remove('show');
+  setStatus('Reading document…');
+  try{
+    let lines = [];
+    if(file.type === 'application/pdf' || file.name.toLowerCase().endsWith('.pdf')){
+      lines = await extractLinesFromPDF(file);
+      if(lines.length < 3){
+        setStatus('No usable text layer found — running OCR on the page image…');
+        lines = await extractLinesFromImageOCR(await renderFirstPdfPageToImage(file));
+      }
+    } else {
+      setStatus('Running OCR on the image…');
+      lines = await extractLinesFromImageOCR(file);
+    }
+    setStatus('Extracting transactions…');
+    const txns = parseTransactions(lines);
+    if(txns.length === 0){
+      showError("Couldn't find transaction-shaped lines (date, description, amount) in this document. Try a clearer scan, or a statement with a standard transaction list.");
+      statusLine.classList.remove('show');
+      return;
+    }
+    setStatus('Checking the math…');
+    const analysis = analyze(txns);
+    renderResults(txns, analysis);
+    statusLine.classList.remove('show');
+  }catch(err){
+    console.error(err);
+    showError('Something went wrong reading that file: ' + err.message);
+    statusLine.classList.remove('show');
+  }
+}
+
+// ---------- PDF text extraction, grouped into visual lines ----------
+async function extractLinesFromPDF(file){
+  const buf = await file.arrayBuffer();
+  const pdf = await pdfjsLib.getDocument({data: buf}).promise;
+  let allLines = [];
+  for(let p=1; p<=pdf.numPages; p++){
+    const page = await pdf.getPage(p);
+    const content = await page.getTextContent();
+    const rows = {};
+    content.items.forEach(item=>{
+      const y = Math.round(item.transform[5]);
+      const x = item.transform[4];
+      if(!rows[y]) rows[y] = [];
+      rows[y].push({x, str: item.str});
+    });
+    const ys = Object.keys(rows).map(Number).sort((a,b)=>b-a);
+    ys.forEach(y=>{
+      const line = rows[y].sort((a,b)=>a.x-b.x).map(i=>i.str).join(' ').replace(/\s+/g,' ').trim();
+      if(line) allLines.push(line);
+    });
+  }
+  return allLines;
+}
+
+async function renderFirstPdfPageToImage(file){
+  const buf = await file.arrayBuffer();
+  const pdf = await pdfjsLib.getDocument({data: buf}).promise;
+  const page = await pdf.getPage(1);
+  const viewport = page.getViewport({scale: 2.2});
+  const canvas = document.createElement('canvas');
+  canvas.width = viewport.width; canvas.height = viewport.height;
+  await page.render({canvasContext: canvas.getContext('2d'), viewport}).promise;
+  return canvas;
+}
+
+async function extractLinesFromImageOCR(imageSourceOrFile){
+  const { data } = await Tesseract.recognize(imageSourceOrFile, 'eng');
+  return data.text.split('\n').map(l=>l.replace(/\s+/g,' ').trim()).filter(Boolean);
+}
+
+// ---------- transaction parsing ----------
+function parseTransactions(lines){
+  const lineRe = /(\d{1,2}\/\d{1,2}(?:\/\d{2,4})?)\s+(.+?)\s+(-?\$?\(?[\d,]+\.\d{2}\)?)(?:\s+(-?\$?\(?[\d,]+\.\d{2}\)?))?\s*$/;
+  const txns = [];
+  for(const raw of lines){
+    const m = raw.match(lineRe);
+    if(!m) continue;
+    const [, date, desc, amtStr, balStr] = m;
+    const amount = toNumber(amtStr);
+    const balance = balStr ? toNumber(balStr) : null;
+    if(amount === null) continue;
+    if(desc.replace(/[^a-zA-Z]/g,'').length < 2) continue; // skip junk lines
+    txns.push({date, desc: desc.trim(), amount, balance});
+  }
+  return txns;
+}
+
+function toNumber(str){
+  if(!str) return null;
+  let neg = /^\(/.test(str) || /^-/.test(str);
+  let n = parseFloat(str.replace(/[\$,()]/g,''));
+  if(isNaN(n)) return null;
+  return neg ? -Math.abs(n) : n;
+}
+
+// ---------- analysis ----------
+function analyze(txns){
+  const flags = [];
+  const excludeRe = /transfer|xfer|loan proceeds|loan advance|internal transfer/i;
+
+  // duplicates: same date+amount+desc appearing more than once
+  const seen = {};
+  txns.forEach((t,i)=>{
+    const key = t.date+'|'+t.amount.toFixed(2)+'|'+t.desc.toLowerCase();
+    seen[key] = seen[key] || [];
+    seen[key].push(i);
+  });
+  const dupIndices = new Set();
+  let dupGroups = 0;
+  Object.values(seen).forEach(arr=>{
+    if(arr.length > 1){ dupGroups++; arr.forEach(i=>dupIndices.add(i)); }
+  });
+  if(dupGroups > 0){
+    flags.push(dupGroups + ' repeated line item' + (dupGroups>1?'s':'') + ' (same date, description, and amount appearing more than once).');
+  }
+
+  // balance-based metrics, if balances are present
+  const withBal = txns.filter(t=>t.balance !== null);
+  const uniqDatesNeg = new Set();
+  const uniqDatesLow = new Set();
+  withBal.forEach(t=>{
+    if(t.balance < 0) uniqDatesNeg.add(t.date);
+    else if(t.balance < 100) uniqDatesLow.add(t.date);
+  });
+  const negativeDays = uniqDatesNeg.size;
+  const lowBalanceDays = uniqDatesLow.size;
+
+  // reconciliation: check chained arithmetic between consecutive balance rows
+  let mismatches = 0;
+  for(let i=1;i<withBal.length;i++){
+    const prev = withBal[i-1], cur = withBal[i];
+    const expected = prev.balance + cur.amount;
+    if(Math.abs(expected - cur.balance) > 0.02) mismatches++;
+  }
+  const reconciled = withBal.length >= 2 ? mismatches === 0 : null;
+  if(withBal.length >= 2 && mismatches > 0){
+    flags.push(mismatches + ' line' + (mismatches>1?'s':'') + " where the balance doesn't match the previous balance plus the transaction amount.");
+  }
+
+  // true revenue: positive amounts, excluding transfers/loans
+  const trueRevenue = txns
+    .filter(t=>t.amount > 0 && !excludeRe.test(t.desc))
+    .reduce((s,t)=>s+t.amount,0);
+
+  if(negativeDays > 0) flags.push(negativeDays + ' day' + (negativeDays>1?'s':'') + ' with a negative balance.');
+  if(lowBalanceDays > 0) flags.push(lowBalanceDays + ' day' + (lowBalanceDays>1?'s':'') + ' with a balance under $100.');
+
+  // score
+  let score = 100;
+  score -= negativeDays * 4;
+  score -= lowBalanceDays * 1;
+  score -= mismatches * 12;
+  score -= dupGroups * 8;
+  score = Math.max(1, Math.min(100, Math.round(score)));
+
+  return { flags, negativeDays, lowBalanceDays, trueRevenue, reconciled, mismatches, dupGroups, dupIndices, score, hasBalances: withBal.length >= 2 };
+}
+
+// ---------- rendering ----------
+function renderResults(txns, a){
+  const circle = document.getElementById('scoreCircle');
+  circle.textContent = a.score;
+  circle.style.background = a.score >= 70 ? 'var(--teal)' : (a.score >= 40 ? 'var(--amber)' : 'var(--red)');
+  document.getElementById('scoreSub').textContent =
+    a.score >= 70 ? 'Statement reads clean against the checks below.' :
+    a.score >= 40 ? 'A few things here are worth a second look.' :
+    'Multiple checks came back flagged — review before relying on this file.';
+
+  const metricsEl = document.getElementById('metrics');
+  metricsEl.innerHTML = '';
+  const rows = [
+    ['Negative-balance days', a.negativeDays, a.negativeDays>0],
+    ['Low-balance days (under $100)', a.lowBalanceDays, a.lowBalanceDays>0],
+    ['Total true revenue (deposits, ex. transfers)', '$'+a.trueRevenue.toLocaleString(undefined,{minimumFractionDigits:2,maximumFractionDigits:2}), false],
+    ['Reconciliation', a.hasBalances ? (a.reconciled ? 'Balances tie out' : (a.mismatches+' mismatch'+(a.mismatches>1?'es':''))) : 'Not enough balance data', a.hasBalances && !a.reconciled],
+    ['Repeated line items', a.dupGroups, a.dupGroups>0],
+  ];
+  rows.forEach(([label, value, flagged])=>{
+    const row = document.createElement('div');
+    row.className = 'metric-row';
+    row.innerHTML = `<div class="label">${label}</div><div class="value ${flagged?'flagged':'ok'}">${value}</div>`;
+    metricsEl.appendChild(row);
+  });
+
+  const flagsContainer = document.getElementById('flagsContainer');
+  if(a.flags.length){
+    flagsContainer.innerHTML = `<div class="flags-block"><h4>Flags raised</h4><ul>${a.flags.map(f=>`<li>${f}</li>`).join('')}</ul></div>`;
+  } else {
+    flagsContainer.innerHTML = `<p class="no-flags">No flags raised — nothing in this statement tripped the checks above.</p>`;
+  }
+
+  document.getElementById('txnCount').textContent = txns.length;
+  const tbody = document.getElementById('txnBody');
+  tbody.innerHTML = '';
+  txns.forEach((t,i)=>{
+    const tr = document.createElement('tr');
+    if(a.dupIndices.has(i)) tr.className = 'dup';
+    tr.innerHTML = `<td>${t.date}</td><td class="desc">${t.desc}</td><td>${t.amount.toFixed(2)}</td><td>${t.balance!==null ? t.balance.toFixed(2) : '—'}</td>`;
+    tbody.appendChild(tr);
+  });
+
+  resultsEl.classList.add('show');
+}
+</script>
+</body>
+</html>
