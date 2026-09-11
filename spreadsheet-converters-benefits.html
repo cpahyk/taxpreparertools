@@ -1,0 +1,634 @@
+<!--
+  Embedding on your site:
+  This is a single self-contained file — no backend, no build step.
+  - Simplest: upload this file to your host and link/iframe it directly,
+    e.g. <iframe src="/tools/statement-converter.html" style="width:100%;height:900px;border:0;"></iframe>
+  - Everything (parsing, OCR, XLSX export) runs client-side in the visitor's
+    browser via CDN-hosted pdf.js / Tesseract.js / SheetJS — no statement
+    data is ever sent to a server, which is worth stating explicitly on a
+    tax-prep site given the sensitivity of the documents.
+  - If you want it to inherit your site's fonts/colors, edit the CSS
+    variables in :root below.
+-->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Ledger — Statement to Spreadsheet</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Source+Serif+4:wght@400;600;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap');
+
+  :root{
+    --ink:#1B2A3D;
+    --paper:#FAF9F6;
+    --paper-dim:#F1EFE8;
+    --ledger:#2F5D4C;
+    --ledger-light:#EAF0ED;
+    --amber:#B4791F;
+    --amber-light:#FBF1E1;
+    --line:#DAD6C9;
+    --red:#A23B2E;
+  }
+  *{box-sizing:border-box;}
+  body{
+    margin:0;
+    background:var(--paper);
+    color:var(--ink);
+    font-family:'IBM Plex Mono', monospace;
+    line-height:1.5;
+  }
+  h1,h2,h3{
+    font-family:'Source Serif 4', serif;
+    font-weight:700;
+    margin:0;
+  }
+  .wrap{ max-width:920px; margin:0 auto; padding:40px 24px 80px; }
+
+  header{
+    display:flex;
+    align-items:baseline;
+    justify-content:space-between;
+    border-bottom:2px solid var(--ink);
+    padding-bottom:18px;
+    margin-bottom:36px;
+  }
+  header h1{ font-size:28px; letter-spacing:-0.01em; }
+  header .tag{ font-size:12px; color:var(--ledger); }
+
+  .intro{ max-width:56ch; margin-bottom:32px; font-size:14px; color:#4A4A42; }
+
+  .dropzone{
+    border:1.5px dashed var(--ink);
+    background:var(--paper-dim);
+    padding:36px 24px;
+    text-align:center;
+    cursor:pointer;
+    transition:border-color .15s, background .15s;
+  }
+  .dropzone.drag{ border-color:var(--ledger); background:var(--ledger-light); }
+  .dropzone h3{ font-size:17px; margin-bottom:6px; }
+  .dropzone p{ font-size:13px; color:#6b6b60; margin:0; }
+  .dropzone input{ display:none; }
+
+  .filelist{ margin-top:18px; display:flex; flex-direction:column; gap:8px; }
+  .filerow{
+    display:flex; align-items:center; justify-content:space-between;
+    border:1px solid var(--line); background:#fff;
+    padding:10px 14px; font-size:13px;
+  }
+  .filerow .name{ font-weight:500; }
+  .filerow .status{ font-size:12px; color:var(--ledger); }
+  .filerow .status.err{ color:var(--red); }
+  .filerow .status.busy{ color:var(--amber); }
+
+  .toolbar{
+    display:flex; align-items:center; justify-content:space-between;
+    margin:36px 0 12px;
+    flex-wrap:wrap;
+    gap:12px;
+  }
+  .toolbar h2{ font-size:20px; }
+  .count{ font-size:12px; color:#6b6b60; }
+
+  .actions{ display:flex; gap:10px; }
+  button.primary, button.secondary{
+    font-family:'IBM Plex Mono', monospace;
+    font-size:13px;
+    padding:9px 16px;
+    border:1px solid var(--ink);
+    cursor:pointer;
+    background:var(--ink);
+    color:var(--paper);
+  }
+  button.secondary{ background:transparent; color:var(--ink); }
+  button:disabled{ opacity:0.35; cursor:not-allowed; }
+  button.primary:hover:not(:disabled){ background:var(--ledger); border-color:var(--ledger); }
+  button.secondary:hover:not(:disabled){ background:var(--paper-dim); }
+
+  table{ width:100%; border-collapse:collapse; font-size:13px; background:#fff; }
+  thead th{
+    text-align:left;
+    font-weight:600;
+    border-bottom:2px solid var(--ink);
+    padding:8px 10px;
+    position:sticky; top:0; background:#fff;
+  }
+  tbody td{ border-bottom:1px solid var(--line); padding:7px 10px; vertical-align:top; }
+  tbody tr:hover{ background:var(--paper-dim); }
+  td.amt{ text-align:right; font-variant-numeric:tabular-nums; white-space:nowrap; }
+  td.amt.neg{ color:var(--red); }
+  td.amt.pos{ color:var(--ledger); }
+  td[contenteditable="true"]:focus{ outline:1.5px solid var(--ledger); outline-offset:-1px; background:#fff; }
+  .col-del{ width:28px; text-align:center; }
+  .col-del span{ cursor:pointer; color:#9a9a8c; }
+  .col-del span:hover{ color:var(--red); }
+
+  .tablewrap{ max-height:520px; overflow:auto; border:1px solid var(--line); }
+
+  .empty{
+    border:1px solid var(--line);
+    padding:40px 20px;
+    text-align:center;
+    color:#8a8a7c;
+    font-size:13px;
+  }
+
+  .summary{
+    display:flex; gap:24px; margin-top:14px; font-size:12px; color:#4A4A42; flex-wrap:wrap;
+  }
+  .summary b{ color:var(--ink); font-family:'Source Serif 4',serif; font-size:15px; display:block; }
+
+  footer{ margin-top:48px; font-size:11px; color:#9a9a8c; border-top:1px solid var(--line); padding-top:14px; }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <header>
+    <h1>Spreadsheet Converter</h1>
+    <div class="tag">statement → spreadsheet, entirely in your browser</div>
+  </header>
+
+  <p class="intro">Drop in a bank or credit card PDF statement. Text is pulled straight out of the PDF — or OCR'd if it's a scanned copy — and parsed into rows. Nothing leaves this tab. Review, fix anything that's off, then export to XLSX or CSV.</p>
+
+  <div class="dropzone" id="dropzone">
+    <h3>Drop statement PDFs here</h3>
+    <p>or click to browse — multiple files at once is fine</p>
+    <input type="file" id="fileInput" accept="application/pdf" multiple>
+  </div>
+
+  <div class="filelist" id="filelist"></div>
+
+  <div class="toolbar">
+    <h2>Transactions</h2>
+    <div class="actions">
+      <span class="count" id="rowCount"></span>
+      <button class="secondary" id="addRowBtn" disabled>+ Add row</button>
+      <button class="secondary" id="csvBtn" disabled>Export CSV</button>
+      <button class="primary" id="xlsxBtn" disabled>Export XLSX</button>
+    </div>
+  </div>
+
+  <div id="tableArea">
+    <div class="empty" id="emptyState">No transactions yet — add a statement above.</div>
+  </div>
+
+  <div class="summary" id="summary" style="display:none;"></div>
+
+  <footer>Parsing is heuristic — it looks for date / description / amount patterns common to US bank &amp; card statements, and checks totals against the statement's own beginning/ending balance when available. Scanned statements are read with OCR, which is slower and less accurate than a native text layer. Always spot-check before filing.</footer>
+</div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
+<script>
+pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.worker.min.js';
+
+let transactions = []; // {id, date, description, amount, source}
+let rowId = 0;
+let fileMetas = []; // {name, beginning, ending, ids: [...]}
+
+const dropzone = document.getElementById('dropzone');
+const fileInput = document.getElementById('fileInput');
+const filelist = document.getElementById('filelist');
+const tableArea = document.getElementById('tableArea');
+const emptyState = document.getElementById('emptyState');
+const rowCount = document.getElementById('rowCount');
+const summary = document.getElementById('summary');
+const addRowBtn = document.getElementById('addRowBtn');
+const csvBtn = document.getElementById('csvBtn');
+const xlsxBtn = document.getElementById('xlsxBtn');
+
+dropzone.addEventListener('click', () => fileInput.click());
+dropzone.addEventListener('dragover', e => { e.preventDefault(); dropzone.classList.add('drag'); });
+dropzone.addEventListener('dragleave', () => dropzone.classList.remove('drag'));
+dropzone.addEventListener('drop', e => {
+  e.preventDefault();
+  dropzone.classList.remove('drag');
+  handleFiles(e.dataTransfer.files);
+});
+fileInput.addEventListener('change', e => handleFiles(e.target.files));
+
+function handleFiles(fileArr){
+  Array.from(fileArr).forEach(f => {
+    if(f.type !== 'application/pdf') return;
+    const row = document.createElement('div');
+    row.className = 'filerow';
+    row.innerHTML = `<span class="name">${escapeHtml(f.name)}</span><span class="status busy">reading…</span>`;
+    filelist.appendChild(row);
+    processFile(f, row);
+  });
+}
+
+const MAX_FILE_MB = 30;
+
+async function processFile(file, row){
+  const statusEl = row.querySelector('.status');
+
+  if(file.size > MAX_FILE_MB * 1024 * 1024){
+    statusEl.textContent = `too large (>${MAX_FILE_MB}MB) — try splitting the PDF`;
+    statusEl.className = 'status err';
+    return;
+  }
+
+  let pdf;
+  try{
+    const buf = await file.arrayBuffer();
+    pdf = await pdfjsLib.getDocument({data: buf}).promise;
+  } catch(err){
+    console.error(err);
+    if(err && err.name === 'PasswordException'){
+      statusEl.textContent = 'password-protected — remove the password and re-upload';
+    } else {
+      statusEl.textContent = 'could not open file — is it a valid PDF?';
+    }
+    statusEl.className = 'status err';
+    return;
+  }
+
+  let fullText = '';
+  try{
+    for(let p = 1; p <= pdf.numPages; p++){
+      const page = await pdf.getPage(p);
+      const content = await page.getTextContent();
+      const lines = {};
+      content.items.forEach(item => {
+        const y = Math.round(item.transform[5]);
+        if(!lines[y]) lines[y] = [];
+        lines[y].push(item.str);
+      });
+      const ys = Object.keys(lines).map(Number).sort((a,b) => b - a);
+      ys.forEach(y => { fullText += lines[y].join(' ') + '\n'; });
+    }
+  } catch(err){
+    console.error(err);
+    statusEl.textContent = 'error reading page text';
+    statusEl.className = 'status err';
+    return;
+  }
+
+  // Scanned statements have (near) no embedded text layer — fall back to OCR.
+  if(fullText.trim().length < 40){
+    statusEl.textContent = 'no text layer found — running OCR on scanned pages…';
+    statusEl.className = 'status busy';
+    try{
+      await ensureTesseractLoaded();
+      fullText = await ocrPdf(pdf, statusEl);
+    } catch(err){
+      console.error(err);
+      statusEl.textContent = 'OCR failed — this looks like a scanned PDF we could not read';
+      statusEl.className = 'status err';
+      return;
+    }
+  }
+
+  const found = parseTransactions(fullText, file.name);
+  const balances = findStatedBalances(fullText);
+
+  if(found.length === 0){
+    statusEl.textContent = 'no transactions found';
+    statusEl.className = 'status err';
+    return;
+  }
+
+  transactions.push(...found);
+  fileMetas.push({ name: file.name, beginning: balances.beginning, ending: balances.ending, ids: found.map(t => t.id) });
+
+  const recon = reconcileFile(found, balances);
+  if(recon === null){
+    statusEl.textContent = `${found.length} rows added`;
+    statusEl.className = 'status';
+  } else if(recon.ok){
+    statusEl.textContent = `${found.length} rows added — balances tie out ✓`;
+    statusEl.className = 'status';
+  } else {
+    statusEl.textContent = `${found.length} rows added — off by $${recon.diff.toFixed(2)}, check for missed rows`;
+    statusEl.className = 'status err';
+  }
+
+  renderTable();
+}
+
+// Compares beginning + sum(transactions) against the statement's own stated
+// ending balance. Returns null when the statement doesn't expose both figures
+// (can't reconcile), otherwise {ok, diff}.
+function reconcileFile(found, balances){
+  if(balances.beginning === null || balances.ending === null) return null;
+  const sum = found.reduce((s,t) => s + t.amount, 0);
+  const expectedEnding = balances.beginning + sum;
+  const diff = Math.abs(expectedEnding - balances.ending);
+  return { ok: diff < 0.01, diff };
+}
+
+let tesseractLoading = null;
+function ensureTesseractLoaded(){
+  if(window.Tesseract) return Promise.resolve();
+  if(tesseractLoading) return tesseractLoading;
+  tesseractLoading = new Promise((resolve, reject) => {
+    const s = document.createElement('script');
+    s.src = 'https://cdnjs.cloudflare.com/ajax/libs/tesseract.js/5.0.4/tesseract.min.js';
+    s.onload = resolve;
+    s.onerror = () => reject(new Error('Tesseract failed to load'));
+    document.head.appendChild(s);
+  });
+  return tesseractLoading;
+}
+
+// Renders each page to a canvas and OCRs it. Slower and less accurate than a
+// real text layer, so this only runs when no text layer is present at all.
+async function ocrPdf(pdf, statusEl){
+  let text = '';
+  for(let p = 1; p <= pdf.numPages; p++){
+    statusEl.textContent = `OCR — page ${p} of ${pdf.numPages}…`;
+    const page = await pdf.getPage(p);
+    const viewport = page.getViewport({ scale: 2 });
+    const canvas = document.createElement('canvas');
+    canvas.width = viewport.width;
+    canvas.height = viewport.height;
+    const ctx = canvas.getContext('2d');
+    await page.render({ canvasContext: ctx, viewport }).promise;
+    const result = await Tesseract.recognize(canvas, 'eng');
+    text += result.data.text + '\n';
+  }
+  return text;
+}
+
+// Main entry: try section-aware parsing first (handles labeled Debit/Credit/Check
+// blocks and year-less MM/DD dates common on business/bank statements). If that
+// finds nothing, fall back to a flat line-by-line heuristic for simpler statements
+// (many credit card / consumer statements just list date+desc+amount per line).
+function parseTransactions(text, sourceName){
+  const refYear = findReferenceYear(text);
+  const sectioned = parseBySections(text, sourceName, refYear);
+  if(sectioned.length > 0) return sectioned;
+  return parseFlatLines(text, sourceName, refYear);
+}
+
+function findStatedBalances(text){
+  const begin = text.match(/Beginning\s*Balance\D{0,10}\$?\(?([\d,]+\.\d{2})\)?/i);
+  const end = text.match(/Ending\s*Balance\D{0,10}\$?\(?([\d,]+\.\d{2})\)?/i)
+           || text.match(/New\s*Balance\D{0,10}\$?\(?([\d,]+\.\d{2})\)?/i);
+  return {
+    beginning: begin ? normalizeAmount(begin[1]) : null,
+    ending: end ? normalizeAmount(end[1]) : null
+  };
+}
+
+function findReferenceYear(text){
+  let m = text.match(/Statement Period[^0-9]*\d{1,2}\/\d{1,2}\/(\d{4})/i);
+  if(m) return m[1];
+  m = text.match(/\b\d{1,2}\/\d{1,2}\/(\d{4})\b/);
+  if(m) return m[1];
+  return null;
+}
+
+function withYear(dateStr, refYear){
+  if(/^\d{1,2}\/\d{1,2}$/.test(dateStr) && refYear) return `${dateStr}/${refYear}`;
+  return dateStr;
+}
+
+// Section headers: which block of the statement a line belongs to, and the sign
+// that should be applied to amounts found in that block.
+const SECTION_RULES = [
+  { re: /^checks?\b/i,                                          sign: -1, mode: 'checks' },
+  { re: /^(deposits|payments)\s*(and|&|\/)\s*(other\s*)?credits/i, sign:  1, mode: 'line' },
+  { re: /^(withdrawals|checks)\s*(and|&|\/)\s*(other\s*)?debits/i, sign: -1, mode: 'line' },
+  { re: /^withdrawals\s*\/\s*debits/i,                          sign: -1, mode: 'line'   },
+  { re: /^deposits\s*\/\s*credits/i,                            sign:  1, mode: 'line'   },
+  { re: /^(electronic|atm\s*&?\s*debit\s*card)\s*withdrawals/i, sign: -1, mode: 'line' },
+  { re: /^(deposits|credits|payments)\b/i,                      sign:  1, mode: 'line'   },
+  { re: /^new\s*(charges|transactions|activity)/i,              sign: -1, mode: 'line'   },
+  { re: /^(purchases|withdrawals|debits|fees|other\s*debits)\b/i, sign: -1, mode: 'line' },
+];
+// Lines that end a transaction section (balances, disclosures, fee schedules —
+// not actual transactions even though they may contain dates/amounts).
+const STOP_RE = /^(daily balance|account summary|analysis period|service charge|relationship overview|standard monthly)/i;
+
+// Skip plain column-header repeats like "Date Amount Description" or
+// "Number Date Paid Amount Number Date Paid Amount" (no real digits to parse).
+const COLHEADER_RE = /^(date|number)\b.*(amount|description)/i;
+
+function parseBySections(text, sourceName, refYear){
+  const results = [];
+  const lines = text.split('\n').map(l => l.trim()).filter(Boolean);
+  let mode = null, sign = 1;
+
+  const lineRe = /^(\d{1,2}\/\d{1,2}(?:\/\d{2,4})?)\s+\$?\(?([\d,]+\.\d{2})\)?\s+(.+)$/;
+  const checkGroupRe = /(\d{3,6})\s*[a-z]?\s+(\d{1,2}\/\d{1,2})\s+([\d,]+\.\d{2})/gi;
+
+  for(const line of lines){
+    if(STOP_RE.test(line)){ mode = null; continue; }
+
+    const header = SECTION_RULES.find(r => r.re.test(line));
+    if(header){ mode = header.mode; sign = header.sign; continue; }
+
+    if(!mode) continue;
+    if(COLHEADER_RE.test(line)) continue;
+
+    if(mode === 'line'){
+      const m = line.match(lineRe);
+      if(!m) continue;
+      const amount = normalizeAmount(m[2]);
+      if(amount === null) continue;
+      let desc = m[3].trim().replace(/\s{2,}/g, ' ');
+      results.push({
+        id: rowId++,
+        date: withYear(m[1], refYear),
+        description: desc || '(no description)',
+        amount: amount * sign,
+        source: sourceName
+      });
+    } else if(mode === 'checks'){
+      let cm;
+      checkGroupRe.lastIndex = 0;
+      while((cm = checkGroupRe.exec(line)) !== null){
+        const amount = normalizeAmount(cm[3]);
+        if(amount === null) continue;
+        results.push({
+          id: rowId++,
+          date: withYear(cm[2], refYear),
+          description: `Check #${cm[1]}`,
+          amount: amount * -1,
+          source: sourceName
+        });
+      }
+    }
+  }
+  return results;
+}
+
+// Fallback for statements with no labeled sections: one date + one amount per
+// line, description is whatever's left. Sign is inferred from parentheses/minus
+// only (no section context available), so review amounts on statements that hit
+// this path.
+function parseFlatLines(text, sourceName, refYear){
+  const results = [];
+  const lines = text.split('\n').map(l => l.trim()).filter(Boolean);
+
+  const datePatterns = [
+    /^(\d{1,2}\/\d{1,2}\/\d{2,4})/,
+    /^(\d{1,2}\/\d{1,2})(?!\d)/,
+    /^(\d{1,2}-\d{1,2}-\d{2,4})/,
+    /^([A-Za-z]{3}\s+\d{1,2},?\s+\d{4})/,
+    /^([A-Za-z]{3}\s+\d{1,2})(?!\d)/
+  ];
+  const amountPattern = /-?\$?\(?-?[\d,]+\.\d{2}\)?-?/g;
+
+  for(const line of lines){
+    if(STOP_RE.test(line) || COLHEADER_RE.test(line)) continue;
+    let dateMatch = null;
+    for(const p of datePatterns){
+      const m = line.match(p);
+      if(m){ dateMatch = m; break; }
+    }
+    if(!dateMatch) continue;
+
+    const amounts = line.match(amountPattern);
+    if(!amounts || amounts.length === 0) continue;
+
+    const chosen = amounts.length >= 2 ? amounts[amounts.length - 2] : amounts[amounts.length - 1];
+    const amount = normalizeAmount(chosen);
+    if(amount === null) continue;
+
+    let desc = line.replace(dateMatch[0], '').replace(amounts[amounts.length-1], '').trim();
+    if(amounts.length >= 2) desc = desc.replace(amounts[amounts.length-2], '').trim();
+    desc = desc.replace(/\s{2,}/g, ' ').replace(/^[-–:\s]+|[-–:\s]+$/g, '');
+    if(!desc) desc = '(no description)';
+
+    results.push({
+      id: rowId++,
+      date: withYear(dateMatch[0].trim(), refYear),
+      description: desc,
+      amount: amount,
+      source: sourceName
+    });
+  }
+  return results;
+}
+
+function normalizeAmount(raw){
+  if(!raw) return null;
+  let s = raw.trim();
+  let negative = false;
+  if(s.startsWith('(') && s.endsWith(')')){ negative = true; s = s.slice(1,-1); }
+  if(s.startsWith('-')){ negative = true; }
+  s = s.replace(/[^\d.]/g, '');
+  if(!s) return null;
+  let val = parseFloat(s);
+  if(isNaN(val)) return null;
+  if(negative) val = -val;
+  return val;
+}
+
+function escapeHtml(s){
+  return String(s).replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+}
+
+function renderTable(){
+  if(transactions.length === 0){
+    tableArea.innerHTML = '';
+    tableArea.appendChild(emptyState);
+    summary.style.display = 'none';
+    rowCount.textContent = '';
+    addRowBtn.disabled = true;
+    csvBtn.disabled = true;
+    xlsxBtn.disabled = true;
+    return;
+  }
+
+  addRowBtn.disabled = false;
+  csvBtn.disabled = false;
+  xlsxBtn.disabled = false;
+  rowCount.textContent = `${transactions.length} row${transactions.length===1?'':'s'}`;
+
+  let html = `<div class="tablewrap"><table><thead><tr>
+    <th>Date</th><th>Description</th><th>Source</th><th style="text-align:right;">Amount</th><th class="col-del"></th>
+  </tr></thead><tbody>`;
+
+  transactions.forEach(t => {
+    const cls = t.amount < 0 ? 'neg' : 'pos';
+    html += `<tr data-id="${t.id}">
+      <td contenteditable="true" data-field="date">${escapeHtml(t.date)}</td>
+      <td contenteditable="true" data-field="description">${escapeHtml(t.description)}</td>
+      <td contenteditable="true" data-field="source">${escapeHtml(t.source)}</td>
+      <td contenteditable="true" data-field="amount" class="amt ${cls}">${t.amount.toFixed(2)}</td>
+      <td class="col-del"><span data-del="${t.id}">✕</span></td>
+    </tr>`;
+  });
+
+  html += '</tbody></table></div>';
+  tableArea.innerHTML = html;
+
+  tableArea.querySelectorAll('[data-del]').forEach(el => {
+    el.addEventListener('click', () => {
+      const id = Number(el.getAttribute('data-del'));
+      transactions = transactions.filter(t => t.id !== id);
+      renderTable();
+    });
+  });
+
+  tableArea.querySelectorAll('td[contenteditable]').forEach(td => {
+    td.addEventListener('blur', () => {
+      const tr = td.closest('tr');
+      const id = Number(tr.getAttribute('data-id'));
+      const field = td.getAttribute('data-field');
+      const t = transactions.find(x => x.id === id);
+      if(!t) return;
+      if(field === 'amount'){
+        const v = parseFloat(td.textContent.replace(/[^\d.-]/g,''));
+        t.amount = isNaN(v) ? 0 : v;
+        td.textContent = t.amount.toFixed(2);
+        td.className = 'amt ' + (t.amount < 0 ? 'neg' : 'pos');
+      } else {
+        t[field] = td.textContent.trim();
+      }
+    });
+  });
+
+  const total = transactions.reduce((s,t) => s + t.amount, 0);
+  const debits = transactions.filter(t => t.amount < 0).reduce((s,t) => s + t.amount, 0);
+  const credits = transactions.filter(t => t.amount > 0).reduce((s,t) => s + t.amount, 0);
+  summary.style.display = 'flex';
+  summary.innerHTML = `
+    <div><b>${transactions.length}</b>transactions</div>
+    <div><b>${credits.toFixed(2)}</b>total credits</div>
+    <div><b>${debits.toFixed(2)}</b>total debits</div>
+    <div><b>${total.toFixed(2)}</b>net</div>
+  `;
+}
+
+addRowBtn.addEventListener('click', () => {
+  transactions.push({id: rowId++, date:'', description:'', amount:0, source:'manual'});
+  renderTable();
+});
+
+csvBtn.addEventListener('click', () => {
+  const header = ['Date','Description','Source','Amount'];
+  const rows = transactions.map(t => [t.date, t.description, t.source, t.amount.toFixed(2)]);
+  const csv = [header, ...rows].map(r =>
+    r.map(v => `"${String(v).replace(/"/g,'""')}"`).join(',')
+  ).join('\n');
+  const blob = new Blob([csv], {type:'text/csv'});
+  downloadBlob(blob, 'transactions.csv');
+});
+
+xlsxBtn.addEventListener('click', () => {
+  const data = transactions.map(t => ({
+    Date: t.date, Description: t.description, Source: t.source, Amount: t.amount
+  }));
+  const ws = XLSX.utils.json_to_sheet(data);
+  ws['!cols'] = [{wch:12},{wch:40},{wch:20},{wch:12}];
+  const wb = XLSX.utils.book_new();
+  XLSX.utils.book_append_sheet(wb, ws, 'Transactions');
+  XLSX.writeFile(wb, 'transactions.xlsx');
+});
+
+function downloadBlob(blob, filename){
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement('a');
+  a.href = url; a.download = filename;
+  document.body.appendChild(a); a.click(); a.remove();
+  URL.revokeObjectURL(url);
+}
+</script>
+</body>
+</html>
