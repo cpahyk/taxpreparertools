@@ -70,6 +70,10 @@
   .dropzone p{ font-size:13px; color:#6b6b60; margin:0; }
   .dropzone input{ display:none; }
 
+  .sample-link{ margin:10px 0 0; font-size:12px; text-align:center; }
+  .sample-link a{ color:var(--ledger); text-decoration:none; border-bottom:1px solid var(--ledger); }
+  .sample-link a:hover{ color:var(--ink); border-color:var(--ink); }
+
   .filelist{ margin-top:18px; display:flex; flex-direction:column; gap:8px; }
   .filerow{
     display:flex; align-items:center; justify-content:space-between;
@@ -157,6 +161,8 @@
     <input type="file" id="fileInput" accept="application/pdf" multiple>
   </div>
 
+  <p class="sample-link"><a href="#" id="sampleBtn">Try it with a sample statement first →</a></p>
+
   <div class="filelist" id="filelist"></div>
 
   <div class="toolbar">
@@ -197,6 +203,7 @@ const summary = document.getElementById('summary');
 const addRowBtn = document.getElementById('addRowBtn');
 const csvBtn = document.getElementById('csvBtn');
 const xlsxBtn = document.getElementById('xlsxBtn');
+const sampleBtn = document.getElementById('sampleBtn');
 
 dropzone.addEventListener('click', () => fileInput.click());
 dropzone.addEventListener('dragover', e => { e.preventDefault(); dropzone.classList.add('drag'); });
@@ -207,6 +214,40 @@ dropzone.addEventListener('drop', e => {
   handleFiles(e.dataTransfer.files);
 });
 fileInput.addEventListener('change', e => handleFiles(e.target.files));
+
+// A small synthetic statement, in the same plain-text-line shape pdf.js would
+// hand us from a real PDF. Lets someone verify the tool's output format and
+// the reconciliation check without needing to find a real statement first.
+const SAMPLE_STATEMENT_TEXT = `
+Statement Period Date: 3/1/2026 - 3/31/2026
+Account Summary - 0000123456
+03/01 Beginning Balance $2,450.00
+03/31 Ending Balance $3,013.50
+
+Withdrawals / Debits
+Date Amount Description
+03/03 60.00 ELECTRIC CO UTILITY PAYMENT
+03/12 214.75 OFFICE SUPPLY CO INVOICE 4471
+03/20 500.00 CHECK PRINTED SUPPLIES LLC
+
+Deposits / Credits
+Date Amount Description
+03/05 1200.00 CLIENT PAYMENT INV 1042
+03/18 138.25 CLIENT PAYMENT INV 1043
+`;
+
+sampleBtn.addEventListener('click', (e) => {
+  e.preventDefault();
+  const row = document.createElement('div');
+  row.className = 'filerow';
+  row.innerHTML = `<span class="name">Sample Statement (demo, no PDF)</span><span class="status busy">parsing…</span>`;
+  filelist.appendChild(row);
+  const statusEl = row.querySelector('.status');
+
+  const found = parseTransactions(SAMPLE_STATEMENT_TEXT, 'Sample Statement.pdf');
+  const balances = findStatedBalances(SAMPLE_STATEMENT_TEXT);
+  finishProcessing(found, balances, 'Sample Statement.pdf', statusEl);
+});
 
 function handleFiles(fileArr){
   Array.from(fileArr).forEach(f => {
@@ -283,7 +324,12 @@ async function processFile(file, row){
 
   const found = parseTransactions(fullText, file.name);
   const balances = findStatedBalances(fullText);
+  finishProcessing(found, balances, file.name, statusEl);
+}
 
+// Shared tail end of processing, used by both real PDF uploads and the sample
+// statement (which skips PDF parsing entirely and hands over plain text).
+function finishProcessing(found, balances, name, statusEl){
   if(found.length === 0){
     statusEl.textContent = 'no transactions found';
     statusEl.className = 'status err';
@@ -291,7 +337,7 @@ async function processFile(file, row){
   }
 
   transactions.push(...found);
-  fileMetas.push({ name: file.name, beginning: balances.beginning, ending: balances.ending, ids: found.map(t => t.id) });
+  fileMetas.push({ name, beginning: balances.beginning, ending: balances.ending, ids: found.map(t => t.id) });
 
   const recon = reconcileFile(found, balances);
   if(recon === null){
