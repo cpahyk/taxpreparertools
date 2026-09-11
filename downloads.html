@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Downloads — Tax Preparer Tools</title>
+<style>
+  :root{
+    --ledger-green: #1f3d2f;
+    --ledger-green-dark: #142a20;
+    --paper: #f7f5ef;
+    --paper-line: #d8d2c2;
+    --ink: #22201a;
+    --ink-soft: #5a5648;
+    --accent: #a8672c;
+    --rule: #c9c2ab;
+  }
+  *{box-sizing:border-box;}
+  body{
+    margin:0;
+    background:var(--paper);
+    color:var(--ink);
+    font-family: "Iowan Old Style","Georgia", serif;
+    line-height:1.5;
+  }
+  header{
+    background:var(--ledger-green);
+    color:var(--paper);
+    padding:2.5rem 1.5rem 2rem;
+    text-align:left;
+    border-bottom:4px double var(--accent);
+  }
+  header .wrap{
+    max-width:760px;
+    margin:0 auto;
+  }
+  header h1{
+    font-size:1.9rem;
+    margin:0 0 0.35rem;
+    font-weight:600;
+    letter-spacing:0.01em;
+  }
+  header p{
+    margin:0;
+    color:#cfd9c9;
+    font-family: "Courier New", monospace;
+    font-size:0.9rem;
+  }
+  main{
+    max-width:760px;
+    margin:0 auto;
+    padding:2.5rem 1.5rem 4rem;
+  }
+  .ledger{
+    border:1px solid var(--paper-line);
+    background:#fffefb;
+  }
+  .ledger-row{
+    display:flex;
+    flex-direction:column;
+    padding:1.75rem 1.75rem;
+    border-bottom:1px solid var(--rule);
+    position:relative;
+  }
+  .ledger-row:last-child{
+    border-bottom:none;
+  }
+  .row-index{
+    font-family:"Courier New", monospace;
+    font-size:0.75rem;
+    color:var(--ink-soft);
+    letter-spacing:0.08em;
+    margin-bottom:0.5rem;
+  }
+  .row-title{
+    font-size:1.3rem;
+    margin:0 0 0.5rem;
+    font-weight:600;
+    color:var(--ledger-green-dark);
+  }
+  .row-desc{
+    margin:0 0 1.1rem;
+    color:var(--ink-soft);
+    font-size:0.98rem;
+    max-width:60ch;
+  }
+  .row-action{
+    display:inline-flex;
+    align-items:center;
+    gap:0.5rem;
+    align-self:flex-start;
+    background:var(--ledger-green);
+    color:var(--paper);
+    text-decoration:none;
+    padding:0.65rem 1.3rem;
+    font-family:"Courier New", monospace;
+    font-size:0.85rem;
+    letter-spacing:0.03em;
+    border:1px solid var(--ledger-green-dark);
+    transition: background 0.15s ease;
+  }
+  .row-action:hover{
+    background:var(--ledger-green-dark);
+  }
+  .row-action.secondary{
+    background:transparent;
+    color:var(--ledger-green-dark);
+    border:1px solid var(--rule);
+  }
+  .row-action.secondary:hover{
+    background:#efece0;
+  }
+  footer{
+    max-width:760px;
+    margin:0 auto;
+    padding:0 1.5rem 3rem;
+    color:var(--ink-soft);
+    font-size:0.85rem;
+    font-family:"Courier New", monospace;
+  }
+  footer a{
+    color:var(--ledger-green-dark);
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="wrap">
+    <h1>Software Downloads</h1>
+    <p>Tax Preparer Tools — file conversion utilities for practitioners</p>
+  </div>
+</header>
+
+<main>
+  <div class="ledger">
+
+    <div class="ledger-row">
+      <div class="row-index">No. 01</div>
+      <h2 class="row-title">PDF to QBO Converter</h2>
+      <p class="row-desc">
+        Convert bank and credit card statement PDFs into QBO files ready to import into QuickBooks. Built for preparers who need clean, reconcilable transaction data without manual re-entry.
+      </p>
+      <a class="row-action" href="https://www.taxpreparertools.com/pdf-to-qbo-converter.html">View &amp; Download →</a>
+    </div>
+
+    <div class="ledger-row">
+      <div class="row-index">No. 02</div>
+      <h2 class="row-title">Spreadsheet Converters</h2>
+      <p class="row-desc">
+        See how the spreadsheet converter tools save time on data cleanup and formatting, so you can move straight from raw exports to usable, client-ready files.
+      </p>
+      <a class="row-action secondary" href="https://www.taxpreparertools.com/spreadsheet-converters-benefits">Learn More →</a>
+    </div>
+
+  </div>
+</main>
+
+<footer>
+  Tax Preparer Tools · Questions about a download? Contact support from the product page.
+</footer>
+
+</body>
+</html>
