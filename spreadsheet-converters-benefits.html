@@ -14,148 +14,211 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<title>Ledger — Statement to Spreadsheet</title>
+<title>Spreadsheet Converter — Statement to Spreadsheet</title>
 <style>
-  @import url('https://fonts.googleapis.com/css2?family=Source+Serif+4:wght@400;600;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap');
+  @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@500;600;700;800&family=Inter:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500;600&display=swap');
 
   :root{
-    --ink:#1B2A3D;
-    --paper:#FAF9F6;
-    --paper-dim:#F1EFE8;
-    --ledger:#2F5D4C;
-    --ledger-light:#EAF0ED;
+    --ink:#0F1B2D;
+    --slate:#3D4C61;
+    --muted:#6B7A8F;
+    --paper:#F5F7FA;
+    --card:#FFFFFF;
+    --accent:#0E7C6B;
+    --accent-dark:#0A5F52;
+    --accent-tint:#E7F4F1;
     --amber:#B4791F;
-    --amber-light:#FBF1E1;
-    --line:#DAD6C9;
-    --red:#A23B2E;
+    --amber-tint:#FBF1E1;
+    --red:#B3382C;
+    --red-tint:#FBEAE8;
+    --line:#E3E7EE;
+    --shadow: 0 1px 2px rgba(15,27,45,0.04), 0 8px 24px rgba(15,27,45,0.06);
   }
   *{box-sizing:border-box;}
   body{
     margin:0;
     background:var(--paper);
     color:var(--ink);
-    font-family:'IBM Plex Mono', monospace;
-    line-height:1.5;
+    font-family:'Inter', sans-serif;
+    line-height:1.55;
+    -webkit-font-smoothing:antialiased;
   }
   h1,h2,h3{
-    font-family:'Source Serif 4', serif;
+    font-family:'Plus Jakarta Sans', sans-serif;
     font-weight:700;
     margin:0;
+    letter-spacing:-0.015em;
   }
-  .wrap{ max-width:920px; margin:0 auto; padding:40px 24px 80px; }
+  .mono{ font-family:'IBM Plex Mono', monospace; }
+  .wrap{ max-width:960px; margin:0 auto; padding:48px 24px 90px; }
 
   header{
     display:flex;
-    align-items:baseline;
+    align-items:center;
     justify-content:space-between;
-    border-bottom:2px solid var(--ink);
-    padding-bottom:18px;
-    margin-bottom:36px;
+    padding-bottom:24px;
+    margin-bottom:32px;
+    border-bottom:1px solid var(--line);
   }
-  header h1{ font-size:28px; letter-spacing:-0.01em; }
-  header .tag{ font-size:12px; color:var(--ledger); }
+  .brand{ display:flex; align-items:center; gap:12px; }
+  .brand-mark{
+    width:38px; height:38px; border-radius:10px;
+    background:linear-gradient(155deg, var(--accent), var(--accent-dark));
+    display:flex; align-items:center; justify-content:center;
+    flex-shrink:0;
+    box-shadow:0 4px 10px rgba(14,124,107,0.28);
+  }
+  .brand-mark svg{ width:20px; height:20px; }
+  header h1{ font-size:22px; }
+  header .tag{
+    font-size:12px; font-weight:500; color:var(--accent-dark);
+    background:var(--accent-tint);
+    padding:5px 12px; border-radius:999px;
+  }
 
-  .intro{ max-width:56ch; margin-bottom:32px; font-size:14px; color:#4A4A42; }
+  .intro{ max-width:60ch; margin-bottom:28px; font-size:15px; color:var(--slate); }
 
   .dropzone{
-    border:1.5px dashed var(--ink);
-    background:var(--paper-dim);
-    padding:36px 24px;
+    border:1.5px dashed #C7D0DD;
+    background:var(--card);
+    border-radius:16px;
+    padding:44px 24px;
     text-align:center;
     cursor:pointer;
-    transition:border-color .15s, background .15s;
+    transition:border-color .15s, background .15s, box-shadow .15s;
+    box-shadow:var(--shadow);
   }
-  .dropzone.drag{ border-color:var(--ledger); background:var(--ledger-light); }
-  .dropzone h3{ font-size:17px; margin-bottom:6px; }
-  .dropzone p{ font-size:13px; color:#6b6b60; margin:0; }
+  .dropzone .upload-icon{
+    width:44px; height:44px; margin:0 auto 14px;
+    border-radius:12px;
+    background:var(--accent-tint);
+    display:flex; align-items:center; justify-content:center;
+  }
+  .dropzone .upload-icon svg{ width:22px; height:22px; color:var(--accent-dark); }
+  .dropzone.drag{ border-color:var(--accent); background:var(--accent-tint); }
+  .dropzone h3{ font-size:16px; margin-bottom:5px; color:var(--ink); }
+  .dropzone p{ font-size:13px; color:var(--muted); margin:0; }
   .dropzone input{ display:none; }
 
-  .sample-link{ margin:10px 0 0; font-size:12px; text-align:center; }
-  .sample-link a{ color:var(--ledger); text-decoration:none; border-bottom:1px solid var(--ledger); }
-  .sample-link a:hover{ color:var(--ink); border-color:var(--ink); }
+  .sample-link{ margin:14px 0 0; font-size:13px; text-align:center; }
+  .sample-link a{ color:var(--accent-dark); text-decoration:none; font-weight:600; }
+  .sample-link a:hover{ color:var(--ink); }
 
-  .filelist{ margin-top:18px; display:flex; flex-direction:column; gap:8px; }
+  .filelist{ margin-top:20px; display:flex; flex-direction:column; gap:8px; }
   .filerow{
     display:flex; align-items:center; justify-content:space-between;
-    border:1px solid var(--line); background:#fff;
-    padding:10px 14px; font-size:13px;
+    border:1px solid var(--line); background:var(--card);
+    border-radius:10px;
+    padding:12px 16px; font-size:13px;
+    box-shadow:var(--shadow);
   }
-  .filerow .name{ font-weight:500; }
-  .filerow .status{ font-size:12px; color:var(--ledger); }
+  .filerow .name{ font-weight:600; color:var(--ink); }
+  .filerow .status{ font-size:12px; font-weight:500; color:var(--accent-dark); }
   .filerow .status.err{ color:var(--red); }
   .filerow .status.busy{ color:var(--amber); }
 
   .toolbar{
     display:flex; align-items:center; justify-content:space-between;
-    margin:36px 0 12px;
+    margin:40px 0 14px;
     flex-wrap:wrap;
     gap:12px;
   }
-  .toolbar h2{ font-size:20px; }
-  .count{ font-size:12px; color:#6b6b60; }
+  .toolbar h2{ font-size:19px; }
+  .count{ font-size:12px; color:var(--muted); font-weight:500; }
 
-  .actions{ display:flex; gap:10px; }
+  .actions{ display:flex; gap:10px; align-items:center; }
   button.primary, button.secondary{
-    font-family:'IBM Plex Mono', monospace;
+    font-family:'Inter', sans-serif;
+    font-weight:600;
     font-size:13px;
-    padding:9px 16px;
-    border:1px solid var(--ink);
+    padding:10px 18px;
+    border-radius:9px;
+    border:1px solid transparent;
     cursor:pointer;
-    background:var(--ink);
-    color:var(--paper);
+    transition:background .15s, border-color .15s, transform .1s;
   }
-  button.secondary{ background:transparent; color:var(--ink); }
-  button:disabled{ opacity:0.35; cursor:not-allowed; }
-  button.primary:hover:not(:disabled){ background:var(--ledger); border-color:var(--ledger); }
-  button.secondary:hover:not(:disabled){ background:var(--paper-dim); }
+  button.primary{ background:var(--accent); color:#fff; box-shadow:0 2px 6px rgba(14,124,107,0.25); }
+  button.secondary{ background:var(--card); color:var(--ink); border-color:var(--line); }
+  button:disabled{ opacity:0.4; cursor:not-allowed; }
+  button.primary:hover:not(:disabled){ background:var(--accent-dark); }
+  button.secondary:hover:not(:disabled){ background:var(--paper); border-color:#C7D0DD; }
+  button:active:not(:disabled){ transform:translateY(1px); }
 
-  table{ width:100%; border-collapse:collapse; font-size:13px; background:#fff; }
+  table{ width:100%; border-collapse:collapse; font-size:13.5px; background:var(--card); }
   thead th{
     text-align:left;
     font-weight:600;
-    border-bottom:2px solid var(--ink);
-    padding:8px 10px;
-    position:sticky; top:0; background:#fff;
+    font-size:12px;
+    text-transform:uppercase;
+    letter-spacing:0.04em;
+    color:var(--muted);
+    border-bottom:1px solid var(--line);
+    padding:12px 14px;
+    position:sticky; top:0; background:var(--card);
   }
-  tbody td{ border-bottom:1px solid var(--line); padding:7px 10px; vertical-align:top; }
-  tbody tr:hover{ background:var(--paper-dim); }
-  td.amt{ text-align:right; font-variant-numeric:tabular-nums; white-space:nowrap; }
+  tbody td{ border-bottom:1px solid var(--line); padding:11px 14px; vertical-align:top; font-family:'IBM Plex Mono', monospace; font-size:13px; }
+  tbody tr:hover{ background:var(--paper); }
+  td.amt{ text-align:right; font-variant-numeric:tabular-nums; white-space:nowrap; font-weight:500; }
   td.amt.neg{ color:var(--red); }
-  td.amt.pos{ color:var(--ledger); }
-  td[contenteditable="true"]:focus{ outline:1.5px solid var(--ledger); outline-offset:-1px; background:#fff; }
-  .col-del{ width:28px; text-align:center; }
-  .col-del span{ cursor:pointer; color:#9a9a8c; }
+  td.amt.pos{ color:var(--accent-dark); }
+  td[contenteditable="true"]:focus{ outline:2px solid var(--accent); outline-offset:-2px; background:#fff; }
+  .col-del{ width:32px; text-align:center; }
+  .col-del span{ cursor:pointer; color:#B7C0CC; font-family:'Inter',sans-serif; }
   .col-del span:hover{ color:var(--red); }
 
-  .tablewrap{ max-height:520px; overflow:auto; border:1px solid var(--line); }
+  .tablewrap{ max-height:540px; overflow:auto; border:1px solid var(--line); border-radius:14px; box-shadow:var(--shadow); }
+  .tablewrap table{ border-radius:14px; overflow:hidden; }
 
   .empty{
-    border:1px solid var(--line);
-    padding:40px 20px;
+    border:1px dashed var(--line);
+    border-radius:14px;
+    background:var(--card);
+    padding:48px 20px;
     text-align:center;
-    color:#8a8a7c;
-    font-size:13px;
+    color:var(--muted);
+    font-size:13.5px;
   }
 
   .summary{
-    display:flex; gap:24px; margin-top:14px; font-size:12px; color:#4A4A42; flex-wrap:wrap;
+    display:flex; gap:16px; margin-top:16px; flex-wrap:wrap;
   }
-  .summary b{ color:var(--ink); font-family:'Source Serif 4',serif; font-size:15px; display:block; }
+  .summary > div{
+    background:var(--card);
+    border:1px solid var(--line);
+    border-radius:10px;
+    padding:12px 18px;
+    font-size:12px;
+    color:var(--muted);
+    flex:1 1 140px;
+  }
+  .summary b{ color:var(--ink); font-family:'Plus Jakarta Sans',sans-serif; font-size:17px; display:block; margin-bottom:2px; }
 
-  footer{ margin-top:48px; font-size:11px; color:#9a9a8c; border-top:1px solid var(--line); padding-top:14px; }
+  footer{ margin-top:52px; font-size:12px; color:var(--muted); border-top:1px solid var(--line); padding-top:16px; }
 </style>
 </head>
 <body>
 <div class="wrap">
 
   <header>
-    <h1>Spreadsheet Converter</h1>
-    <div class="tag">statement → spreadsheet, entirely in your browser</div>
+    <div class="brand">
+      <div class="brand-mark">
+        <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path d="M4 6h16M4 12h16M4 18h10" stroke="white" stroke-width="2" stroke-linecap="round"/>
+        </svg>
+      </div>
+      <h1>Spreadsheet Converter</h1>
+    </div>
+    <div class="tag">Runs entirely in your browser</div>
   </header>
 
   <p class="intro">Drop in a bank or credit card PDF statement. Text is pulled straight out of the PDF — or OCR'd if it's a scanned copy — and parsed into rows. Nothing leaves this tab. Review, fix anything that's off, then export to XLSX or CSV.</p>
 
   <div class="dropzone" id="dropzone">
+    <div class="upload-icon">
+      <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <path d="M12 16V4M12 4L7 9M12 4l5 5M5 20h14" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+      </svg>
+    </div>
     <h3>Drop statement PDFs here</h3>
     <p>or click to browse — multiple files at once is fine</p>
     <input type="file" id="fileInput" accept="application/pdf" multiple>
