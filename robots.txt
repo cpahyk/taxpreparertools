@@ -1,8 +1,14 @@
 User-agent: *
 Allow: /
 
-# Explicit allows for AI search/citation and training crawlers
-# (already covered by the wildcard above; listed here for clarity)
+# Keep private/account pages out of search indexes
+Disallow: /login.html
+Disallow: /signup.html
+Disallow: /dashboard.html
+Disallow: /forgot-password.html
+Disallow: /admin/
+
+# AI search, citation, and training crawlers
 User-agent: ChatGPT-User
 Allow: /
 
@@ -16,6 +22,9 @@ User-agent: ClaudeBot
 Allow: /
 
 User-agent: Claude-User
+Allow: /
+
+User-agent: Claude-Web
 Allow: /
 
 User-agent: PerplexityBot
@@ -36,4 +45,20 @@ Allow: /
 User-agent: Amazonbot
 Allow: /
 
+User-agent: Bingbot
+Allow: /
+
+User-agent: CCBot
+Allow: /
+
+User-agent: FacebookBot
+Allow: /
+
+User-agent: Meta-ExternalAgent
+Allow: /
+
+User-agent: YouBot
+Allow: /
+
+# Sitemap
 Sitemap: https://www.taxpreparertools.com/sitemap.xml

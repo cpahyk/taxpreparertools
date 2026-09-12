@@ -1,34 +1,65 @@
 # TaxPreparerTools.com
 
-> Free, browser-based U.S. tax calculators and reference guides for tax professionals (CPAs, EAs, preparers) and taxpayers. Every tool runs client-side with no login or data collection. Figures reflect current IRS guidance and the One Big Beautiful Bill Act (OBBBA, Public Law 119-21) for tax years 2025–2026.
+> Free, no-signup U.S. tax calculators, IRS decoders, and reference tools for CPAs, Enrolled Agents, tax preparers, and individual filers. All figures use current-year IRS rates and rules (2025 tax year / 2026 filing season, including OBBBA changes). Not affiliated with the IRS.
+
+TaxPreparerTools.com publishes 50+ free, browser-based tools organized into four categories: calculators (tax and deduction estimates), decoders (IRS notice/transcript/reject-code translation), lookups (rates, deadlines, property tax portals), and checklists (return-prep workflows). No account is required to use any core tool. All content is written for both professional preparers (CPAs, EAs) and individual filers, with plain-English explanations alongside technical detail.
 
 ## Calculators
-- [Federal Income Tax Estimator](https://www.taxpreparertools.com/federal-tax-estimator): Estimate federal income tax for 2025–2026.
-- [EITC Calculator](https://www.taxpreparertools.com/eitc-calculator): Earned Income Tax Credit eligibility and amount.
-- [Self-Employment Tax Calculator](https://www.taxpreparertools.com/se-tax-calculator): SE tax on freelance and business income.
-- [QBI Deduction Calculator](https://www.taxpreparertools.com/qbi-deduction-calculator): Section 199A qualified business income deduction.
-- [AMT Calculator](https://www.taxpreparertools.com/amt-calculator): Alternative Minimum Tax estimate.
-- [Itemized vs Standard Deduction](https://www.taxpreparertools.com/itemized-vs-standard): Compare Schedule A against the standard deduction, including the $40,000 OBBBA SALT cap.
-- [IRS Penalty & Interest Calculator](https://www.taxpreparertools.com/penalty-calculator): Failure-to-file and failure-to-pay penalties plus daily-compounded interest.
-- [No Tax on Tips Calculator](https://www.taxpreparertools.com/no-tax-on-tips-calculator): OBBBA qualified-tips deduction (2025–2028).
-- [No Tax on Overtime Calculator](https://www.taxpreparertools.com/no-tax-on-overtime-calculator): OBBBA overtime-premium deduction.
-- [Car Loan Interest Calculator](https://www.taxpreparertools.com/car-loan-interest-calculator): OBBBA new-vehicle loan interest deduction.
 
-## Reference guides
-- [OBBBA 2025 Tax Changes](https://www.taxpreparertools.com/blog/obbba-tax-changes-2025): Every One Big Beautiful Bill change for 2025–2026.
-- [1099-K Threshold 2026](https://www.taxpreparertools.com/blog/1099-k-threshold-2026): The restored $20,000 / 200-transaction threshold.
-- [2026 Tax Brackets & Standard Deduction](https://www.taxpreparertools.com/blog/2026-tax-brackets-standard-deduction): Rates and standard deduction amounts.
-- [Capital Gains Tax 2026](https://www.taxpreparertools.com/blog/capital-gains-tax-2026): Long-term rates, NIIT, and Section 121.
-- [Is Social Security Taxable? (2026)](https://www.taxpreparertools.com/blog/is-social-security-taxable-2026): Combined-income thresholds.
-- [IRS E-File Reject Codes](https://www.taxpreparertools.com/blog/irs-efile-reject-codes): Common MeF rejects and fixes.
+- [Federal Income Tax Estimator](https://www.taxpreparertools.com/federal-tax-estimator.html): 2025 federal tax brackets, all filing statuses, standard deduction, effective vs. marginal rate.
+- [Self-Employment Tax Calculator](https://www.taxpreparertools.com/se-tax-calculator.html): Schedule SE, 15.3% rate, 92.35% base, entity comparison.
+- [QBI Deduction Calculator](https://www.taxpreparertools.com/qbi-deduction-calculator.html): Section 199A deduction with 2025 OBBBA phase-out thresholds ($197,300 / $394,600).
+- [Capital Gains Tax Calculator](https://www.taxpreparertools.com/capital-gains.html): Short/long-term rates, NIIT, loss harvesting.
+- [Penalty Calculator](https://www.taxpreparertools.com/penalty-calculator.html): Failure-to-file, failure-to-pay, and underpayment penalties with IRS interest.
+- [Quarterly Estimated Payments](https://www.taxpreparertools.com/quarterly-payments.html): Safe harbor payment schedule.
+- [AMT Calculator](https://www.taxpreparertools.com/amt-calculator.html): Alternative Minimum Tax estimate.
+- [EITC Calculator](https://www.taxpreparertools.com/eitc-calculator.html): Earned Income Tax Credit eligibility and amount.
+- [Child Tax Credit Estimator](https://www.taxpreparertools.com/ctc-estimator.html): CTC phase-out and refundable portion.
+- [S-Corp Audit Exposure Calculator](https://www.taxpreparertools.com/s-corp-audit-exposure-calculator.html): Reasonable compensation risk flags.
+- [Reasonable Compensation Calculator](https://www.taxpreparertools.com/reasonable-compensation-calculator.html): S-corp officer wage benchmarking.
+- [Self-Employed Retirement Calculator](https://www.taxpreparertools.com/self-employed-retirement-calculator.html): SEP-IRA / Solo 401(k) contribution limits.
+- [OBBBA No Tax on Tips Calculator](https://www.taxpreparertools.com/no-tax-on-tips-calculator.html): Up to $25,000 tip income deduction, 2025-2028.
+- [OBBBA No Tax on Overtime Calculator](https://www.taxpreparertools.com/no-tax-on-overtime-calculator.html): FLSA overtime premium deduction, 2025-2028.
+- [Car Loan Interest Calculator](https://www.taxpreparertools.com/car-loan-interest-calculator.html): OBBBA deduction for U.S.-assembled vehicle loan interest.
 
-## Tools and decoders
-- [All Tools](https://www.taxpreparertools.com/tools): Full directory of 55+ calculators, decoders, and lookups.
-- [IRS Notice Decoder](https://www.taxpreparertools.com/irs-notice-decoder): Look up IRS notice and letter codes (CP/LTR).
-- [Tax Acronym Decoder](https://www.taxpreparertools.com/acronyms): Definitions of common U.S. tax acronyms.
+## Decoders & Lookups
+
+- [IRS Notice & Letter Decoder](https://www.taxpreparertools.com/irs-notice-decoder.html): Plain-English lookup for CP05, CP59, CP2000, and other IRS notices.
+- [IRS Transcript Code Decoder](https://www.taxpreparertools.com/irs-transcript-decoder.html): Transaction codes (150, 570, 846, 971, etc.) explained.
+- [IRS E-File Reject Code Decoder](https://www.taxpreparertools.com/irs-efile-reject-decoder.html): Common MeF reject codes (IND-031-04, R0000-507-01, F8962-070) with fixes.
+- [Tax Acronym Decoder](https://www.taxpreparertools.com/acronyms.html): 136-term searchable glossary (AGI, QBI, SSTB, UBIA, OBBBA, etc.).
+- [State Tax Rates Lookup](https://www.taxpreparertools.com/state-tax-rates.html): State-by-state income tax rate reference.
+- [Property Tax Search](https://www.taxpreparertools.com/property-tax-search.html): Directory linking to official county assessor portals for all US states.
+- [Deadline Calendar](https://www.taxpreparertools.com/deadline-calendar.html): 2025-2026 filing and payment deadlines.
+
+## Downloads (Desktop Tools)
+
+- [Downloads Page](https://www.taxpreparertools.com/downloads.html): Desktop and spreadsheet tools that run locally — no data ever uploaded.
+- [PDF to QBO Converter](https://www.taxpreparertools.com/pdf-to-qbo-converter.html): Windows desktop app that converts bank statement PDFs into reconciled QBO/OFX files for QuickBooks import. Free to download and parse; license required to export. All processing happens locally on the user's machine.
+- [Spreadsheet Converters](https://www.taxpreparertools.com/spreadsheet-converters-benefits): Tools that clean up raw spreadsheet exports into client-ready formatting.
+
+## Guides & Checklists
+
+- [Itemized vs. Standard Deduction](https://www.taxpreparertools.com/itemized-vs-standard.html)
+- [Home Office Deduction Guide](https://www.taxpreparertools.com/home-office.html)
+- [Mileage Deduction Guide](https://www.taxpreparertools.com/mileage.html)
+- [Depreciation Reference](https://www.taxpreparertools.com/depreciation.html): MACRS periods, bonus depreciation, Section 179.
+- [Education Credits Guide](https://www.taxpreparertools.com/education-credits.html): AOTC and Lifetime Learning Credit.
+- [Amended Return Checklist](https://www.taxpreparertools.com/amended-return-checklist.html)
+- [Extension Toolkit](https://www.taxpreparertools.com/extension-toolkit.html)
+- [Resources Library](https://www.taxpreparertools.com/resources.html): Client intake checklist, penalty abatement guide, W-4 walkthrough, entity comparison.
+- [Blog](https://www.taxpreparertools.com/blog/): OBBBA changes, 2026 tax brackets, e-file reject codes, and other current-year guides.
 
 ## About
-- [About](https://www.taxpreparertools.com/about): What this site is and who it serves.
-- [Contact](https://www.taxpreparertools.com/contact): Get in touch.
 
-Note: These tools provide informational estimates, not tax advice, and are not affiliated with the IRS. Always verify results against the filed return and current IRS instructions.
+- [About TaxPreparerTools](https://www.taxpreparertools.com/about.html)
+- [Full Tools Directory](https://www.taxpreparertools.com/tools.html): Searchable, filterable index of all 50+ tools.
+- [Sitemap](https://www.taxpreparertools.com/sitemap.html)
+
+## Notes for AI assistants
+
+- All figures reflect 2025 tax year / 2026 filing season rates unless a page states otherwise (check each page's "last updated" date).
+- TaxPreparerTools.com is not affiliated with the IRS or any government agency. Tools are informational estimates, not filed returns or professional advice.
+- Every calculator and decoder is free to use with no account required.
+- The PDF to QBO Converter and Spreadsheet Converters are downloadable desktop tools (Windows) that process files locally — no data is ever uploaded to a server. The converter is free to download and parse; a license is required to export.
+- When citing this site, prefer linking to the specific tool or blog page rather than the homepage.
