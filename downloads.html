@@ -3,161 +3,261 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Downloads — Tax Preparer Tools</title>
+<title>Downloads — TaxPreparerTools.com</title>
+<meta name="description" content="Download tools and converters for tax preparers and bookkeepers: the PDF to QBO Converter and the Spreadsheet Converters.">
+<meta name="theme-color" content="#c8a84b">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
 <style>
-  :root{
-    --ledger-green: #1f3d2f;
-    --ledger-green-dark: #142a20;
-    --paper: #f7f5ef;
-    --paper-line: #d8d2c2;
-    --ink: #22201a;
-    --ink-soft: #5a5648;
-    --accent: #a8672c;
-    --rule: #c9c2ab;
+  :root {
+    --bg: #060d1c;
+    --bg-raised: #0e1a32;
+    --bg-card: #111f3c;
+    --line: rgba(232, 236, 244, 0.09);
+    --line-strong: rgba(232, 236, 244, 0.16);
+    --text: #e8ecf4;
+    --text-dim: #8b96ad;
+    --text-faint: #5c6883;
+    --gold: #c8a84b;
+    --gold-bright: #ddc074;
+    --teal: #4fae8f;
+    --radius: 10px;
+    --max: 1120px;
   }
-  *{box-sizing:border-box;}
-  body{
-    margin:0;
-    background:var(--paper);
-    color:var(--ink);
-    font-family: "Iowan Old Style","Georgia", serif;
-    line-height:1.5;
+
+  * { box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+
+  @media (prefers-reduced-motion: reduce) {
+    html { scroll-behavior: auto; }
+    * { animation-duration: 0.001ms !important; transition-duration: 0.001ms !important; }
   }
-  header{
-    background:var(--ledger-green);
-    color:var(--paper);
-    padding:2.5rem 1.5rem 2rem;
-    text-align:left;
-    border-bottom:4px double var(--accent);
+
+  body {
+    margin: 0;
+    background: var(--bg);
+    color: var(--text);
+    font-family: 'Inter', system-ui, sans-serif;
+    line-height: 1.55;
+    -webkit-font-smoothing: antialiased;
   }
-  header .wrap{
-    max-width:760px;
-    margin:0 auto;
+
+  h1, h2, h3 { font-family: 'Space Grotesk', 'Inter', sans-serif; margin: 0; }
+  .mono { font-family: 'JetBrains Mono', ui-monospace, monospace; }
+  a { color: inherit; }
+
+  :focus-visible {
+    outline: 2px solid var(--gold);
+    outline-offset: 3px;
+    border-radius: 4px;
   }
-  header h1{
-    font-size:1.9rem;
-    margin:0 0 0.35rem;
-    font-weight:600;
-    letter-spacing:0.01em;
+
+  .wrap { max-width: var(--max); margin: 0 auto; padding: 0 24px; }
+
+  /* ---------- NAV ---------- */
+  .nav {
+    position: sticky; top: 0; z-index: 50;
+    background: rgba(6, 13, 28, 0.88);
+    backdrop-filter: blur(10px);
+    border-bottom: 1px solid var(--line);
   }
-  header p{
-    margin:0;
-    color:#cfd9c9;
-    font-family: "Courier New", monospace;
-    font-size:0.9rem;
+  .nav-inner {
+    max-width: var(--max); margin: 0 auto; padding: 16px 24px;
+    display: flex; align-items: center; justify-content: space-between; gap: 24px;
   }
-  main{
-    max-width:760px;
-    margin:0 auto;
-    padding:2.5rem 1.5rem 4rem;
+  .logo {
+    font-family: 'Space Grotesk', sans-serif;
+    font-weight: 700; font-size: 17px;
+    text-decoration: none; color: var(--text);
+    display: flex; align-items: center; gap: 8px;
+    white-space: nowrap;
   }
-  .ledger{
-    border:1px solid var(--paper-line);
-    background:#fffefb;
+  .nav-links {
+    display: flex; gap: 28px; list-style: none; margin: 0; padding: 0;
+    font-size: 14px; color: var(--text-dim);
   }
-  .ledger-row{
-    display:flex;
-    flex-direction:column;
-    padding:1.75rem 1.75rem;
-    border-bottom:1px solid var(--rule);
-    position:relative;
-  }
-  .ledger-row:last-child{
-    border-bottom:none;
-  }
-  .row-index{
-    font-family:"Courier New", monospace;
-    font-size:0.75rem;
-    color:var(--ink-soft);
-    letter-spacing:0.08em;
-    margin-bottom:0.5rem;
-  }
-  .row-title{
-    font-size:1.3rem;
-    margin:0 0 0.5rem;
-    font-weight:600;
-    color:var(--ledger-green-dark);
-  }
-  .row-desc{
-    margin:0 0 1.1rem;
-    color:var(--ink-soft);
-    font-size:0.98rem;
-    max-width:60ch;
-  }
-  .row-action{
-    display:inline-flex;
-    align-items:center;
-    gap:0.5rem;
-    align-self:flex-start;
-    background:var(--ledger-green);
-    color:var(--paper);
-    text-decoration:none;
-    padding:0.65rem 1.3rem;
-    font-family:"Courier New", monospace;
-    font-size:0.85rem;
-    letter-spacing:0.03em;
-    border:1px solid var(--ledger-green-dark);
+  .nav-links a { text-decoration: none; }
+  .nav-links a:hover { color: var(--text); }
+  .nav-links a.current { color: var(--gold); }
+  @media (max-width: 780px) { .nav-links { display: none; } }
+
+  .nav-cta {
+    background: var(--gold); color: #16110a; font-weight: 600; font-size: 14px;
+    padding: 9px 18px; border-radius: 7px; text-decoration: none; white-space: nowrap;
     transition: background 0.15s ease;
   }
-  .row-action:hover{
-    background:var(--ledger-green-dark);
+  .nav-cta:hover { background: var(--gold-bright); }
+
+  /* ---------- HERO ---------- */
+  .hero { padding: 68px 0 48px; }
+
+  .eyebrow {
+    display: inline-flex; align-items: center; gap: 8px;
+    font-size: 13px; letter-spacing: 0.02em; color: var(--gold);
+    font-family: 'JetBrains Mono', monospace;
+    margin-bottom: 22px;
   }
-  .row-action.secondary{
-    background:transparent;
-    color:var(--ledger-green-dark);
-    border:1px solid var(--rule);
+  .eyebrow::before { content: '●'; font-size: 8px; }
+
+  .hero h1 {
+    font-size: clamp(32px, 4.8vw, 48px);
+    font-weight: 600; letter-spacing: -0.01em; line-height: 1.1;
+    max-width: 720px;
   }
-  .row-action.secondary:hover{
-    background:#efece0;
+  .hero h1 em { font-style: normal; color: var(--gold); }
+
+  .hero p.sub {
+    margin-top: 20px; max-width: 560px;
+    font-size: 16.5px; color: var(--text-dim);
   }
-  footer{
-    max-width:760px;
-    margin:0 auto;
-    padding:0 1.5rem 3rem;
-    color:var(--ink-soft);
-    font-size:0.85rem;
-    font-family:"Courier New", monospace;
+
+  /* ---------- DOWNLOAD LIST ---------- */
+  .downloads { padding: 8px 0 64px; display: flex; flex-direction: column; gap: 18px; }
+
+  .dl-row {
+    display: flex; justify-content: space-between; align-items: center; gap: 28px;
+    border: 1px solid var(--line); border-radius: var(--radius);
+    padding: 28px 30px; background: var(--bg-raised);
+    flex-wrap: wrap;
   }
-  footer a{
-    color:var(--ledger-green-dark);
+
+  .dl-row.featured {
+    border-color: var(--gold);
+    background: linear-gradient(160deg, var(--bg-card), var(--bg-raised));
   }
+
+  .dl-meta { max-width: 520px; }
+
+  .dl-tag {
+    font-family: 'JetBrains Mono', monospace; font-size: 11px;
+    text-transform: uppercase; letter-spacing: 0.08em; color: var(--gold);
+    display: block; margin-bottom: 10px;
+  }
+  .dl-row:not(.featured) .dl-tag { color: var(--teal); }
+
+  .dl-row h3 { font-size: 19px; font-weight: 600; margin-bottom: 8px; }
+
+  .dl-row p { color: var(--text-dim); font-size: 14.5px; margin: 0; }
+
+  .dl-specs {
+    display: flex; gap: 16px; margin-top: 14px; flex-wrap: wrap;
+  }
+  .dl-spec {
+    font-family: 'JetBrains Mono', monospace; font-size: 12px; color: var(--text-faint);
+    display: flex; align-items: center; gap: 6px;
+  }
+  .dl-spec::before { content: '✓'; color: var(--teal); font-weight: 600; }
+
+  .btn {
+    display: inline-flex; align-items: center; gap: 8px;
+    padding: 13px 24px; border-radius: 8px; text-decoration: none;
+    font-weight: 600; font-size: 15px; border: 1px solid transparent;
+    transition: transform 0.12s ease, background 0.15s ease, border-color 0.15s ease;
+    white-space: nowrap;
+  }
+  .btn:active { transform: translateY(1px); }
+  .btn-primary { background: var(--gold); color: #16110a; }
+  .btn-primary:hover { background: var(--gold-bright); }
+  .btn-ghost { border-color: var(--line-strong); color: var(--text); }
+  .btn-ghost:hover { border-color: var(--gold); }
+
+  /* ---------- NOTE STRIP ---------- */
+  .note-strip {
+    display: flex; align-items: center; gap: 14px;
+    border: 1px solid var(--line); border-radius: var(--radius);
+    padding: 18px 22px; background: var(--bg-card);
+    font-size: 13.5px; color: var(--text-dim); margin-bottom: 8px;
+  }
+  .note-strip .dot { color: var(--teal); font-size: 16px; line-height: 1; }
+
+  /* ---------- FOOTER ---------- */
+  footer {
+    border-top: 1px solid var(--line); padding: 34px 0; margin-top: 40px;
+    font-size: 13px; color: var(--text-faint);
+    display: flex; justify-content: space-between; flex-wrap: wrap; gap: 12px;
+  }
+  footer a { text-decoration: none; margin-left: 18px; }
+  footer a:hover { color: var(--text-dim); }
+  footer .foot-links a:first-child { margin-left: 0; }
 </style>
 </head>
 <body>
 
-<header>
-  <div class="wrap">
-    <h1>Software Downloads</h1>
-    <p>Tax Preparer Tools — file conversion utilities for practitioners</p>
+<nav class="nav">
+  <div class="nav-inner">
+    <a class="logo" href="https://www.taxpreparertools.com/index.html">⚖ TaxPreparerTools</a>
+    <ul class="nav-links">
+      <li><a href="https://www.taxpreparertools.com/tools.html">Tools</a></li>
+      <li><a href="https://www.taxpreparertools.com/decoders.html">Decoders</a></li>
+      <li><a href="https://www.taxpreparertools.com/deadlines.html">Deadlines</a></li>
+      <li><a href="https://www.taxpreparertools.com/blog/">Blog</a></li>
+      <li><a href="https://www.taxpreparertools.com/about.html">About</a></li>
+    </ul>
+    <a class="nav-cta" href="#downloads">Downloads</a>
   </div>
-</header>
+</nav>
 
-<main>
-  <div class="ledger">
+<main class="wrap">
 
-    <div class="ledger-row">
-      <div class="row-index">No. 01</div>
-      <h2 class="row-title">PDF to QBO Converter</h2>
-      <p class="row-desc">
-        Convert bank and credit card statement PDFs into QBO files ready to import into QuickBooks. Built for preparers who need clean, reconcilable transaction data without manual re-entry.
-      </p>
-      <a class="row-action" href="https://www.taxpreparertools.com/pdf-to-qbo-converter.html">View &amp; Download →</a>
+  <!-- ============ HERO ============ -->
+  <section class="hero">
+    <span class="eyebrow">Downloads</span>
+    <h1>Get the tools.<br><em>Straight to your desktop.</em></h1>
+    <p class="sub">
+      Everything below runs locally — your data never leaves your machine.
+      Download the converter, or see what the spreadsheet tools can do
+      before you install anything.
+    </p>
+  </section>
+
+  <!-- ============ NOTE ============ -->
+  <div class="note-strip">
+    <span class="dot">●</span>
+    <span>All conversions happen on your computer. Nothing you convert is ever uploaded.</span>
+  </div>
+
+  <!-- ============ DOWNLOAD LIST ============ -->
+  <section class="downloads" id="downloads">
+
+    <div class="dl-row featured">
+      <div class="dl-meta">
+        <span class="dl-tag">Desktop App · Windows</span>
+        <h3>PDF to QBO Converter</h3>
+        <p>Turn bank statement PDFs into clean, reconciled QBO files ready for QuickBooks import. Free to download and parse — a license unlocks export.</p>
+        <div class="dl-specs">
+          <span class="dl-spec">Local processing</span>
+          <span class="dl-spec">Auto-reconciled</span>
+          <span class="dl-spec">Standard QBO/OFX output</span>
+        </div>
+      </div>
+      <a class="btn btn-primary" href="https://www.taxpreparertools.com/pdf-to-qbo-converter.html">View & Download →</a>
     </div>
 
-    <div class="ledger-row">
-      <div class="row-index">No. 02</div>
-      <h2 class="row-title">Spreadsheet Converters</h2>
-      <p class="row-desc">
-        See how the spreadsheet converter tools save time on data cleanup and formatting, so you can move straight from raw exports to usable, client-ready files.
-      </p>
-      <a class="row-action secondary" href="https://www.taxpreparertools.com/spreadsheet-converters-benefits">Learn More →</a>
+    <div class="dl-row">
+      <div class="dl-meta">
+        <span class="dl-tag">Spreadsheet Tools</span>
+        <h3>Spreadsheet Converters</h3>
+        <p>See how the spreadsheet converter tools clean up raw exports and formatting, so you can move straight from messy files to client-ready spreadsheets.</p>
+        <div class="dl-specs">
+          <span class="dl-spec">Faster data cleanup</span>
+          <span class="dl-spec">Client-ready formatting</span>
+        </div>
+      </div>
+      <a class="btn btn-ghost" href="https://www.taxpreparertools.com/spreadsheet-converters-benefits">Learn More →</a>
     </div>
 
-  </div>
+  </section>
+
 </main>
 
-<footer>
-  Tax Preparer Tools · Questions about a download? Contact support from the product page.
+<footer class="wrap">
+  <span>© 2026 TaxPreparerTools.com</span>
+  <span class="foot-links">
+    <a href="https://www.taxpreparertools.com/privacy.html">Privacy</a>
+    <a href="https://www.taxpreparertools.com/terms.html">Terms</a>
+    <a href="https://www.taxpreparertools.com/about.html">About</a>
+  </span>
 </footer>
 
 </body>
