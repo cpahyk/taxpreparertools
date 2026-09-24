@@ -3,11 +3,13 @@ main = "cloudflare-worker.js"
 compatibility_date = "2026-09-24"
 
 # Cloudflare Rate Limiting binding. Set a lower production threshold if needed.
-[[unsafe.bindings]]
+[[ratelimits]]
 name = "AI_RATE_LIMITER"
-type = "ratelimit"
 namespace_id = "1001"
-simple = { limit = 10, period = 60 }
+
+  [ratelimits.simple]
+  limit = 10
+  period = 60
 
 # Set secrets with wrangler secret put: ANTHROPIC_API_KEY,
 # SUPABASE_URL, SUPABASE_PUBLISHABLE_KEY.

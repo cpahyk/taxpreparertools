@@ -7,6 +7,28 @@ const MAX_BYTES = 24000;
 const MAX_MESSAGE_CHARS = 4000;
 const MAX_SYSTEM_CHARS = 6000;
 
+async function readLimitedBody(request) {
+  const reader = request.body?.getReader();
+  if (!reader) return '';
+  const chunks = [];
+  let bytes = 0;
+  try {
+    while (true) {
+      const { done, value } = await reader.read();
+      if (done) break;
+      bytes += value.byteLength;
+      if (bytes > MAX_BYTES) throw new RangeError('Request too large');
+      chunks.push(value);
+    }
+  } finally {
+    reader.releaseLock();
+  }
+  const buffer = new Uint8Array(bytes);
+  let offset = 0;
+  for (const chunk of chunks) { buffer.set(chunk, offset); offset += chunk.byteLength; }
+  return new TextDecoder('utf-8', { fatal: true }).decode(buffer);
+}
+
 function respond(data, status, origin) {
   const headers = { 'Content-Type': 'application/json', 'Cache-Control': 'no-store', 'Vary': 'Origin' };
   if (ORIGINS.has(origin)) {
@@ -30,11 +52,12 @@ export default {
     const length = Number(request.headers.get('Content-Length'));
     if (length > MAX_BYTES) return respond({ error: 'Request too large' }, 413, origin);
     let raw;
-    try { raw = await request.text(); } catch { return respond({ error: 'Invalid body' }, 400, origin); }
-    if (raw.length > MAX_BYTES) return respond({ error: 'Request too large' }, 413, origin);
+    try { raw = await readLimitedBody(request); }
+    catch (error) { return respond({ error: error instanceof RangeError ? 'Request too large' : 'Invalid body' },
+      error instanceof RangeError ? 413 : 400, origin); }
     let body;
     try { body = JSON.parse(raw); } catch { return respond({ error: 'Invalid JSON' }, 400, origin); }
-    if (!Array.isArray(body.messages) || !body.messages.length || body.messages.length > 20 ||
+    if (!body || typeof body !== 'object' || !Array.isArray(body.messages) || !body.messages.length || body.messages.length > 20 ||
         typeof body.system !== 'string' || body.system.length > MAX_SYSTEM_CHARS ||
         body.messages.some(m => !m || !['user', 'assistant'].includes(m.role) ||
           typeof m.content !== 'string' || !m.content.length || m.content.length > MAX_MESSAGE_CHARS))
