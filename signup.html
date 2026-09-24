@@ -547,18 +547,6 @@ async function handleSignup() {
 
     if (error) throw error;
 
-    // — Also insert into a profiles table for easy querying (optional) —
-    if (data?.user) {
-      await _supabase.from('profiles').upsert({
-        id:         data.user.id,
-        first_name: first.value.trim(),
-        last_name:  last.value.trim(),
-        email:      email.value.trim(),
-        role:       role.value,
-        created_at: new Date().toISOString()
-      });
-    }
-
     // — Show success screen —
     document.getElementById('signupFormContent').style.display = 'none';
     document.getElementById('signupSuccess').style.display = 'block';
