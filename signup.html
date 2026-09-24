@@ -539,8 +539,7 @@ async function handleSignup() {
         data: {
           first_name: first.value.trim(),
           last_name:  last.value.trim(),
-          role:       role.value,
-          plan:       selectedPlan
+          role:       role.value
         },
         emailRedirectTo: 'https://www.taxpreparertools.com/dashboard.html'
       }
@@ -556,7 +555,6 @@ async function handleSignup() {
         last_name:  last.value.trim(),
         email:      email.value.trim(),
         role:       role.value,
-        plan:       selectedPlan,
         created_at: new Date().toISOString()
       });
     }

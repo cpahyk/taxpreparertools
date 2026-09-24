@@ -228,8 +228,8 @@
 
   <div class="sb-bottom">
     <div class="upgrade-box">
-      <div class="upgrade-title">You're on Pro ✓</div>
-      <div class="upgrade-sub">Next renewal: Jul 15, 2026 · $19/mo</div>
+      <div class="upgrade-title" id="accountPlanTitle">Free account</div>
+      <div class="upgrade-sub" id="accountPlanSub">See billing for plan options.</div>
       <a href="dashboard.html#billing" class="upgrade-btn">Manage Plan</a>
     </div>
     <div class="sb-signout" onclick="handleLogout()">🚪 Sign Out</div>
@@ -507,7 +507,8 @@ const _supabase = supabase.createClient(SUPABASE_URL, SUPABASE_ANON);
   const firstName = profile?.first_name || meta.first_name || user.email.split('@')[0];
   const lastName  = profile?.last_name  || meta.last_name  || '';
   const roleLabel = profile?.role || meta.role || 'Tax Professional';
-  const plan      = (profile?.plan || meta.plan || 'Free').toUpperCase();
+  // Auth metadata is user controlled; only a server-managed profile plan is displayable.
+  const plan      = (profile?.plan || 'Free').toUpperCase();
   const initials  = (firstName[0] + (lastName[0] || '')).toUpperCase();
 
   document.getElementById('sbAvatar').textContent    = initials;
@@ -520,6 +521,8 @@ const _supabase = supabase.createClient(SUPABASE_URL, SUPABASE_ANON);
   if (greetEl) greetEl.textContent = greet + ', ' + firstName + ' 👋';
   document.getElementById('sbUserRole').textContent  = roleLabel;
   document.getElementById('sbPlanBadge').textContent = plan;
+  document.getElementById('accountPlanTitle').textContent = plan === 'FREE' ? 'Free account' : plan + ' account';
+  document.getElementById('accountPlanSub').textContent = 'See billing for current subscription details.';
   document.getElementById('sbUserBlock').style.opacity = '1';
 })();
 
