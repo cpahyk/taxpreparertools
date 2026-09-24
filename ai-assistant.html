@@ -570,6 +570,7 @@
 
 </div>
 
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.js"></script>
 <script>
 // ── DEMO AI RESPONSES ──
 const AI_RESPONSES = {
@@ -718,9 +719,14 @@ async function sendMessage() {
   document.getElementById('sendBtn').disabled = true;
 
   try {
+    const { data: { session } } = await supabase.createClient(
+      'https://jvaxyaroohrrrbqpztkq.supabase.co',
+      'sb_publishable_TQ5Ft8riuscoFDrN2_M-VQ_HMQaGjxZ'
+    ).auth.getSession();
+    if (!session) throw new Error('Sign in required');
     const res = await fetch(WORKER_URL, {
       method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
+      headers: { 'Content-Type': 'application/json', 'Authorization': 'Bearer ' + session.access_token },
       body: JSON.stringify({
         system: TAX_SYSTEM_PROMPT,
         messages: conversationHistory
@@ -744,7 +750,9 @@ async function sendMessage() {
     isTyping = false;
     document.getElementById('sendBtn').disabled = false;
     console.error('AI error:', err);
-    addMessage('ai', '<p>⚠️ Could not reach the AI service. Please try again in a moment.</p>');
+    addMessage('ai', err.message === 'Sign in required' || err.message === 'Worker error 401'
+      ? '<p>⚠️ Please <a href="login.html">sign in</a> to use the AI assistant.</p>'
+      : '<p>⚠️ Could not reach the AI service. Please try again in a moment.</p>');
   }
 }
 
