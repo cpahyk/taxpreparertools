@@ -409,6 +409,13 @@ jobs:
             failures.push('Cook County reverted to the old Assessor advanced-search primary destination.');
           }
 
+          if (!data.includes('{ name:"Tippecanoe", portal:"https://www.tippecanoe.in.gov/150/Assessor"')) {
+            failures.push('Tippecanoe County must use the current official Assessor route.');
+          }
+          if (data.includes('https://www.tippecanoe.in.gov/137/Assessor')) {
+            failures.push('Retired Tippecanoe County Assessor URL returned.');
+          }
+
           const knownStalePropertyTaxUrls = [
             'https://www.mc-ala.org/residents/online-services/property-search',
             'https://www.muni.org/Departments/finance/treasury/PropertyTax/Pages/default.aspx',
@@ -444,7 +451,8 @@ jobs:
             'https://www.assessormelvinburgess.com/propertysearch',
             'https://www3.co.weber.ut.us/assessor/',
             'https://www.vbgov.com/government/departments/assessor',
-            'https://pbcpao.gov/Property/Search'
+            'https://pbcpao.gov/Property/Search',
+            'https://www.tippecanoe.in.gov/137/Assessor'
           ];
           for (const staleUrl of knownStalePropertyTaxUrls) {
             if (data.includes(staleUrl)) failures.push(`Known stale property-tax URL returned: ${staleUrl}`);
