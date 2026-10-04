@@ -1305,6 +1305,7 @@ footer { border-top:1px solid var(--border); padding:36px 48px; display:flex; al
   // ── Reset all search state.
   if (btnResetSearch) {
     btnResetSearch.addEventListener('click', function(){
+      resolveSequence++;
       var zipInput = document.getElementById('ptZipInput');
       var zipMsg = document.getElementById('ptZipMsg');
       if (zipInput) zipInput.value = '';
@@ -1496,6 +1497,8 @@ footer { border-top:1px solid var(--border); padding:36px 48px; display:flex; al
       countyInput=document.getElementById('countyInput'),
       countyList=document.getElementById('countyList');
   if(!btn || !stateSelect) return;
+
+  var resolveSequence = 0;
 
   function setMsg(t,kind){
     msg.textContent=t;
@@ -1739,6 +1742,7 @@ footer { border-top:1px solid var(--border); padding:36px 48px; display:flex; al
   }
 
   function resolve(){
+    var sequence=++resolveSequence;
     var raw=(input.value||'').trim();
     if(!raw){
       setMsg('Enter a 5-digit ZIP code or full U.S. street address so we can find the jurisdiction.','err');
@@ -1778,8 +1782,12 @@ footer { border-top:1px solid var(--border); padding:36px 48px; display:flex; al
     }
 
     task
-      .then(applyResolvedJurisdiction)
+      .then(function(out){
+        if(sequence!==resolveSequence) return;
+        applyResolvedJurisdiction(out);
+      })
       .catch(function(){
+        if(sequence!==resolveSequence) return;
         setMsg(
           bareZip
             ? 'Couldn’t auto-detect from that ZIP. Please select your state and county manually below.'
@@ -1789,7 +1797,9 @@ footer { border-top:1px solid var(--border); padding:36px 48px; display:flex; al
           'err'
         );
       })
-      .then(function(){ btn.disabled=false; });
+      .then(function(){
+        if(sequence===resolveSequence) btn.disabled=false;
+      });
   }
 
   btn.addEventListener('click',resolve);
