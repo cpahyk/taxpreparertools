@@ -372,7 +372,7 @@
         <div class="widget">
           <div class="widget-header">
             <span class="widget-title" id="recentToolsTitle">Recommended Tools</span>
-            <a href="tools.html" class="widget-action">View all →</a>
+            <a href="tools.html" class="widget-action" id="recentToolsAction">View all →</a>
           </div>
           <div class="widget-body" id="recentToolsList">
             <a href="federal-tax-estimator.html" class="tool-item">
@@ -547,15 +547,40 @@ function rememberToolVisit(name, url, emoji, description) {
   try { localStorage.setItem(RECENT_TOOLS_KEY, JSON.stringify(current.slice(0, 5))); } catch (_) {}
 }
 
+function formatRecentVisit(timestamp) {
+  const value = Number(timestamp);
+  if (!Number.isFinite(value) || value <= 0) return 'Recently visited';
+  const minutes = Math.max(0, Math.round((Date.now() - value) / 60000));
+  if (minutes < 1) return 'Visited just now';
+  if (minutes < 60) return 'Visited ' + minutes + 'm ago';
+  const hours = Math.round(minutes / 60);
+  if (hours < 24) return 'Visited ' + hours + 'h ago';
+  const days = Math.round(hours / 24);
+  if (days === 1) return 'Visited yesterday';
+  if (days < 7) return 'Visited ' + days + 'd ago';
+  return 'Visited recently';
+}
+
+function clearRecentTools(event) {
+  event?.preventDefault();
+  try { localStorage.removeItem(RECENT_TOOLS_KEY); } catch (_) {}
+  window.location.reload();
+}
+
 function renderRecentTools() {
   const list = document.getElementById('recentToolsList');
   const title = document.getElementById('recentToolsTitle');
-  if (!list || !title) return;
+  const action = document.getElementById('recentToolsAction');
+  if (!list || !title || !action) return;
 
   const recent = readRecentTools();
   if (!recent.length) return;
 
   title.textContent = 'Recently Visited Tools';
+  action.textContent = 'Clear history';
+  action.href = '#';
+  action.setAttribute('role', 'button');
+  action.addEventListener('click', clearRecentTools);
   list.replaceChildren();
 
   recent.forEach(item => {
@@ -573,7 +598,7 @@ function renderRecentTools() {
     name.textContent = item.name;
     const used = document.createElement('div');
     used.className = 'tool-item-used';
-    used.textContent = item.description || 'Recently opened tool';
+    used.textContent = formatRecentVisit(item.visitedAt);
     body.append(name, used);
 
     const arrow = document.createElement('span');
