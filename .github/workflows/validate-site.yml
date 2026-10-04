@@ -470,6 +470,9 @@ jobs:
             'matchSource: "detected"',
             'CURATED DIRECT DESTINATION',
             'DETECTED JURISDICTION · SEARCH FALLBACK',
+            "getJurisdictionNoun(out.abbr) === 'local area'",
+            'Detected local area:',
+            'Property assessment is generally municipal here',
             'function normalizeAreaFilter',
             "e.key === 'Home'",
             "e.key === 'End'"
