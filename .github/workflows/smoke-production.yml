@@ -80,6 +80,11 @@ jobs:
           grep -q 'ZIP will be used only as a fallback' /tmp/property-tax.html
           grep -q 'task=geocodeAddressViaCensusJsonp(raw)' /tmp/property-tax.html
           grep -q 'return lookupZipJurisdiction(fallbackZip)' /tmp/property-tax.html
+          grep -q "fetchJsonWithTimeout('https://api.zippopotam.us/us/'+encodeURIComponent(zip),5000)" /tmp/property-tax.html
+          grep -q 'var resolveSequence = 0' /tmp/property-tax.html
+          grep -q 'propertytax:reset' /tmp/property-tax.html
+          grep -q 'sequence!==resolveSequence' /tmp/property-tax.html
+          grep -q 'sequence===resolveSequence' /tmp/property-tax.html
           grep -q "source:'address'" /tmp/property-tax.html
           grep -q 'function applyResolvedJurisdiction' /tmp/property-tax.html
           grep -q 'var detectedFallback = {' /tmp/property-tax.html
