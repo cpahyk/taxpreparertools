@@ -75,6 +75,11 @@ jobs:
           grep -q 'function inferCountyFromPlace' /tmp/property-tax.html
           grep -q 'function geocodeAddressViaCensusJsonp' /tmp/property-tax.html
           grep -q '/geocoder/geographies/onelineaddress' /tmp/property-tax.html
+          grep -q 'function lookupZipJurisdiction' /tmp/property-tax.html
+          grep -q 'var bareZip=' /tmp/property-tax.html
+          grep -q 'ZIP will be used only as a fallback' /tmp/property-tax.html
+          grep -q 'task=geocodeAddressViaCensusJsonp(raw)' /tmp/property-tax.html
+          grep -q 'return lookupZipJurisdiction(fallbackZip)' /tmp/property-tax.html
           grep -q "source:'address'" /tmp/property-tax.html
           grep -q 'function applyResolvedJurisdiction' /tmp/property-tax.html
           grep -q 'var detectedFallback = {' /tmp/property-tax.html
