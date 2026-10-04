@@ -1,0 +1,13 @@
+# Legacy route redirects for static hosting / Cloudflare Pages
+/qbi.html /qbi-deduction-calculator.html 301
+/deadline-calendar.html /deadlines.html 301
+
+/tools/federal-tax-estimator /federal-tax-estimator.html 301
+/tools/se-tax-calculator /se-tax-calculator.html 301
+/tools/quarterly-payments /quarterly-payments.html 301
+/tools/qbi /qbi-deduction-calculator.html 301
+/tools/capital-gains /capital-gains.html 301
+/tools/penalty-calculator /penalty-calculator.html 301
+/tools/home-office /home-office.html 301
+/tools/mileage /mileage.html 301
+/tools/depreciation /depreciation.html 301
