@@ -1,0 +1,61 @@
+name: Audit property tax portal links
+
+on:
+  workflow_dispatch:
+    inputs:
+      limit:
+        description: "Optional number of unique direct portals to check (0 = all)"
+        required: false
+        default: "0"
+  schedule:
+    - cron: "17 7 * * 1"
+  push:
+    branches:
+      - main
+    paths:
+      - "assets/js/property-tax-data.js"
+      - "scripts/audit-property-tax-links.cjs"
+      - ".github/workflows/property-tax-link-audit.yml"
+
+permissions:
+  contents: read
+
+jobs:
+  audit:
+    name: Check direct assessor and tax portal links
+    runs-on: ubuntu-latest
+    timeout-minutes: 25
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v6
+
+      - name: Run property tax portal audit
+        shell: bash
+        env:
+          PROPERTY_TAX_AUDIT_LIMIT: ${{ github.event_name == 'workflow_dispatch' && inputs.limit || '0' }}
+          PROPERTY_TAX_AUDIT_CONCURRENCY: "6"
+          PROPERTY_TAX_AUDIT_TIMEOUT_MS: "10000"
+        run: |
+          node scripts/audit-property-tax-links.cjs
+
+      - name: Publish audit summary
+        if: always()
+        shell: bash
+        run: |
+          if [ -f property-tax-link-audit.md ]; then
+            cat property-tax-link-audit.md >> "$GITHUB_STEP_SUMMARY"
+          else
+            echo "Property tax link audit did not produce a report." >> "$GITHUB_STEP_SUMMARY"
+          fi
+
+      - name: Upload audit report
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: property-tax-link-audit
+          path: |
+            property-tax-link-audit.json
+            property-tax-link-audit.md
+          if-no-files-found: warn
+          retention-days: 14
