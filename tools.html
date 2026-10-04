@@ -807,6 +807,10 @@ function renderTools(list) {
 }
 
 // Init
+const initialSearch = new URLSearchParams(window.location.search).get('search');
+if (initialSearch) {
+  document.getElementById('searchInput').value = initialSearch.slice(0, 120);
+}
 updateDirectoryStats();
 syncQuickFilterUI();
 applyFilters();

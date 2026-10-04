@@ -67,8 +67,11 @@
   .upgrade-sub{font-size:0.7rem;color:var(--muted);margin-bottom:10px;line-height:1.45;}
   .upgrade-btn{display:block;background:var(--gold);color:var(--navy);text-align:center;padding:8px;border-radius:7px;font-size:0.75rem;font-weight:700;text-decoration:none;transition:all .2s;}
   .upgrade-btn:hover{background:var(--gold-light);}
-  .sb-signout{font-size:0.75rem;color:var(--muted);cursor:pointer;transition:color .18s;display:flex;align-items:center;gap:7px;}
-  .sb-signout:hover{color:var(--red);}
+  .sb-signout{font-size:0.75rem;color:var(--muted);cursor:pointer;transition:color .18s;display:flex;align-items:center;gap:7px;background:transparent;border:0;padding:0;font-family:inherit;}
+  .sb-signout:hover,.sb-signout:focus-visible{color:var(--red);}
+  .sidebar-close{display:none;margin-left:auto;width:34px;height:34px;border-radius:8px;border:1px solid var(--border);background:var(--card);color:var(--text);font-size:18px;align-items:center;justify-content:center;cursor:pointer;}
+  .mobile-backdrop{display:none;position:fixed;inset:0;background:rgba(8,21,42,.42);z-index:90;}
+  .mobile-menu-btn{display:none;width:38px;height:38px;border-radius:9px;border:1px solid var(--border);background:var(--card);color:var(--text);align-items:center;justify-content:center;cursor:pointer;font-size:18px;}
 
   /* MAIN */
   .main-content{margin-left:var(--sidebar-w);flex:1;min-height:100vh;display:flex;flex-direction:column;}
@@ -84,9 +87,8 @@
   .tb-btn{padding:8px 16px;border-radius:7px;font-size:0.8rem;font-weight:700;cursor:pointer;text-decoration:none;border:none;font-family:'DM Sans',sans-serif;transition:all .2s;}
   .tb-btn-gold{background:var(--gold);color:var(--navy);}
   .tb-btn-gold:hover{background:var(--gold-light);}
-  .notif-btn{width:34px;height:34px;border-radius:8px;background:var(--card);border:1px solid var(--border);display:flex;align-items:center;justify-content:center;cursor:pointer;font-size:15px;position:relative;transition:all .18s;}
-  .notif-btn:hover{border-color:var(--gold);}
-  .notif-dot{position:absolute;top:6px;right:6px;width:7px;height:7px;border-radius:50%;background:var(--red);border:1.5px solid var(--navy-mid);}
+  .notif-btn{width:34px;height:34px;border-radius:8px;background:var(--card);border:1px solid var(--border);display:flex;align-items:center;justify-content:center;cursor:pointer;font-size:15px;position:relative;transition:all .18s;text-decoration:none;color:var(--text);}
+  .notif-btn:hover,.notif-btn:focus-visible{border-color:var(--gold);}
 
   /* CONTENT */
   .page-content{padding:32px 36px;flex:1;}
@@ -172,6 +174,11 @@
   .calc-name{font-size:0.83rem;font-weight:600;color:var(--text);transition:color .18s;}
   .calc-val{margin-left:auto;font-family:'DM Mono',monospace;font-size:0.78rem;color:var(--gold);font-weight:600;}
   .calc-date{font-size:0.67rem;color:var(--muted);font-family:'DM Mono',monospace;margin-top:2px;}
+  .empty-state{padding:10px 0 4px;text-align:center;}
+  .empty-state-icon{font-size:1.8rem;margin-bottom:10px;}
+  .empty-state-title{font-size:.9rem;font-weight:700;color:var(--text);margin-bottom:5px;}
+  .empty-state-copy{font-size:.76rem;color:var(--muted);line-height:1.55;max-width:440px;margin:0 auto 12px;}
+  .empty-state-link{display:inline-flex;align-items:center;gap:6px;color:var(--gold);font-size:.76rem;font-weight:700;text-decoration:none;}
 
   /* QUICK ACCESS TOOLS */
   .quick-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(140px,1fr));gap:10px;}
@@ -185,7 +192,32 @@
   .dash-footer a{color:var(--muted);text-decoration:none;transition:color .18s;}
   .dash-footer a:hover{color:var(--gold);}
 
-  @media(max-width:900px){.sidebar{display:none;}.main-content{margin-left:0;}.stats-row{grid-template-columns:1fr 1fr;}.dash-grid{grid-template-columns:1fr;}.topbar{padding:14px 18px;}.page-content{padding:20px 18px;}}
+  @media(max-width:900px){
+    .sidebar{display:flex;transform:translateX(-102%);transition:transform .22s ease;box-shadow:0 20px 55px rgba(0,0,0,.22);}
+    .sidebar.open{transform:translateX(0);}
+    .sidebar-close{display:flex;}
+    .mobile-backdrop.open{display:block;}
+    .mobile-menu-btn{display:flex;}
+    body.sidebar-open{overflow:hidden;}
+    .main-content{margin-left:0;}
+    .stats-row{grid-template-columns:1fr 1fr;}
+    .dash-grid{grid-template-columns:1fr;}
+    .topbar{padding:14px 18px;flex-wrap:nowrap;}
+    .topbar-left{min-width:0;flex:1;}
+    .topbar-left h2{white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+    .topbar-left p{white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+    .topbar-right{gap:7px;}
+    .tb-search{width:min(38vw,180px);}
+    .page-content{padding:20px 18px;}
+  }
+  @media(max-width:620px){
+    .stats-row{grid-template-columns:1fr;}
+    .tb-search{display:none;}
+    .tb-btn{display:none;}
+    .page-content{padding:16px 14px;}
+    .topbar{padding:12px 14px;}
+    .dash-footer{padding:16px 14px;}
+  }
 </style>
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.117.2/dist/umd/supabase.js"></script>
 <meta name="robots" content="noindex, nofollow" />
@@ -200,11 +232,14 @@
 <h1 class="sr-only">TaxPreparerTools Dashboard</h1>
 
 <!-- SIDEBAR -->
-<aside class="sidebar">
-  <a href="index.html" class="sb-logo">
-    <div class="sb-logo-mark">⚖</div>
-    <div class="sb-logo-name">TaxPreparer<span>Tools</span></div>
-  </a>
+<aside class="sidebar" id="dashboardSidebar" aria-label="Dashboard navigation">
+  <div style="display:flex;align-items:center;border-bottom:1px solid var(--border);">
+    <a href="index.html" class="sb-logo" style="border-bottom:0;flex:1;">
+      <div class="sb-logo-mark">⚖</div>
+      <div class="sb-logo-name">TaxPreparer<span>Tools</span></div>
+    </a>
+    <button type="button" class="sidebar-close" aria-label="Close dashboard menu" onclick="closeSidebar()">×</button>
+  </div>
 
   <div class="sb-user" id="sbUserBlock" style="opacity:0">
     <div class="sb-avatar" id="sbAvatar">--</div>
@@ -224,40 +259,39 @@
     <a href="resources.html" class="sb-nav-item"><span class="sb-nav-icon">📚</span> Resources</a>
 
     <div class="sb-section-label">My Work</div>
-    <a href="dashboard.html#saved" class="sb-nav-item"><span class="sb-nav-icon">💾</span> Saved Calculations</a>
-    <a href="dashboard.html#clients" class="sb-nav-item"><span class="sb-nav-icon">👥</span> Clients</a>
-    <a href="dashboard.html#organizers" class="sb-nav-item"><span class="sb-nav-icon">📋</span> Organizers</a>
-    <a href="dashboard.html#templates" class="sb-nav-item"><span class="sb-nav-icon">📄</span> My Templates</a>
+    <a href="#saved" class="sb-nav-item" onclick="closeSidebar()"><span class="sb-nav-icon">💾</span> Saved Calculations</a>
 
     <div class="sb-section-label">Account</div>
-    <a href="dashboard.html#settings" class="sb-nav-item"><span class="sb-nav-icon">⚙️</span> Settings</a>
-    <a href="dashboard.html#notifications" class="sb-nav-item"><span class="sb-nav-icon">🔔</span> Notifications</a>
-    <a href="dashboard.html#billing" class="sb-nav-item"><span class="sb-nav-icon">💳</span> Billing</a>
+    <a href="deadlines.html" class="sb-nav-item"><span class="sb-nav-icon">🔔</span> Deadline Alerts</a>
+    <a href="contact.html" class="sb-nav-item"><span class="sb-nav-icon">💬</span> Support</a>
+    <a href="privacy.html" class="sb-nav-item"><span class="sb-nav-icon">🔐</span> Privacy</a>
   </nav>
 
   <div class="sb-bottom">
     <div class="upgrade-box">
       <div class="upgrade-title" id="accountPlanTitle">Free account</div>
-      <div class="upgrade-sub" id="accountPlanSub">See billing for plan options.</div>
-      <a href="dashboard.html#billing" class="upgrade-btn">Manage Plan</a>
+      <div class="upgrade-sub" id="accountPlanSub">Your account status is loaded securely from your profile.</div>
+      <a href="contact.html" class="upgrade-btn">Account Support</a>
     </div>
-    <div class="sb-signout" onclick="handleLogout()">🚪 Sign Out</div>
+    <button type="button" class="sb-signout" onclick="handleLogout()">🚪 Sign Out</button>
   </div>
 </aside>
+<div class="mobile-backdrop" id="mobileBackdrop" onclick="closeSidebar()" aria-hidden="true"></div>
 
 <!-- MAIN CONTENT -->
 <div class="main-content">
 
   <!-- TOPBAR -->
   <div class="topbar">
+    <button type="button" class="mobile-menu-btn" aria-label="Open dashboard menu" aria-controls="dashboardSidebar" aria-expanded="false" id="mobileMenuBtn" onclick="openSidebar()">☰</button>
     <div class="topbar-left">
       <h2 id="dashGreeting">Welcome back 👋</h2>
-      <p>Sunday, May 3, 2026 · Tax Season 2025</p>
+      <p id="currentDateLabel">Loading today’s date…</p>
     </div>
     <div class="topbar-right">
-      <input class="tb-search" type="text" placeholder="Search tools…"  aria-label="Search tools"/>
-      <div class="notif-btn">🔔<div class="notif-dot"></div></div>
-      <a href="tools.html" class="tb-btn tb-btn-gold">+ New Calculation</a>
+      <input class="tb-search" id="dashboardSearch" type="search" placeholder="Search tools…" aria-label="Search tools" onkeydown="if(event.key==='Enter') searchDashboardTools()"/>
+      <a class="notif-btn" href="deadlines.html" aria-label="Open tax deadline calendar" title="Tax deadline calendar">🔔</a>
+      <a href="tools.html" class="tb-btn tb-btn-gold">Browse Tools</a>
     </div>
   </div>
 
@@ -265,39 +299,23 @@
   <div class="page-content">
 
     <!-- STATS -->
-    <div class="stats-row">
-      <div class="stat-card">
-        <div class="stat-top">
-          <div class="stat-icon si-gold">🧮</div>
-          <span class="stat-trend trend-up">+8 this week</span>
-        </div>
-        <div class="stat-num">47</div>
-        <div class="stat-label">Calculations Run</div>
-      </div>
-      <div class="stat-card">
-        <div class="stat-top">
-          <div class="stat-icon si-green">✅</div>
-          <span class="stat-trend trend-up">3 upcoming</span>
-        </div>
-        <div class="stat-num">12</div>
-        <div class="stat-label">Deadlines Tracked</div>
-      </div>
-      <div class="stat-card">
-        <div class="stat-top">
-          <div class="stat-icon si-blue">⚖️</div>
-          <span class="stat-trend trend-up">+22 today</span>
-        </div>
-        <div class="stat-num">156</div>
-        <div class="stat-label">AI Queries (this month)</div>
-      </div>
-      <div class="stat-card">
-        <div class="stat-top">
-          <div class="stat-icon si-purple">📚</div>
-          <span class="stat-trend trend-up">2 new</span>
-        </div>
-        <div class="stat-num">9</div>
-        <div class="stat-label">Resources Downloaded</div>
-      </div>
+    <div class="stats-row" aria-label="Dashboard shortcuts">
+      <a class="stat-card" href="tools.html" style="text-decoration:none;">
+        <div class="stat-top"><div class="stat-icon si-gold">🧮</div><span class="stat-trend trend-up">Directory</span></div>
+        <div class="stat-num">54+</div><div class="stat-label">Tax Tools & Calculators</div>
+      </a>
+      <a class="stat-card" href="deadlines.html" style="text-decoration:none;">
+        <div class="stat-top"><div class="stat-icon si-green">📅</div><span class="stat-trend trend-up">Calendar</span></div>
+        <div class="stat-num">2026</div><div class="stat-label">Federal Tax Deadlines</div>
+      </a>
+      <a class="stat-card" href="ai-assistant.html" style="text-decoration:none;">
+        <div class="stat-top"><div class="stat-icon si-blue">⚖️</div><span class="stat-trend trend-up">Signed-in</span></div>
+        <div class="stat-num">AI</div><div class="stat-label">Tax Research Assistant</div>
+      </a>
+      <a class="stat-card" href="resources.html" style="text-decoration:none;">
+        <div class="stat-top"><div class="stat-icon si-purple">📚</div><span class="stat-trend trend-up">Library</span></div>
+        <div class="stat-num">38+</div><div class="stat-label">Guides & Resources</div>
+      </a>
     </div>
 
     <!-- MAIN GRID -->
@@ -309,65 +327,51 @@
         <!-- Recent Tools -->
         <div class="widget">
           <div class="widget-header">
-            <span class="widget-title">Recently Used Tools</span>
+            <span class="widget-title">Recommended Tools</span>
             <a href="tools.html" class="widget-action">View all →</a>
           </div>
           <div class="widget-body">
             <a href="federal-tax-estimator.html" class="tool-item">
               <div class="tool-item-icon">🧮</div>
-              <div><div class="tool-item-name">Federal Tax Estimator</div><div class="tool-item-used">Used 2 hours ago</div></div>
+              <div><div class="tool-item-name">Federal Tax Estimator</div><div class="tool-item-used">Federal income tax estimate</div></div>
               <span class="tool-item-arr">→</span>
             </a>
             <a href="se-tax-calculator.html" class="tool-item">
               <div class="tool-item-icon">💼</div>
-              <div><div class="tool-item-name">Self-Employment Tax Calc</div><div class="tool-item-used">Used yesterday</div></div>
+              <div><div class="tool-item-name">Self-Employment Tax Calc</div><div class="tool-item-used">Self-employment tax calculation</div></div>
               <span class="tool-item-arr">→</span>
             </a>
             <a href="qbi.html" class="tool-item">
               <div class="tool-item-icon">📈</div>
-              <div><div class="tool-item-name">QBI Deduction Calculator</div><div class="tool-item-used">Used May 1</div></div>
+              <div><div class="tool-item-name">QBI Deduction Calculator</div><div class="tool-item-used">Qualified business income deduction</div></div>
               <span class="tool-item-arr">→</span>
             </a>
             <a href="penalty-calculator.html" class="tool-item">
               <div class="tool-item-icon">⚠️</div>
-              <div><div class="tool-item-name">IRS Penalty Calculator</div><div class="tool-item-used">Sample · connect Supabase activity log</div></div>
+              <div><div class="tool-item-name">IRS Penalty Calculator</div><div class="tool-item-used">Federal penalty and interest estimate</div></div>
               <span class="tool-item-arr">→</span>
             </a>
             <a href="tools.html" class="tool-item">
               <div class="tool-item-icon">🏢</div>
-              <div><div class="tool-item-name">S-Corp Payroll Optimizer</div><div class="tool-item-used">Used Apr 28</div></div>
+              <div><div class="tool-item-name">S-Corp Payroll Optimizer</div><div class="tool-item-used">Browse business tax tools</div></div>
               <span class="tool-item-arr">→</span>
             </a>
           </div>
         </div>
 
         <!-- Saved Calculations -->
-        <div class="widget">
+        <div class="widget" id="saved">
           <div class="widget-header">
             <span class="widget-title">Saved Calculations</span>
-            <a href="dashboard.html#saved" class="widget-action">View all →</a>
+            <a href="tools.html" class="widget-action">Browse tools →</a>
           </div>
           <div class="widget-body">
-            <a href="federal-tax-estimator.html" class="calc-item">
-              <span class="calc-icon">🧮</span>
-              <div><div class="calc-name">Martinez 2025 Federal Estimate</div><div class="calc-date">Saved May 2 · Federal Tax Estimator</div></div>
-              <div><div class="calc-val">$24,180</div></div>
-            </a>
-            <a href="qbi.html" class="calc-item">
-              <span class="calc-icon">📈</span>
-              <div><div class="calc-name">Chen LLC QBI Analysis</div><div class="calc-date">Saved Apr 30 · QBI Calculator</div></div>
-              <div><div class="calc-val">$34,000</div></div>
-            </a>
-            <a href="se-tax-calculator.html" class="calc-item">
-              <span class="calc-icon">💼</span>
-              <div><div class="calc-name">Thompson SE Tax 2025</div><div class="calc-date">Saved Apr 28 · SE Tax Calc</div></div>
-              <div><div class="calc-val">$8,478</div></div>
-            </a>
-            <a href="penalty-calculator.html" class="calc-item">
-              <span class="calc-icon">⚠️</span>
-              <div><div class="calc-name">Williams FTF Penalty</div><div class="calc-date">Saved Apr 25 · Penalty Calc</div></div>
-              <div><div class="calc-val">$1,240</div></div>
-            </a>
+            <div class="empty-state">
+              <div class="empty-state-icon">💾</div>
+              <div class="empty-state-title">No saved calculations yet</div>
+              <div class="empty-state-copy">This dashboard does not invent client activity. When a calculator supports account-backed saving, your saved work will appear here.</div>
+              <a class="empty-state-link" href="tools.html">Open the tools directory →</a>
+            </div>
           </div>
         </div>
 
@@ -405,22 +409,22 @@
             <div class="dl-item">
               <div class="dl-date"><div class="dl-d">15</div><div class="dl-m">Jun</div></div>
               <div><div class="dl-name">Q2 Estimated Tax Payment</div><div class="dl-who">Self-employed, high-income</div></div>
-              <span class="dl-badge db-upcoming">43d</span>
+              <span class="dl-badge db-upcoming">Annual</span>
             </div>
             <div class="dl-item">
               <div class="dl-date"><div class="dl-d">15</div><div class="dl-m">Sep</div></div>
               <div><div class="dl-name">Q3 Estimated Tax Payment</div><div class="dl-who">Self-employed, high-income</div></div>
-              <span class="dl-badge db-upcoming">135d</span>
+              <span class="dl-badge db-upcoming">Annual</span>
             </div>
             <div class="dl-item">
               <div class="dl-date"><div class="dl-d">15</div><div class="dl-m">Sep</div></div>
               <div><div class="dl-name">Extended S-Corp Return</div><div class="dl-who">Form 1120-S extended filers</div></div>
-              <span class="dl-badge db-upcoming">135d</span>
+              <span class="dl-badge db-upcoming">Annual</span>
             </div>
             <div class="dl-item">
               <div class="dl-date"><div class="dl-d">15</div><div class="dl-m">Oct</div></div>
               <div><div class="dl-name">Extended 1040 Deadline</div><div class="dl-who">Individuals with extension</div></div>
-              <span class="dl-badge db-upcoming">165d</span>
+              <span class="dl-badge db-upcoming">Annual</span>
             </div>
           </div>
         </div>
@@ -441,8 +445,7 @@
             <button class="ai-send" onclick="goAI()">↑</button>
           </div>
           <div class="usage-section">
-            <div class="usage-label"><span>AI Queries Used</span><strong>156 / Unlimited</strong></div>
-            <div class="usage-track"><div class="usage-fill" style="width:100%"></div></div>
+            <div class="usage-label"><span>AI access</span><strong>Authenticated session required</strong></div>
           </div>
         </div>
 
@@ -486,6 +489,42 @@ function goAI(q) {
   const query = q || input.value.trim();
   if (!query) return;
   window.location.href = 'ai-assistant.html?q=' + encodeURIComponent(query);
+}
+
+function searchDashboardTools() {
+  const input = document.getElementById('dashboardSearch');
+  const query = input ? input.value.trim() : '';
+  if (!query) {
+    window.location.href = 'tools.html';
+    return;
+  }
+  window.location.href = 'tools.html?search=' + encodeURIComponent(query);
+}
+
+function openSidebar() {
+  document.getElementById('dashboardSidebar')?.classList.add('open');
+  document.getElementById('mobileBackdrop')?.classList.add('open');
+  document.getElementById('mobileMenuBtn')?.setAttribute('aria-expanded', 'true');
+  document.body.classList.add('sidebar-open');
+}
+
+function closeSidebar() {
+  document.getElementById('dashboardSidebar')?.classList.remove('open');
+  document.getElementById('mobileBackdrop')?.classList.remove('open');
+  document.getElementById('mobileMenuBtn')?.setAttribute('aria-expanded', 'false');
+  document.body.classList.remove('sidebar-open');
+}
+
+document.addEventListener('keydown', (event) => {
+  if (event.key === 'Escape') closeSidebar();
+});
+
+const dateLabel = document.getElementById('currentDateLabel');
+if (dateLabel) {
+  const now = new Date();
+  dateLabel.textContent = now.toLocaleDateString(undefined, {
+    weekday:'long', year:'numeric', month:'long', day:'numeric'
+  }) + ' · Tax Year ' + (now.getFullYear() - 1);
 }
 </script>
 
@@ -559,7 +598,7 @@ const _supabase = supabase.createClient(SUPABASE_URL, SUPABASE_ANON);
     document.getElementById('sbUserRole').textContent  = roleLabel;
     document.getElementById('sbPlanBadge').textContent = plan;
     document.getElementById('accountPlanTitle').textContent = plan === 'FREE' ? 'Free account' : plan + ' account';
-    document.getElementById('accountPlanSub').textContent = 'See billing for current subscription details.';
+    document.getElementById('accountPlanSub').textContent = 'Signed in securely. Contact support for account or plan help.';
     document.getElementById('sbUserBlock').style.opacity = '1';
 
     document.body.classList.remove('auth-pending');
@@ -574,7 +613,7 @@ const _supabase = supabase.createClient(SUPABASE_URL, SUPABASE_ANON);
 // Logout handler — add to any logout button
 async function handleLogout() {
   await _supabase.auth.signOut();
-  window.location.href = 'login.html';
+  window.location.replace('login.html');
 }
 </script>
 

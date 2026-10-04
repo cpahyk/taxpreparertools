@@ -96,6 +96,18 @@ jobs:
           grep -q "window.location.replace('login.html')" /tmp/dashboard.html
           grep -q "fallbackFirst" /tmp/dashboard.html
           grep -q "Profile initialization warning" /tmp/dashboard.html
+          grep -q 'id="currentDateLabel"' /tmp/dashboard.html
+          grep -q 'id="dashboardSearch"' /tmp/dashboard.html
+          grep -q 'function searchDashboardTools' /tmp/dashboard.html
+          grep -q 'id="mobileMenuBtn"' /tmp/dashboard.html
+          grep -q 'function openSidebar' /tmp/dashboard.html
+          grep -q 'No saved calculations yet' /tmp/dashboard.html
+          grep -q 'Recommended Tools' /tmp/dashboard.html
+          if grep -q 'Sunday, May 3, 2026' /tmp/dashboard.html; then
+            echo 'Dashboard still contains stale hard-coded date' >&2
+            exit 1
+          fi
+          grep -q "new URLSearchParams(window.location.search).get('search')" /tmp/tools.html
 
       - name: Verify property tax search production
         shell: bash
