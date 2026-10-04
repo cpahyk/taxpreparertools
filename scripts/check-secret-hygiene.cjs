@@ -31,12 +31,15 @@ const binaryExt = new Set([
 
 const tokenPatterns = [
   ['Stripe secret key', /\bsk_(?:live|test)_[A-Za-z0-9]{16,}\b/],
+  ['Supabase secret key', /\bsb_secret_[A-Za-z0-9_-]{16,}\b/],
+  ['OpenAI secret key', /\bsk-(?:proj-|svcacct-)?[A-Za-z0-9_-]{20,}\b/],
+  ['Anthropic secret key', /\bsk-ant-[A-Za-z0-9_-]{20,}\b/],
   ['GitHub token', /\bgh[pousr]_[A-Za-z0-9_]{20,}\b/],
   ['AWS access key', /\bAKIA[0-9A-Z]{16}\b/],
   ['Private key', /-----BEGIN (?:RSA |EC |OPENSSH |PGP )?PRIVATE KEY-----/]
 ];
 
-const directSecretAssignment = /^\s*(ADMIN_PASSWORD|SECRET_KEY|POSTGRES_PASSWORD|DATABASE_URL|STRIPE_SECRET_KEY|STRIPE_WEBHOOK_SECRET|LICENSE_SECRET)\s*=\s*(["'])(.*?)\2\s*;?\s*$/;
+const directSecretAssignment = /^\s*(ADMIN_PASSWORD|SECRET_KEY|POSTGRES_PASSWORD|DATABASE_URL|STRIPE_SECRET_KEY|STRIPE_WEBHOOK_SECRET|LICENSE_SECRET|SUPABASE_SERVICE_ROLE_KEY|SUPABASE_SECRET_KEY|OPENAI_API_KEY|ANTHROPIC_API_KEY)\s*=\s*(["'])(.*?)\2\s*;?\s*$/;
 
 function looksPlaceholder(value) {
   const v = value.trim();
