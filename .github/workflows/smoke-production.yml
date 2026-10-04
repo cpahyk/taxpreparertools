@@ -83,6 +83,8 @@ jobs:
           grep -q 'class="auth-pending"' /tmp/dashboard.html
           grep -q 'id="authGate"' /tmp/dashboard.html
           grep -q "window.location.replace('login.html')" /tmp/dashboard.html
+          grep -q "fallbackFirst" /tmp/dashboard.html
+          grep -q "Profile initialization warning" /tmp/dashboard.html
 
       - name: Verify property tax search production
         shell: bash
