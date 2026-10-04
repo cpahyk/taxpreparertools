@@ -390,7 +390,7 @@ footer{border-top:1px solid var(--border);padding:28px 48px;display:flex;align-i
             <div class="field" style="margin-bottom:24px;"><div class="label">Rental / Passive Income</div><div class="input-wrap"><span class="input-prefix">$</span><input type="number" id="d_rental" placeholder="0" oninput="updateCalc()" min="0" aria-label="Rental / Passive Income"/></div></div>
             <div class="section-title">Itemized Deductions</div>
             <div class="field" style="margin-bottom:14px;"><div class="label">Mortgage Interest</div><div class="input-wrap"><span class="input-prefix">$</span><input type="number" id="d_mort" placeholder="0" oninput="updateCalc()" min="0" aria-label="Mortgage Interest"/></div></div>
-            <div class="field" style="margin-bottom:14px;"><div class="label">State & Local Taxes (SALT — annual limit applies)</div><div class="input-wrap"><span class="input-prefix">$</span><input type="number" id="d_salt" placeholder="0" oninput="updateCalc()" min="0" aria-label="State &amp; Local Taxes (SALT — max $10k)"/></div></div>
+            <div class="field" style="margin-bottom:14px;"><div class="label">State & Local Taxes (SALT — annual limit applies)</div><div class="input-wrap"><span class="input-prefix">$</span><input type="number" id="d_salt" placeholder="0" oninput="updateCalc()" min="0" aria-label="State &amp; Local Taxes (SALT — annual limit applies)"/></div></div>
             <div class="field" style="margin-bottom:24px;"><div class="label">Charitable Contributions</div><div class="input-wrap"><span class="input-prefix">$</span><input type="number" id="d_charity" placeholder="0" oninput="updateCalc()" min="0" aria-label="Charitable Contributions"/></div></div>
           </div>
 
@@ -641,9 +641,10 @@ function getInputs() {
     const capgain = +document.getElementById('d_capgain').value||0;
     const rental = +document.getElementById('d_rental').value||0;
     const mort = +document.getElementById('d_mort').value||0;
-    const salt = Math.min(+document.getElementById('d_salt').value||0, 10000);
     const charity = +document.getElementById('d_charity').value||0;
     const status = document.getElementById('filingStatus').value;
+    const provisionalMagi = wages+interest+qdiv+odiv+capgain+rental;
+    const salt = getSaltDeduction(+document.getElementById('d_salt').value||0, status, provisionalMagi);
     const itemized = mort + salt + charity;
     const std = getTaxData().stdDed[status];
     return { gross: wages+interest+qdiv+odiv+capgain+rental, wages, business: 0, other: interest+qdiv+odiv+capgain+rental, status, deductionAmt: Math.max(itemized, std), credits: 0, adjustments: 0 };
@@ -682,11 +683,18 @@ function calculate() {
   const inp = getInputs();
   const { gross, business, status, deductionAmt, credits, adjustments } = inp;
 
-  // SE Tax
+  // Self-employment tax (planning estimate)
   const netSE = business;
-  const seSub = Math.min(netSE, SE_WAGE_BASE) * 0.9235;
-  const seTax = seSub * 0.153 + Math.max(0, netSE*0.9235 - SE_WAGE_BASE) * 0.029;
-  const seDeduction = seTax / 2;
+  const data = getTaxData();
+  const netEarningsSE = Math.max(0, netSE * 0.9235);
+  const wageIncome = inp.wages || 0;
+  const ssBaseRemaining = Math.max(0, data.seWageBase - wageIncome);
+  const ssTax = Math.min(netEarningsSE, ssBaseRemaining) * 0.124;
+  const medicareTax = netEarningsSE * 0.029;
+  const addlThreshold = status === 'mfj' ? 250000 : status === 'mfs' ? 125000 : 200000;
+  const additionalMedicare = Math.max(0, wageIncome + netEarningsSE - addlThreshold) * 0.009;
+  const seTax = ssTax + medicareTax + additionalMedicare;
+  const seDeduction = (ssTax + medicareTax) / 2;
 
   const agi = Math.max(0, gross - adjustments - seDeduction);
   const taxable = Math.max(0, agi - deductionAmt);
@@ -696,7 +704,7 @@ function calculate() {
 
   // Render summary
   document.getElementById('r_totalTax').textContent = fmt(afterCredits);
-  document.getElementById('r_summary').textContent = `${document.getElementById('filingStatus')?.value === status ? '' : ''}${status.toUpperCase()} filer · Taxable income ${fmt(taxable)}`;
+  document.getElementById('r_summary').textContent = `${getTaxYear()} · ${status.toUpperCase()} filer · Taxable income ${fmt(taxable)}`;
   document.getElementById('r_gross').textContent = fmt(gross);
   document.getElementById('r_taxable').textContent = fmt(taxable);
   document.getElementById('r_effRate').textContent = gross > 0 ? pct(afterCredits/gross) : '0.0%';
@@ -723,6 +731,7 @@ function calculate() {
 }
 
 function updateCalc() {}
+handleTaxYearChange();
 </script>
 <script>
 (function(){
