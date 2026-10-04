@@ -1,4 +1,5 @@
 /*
+  Cache-Control: public, max-age=0, must-revalidate
   X-Content-Type-Options: nosniff
   Referrer-Policy: strict-origin-when-cross-origin
   Permissions-Policy: camera=(), microphone=(), geolocation=(), payment=()
@@ -20,3 +21,9 @@
 /dashboard.html
   X-Frame-Options: DENY
   Content-Security-Policy: frame-ancestors 'none'
+
+/professional-light.css
+  Cache-Control: public, max-age=300, must-revalidate
+
+/assets/*
+  Cache-Control: public, max-age=86400
