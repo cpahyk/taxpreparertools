@@ -1305,7 +1305,7 @@ footer { border-top:1px solid var(--border); padding:36px 48px; display:flex; al
   // ── Reset all search state.
   if (btnResetSearch) {
     btnResetSearch.addEventListener('click', function(){
-      resolveSequence++;
+      window.dispatchEvent(new CustomEvent('propertytax:reset'));
       var zipInput = document.getElementById('ptZipInput');
       var zipMsg = document.getElementById('ptZipMsg');
       if (zipInput) zipInput.value = '';
@@ -1499,6 +1499,10 @@ footer { border-top:1px solid var(--border); padding:36px 48px; display:flex; al
   if(!btn || !stateSelect) return;
 
   var resolveSequence = 0;
+  window.addEventListener('propertytax:reset', function(){
+    resolveSequence++;
+    btn.disabled=false;
+  });
 
   function setMsg(t,kind){
     msg.textContent=t;
