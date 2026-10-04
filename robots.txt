@@ -2,9 +2,13 @@ User-agent: *
 Allow: /
 
 # Keep private/account pages out of search indexes
+Disallow: /login
 Disallow: /login.html
+Disallow: /signup
 Disallow: /signup.html
+Disallow: /dashboard
 Disallow: /dashboard.html
+Disallow: /forgot-password
 Disallow: /forgot-password.html
 Disallow: /admin/
 
