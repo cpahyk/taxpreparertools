@@ -11,6 +11,7 @@
      {
        name:        "Harris",                       // display name (no "County" suffix)
        portal:      "https://hcad.org/...",         // primary search URL
+       routeType:   "search",                       // optional; only for search fallback rows
        methods:     ["address","parcel","owner"],   // expected search inputs
        notes:       "Free online search."           // short hint shown to user
      }
@@ -128,9 +129,9 @@ const COUNTY_PORTALS = {
 
   /* ───────────── CONNECTICUT ───────────── */
   CT: [
-    { name:"Fairfield",   portal:"https://www.google.com/search?q=fairfield+county+ct+property+tax+town+assessor",   methods:ALL,         notes:"CT has town-level assessors, not county. Search at the town level." },
-    { name:"Hartford",    portal:"https://www.google.com/search?q=hartford+county+ct+property+tax+town+assessor",    methods:ALL,         notes:"CT abolished county government — use town assessor sites." },
-    { name:"New Haven",   portal:"https://www.google.com/search?q=new+haven+county+ct+property+tax+town+assessor",   methods:ALL,         notes:"Search by town: New Haven, Hamden, West Haven, etc." }
+    { name:"Fairfield",   portal:"https://www.google.com/search?q=fairfield+county+ct+property+tax+town+assessor",   routeType:"search", methods:ALL,         notes:"CT has town-level assessors, not county. Search at the town level." },
+    { name:"Hartford",    portal:"https://www.google.com/search?q=hartford+county+ct+property+tax+town+assessor",    routeType:"search", methods:ALL,         notes:"CT abolished county government — use town assessor sites." },
+    { name:"New Haven",   portal:"https://www.google.com/search?q=new+haven+county+ct+property+tax+town+assessor",   routeType:"search", methods:ALL,         notes:"Search by town: New Haven, Hamden, West Haven, etc." }
   ],
 
   /* ───────────── DELAWARE ───────────── */
@@ -255,9 +256,9 @@ const COUNTY_PORTALS = {
 
   /* ───────────── MAINE ───────────── */
   ME: [
-    { name:"Cumberland",  portal:"https://www.google.com/search?q=cumberland+county+maine+property+tax+town+assessor", methods:ALL, notes:"ME assessment is town-level. Portland is largest city." },
-    { name:"York",        portal:"https://www.google.com/search?q=york+county+maine+town+property+assessor",            methods:ALL, notes:"Search by town: York, Sanford, Biddeford, etc." },
-    { name:"Penobscot",   portal:"https://www.google.com/search?q=penobscot+county+maine+town+property+assessor",       methods:ALL, notes:"Bangor is largest city." }
+    { name:"Cumberland",  portal:"https://www.google.com/search?q=cumberland+county+maine+property+tax+town+assessor", routeType:"search", methods:ALL, notes:"ME assessment is town-level. Portland is largest city." },
+    { name:"York",        portal:"https://www.google.com/search?q=york+county+maine+town+property+assessor",            routeType:"search", methods:ALL, notes:"Search by town: York, Sanford, Biddeford, etc." },
+    { name:"Penobscot",   portal:"https://www.google.com/search?q=penobscot+county+maine+town+property+assessor",       routeType:"search", methods:ALL, notes:"Bangor is largest city." }
   ],
 
   /* ───────────── MARYLAND ───────────── */
@@ -274,13 +275,13 @@ const COUNTY_PORTALS = {
 
   /* ───────────── MASSACHUSETTS ───────────── */
   MA: [
-    { name:"Middlesex",   portal:"https://www.google.com/search?q=middlesex+county+ma+town+property+assessor",  methods:ALL, notes:"MA assessment is by city/town. Includes Cambridge, Lowell." },
-    { name:"Worcester",   portal:"https://www.google.com/search?q=worcester+county+ma+town+property+assessor",  methods:ALL, notes:"Worcester city is largest." },
-    { name:"Essex",       portal:"https://www.google.com/search?q=essex+county+ma+town+property+assessor",      methods:ALL, notes:"Lawrence, Lynn, Salem." },
+    { name:"Middlesex",   portal:"https://www.google.com/search?q=middlesex+county+ma+town+property+assessor",  routeType:"search", methods:ALL, notes:"MA assessment is by city/town. Includes Cambridge, Lowell." },
+    { name:"Worcester",   portal:"https://www.google.com/search?q=worcester+county+ma+town+property+assessor",  routeType:"search", methods:ALL, notes:"Worcester city is largest." },
+    { name:"Essex",       portal:"https://www.google.com/search?q=essex+county+ma+town+property+assessor",      routeType:"search", methods:ALL, notes:"Lawrence, Lynn, Salem." },
     { name:"Suffolk",     portal:"https://www.boston.gov/departments/assessing",                                 methods:ALL, notes:"Boston city assessor." },
-    { name:"Norfolk",     portal:"https://www.google.com/search?q=norfolk+county+ma+town+property+assessor",    methods:ALL, notes:"Quincy, Brookline." },
-    { name:"Plymouth",    portal:"https://www.google.com/search?q=plymouth+county+ma+town+property+assessor",   methods:ALL, notes:"Brockton, Plymouth." },
-    { name:"Hampden",     portal:"https://www.google.com/search?q=hampden+county+ma+town+property+assessor",    methods:ALL, notes:"Springfield." }
+    { name:"Norfolk",     portal:"https://www.google.com/search?q=norfolk+county+ma+town+property+assessor",    routeType:"search", methods:ALL, notes:"Quincy, Brookline." },
+    { name:"Plymouth",    portal:"https://www.google.com/search?q=plymouth+county+ma+town+property+assessor",   routeType:"search", methods:ALL, notes:"Brockton, Plymouth." },
+    { name:"Hampden",     portal:"https://www.google.com/search?q=hampden+county+ma+town+property+assessor",    routeType:"search", methods:ALL, notes:"Springfield." }
   ],
 
   /* ───────────── MICHIGAN ───────────── */
@@ -342,9 +343,9 @@ const COUNTY_PORTALS = {
 
   /* ───────────── NEW HAMPSHIRE ───────────── */
   NH: [
-    { name:"Hillsborough", portal:"https://www.google.com/search?q=hillsborough+county+nh+town+property+assessor", methods:ALL, notes:"NH assessment is town-level. Manchester / Nashua." },
-    { name:"Rockingham",   portal:"https://www.google.com/search?q=rockingham+county+nh+town+property+assessor",   methods:ALL, notes:"Search by town." },
-    { name:"Merrimack",    portal:"https://www.google.com/search?q=merrimack+county+nh+town+property+assessor",    methods:ALL, notes:"Concord (state capital)." }
+    { name:"Hillsborough", portal:"https://www.google.com/search?q=hillsborough+county+nh+town+property+assessor", routeType:"search", methods:ALL, notes:"NH assessment is town-level. Manchester / Nashua." },
+    { name:"Rockingham",   portal:"https://www.google.com/search?q=rockingham+county+nh+town+property+assessor",   routeType:"search", methods:ALL, notes:"Search by town." },
+    { name:"Merrimack",    portal:"https://www.google.com/search?q=merrimack+county+nh+town+property+assessor",    routeType:"search", methods:ALL, notes:"Concord (state capital)." }
   ],
 
   /* ───────────── NEW JERSEY ───────────── */
@@ -457,8 +458,8 @@ const COUNTY_PORTALS = {
 
   /* ───────────── RHODE ISLAND ───────────── */
   RI: [
-    { name:"Providence",  portal:"https://www.google.com/search?q=providence+county+ri+town+property+assessor",  methods:ALL, notes:"RI uses city/town assessors. Providence is largest city." },
-    { name:"Kent",        portal:"https://www.google.com/search?q=kent+county+ri+town+property+assessor",        methods:ALL, notes:"Warwick area." }
+    { name:"Providence",  portal:"https://www.google.com/search?q=providence+county+ri+town+property+assessor",  routeType:"search", methods:ALL, notes:"RI uses city/town assessors. Providence is largest city." },
+    { name:"Kent",        portal:"https://www.google.com/search?q=kent+county+ri+town+property+assessor",        routeType:"search", methods:ALL, notes:"Warwick area." }
   ],
 
   /* ───────────── SOUTH CAROLINA ───────────── */
@@ -527,7 +528,7 @@ const COUNTY_PORTALS = {
 
   /* ───────────── VERMONT ───────────── */
   VT: [
-    { name:"Chittenden",  portal:"https://www.google.com/search?q=chittenden+county+vt+town+property+assessor",  methods:ALL, notes:"VT assessment is town-level. Burlington is largest city." }
+    { name:"Chittenden",  portal:"https://www.google.com/search?q=chittenden+county+vt+town+property+assessor",  routeType:"search", methods:ALL, notes:"VT assessment is town-level. Burlington is largest city." }
   ],
 
   /* ───────────── VIRGINIA ───────────── */
@@ -603,7 +604,7 @@ function getJurisdictionNoun(stateCode) {
 }
 
 function isSearchFallback(county) {
-  return !!(county && /google\.com\/search/i.test(county.portal || ''));
+  return !!(county && county.routeType === 'search');
 }
 
 /* Build a jurisdiction-neutral fallback search URL. */
