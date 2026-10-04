@@ -69,6 +69,8 @@ jobs:
           grep -q 'function normalizeJurisdiction' /tmp/property-tax.html
           grep -q 'baseMatches.length===1' /tmp/property-tax.html
           grep -q 'findCountyItem(out.county, out.abbr)' /tmp/property-tax.html
+          grep -q "typeof data.matchJurisdiction === 'function'" /tmp/property-tax.html
+          grep -q 'function matchJurisdiction' /tmp/property-tax-data.js
           grep -q 'function lookupCountyFromCoordinates' /tmp/property-tax.html
           grep -q '/api/census/block/find?latitude=' /tmp/property-tax.html
           grep -q 'function lookupCountyViaCensusJsonp' /tmp/property-tax.html
