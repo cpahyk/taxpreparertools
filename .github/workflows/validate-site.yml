@@ -307,6 +307,7 @@ jobs:
         run: |
           node <<'NODE'
           const fs = require('fs');
+          const vm = require('vm');
           const html = fs.readFileSync('property-tax-search.html', 'utf8');
           const data = fs.readFileSync('assets/js/property-tax-data.js', 'utf8');
 
@@ -383,6 +384,7 @@ jobs:
             'function getJurisdictionLabel',
             'function getJurisdictionNoun',
             "county.routeType === 'search'",
+            'function matchJurisdiction',
             'DIRECT_PORTAL_COUNT',
             'UNIQUE_DIRECT_PORTAL_COUNT',
             'window.PROPERTY_TAX_DATA'
@@ -400,6 +402,40 @@ jobs:
           }
           if (!data.includes('{ name:"St. Louis County"') || !data.includes('{ name:"St. Louis City"')) {
             failures.push('St. Louis City/County regression fixtures are missing.');
+          }
+
+          try {
+            const sandbox = { window: {} };
+            vm.createContext(sandbox);
+            vm.runInContext(data, sandbox, { filename: 'assets/js/property-tax-data.js', timeout: 2000 });
+            const api = sandbox.window.PROPERTY_TAX_DATA;
+            const cases = [
+              ['FL', 'Polk County', 'Polk'],
+              ['IL', 'Cook County', 'Cook'],
+              ['MD', 'Baltimore City', 'Baltimore City'],
+              ['MD', 'Baltimore County', 'Baltimore County'],
+              ['MO', 'St. Louis City', 'St. Louis City'],
+              ['MO', 'St. Louis County', 'St. Louis County'],
+              ['CA', 'Los Angeles County', 'Los Angeles']
+            ];
+            for (const [state, source, expected] of cases) {
+              const matched = api.matchJurisdiction(state, source);
+              if (!matched || matched.name !== expected) {
+                failures.push(`Jurisdiction matcher regression: ${state} / ${source} expected ${expected}, got ${matched ? matched.name : 'null'}.`);
+              }
+            }
+            if (api.matchJurisdiction('MD', 'Baltimore') !== null) {
+              failures.push('Jurisdiction matcher must not collapse ambiguous Baltimore City/County input.');
+            }
+            if (api.matchJurisdiction('MO', 'St. Louis') !== null) {
+              failures.push('Jurisdiction matcher must not collapse ambiguous St. Louis City/County input.');
+            }
+            const cook = api.matchJurisdiction('IL', 'Cook County');
+            if (!cook || cook.portal !== 'https://www.cookcountypropertyinfo.com/') {
+              failures.push('Cook County matcher must resolve to cookcountypropertyinfo.com.');
+            }
+          } catch (error) {
+            failures.push('Could not execute property-tax matcher regression tests: ' + error.message);
           }
 
           if (!data.includes('{ name:"Polk",        portal:"https://www.polkflpa.gov/CamaSearch.aspx"') || !data.includes('notes:"Lakeland / Winter Haven."')) {
@@ -478,6 +514,7 @@ jobs:
             'function normalizeJurisdiction',
             'baseMatches.length===1',
             'findCountyItem(out.county, out.abbr)',
+            "typeof data.matchJurisdiction === 'function'",
             'function lookupCountyFromCoordinates',
             '/api/census/block/find?latitude=',
             'function lookupCountyViaCensusJsonp',
