@@ -73,6 +73,10 @@ jobs:
           grep -q '/api/census/block/find?latitude=' /tmp/property-tax.html
           grep -q 'function lookupCountyViaCensusJsonp' /tmp/property-tax.html
           grep -q 'function inferCountyFromPlace' /tmp/property-tax.html
+          grep -q 'function geocodeAddressViaCensusJsonp' /tmp/property-tax.html
+          grep -q '/geocoder/geographies/onelineaddress' /tmp/property-tax.html
+          grep -q "source:'address'" /tmp/property-tax.html
+          grep -q 'function applyResolvedJurisdiction' /tmp/property-tax.html
           grep -q 'function getJurisdictionLabel' /tmp/property-tax-data.js
           grep -q 'UNIQUE_DIRECT_PORTAL_COUNT' /tmp/property-tax-data.js
           if grep -q 'portal:"http://' /tmp/property-tax-data.js; then
