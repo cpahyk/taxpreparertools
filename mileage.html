@@ -13,10 +13,10 @@
   <meta name="msapplication-TileColor" content="#08152a">
   <meta name="msapplication-config" content="/browserconfig.xml">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Mileage Deduction Calculator 2025 | TaxPreparerTools.com</title>
+<title>Mileage Deduction Calculator 2025–2026 | TaxPreparerTools.com</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<meta name="description" content="Calculate 2025 IRS mileage deductions for business, medical, charity, and military use. Standard mileage rates: business 70¢, medical/military 21¢, charity 14¢.">
+<meta name="description" content="Calculate IRS standard mileage deductions for 2025 and both 2026 rate periods. Includes business, medical, charitable, and eligible moving mileage.">
 <link rel="canonical" href="https://www.taxpreparertools.com/mileage" />
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700;900&family=DM+Sans:wght@300;400;500;600&family=DM+Mono:wght@400;500&display=swap" media="print" onload="this.media='all'">
 <noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700;900&family=DM+Sans:wght@300;400;500;600&family=DM+Mono:wght@400;500&display=swap"></noscript>
@@ -119,12 +119,12 @@ footer{border-top:1px solid var(--border);padding:20px 48px;display:flex;justify
   <!-- Open Graph / Social Sharing -->
   <meta property="og:type" content="website" />
   <meta property="og:url" content="https://www.taxpreparertools.com/mileage" />
-  <meta property="og:title" content="Mileage Deduction Calculator 2025" />
-  <meta property="og:description" content="Calculate 2025 IRS standard mileage deductions for business, medical, charity, and military use." />
+  <meta property="og:title" content="Mileage Deduction Calculator 2025–2026" />
+  <meta property="og:description" content="Calculate 2025–2026 IRS standard mileage deductions, including the July 1, 2026 mid-year rate change." />
   <meta property="og:image" content="https://www.taxpreparertools.com/assets/og-image.png" />
   <meta name="twitter:card" content="summary_large_image" />
-  <meta name="twitter:title" content="Mileage Deduction Calculator 2025" />
-  <meta name="twitter:description" content="Calculate 2025 IRS standard mileage deductions for business, medical, charity, and military use." />
+  <meta name="twitter:title" content="Mileage Deduction Calculator 2025–2026" />
+  <meta name="twitter:description" content="Calculate 2025–2026 IRS standard mileage deductions, including the July 1, 2026 mid-year rate change." />
   <meta name="twitter:image" content="https://www.taxpreparertools.com/assets/og-image.png" />
 <script type="application/ld+json">
 {
@@ -132,9 +132,9 @@ footer{border-top:1px solid var(--border);padding:20px 48px;display:flex;justify
   "@graph": [
     {
       "@type": "WebApplication",
-      "name": 'Mileage Deduction Calculator 2025',
+      "name": 'Mileage Deduction Calculator 2025–2026',
       "url": 'https://www.taxpreparertools.com/mileage',
-      "description": 'Calculate 2025 IRS mileage deductions for business, medical, charity, and military use at IRS standard rates.',
+      "description": 'Calculate IRS standard mileage deductions for 2025 and both 2026 rate periods for business, medical, charitable, and eligible moving use.',
       "applicationCategory": "FinanceApplication",
       "operatingSystem": "Web",
       "offers": {"@type": "Offer", "price": "0", "priceCurrency": "USD"},
@@ -147,7 +147,7 @@ footer{border-top:1px solid var(--border);padding:20px 48px;display:flex;justify
     {
       "@type": "FAQPage",
       "mainEntity": [
-        {"@type": "Question", "name": 'What are the 2025 IRS standard mileage rates?', "acceptedAnswer": {"@type": "Answer", "text": 'The 2025 IRS standard mileage rates are: 70 cents per mile for business, 21 cents per mile for medical and military moving, and 14 cents per mile for charitable purposes.'}},
+        {"@type": "Question", "name": 'What IRS standard mileage rates does this calculator support?', "acceptedAnswer": {"@type": "Answer", "text": 'For 2025 the rates are 70 cents business, 21 cents medical/eligible moving, and 14 cents charity. For Jan–Jun 2026 they are 72.5, 20.5, and 14 cents; for Jul–Dec 2026 they are 76, 23.5, and 14 cents.'}},
         {"@type": "Question", "name": 'Can I use actual expenses instead of the standard mileage rate?', "acceptedAnswer": {"@type": "Answer", "text": 'Yes. You may deduct actual vehicle expenses (gas, insurance, repairs, depreciation) instead of the standard rate. You must choose actual expenses in the first year for that vehicle; you can switch to standard mileage in later years.'}},
         {"@type": "Question", "name": 'Do I need a mileage log for the IRS?', "acceptedAnswer": {"@type": "Answer", "text": 'Yes. The IRS requires contemporaneous records including date, destination, business purpose, and miles driven for each trip. A mileage log or app records satisfy this requirement.'}}
       ]
@@ -199,11 +199,11 @@ footer{border-top:1px solid var(--border);padding:20px 48px;display:flex;justify
     <div>
       <div class="tool-badges">
         <span class="badge badge-free">Free</span>
-        <span class="badge badge-upd">2025 Rates</span>
+        <span class="badge badge-upd" id="rateBadge">2026 Jul–Dec Rates</span>
         <span class="badge badge-cat">Calculator</span>
       </div>
       <h1>Mileage Deduction Calculator</h1>
-      <p class="tool-desc-txt">Calculate your 2025 IRS standard mileage deductions across all categories — business, medical, charity, and military. Enter your miles for each use type and see your total deduction instantly.</p>
+      <p class="tool-desc-txt">Calculate IRS standard mileage deductions using 2025 rates or either 2026 rate period. The calculator handles the July 1, 2026 mid-year increase automatically when you select the applicable period.</p>
     </div>
   </div>
 
@@ -211,30 +211,34 @@ footer{border-top:1px solid var(--border);padding:20px 48px;display:flex;justify
     <div>
       <div class="calc-card">
         <div class="cc-head">
-          <div class="cc-title">2025 IRS Standard Mileage Rates</div>
-          <div class="cc-sub">Rates effective January 1, 2025</div>
+          <div class="cc-title" id="rateTitle">2026 IRS Standard Mileage Rates</div>
+        <div class="cc-sub" id="ratePeriodSub">Rates for July 1–December 31, 2026</div>
         </div>
         <div class="cc-body">
-          <div class="rate-grid">
+      <div class="field" style="margin-bottom:18px;">
+        <label class="f-label" for="ratePeriod">Tax / Mileage Period</label>
+        <select id="ratePeriod" onchange="updateRatePeriod()" aria-label="Tax / Mileage Period">
+          <option value="2026h2" selected>2026 — Jul 1 to Dec 31</option>
+          <option value="2026h1">2026 — Jan 1 to Jun 30</option>
+          <option value="2025">2025 — Full Year</option>
+        </select>
+      </div>
+      <div class="rate-grid">
             <div class="rate-pill">
               <div class="rp-emoji">💼</div>
-              <div class="rp-label">Business</div>
-              <div class="rp-rate">70¢/mi</div>
+              <div class="rp-label">Business</div><div class="rp-rate" id="rateBiz">76¢/mi</div>
             </div>
             <div class="rate-pill">
               <div class="rp-emoji">🏥</div>
-              <div class="rp-label">Medical</div>
-              <div class="rp-rate">21¢/mi</div>
+              <div class="rp-label">Medical</div><div class="rp-rate" id="rateMed">23.5¢/mi</div>
             </div>
             <div class="rate-pill">
               <div class="rp-emoji">❤️</div>
-              <div class="rp-label">Charity</div>
-              <div class="rp-rate">14¢/mi</div>
+              <div class="rp-label">Charity</div><div class="rp-rate" id="rateChar">14¢/mi</div>
             </div>
             <div class="rate-pill">
               <div class="rp-emoji">🎖️</div>
-              <div class="rp-label">Military</div>
-              <div class="rp-rate">21¢/mi</div>
+              <div class="rp-label">Eligible Moving</div><div class="rp-rate" id="rateMove">23.5¢/mi</div>
             </div>
           </div>
 
@@ -262,9 +266,9 @@ footer{border-top:1px solid var(--border);padding:20px 48px;display:flex;justify
               </div>
             </div>
             <div class="field">
-              <label class="f-label">🎖️ Military Miles</label>
+              <label class="f-label">🎖️ Eligible Moving Miles</label>
               <div class="input-wrap">
-                <input type="number" id="milMiles" value="0" min="0" oninput="calc()" aria-label="🎖️ Military Miles">
+                <input type="number" id="milMiles" value="0" min="0" oninput="calc()" aria-label="🎖️ Eligible Moving Miles">
                 <span class="sfx">miles</span>
               </div>
             </div>
@@ -323,7 +327,7 @@ footer{border-top:1px solid var(--border);padding:20px 48px;display:flex;justify
 
     <div class="sidebar">
       <div class="info-card">
-        <div class="ic-title">📋 Key Rules for 2025</div>
+        <div class="ic-title">📋 Key Mileage Rules</div>
         <div class="rule-item"><div class="rule-dot"></div><span><strong>Business miles:</strong> Must be for business purposes — commuting to a regular office does NOT count. Going between job sites or to client meetings does.</span></div>
         <div class="rule-item"><div class="rule-dot"></div><span><strong>Recordkeeping required:</strong> Log date, destination, business purpose, and miles for each trip. Keep mileage logs; the IRS requires written records.</span></div>
         <div class="rule-item"><div class="rule-dot"></div><span><strong>Actual expense method:</strong> Instead of the standard rate, you can deduct a percentage of all actual vehicle costs. Calculate both methods — actual can exceed standard for high-cost vehicles.</span></div>
@@ -377,14 +381,14 @@ footer{border-top:1px solid var(--border);padding:20px 48px;display:flex;justify
 <section style="max-width:900px;margin:0 auto;padding:8px 24px 56px;font-family:'DM Sans',sans-serif;color:var(--text,#dde4f0);line-height:1.75;font-size:0.95rem;">
 <hr style="border:none;border-top:1px solid var(--border,rgba(200,168,75,0.14));margin:8px 0 28px;">
 <h2 style="font-family:'Playfair Display',serif;font-size:1.4rem;color:var(--white,#fff);margin:0 0 14px;">How the mileage deduction is calculated</h2>
-<p style="color:var(--muted,#7a8fac);margin:0 0 14px;">The standard mileage method values your business driving at a flat IRS rate per mile, so you simply multiply your substantiated business miles by the applicable rate instead of tracking every gas, insurance, repair, and depreciation cost. The rate is set annually and bundles all of those operating costs into one figure. For 2025 the rates are 70&#162; per mile for business, 21&#162; for medical and qualified active-duty military moving, and 14&#162; for charitable driving. For 2026 the business rate rises to 72.5&#162;, medical/moving falls to 20.5&#162;, and the statutory charitable rate stays at 14&#162;.</p>
+<p style="color:var(--muted,#7a8fac);margin:0 0 14px;">The standard mileage method values your business driving at a flat IRS rate per mile, so you simply multiply your substantiated business miles by the applicable rate instead of tracking every gas, insurance, repair, and depreciation cost. The rate is set annually and bundles all of those operating costs into one figure. For 2025 the rates are 70&#162; per business mile, 21&#162; for medical and eligible moving, and 14&#162; for charity. For Jan–Jun 2026 the rates are 72.5&#162;, 20.5&#162;, and 14&#162;. Effective July 1, 2026, the IRS raised business mileage to 76&#162; and medical/eligible moving to 23.5&#162;, while charity remains 14&#162;.</p>
 <p style="color:var(--muted,#7a8fac);margin:0 0 14px;">The alternative is the actual-expense method, where you total the real costs of operating the vehicle (fuel, oil, tires, insurance, registration, lease payments or depreciation, repairs) and deduct the business-use percentage. The standard rate is simpler and needs only a mileage log; actual expenses can produce a larger deduction for expensive or heavily driven vehicles but require far more recordkeeping.</p>
 <h3 style="font-family:'Playfair Display',serif;font-size:1.12rem;color:var(--gold,#c8a84b);margin:22px 0 8px;">Worked example</h3>
 <p style="color:var(--muted,#7a8fac);margin:0 0 14px;">A self-employed consultant drives 12,000 business miles in 2025. Using the standard mileage method, the deduction is 12,000 &#215; $0.70 = $8,400, reported on Schedule C. If that same driver instead documented $9,800 of total vehicle costs and the car was used 70% for business, the actual-expense deduction would be $9,800 &#215; 70% = $6,860 &mdash; so here the standard method wins. The right choice depends on the vehicle and the miles, which is why it is worth running both.</p>
 <h3 style="font-family:'Playfair Display',serif;font-size:1.12rem;color:var(--gold,#c8a84b);margin:22px 0 8px;">Common mistakes &amp; edge cases</h3>
 <p style="color:var(--muted,#7a8fac);margin:0 0 14px;">Commuting between home and a regular workplace is never deductible &mdash; only business trips between work locations, to clients, or for errands count. If you own the vehicle and want the flexibility to switch methods later, you must use the standard mileage rate in the first year the car is placed in service; a leased vehicle that starts on the standard rate must keep it for the entire lease term. Note also that the standard rate includes a depreciation component (33&#162; per mile for 2025, 35&#162; for 2026) that reduces your vehicle&rsquo;s basis. Finally, unreimbursed employee mileage is not deductible for most W-2 workers because the Tax Cuts and Jobs Act suspended miscellaneous itemized deductions, a suspension the One Big Beautiful Bill Act made permanent.</p>
 <h3 style="font-family:'Playfair Display',serif;font-size:1.2rem;color:var(--white,#fff);margin:26px 0 14px;">Frequently asked questions</h3>
-<div style="margin-bottom:14px;"><div style="font-weight:700;color:var(--white,#fff);margin-bottom:4px;">Are the 2026 mileage rates different from 2025?</div><p style="color:var(--muted,#7a8fac);margin:0;">Yes. The business rate increases to 72.5&#162; per mile for 2026 (from 70&#162; in 2025), the medical and military-moving rate decreases to 20.5&#162; (from 21&#162;), and the charitable rate remains 14&#162; because it is fixed by statute rather than the annual cost study.</p></div>
+<div style="margin-bottom:14px;"><div style="font-weight:700;color:var(--white,#fff);margin-bottom:4px;">Did the IRS change the 2026 mileage rates mid-year?</div><p style="color:var(--muted,#7a8fac);margin:0;">Yes. The Jan–Jun 2026 rates are 72.5&#162; for business and 20.5&#162; for medical/eligible moving. For miles on or after July 1, 2026, those rates increase to 76&#162; and 23.5&#162;. Charity remains 14&#162; for both periods.</p></div>
 <div style="margin-bottom:14px;"><div style="font-weight:700;color:var(--white,#fff);margin-bottom:4px;">Can a W-2 employee deduct business mileage?</div><p style="color:var(--muted,#7a8fac);margin:0;">Generally no. The deduction for unreimbursed employee business expenses, including mileage, is suspended for most employees through the TCJA and now permanently under OBBBA. Limited exceptions exist (for example, certain reservists, qualified performing artists, and fee-basis government officials). The better route for employees is an employer accountable-plan reimbursement, which is tax-free.</p></div>
 <div style="margin-bottom:14px;"><div style="font-weight:700;color:var(--white,#fff);margin-bottom:4px;">Do I have to keep a mileage log?</div><p style="color:var(--muted,#7a8fac);margin:0;">Yes. The IRS requires a contemporaneous record showing the date, destination, business purpose, and miles for each trip. A mileage app or a written log satisfies this; reconstructed or estimated logs are routinely disallowed on audit.</p></div>
 </section>
@@ -400,25 +404,75 @@ footer{border-top:1px solid var(--border);padding:20px 48px;display:flex;justify
 </footer>
 
 <script>
-const RATES = { biz: 0.70, med: 0.21, char: 0.14, mil: 0.21 };
-function fmt(n){ return '$' + n.toLocaleString('en-US',{minimumFractionDigits:2,maximumFractionDigits:2}); }
-function mi(n){ return n.toLocaleString() + ' mi'; }
+const RATE_PERIODS = {
+  "2025": {
+    label: "2025 — Full Year",
+    title: "2025 IRS Standard Mileage Rates",
+    subtitle: "Rates effective January 1–December 31, 2025",
+    badge: "2025 Rates",
+    biz: 0.70, med: 0.21, char: 0.14, mil: 0.21
+  },
+  "2026h1": {
+    label: "2026 — Jan 1 to Jun 30",
+    title: "2026 IRS Standard Mileage Rates",
+    subtitle: "Rates for January 1–June 30, 2026",
+    badge: "2026 Jan–Jun Rates",
+    biz: 0.725, med: 0.205, char: 0.14, mil: 0.205
+  },
+  "2026h2": {
+    label: "2026 — Jul 1 to Dec 31",
+    title: "2026 IRS Standard Mileage Rates",
+    subtitle: "Rates for July 1–December 31, 2026",
+    badge: "2026 Jul–Dec Rates",
+    biz: 0.76, med: 0.235, char: 0.14, mil: 0.235
+  }
+};
+
+function getRates(){
+  return RATE_PERIODS[document.getElementById('ratePeriod')?.value || '2026h2'];
+}
+
+function cents(rate){
+  const value = rate * 100;
+  return value.toFixed(Number.isInteger(value) ? 0 : 1) + '¢/mi';
+}
+
+function fmt(n){
+  return '$' + n.toLocaleString('en-US',{minimumFractionDigits:2,maximumFractionDigits:2});
+}
+
+function mi(n){
+  return n.toLocaleString() + ' mi';
+}
+
+function updateRatePeriod(){
+  const rates = getRates();
+  document.getElementById('rateTitle').textContent = rates.title;
+  document.getElementById('ratePeriodSub').textContent = rates.subtitle;
+  document.getElementById('rateBadge').textContent = rates.badge;
+  document.getElementById('rateBiz').textContent = cents(rates.biz);
+  document.getElementById('rateMed').textContent = cents(rates.med);
+  document.getElementById('rateChar').textContent = cents(rates.char);
+  document.getElementById('rateMove').textContent = cents(rates.mil);
+  calc();
+}
 
 function calc() {
-  const biz  = parseFloat(document.getElementById('bizMiles').value)  || 0;
-  const med  = parseFloat(document.getElementById('medMiles').value)  || 0;
-  const ch   = parseFloat(document.getElementById('charMiles').value) || 0;
-  const mil  = parseFloat(document.getElementById('milMiles').value)  || 0;
+  const rates = getRates();
+  const biz = parseFloat(document.getElementById('bizMiles').value) || 0;
+  const med = parseFloat(document.getElementById('medMiles').value) || 0;
+  const ch = parseFloat(document.getElementById('charMiles').value) || 0;
+  const mil = parseFloat(document.getElementById('milMiles').value) || 0;
 
-  const bizD  = biz  * RATES.biz;
-  const medD  = med  * RATES.med;
-  const charD = ch   * RATES.char;
-  const milD  = mil  * RATES.mil;
+  const bizD = biz * rates.biz;
+  const medD = med * rates.med;
+  const charD = ch * rates.char;
+  const milD = mil * rates.mil;
   const total = bizD + medD + charD + milD;
   const totalMiles = biz + med + ch + mil;
 
   document.getElementById('r_total').textContent = fmt(total);
-  document.getElementById('r_totalMiles').textContent = mi(totalMiles) + ' total';
+  document.getElementById('r_totalMiles').textContent = mi(totalMiles) + ' total · ' + rates.label;
   document.getElementById('r_biz').textContent = fmt(bizD);
   document.getElementById('bk_total').textContent = fmt(total);
 
@@ -429,20 +483,20 @@ function calc() {
       document.getElementById(valEl).textContent = fmt(deduction);
     }
   };
-  showRow('row_biz','bk_bizMi','bk_bizVal', biz,  bizD);
-  showRow('row_med','bk_medMi','bk_medVal', med,  medD);
+
+  showRow('row_biz','bk_bizMi','bk_bizVal', biz, bizD);
+  showRow('row_med','bk_medMi','bk_medVal', med, medD);
   showRow('row_char','bk_charMi','bk_charVal', ch, charD);
-  showRow('row_mil','bk_milMi','bk_milVal', mil,  milD);
+  showRow('row_mil','bk_milMi','bk_milVal', mil, milD);
 
-  document.getElementById('fmt_biz').textContent  = bizD  > 0 ? fmt(bizD)  : '—';
-  document.getElementById('fmt_med').textContent  = medD  > 0 ? fmt(medD)  : '—';
+  document.getElementById('fmt_biz').textContent = bizD > 0 ? fmt(bizD) : '—';
+  document.getElementById('fmt_med').textContent = medD > 0 ? fmt(medD) : '—';
   document.getElementById('fmt_char').textContent = charD > 0 ? fmt(charD) : '—';
-  document.getElementById('fmt_mil').textContent  = milD  > 0 ? fmt(milD)  : '—';
-
+  document.getElementById('fmt_mil').textContent = milD > 0 ? fmt(milD) : '—';
   document.getElementById('resultsPanel').classList.add('show');
 }
 
-calc();
+updateRatePeriod();
 </script>
 <script>
 (function(){
