@@ -79,14 +79,18 @@ for (const file of htmlFiles) {
     if (!hasMain) add(file,'warning','missing-main','Indexable page has no <main> or role="main" landmark.');
   }
 
-  const ids = [...html.matchAll(/\bid=["']([^"']+)["']/gi)].map(m => m[1]);
+  const htmlForDomChecks = html
+    .replace(/<script\b[^>]*>[\s\S]*?<\/script>/gi, '')
+    .replace(/<style\b[^>]*>[\s\S]*?<\/style>/gi, '');
+
+  const ids = [...htmlForDomChecks.matchAll(/\bid=["']([^"']+)["']/gi)].map(m => m[1]);
   const seen = new Set();
   for (const id of ids) {
     if (seen.has(id)) add(file,'error','duplicate-id',`Duplicate id="${id}".`);
     seen.add(id);
   }
 
-  const anchors = [...html.matchAll(/<a\b[^>]*>/gi)].map(m => m[0]);
+  const anchors = [...htmlForDomChecks.matchAll(/<a\b[^>]*>/gi)].map(m => m[0]);
   for (const tag of anchors) {
     if (attr(tag,'target').toLowerCase() !== '_blank') continue;
     const rel = attr(tag,'rel').toLowerCase().split(/\s+/).filter(Boolean);
@@ -99,7 +103,7 @@ for (const file of htmlFiles) {
     add(file,'warning','native-dialog','Uses browser alert()/prompt() instead of inline UI.');
   }
 
-  const images = [...html.matchAll(/<img\b[^>]*>/gi)].map(m => m[0]);
+  const images = [...htmlForDomChecks.matchAll(/<img\b[^>]*>/gi)].map(m => m[0]);
   for (const tag of images) {
     if (!/\balt\s*=/.test(tag)) add(file,'warning','missing-img-alt','Image tag is missing alt attribute.');
   }
