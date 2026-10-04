@@ -160,12 +160,7 @@ for (const file of htmlFiles) {
     }
   }
   for (const name of inlineHandlerNames) {
-    const escaped = name.replace(/[.*+?^$(){}|[\]\\]/g, '\\  const iframes = [...htmlForDomChecks.matchAll(/<iframe\b[^>]*>/gi)].map(m => m[0]);
-  for (const tag of iframes) {
-    if (!attr(tag,'title').trim()) add(file,'warning','missing-iframe-title','Iframe is missing a descriptive title attribute.');
-  }
-
-  pages.push({');
+    const escaped = name.replace(/[.*+?^$(){}|[\]\\]/g, '\\$&');
     const definitions = [
       new RegExp('\\bfunction\\s+' + escaped + '\\s*\\('),
       new RegExp('\\b(?:const|let|var)\\s+' + escaped + '\\s*='),
