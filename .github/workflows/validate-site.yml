@@ -297,8 +297,9 @@ jobs:
           node <<'NODE'
           const fs = require('fs');
           const html = fs.readFileSync('property-tax-search.html', 'utf8');
+          const data = fs.readFileSync('assets/js/property-tax-data.js', 'utf8');
 
-          const stateDefs = [...html.matchAll(/\{ code:"([A-Z]{2})", name:"([^"]+)" \}/g)];
+          const stateDefs = [...data.matchAll(/\{ code:"([A-Z]{2})", name:"([^"]+)" \}/g)];
           const stateCodes = stateDefs.map(m => m[1]);
           const uniqueStates = new Set(stateCodes);
           const failures = [];
@@ -307,12 +308,19 @@ jobs:
             failures.push(`Expected 51 unique state/DC entries; found ${stateCodes.length} rows / ${uniqueStates.size} unique.`);
           }
 
-          const start = html.indexOf('const COUNTY_PORTALS = {');
-          const end = html.indexOf('\n};', start);
+          if (!html.includes('src="/assets/js/property-tax-data.js"')) {
+            failures.push('property-tax-search.html must load the shared property-tax data file.');
+          }
+          if (html.includes('const COUNTY_PORTALS = {')) {
+            failures.push('property-tax-search.html must not contain a second inline COUNTY_PORTALS copy.');
+          }
+
+          const start = data.indexOf('const COUNTY_PORTALS = {');
+          const end = data.indexOf('\n};', start);
           if (start < 0 || end < 0) {
             failures.push('Could not locate COUNTY_PORTALS data.');
           } else {
-            const block = html.slice(start, end + 3);
+            const block = data.slice(start, end + 3);
             const stateBlocks = [...block.matchAll(/\n\s{2}([A-Z]{2}):\s*\[([\s\S]*?)\n\s{2}\](?:,|\n)/g)];
             if (stateBlocks.length !== 51) failures.push(`Expected 51 COUNTY_PORTALS blocks; found ${stateBlocks.length}.`);
 
@@ -353,16 +361,25 @@ jobs:
             if (uniqueDirect.size < 290) failures.push(`Expected at least 290 unique direct HTTPS destinations; found ${uniqueDirect.size}.`);
           }
 
-          const requiredMarkers = [
+          const dataMarkers = [
             'function getJurisdictionLabel',
             'function getJurisdictionNoun',
             'DIRECT_PORTAL_COUNT',
             'UNIQUE_DIRECT_PORTAL_COUNT',
-            'ZIP matches are approximate',
-            'Expected Search Options'
+            'window.PROPERTY_TAX_DATA'
           ];
-          for (const marker of requiredMarkers) {
-            if (!html.includes(marker)) failures.push(`Missing property-tax safety marker: ${marker}`);
+          for (const marker of dataMarkers) {
+            if (!data.includes(marker)) failures.push(`Missing property-tax data marker: ${marker}`);
+          }
+
+          const htmlMarkers = [
+            'ZIP matches are approximate',
+            'Expected Search Options',
+            'aria-autocomplete="list"',
+            'aria-activedescendant'
+          ];
+          for (const marker of htmlMarkers) {
+            if (!html.includes(marker)) failures.push(`Missing property-tax UI safety marker: ${marker}`);
           }
 
           if (failures.length) {
