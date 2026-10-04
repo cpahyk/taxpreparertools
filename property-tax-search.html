@@ -982,6 +982,15 @@ footer { border-top:1px solid var(--border); padding:36px 48px; display:flex; al
       var label = normalizeAreaFilter(DATA.getJurisdictionLabel(currentState.code, item.name));
       return name.indexOf(q) >= 0 || label.indexOf(q) >= 0;
     }) : counties;
+
+    if (q) {
+      countyCountEl.textContent = filtered.length
+        ? filtered.length + (filtered.length === 1 ? ' listed match' : ' listed matches')
+        : 'No listed match';
+    } else {
+      countyCountEl.textContent = counties.length + ' areas listed';
+    }
+
     renderCountyList(filtered, countyInput.value);
     countyList.classList.add('show');
     countyInput.setAttribute('aria-expanded','true');
@@ -1059,7 +1068,7 @@ footer { border-top:1px solid var(--border); padding:36px 48px; display:flex; al
       return normalizeAreaFilter(item.name) === queryNorm
         || normalizeAreaFilter(DATA.getJurisdictionLabel(currentState.code, item.name)) === queryNorm;
     });
-    var showInlineFallback = queryNorm.length >= 3 && !exactListed;
+    var showInlineFallback = queryNorm.length >= 3 && !exactListed && counties.length === 0;
 
     if (!counties.length && !showInlineFallback) {
       var empty = document.createElement('div');
