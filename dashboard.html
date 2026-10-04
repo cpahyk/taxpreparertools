@@ -409,26 +409,9 @@
             <span class="widget-title">Upcoming Deadlines</span>
             <a href="deadlines.html" class="widget-action">Full calendar →</a>
           </div>
-          <div class="widget-body">
-            <div class="dl-item">
-              <div class="dl-date"><div class="dl-d">15</div><div class="dl-m">Jun</div></div>
-              <div><div class="dl-name">Q2 Estimated Tax Payment</div><div class="dl-who">Self-employed, high-income</div></div>
-              <span class="dl-badge db-upcoming">Annual</span>
-            </div>
-            <div class="dl-item">
-              <div class="dl-date"><div class="dl-d">15</div><div class="dl-m">Sep</div></div>
-              <div><div class="dl-name">Q3 Estimated Tax Payment</div><div class="dl-who">Self-employed, high-income</div></div>
-              <span class="dl-badge db-upcoming">Annual</span>
-            </div>
-            <div class="dl-item">
-              <div class="dl-date"><div class="dl-d">15</div><div class="dl-m">Sep</div></div>
-              <div><div class="dl-name">Extended S-Corp Return</div><div class="dl-who">Form 1120-S extended filers</div></div>
-              <span class="dl-badge db-upcoming">Annual</span>
-            </div>
-            <div class="dl-item">
-              <div class="dl-date"><div class="dl-d">15</div><div class="dl-m">Oct</div></div>
-              <div><div class="dl-name">Extended 1040 Deadline</div><div class="dl-who">Individuals with extension</div></div>
-              <span class="dl-badge db-upcoming">Annual</span>
+          <div class="widget-body" id="dashboardDeadlines" aria-live="polite">
+            <div class="empty-state">
+              <div class="empty-state-copy">Loading upcoming federal deadlines…</div>
             </div>
           </div>
         </div>
@@ -530,6 +513,45 @@ if (dateLabel) {
     weekday:'long', year:'numeric', month:'long', day:'numeric'
   }) + ' · Tax Year ' + (now.getFullYear() - 1);
 }
+
+const DASHBOARD_DEADLINES = [
+  { date:'2026-10-15', name:'Extended Individual & C-Corp Returns', who:'Forms 1040 / 1120 and extended FBAR' },
+  { date:'2026-11-02', name:'Form 941 — Q3 Payroll Return', who:'Employers filing quarterly payroll returns' },
+  { date:'2027-01-15', name:'Q4 2026 Estimated Tax Payment', who:'Individuals making estimated payments' },
+  { date:'2027-02-01', name:'Form 941 — Q4 2026 Payroll Return', who:'Employers filing quarterly payroll returns' }
+];
+
+function renderDashboardDeadlines() {
+  const container = document.getElementById('dashboardDeadlines');
+  if (!container) return;
+
+  const now = new Date();
+  const today = new Date(now.getFullYear(), now.getMonth(), now.getDate());
+  const upcoming = DASHBOARD_DEADLINES
+    .map(item => ({ ...item, dateObj:new Date(item.date + 'T12:00:00') }))
+    .filter(item => item.dateObj >= today)
+    .sort((a,b) => a.dateObj - b.dateObj)
+    .slice(0, 4);
+
+  if (!upcoming.length) {
+    container.innerHTML = '<div class="empty-state"><div class="empty-state-icon">📅</div><div class="empty-state-title">Open the current deadline calendar</div><div class="empty-state-copy">The dashboard’s loaded deadline window is complete. Use the full calendar for the latest federal filing and payment dates.</div><a class="empty-state-link" href="deadlines.html">View deadline calendar →</a></div>';
+    return;
+  }
+
+  container.innerHTML = upcoming.map(item => {
+    const days = Math.ceil((item.dateObj - today) / 86400000);
+    const badge = days === 0 ? 'Today' : days === 1 ? 'Tomorrow' : days + 'd';
+    const urgency = days <= 14 ? 'db-urgent' : days <= 45 ? 'db-soon' : 'db-upcoming';
+    const day = item.dateObj.getDate();
+    const month = item.dateObj.toLocaleDateString(undefined, { month:'short' });
+    return '<div class="dl-item">' +
+      '<div class="dl-date"><div class="dl-d">' + day + '</div><div class="dl-m">' + month + '</div></div>' +
+      '<div><div class="dl-name">' + item.name + '</div><div class="dl-who">' + item.who + '</div></div>' +
+      '<span class="dl-badge ' + urgency + '">' + badge + '</span></div>';
+  }).join('');
+}
+
+renderDashboardDeadlines();
 </script>
 
 <script>
