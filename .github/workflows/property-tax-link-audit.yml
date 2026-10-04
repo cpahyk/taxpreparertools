@@ -20,6 +20,10 @@ on:
 permissions:
   contents: read
 
+concurrency:
+  group: property-tax-link-audit-${{ github.ref }}
+  cancel-in-progress: true
+
 jobs:
   audit:
     name: Check direct assessor and tax portal links
