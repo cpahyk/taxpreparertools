@@ -1035,6 +1035,10 @@ footer { border-top:1px solid var(--border); padding:36px 48px; display:flex; al
       items[activeCountyOption].click();
       activeCountyOption = -1;
       countyInput.removeAttribute('aria-activedescendant');
+    } else if (e.key === 'Enter' && activeCountyOption < 0 && items.length === 1) {
+      e.preventDefault();
+      items[0].click();
+      countyInput.removeAttribute('aria-activedescendant');
     } else if (e.key === 'Escape') {
       countyList.classList.remove('show');
       countyInput.setAttribute('aria-expanded','false');
