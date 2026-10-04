@@ -507,6 +507,8 @@ jobs:
             'matchSource: source || "manual"',
             'id = \'countyFallbackOption\'',
             'Unlisted area',
+            'Choose a state first',
+            'Type an unlisted county, city, parish, borough, or town',
             "items.length === 1",
             'counties.length === 0',
             'listed match',
@@ -538,6 +540,10 @@ jobs:
           ];
           for (const legacyPattern of legacyLightThemePatterns) {
             if (html.includes(legacyPattern)) failures.push(`Legacy dark-theme property-tax styling returned: ${legacyPattern}`);
+          }
+
+          if (/\balert\s*\(/.test(html) || /\bprompt\s*\(/.test(html)) {
+            failures.push('Property-tax page must use inline guidance instead of native alert/prompt dialogs.');
           }
 
           if (failures.length) {
