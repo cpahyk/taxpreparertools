@@ -100,6 +100,15 @@ for (const file of htmlFiles) {
     }
   }
 
+  for (const tag of anchors) {
+    const href = attr(tag,'href').trim().toLowerCase();
+    if (href !== '#' && href !== 'javascript:void(0)' && href !== 'javascript:void(0);') continue;
+    const hasHandler = /\bonclick\s*=/.test(tag) || !!attr(tag,'id').trim();
+    if (!hasHandler) {
+      add(file,'warning','dead-placeholder-link','Placeholder link has no id or inline handler and may be non-functional.');
+    }
+  }
+
   if (/\balert\s*\(/.test(html) || /\bprompt\s*\(/.test(html)) {
     add(file,'error','native-dialog','Uses browser alert()/prompt() instead of inline UI.');
   }
