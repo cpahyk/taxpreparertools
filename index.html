@@ -1441,15 +1441,17 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
         <input type="number" id="extraDeductions" placeholder="e.g. 5000"  aria-label="Additional Deductions ($)"/>
       </div>
       <button class="calc-btn" onclick="calculateTax()">Calculate Tax →</button>
-      (m)=>{
-  if(m.includes("Open full 2025–2026 estimator")) return m;
-  return m.replace(/<\/div>\s*<\/div>\s*<\/section>$/,
-`</div>
+      <div class="calc-result" id="calcResult">
+        <div class="calc-result-row"><span>Standard Deduction</span><span id="stdDed">—</span></div>
+        <div class="calc-result-row"><span>Taxable Income</span><span id="taxableInc">—</span></div>
+        <div class="calc-result-row"><span>Marginal Rate</span><span id="margRate">—</span></div>
+        <div class="calc-result-row"><span>Effective Rate</span><span id="effRate">—</span></div>
+        <div class="calc-result-row total"><span>Est. Federal Tax</span><span id="totalTax">—</span></div>
+      </div>
       <a href="federal-tax-estimator.html" class="btn-outline" style="display:inline-flex;margin-top:16px;width:100%;justify-content:center;">Open full 2025–2026 estimator →</a>
     </div>
   </div>
-</section>`);
-}
+</section>
 
 <!-- TAX DEADLINES -->
 <section class="deadlines-section" id="deadlines">
