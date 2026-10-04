@@ -1685,6 +1685,7 @@ function calculateTax() {
   const extra = parseFloat(document.getElementById('extraDeductions').value) || 0;
   const status = document.getElementById('filingStatus').value;
   const year = Number(document.getElementById('quickTaxYear')?.value || 2026);
+
   const taxData = {
     2025: {
       std: { single:15750, mfj:31500, mfs:15750, hoh:23625 },
@@ -1705,11 +1706,15 @@ function calculateTax() {
       }
     }
   };
+
   const data = taxData[year] || taxData[2026];
   const stdDed = data.std[status];
   const taxable = Math.max(0, gross - stdDed - extra);
 
-  let tax = 0, prev = 0, marginalRate = .10;
+  let tax = 0;
+  let prev = 0;
+  let marginalRate = .10;
+
   for (const [upper, rate] of data.brackets[status]) {
     if (taxable <= prev) break;
     const chunk = Math.min(taxable, upper) - prev;
@@ -1719,7 +1724,14 @@ function calculateTax() {
     if (taxable <= upper) break;
   }
 
-  const fmt = n => '
+  const fmt = n => '$' + Math.round(n).toLocaleString();
+  document.getElementById('stdDed').textContent = fmt(stdDed);
+  document.getElementById('taxableInc').textContent = fmt(taxable);
+  document.getElementById('margRate').textContent = (marginalRate * 100).toFixed(0) + '%';
+  document.getElementById('effRate').textContent = gross > 0 ? (tax / gross * 100).toFixed(1) + '%' : '0%';
+  document.getElementById('totalTax').textContent = fmt(tax);
+  document.getElementById('calcResult').classList.add('visible');
+}
 </script>
 <script>
 function refreshDeadlineBadges() {
@@ -1773,46 +1785,7 @@ refreshDeadlineBadges();
   document.getElementById('calcResult').classList.add('visible');
 }
 </script>
-<script>
-function refreshDeadlineBadges() {
-  const now = new Date();
-  now.setHours(0,0,0,0);
-  document.querySelectorAll('.deadline-item[data-deadline]').forEach(item => {
-    const due = new Date(item.dataset.deadline + 'T23:59:59');
-    const badge = item.querySelector('.deadline-badge');
-    if (!badge || Number.isNaN(due.getTime())) return;
-    const days = Math.ceil((due - now) / 86400000);
-    badge.classList.remove('upcoming','later');
-    if (days < 0) {
-      badge.textContent = 'Past';
-    } else if (days <= 30) {
-      badge.textContent = days === 0 ? 'Today' : 'Upcoming';
-      badge.classList.add('upcoming');
-    } else {
-      badge.textContent = 'Later';
-      badge.classList.add('later');
-    }
-  });
-}
-refreshDeadlineBadges();
-</script>
-<script>
-(function(){
-  var btn = document.getElementById('navHamburger');
-  var ul  = document.querySelector('nav ul, nav .nav-links');
-  if(!btn || !ul) return;
-  btn.addEventListener('click', function(){
-    btn.classList.toggle('open');
-    ul.classList.toggle('mobile-open');
-  });
-  // Close on outside click
-  document.addEventListener('click', function(e){
-    if(!e.target.closest('nav')){
-      btn.classList.remove('open');
-      ul && ul.classList.remove('mobile-open');
-    }
-  });
-})();
-</script>
+
+
 </body>
 </html>
