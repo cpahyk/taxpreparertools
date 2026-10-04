@@ -383,6 +383,10 @@ jobs:
             failures.push('St. Louis City/County regression fixtures are missing.');
           }
 
+          if (!data.includes('{ name:"Polk",        portal:"https://www.polkflpa.gov/CamaSearch.aspx"') || !data.includes('notes:"Lakeland / Winter Haven."')) {
+            failures.push('Florida Polk County / Lakeland ZIP fallback fixture is missing.');
+          }
+
           const htmlMarkers = [
             'ZIP matches are approximate',
             'Expected Search Options',
@@ -391,7 +395,12 @@ jobs:
             "classList.toggle('kbd-focus'",
             'function normalizeJurisdiction',
             'baseMatches.length===1',
-            'findCountyItem(out.county, out.abbr)'
+            'findCountyItem(out.county, out.abbr)',
+            'function lookupCountyFromCoordinates',
+            '/api/census/block/find?latitude=',
+            'function lookupCountyViaCensusJsonp',
+            'format=jsonp',
+            'function inferCountyFromPlace'
           ];
           for (const marker of htmlMarkers) {
             if (!html.includes(marker)) failures.push(`Missing property-tax UI safety marker: ${marker}`);
