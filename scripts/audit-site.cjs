@@ -108,6 +108,44 @@ for (const file of htmlFiles) {
     if (!/\balt\s*=/.test(tag)) add(file,'warning','missing-img-alt','Image tag is missing alt attribute.');
   }
 
+  const labelTargets = new Set(
+    [...htmlForDomChecks.matchAll(/<label\b[^>]*\bfor=["']([^"']+)["'][^>]*>/gi)].map(m => m[1])
+  );
+  const controls = [...htmlForDomChecks.matchAll(/<(input|select|textarea)\b[^>]*>/gi)];
+  for (const match of controls) {
+    const tag = match[0];
+    const tagName = match[1].toLowerCase();
+    const type = tagName === 'input' ? attr(tag,'type').toLowerCase() : '';
+    if (tagName === 'input' && ['hidden','submit','button','reset','image'].includes(type)) continue;
+
+    const id = attr(tag,'id');
+    const hasExplicitName =
+      !!attr(tag,'aria-label').trim() ||
+      !!attr(tag,'aria-labelledby').trim() ||
+      !!attr(tag,'title').trim() ||
+      (!!id && labelTargets.has(id));
+
+    const before = htmlForDomChecks.slice(0, match.index);
+    const nestedInLabel = before.lastIndexOf('<label') > before.lastIndexOf('</label>');
+
+    if (!hasExplicitName && !nestedInLabel) {
+      add(file,'warning','unnamed-form-control',`${tagName} control is missing an associated label or accessible name.`);
+    }
+  }
+
+  const buttons = [...htmlForDomChecks.matchAll(/<button\b([^>]*)>([\s\S]*?)<\/button>/gi)];
+  for (const match of buttons) {
+    const tag = '<button' + match[1] + '>';
+    const text = match[2].replace(/<[^>]+>/g,' ').replace(/&nbsp;/gi,' ').replace(/\s+/g,' ').trim();
+    const hasName = text || attr(tag,'aria-label').trim() || attr(tag,'aria-labelledby').trim() || attr(tag,'title').trim();
+    if (!hasName) add(file,'warning','unnamed-button','Button is missing visible text or an accessible name.');
+  }
+
+  const iframes = [...htmlForDomChecks.matchAll(/<iframe\b[^>]*>/gi)].map(m => m[0]);
+  for (const tag of iframes) {
+    if (!attr(tag,'title').trim()) add(file,'warning','missing-iframe-title','Iframe is missing a descriptive title attribute.');
+  }
+
   pages.push({
     file,
     inSitemap,
