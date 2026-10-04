@@ -157,6 +157,34 @@ jobs:
           console.log(`Verified theme coverage for ${urls.length} sitemap URLs.`);
           NODE
 
+      - name: Verify all user-facing HTML uses the professional theme
+        shell: bash
+        run: |
+          node <<'NODE'
+          const fs = require('fs');
+          const path = require('path');
+
+          function walk(dir) {
+            return fs.readdirSync(dir, { withFileTypes: true }).flatMap(entry => {
+              if (entry.name === '.git' || entry.name === '.wrangler' || entry.name === 'node_modules') return [];
+              const full = path.join(dir, entry.name);
+              return entry.isDirectory() ? walk(full) : [full];
+            });
+          }
+
+          const excluded = new Set(['fo-verify.html']);
+          const htmlFiles = walk('.').filter(file => file.endsWith('.html') && !excluded.has(file));
+          const missing = htmlFiles.filter(file => !fs.readFileSync(file, 'utf8').includes('professional-light.css'));
+
+          if (missing.length) {
+            console.error('User-facing HTML files missing professional-light.css:');
+            missing.forEach(f => console.error(' - ' + f));
+            process.exit(1);
+          }
+
+          console.log(`Verified professional theme on ${htmlFiles.length} user-facing HTML files.`);
+          NODE
+
       - name: Check internal HTML links
         shell: bash
         run: |
