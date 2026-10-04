@@ -417,7 +417,9 @@ jobs:
             'https://www.rva.gov/finance/real-estate-assessor',
             'https://www.racinecounty.com/government/treasurer/property-tax-information',
             'https://www.laramiecountywy.gov/government/elected-officials/assessor/',
-            'https://www.natronacounty-wy.gov/176/Assessor'
+            'https://www.natronacounty-wy.gov/176/Assessor',
+            'https://mylandinfo.sbcounty.gov/',
+            'https://www.westchestergov.com/property-tax'
           ];
           for (const staleUrl of knownStalePropertyTaxUrls) {
             if (data.includes(staleUrl)) failures.push(`Known stale property-tax URL returned: ${staleUrl}`);
