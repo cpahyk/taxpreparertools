@@ -763,7 +763,7 @@ footer { border-top:1px solid var(--border); padding:36px 48px; display:flex; al
 </footer>
 
 <!-- PROPERTY TAX DIRECTORY DATA — single source of truth -->
-<script src="/assets/js/property-tax-data.js?v=20261004-2"></script>
+<script src="/assets/js/property-tax-data.js?v=20261004-3"></script>
 
 
 <!-- LOGIC -->
@@ -1263,27 +1263,45 @@ footer { border-top:1px solid var(--border); padding:36px 48px; display:flex; al
     msg.textContent=t;
     msg.style.color = kind==='err' ? '#e8a0a0' : (kind==='ok' ? '#9fd5a0' : 'var(--muted,#8a9bb5)');
   }
-  function stripSuffix(n){
-    return (n||'').replace(/\s+(City and Borough|Census Area|Municipality|Parish|Borough|County|City)$/i,'').trim();
+  var data=window.PROPERTY_TAX_DATA;
+
+  function normalizeJurisdiction(n){
+    return String(n||'')
+      .toLowerCase()
+      .replace(/[.\u2019']/g,'')
+      .replace(/[-_/]+/g,' ')
+      .replace(/[^a-z0-9\s&]/g,' ')
+      .replace(/\s+/g,' ')
+      .trim();
+  }
+  function jurisdictionBase(n){
+    return normalizeJurisdiction(
+      String(n||'').replace(/\s+(City and Borough|Census Area|Municipality|Parish|Borough|County|City)$/i,'')
+    );
   }
   function setState(abbr){
     stateSelect.value=abbr;
     stateSelect.dispatchEvent(new Event('change',{bubbles:true}));
   }
-  function findCountyItem(name){
-    if(!countyList) return null;
-    var items=countyList.querySelectorAll('.county-item'), want=name.toLowerCase(), hit=null;
-    items.forEach(function(it){
-      var dn=(it.dataset&&it.dataset.name)?it.dataset.name.toLowerCase():'';
-      if(dn===want) hit=it;
+  function findCountyItem(name, stateCode){
+    if(!countyList || !name) return null;
+    var items=Array.prototype.slice.call(countyList.querySelectorAll('.county-item'));
+    var want=normalizeJurisdiction(name);
+
+    var exact=items.filter(function(it){
+      var stored=(it.dataset&&it.dataset.name)?it.dataset.name:'';
+      var label=data&&data.getJurisdictionLabel ? data.getJurisdictionLabel(stateCode,stored) : stored;
+      return normalizeJurisdiction(stored)===want || normalizeJurisdiction(label)===want;
     });
-    if(!hit){
-      items.forEach(function(it){
-        var dn=(it.dataset&&it.dataset.name)?it.dataset.name.toLowerCase():'';
-        if(!hit && dn && (dn.indexOf(want)===0 || want.indexOf(dn)===0)) hit=it;
-      });
-    }
-    return hit;
+    if(exact.length===1) return exact[0];
+
+    var wantBase=jurisdictionBase(name);
+    var baseMatches=items.filter(function(it){
+      var stored=(it.dataset&&it.dataset.name)?it.dataset.name:'';
+      var label=data&&data.getJurisdictionLabel ? data.getJurisdictionLabel(stateCode,stored) : stored;
+      return jurisdictionBase(stored)===wantBase || jurisdictionBase(label)===wantBase;
+    });
+    return baseMatches.length===1 ? baseMatches[0] : null;
   }
 
   function resolve(){
@@ -1302,7 +1320,7 @@ footer { border-top:1px solid var(--border); padding:36px 48px; display:flex; al
           .then(function(r){ return r.ok ? r.json() : {}; })
           .then(function(a){
             var res=a&&a.results&&a.results[0];
-            return { abbr:abbr, county: res ? stripSuffix(res.county_name) : '' };
+            return { abbr:abbr, county: res && res.county_name ? String(res.county_name).trim() : '' };
           });
       })
       .then(function(out){
@@ -1311,17 +1329,16 @@ footer { border-top:1px solid var(--border); padding:36px 48px; display:flex; al
         if(out.county){
           var hit = out.abbr === 'DC'
             ? (countyList && countyList.querySelector('.county-item'))
-            : findCountyItem(out.county);
-          var data = window.PROPERTY_TAX_DATA;
+            : findCountyItem(out.county, out.abbr);
           var matchedName = hit && hit.dataset && hit.dataset.name ? hit.dataset.name : out.county;
           var label = data && data.getJurisdictionLabel ? data.getJurisdictionLabel(out.abbr, matchedName) : matchedName;
           if(hit){
             hit.click();
             try{ document.getElementById('step3').scrollIntoView({behavior:'smooth',block:'nearest'}); }catch(e){}
-            setMsg('Likely match: '+label+', '+out.abbr+' — verify the jurisdiction if the ZIP is near a boundary. ✓','ok');
+            setMsg('Matched jurisdiction: '+label+', '+out.abbr+' — ZIP-only lookup can be approximate near boundaries, so verify the local office before relying on it. ✓','ok');
           } else {
             if(countyInput){ countyInput.value=out.county; countyInput.dispatchEvent(new Event('input',{bubbles:true})); }
-            setMsg('State set to '+out.abbr+'. No curated direct link for '+label+' yet — use the listed areas or fallback search below.','');
+            setMsg('State set to '+out.abbr+', but the detected jurisdiction ('+out.county+') did not map uniquely to a listed area. Please choose the jurisdiction manually below.','');
           }
         } else {
           setMsg('State set to '+out.abbr+'. Pick your county from the list below.','');
