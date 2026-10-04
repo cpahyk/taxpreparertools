@@ -516,16 +516,16 @@ footer { border-top:1px solid var(--border); padding:36px 48px; display:flex; al
     <!-- LEFT: Search Panel -->
     <div class="search-panel">
       <div class="panel-title">Property Tax Search</div>
-      <p class="panel-sub">Pick a state and listed jurisdiction, then choose the lookup field you expect to use. That field is guidance only—we do not transmit an owner name, street address, or parcel number to the destination.</p>
+      <p class="panel-sub">Pick a state and listed jurisdiction, then choose the lookup field you expect to use. That field is guidance only—we do not transmit an owner name, parcel number, or property-record search value to the destination. The optional ZIP/address shortcut is used only to identify the likely jurisdiction.</p>
 
       <!-- Shortcut: ZIP -> county auto-resolver -->
       <div id="ptZipBox" style="background:rgba(200,168,75,0.06);border:1px solid rgba(200,168,75,0.18);border-radius:12px;padding:16px 18px;margin-bottom:22px;">
-        <div style="font-size:0.72rem;font-family:'DM Mono',monospace;text-transform:uppercase;letter-spacing:0.1em;color:var(--gold,#c8a84b);margin-bottom:8px;">Shortcut &middot; Find likely jurisdiction by ZIP</div>
+        <div style="font-size:0.72rem;font-family:'DM Mono',monospace;text-transform:uppercase;letter-spacing:0.1em;color:var(--gold,#c8a84b);margin-bottom:8px;">Shortcut &middot; Find likely jurisdiction by ZIP or address</div>
         <div style="display:flex;gap:8px;flex-wrap:wrap;align-items:center;">
-          <input id="ptZipInput" type="text" placeholder="ZIP or address containing ZIP (e.g. Atlanta GA 30303)" aria-label="Enter a ZIP code or address containing a ZIP code to find the likely jurisdiction" style="flex:1;min-width:200px;background:var(--navy-mid,#122040);border:1px solid rgba(200,168,75,0.25);border-radius:8px;color:var(--text,#e8edf5);padding:11px 14px;font-size:0.95rem;font-family:inherit;" />
+          <input id="ptZipInput" type="text" placeholder="ZIP or full U.S. street address" aria-label="Enter a ZIP code or full U.S. street address to find the likely jurisdiction" style="flex:1;min-width:200px;background:var(--navy-mid,#122040);border:1px solid rgba(200,168,75,0.25);border-radius:8px;color:var(--text,#e8edf5);padding:11px 14px;font-size:0.95rem;font-family:inherit;" />
           <button id="ptZipBtn" type="button" style="background:var(--gold,#c8a84b);color:#0a1628;border:none;border-radius:8px;padding:11px 20px;font-weight:600;font-size:0.9rem;cursor:pointer;font-family:inherit;">Find jurisdiction &rarr;</button>
         </div>
-        <div id="ptZipMsg" role="status" aria-live="polite" style="font-size:0.82rem;color:var(--muted,#8a9bb5);margin-top:8px;min-height:1.1em;">Enter a 5-digit ZIP (or an address containing one). ZIP matches are approximate near jurisdiction boundaries, so verify the selected local office before relying on it.</div>
+        <div id="ptZipMsg" role="status" aria-live="polite" style="font-size:0.82rem;color:var(--muted,#8a9bb5);margin-top:8px;min-height:1.1em;">Enter a 5-digit ZIP or full U.S. street address. ZIP matches are approximate near jurisdiction boundaries; full addresses use the U.S. Census Geocoder.</div>
       </div>
 
       <!-- Step 1: State -->
@@ -569,7 +569,7 @@ footer { border-top:1px solid var(--border); padding:36px 48px; display:flex; al
           <button class="method-btn"        data-method="parcel"  disabled><span class="method-emoji">🔢</span>By Parcel / PIN</button>
           <button class="method-btn"        data-method="owner"   disabled><span class="method-emoji">👤</span>By Owner Name</button>
         </div>
-        <div class="lookup-privacy">Nothing typed into this directory is sent as a property-record query. Enter the actual lookup value after opening the destination portal.</div>
+        <div class="lookup-privacy">Owner names, parcel numbers, and property-record lookup values are not sent by this directory. The optional ZIP/address shortcut is used only to identify the jurisdiction; enter the actual property lookup after opening the destination portal.</div>
       </div>
     </div>
 
@@ -675,7 +675,7 @@ footer { border-top:1px solid var(--border); padding:36px 48px; display:flex; al
       <div class="why-title">Why we don't pull data ourselves</div>
       <p class="why-prose">Property assessment and tax administration are decentralized, and local offices use many different government and vendor record systems. A single directory therefore needs jurisdiction-specific links and fallbacks.</p>
       <p class="why-prose">We maintain a curated directory of <strong>government pages and locally linked record portals</strong>. TaxPreparerTools does not copy the property-record database into this page; you review records at the destination source.</p>
-      <p class="why-prose"><strong>Privacy note:</strong> property owner, parcel, and address searches happen after you leave this tool. If you use the ZIP shortcut, the ZIP is sent from your browser to Zippopotam and the returned coordinates are sent to the FCC area API to estimate the jurisdiction. You can always select the state and area manually instead.</p>
+      <p class="why-prose"><strong>Privacy note:</strong> owner-name, parcel, and property-record searches happen after you leave this tool. ZIP shortcuts send the ZIP from your browser to Zippopotam and use FCC/Census geography services to estimate the jurisdiction. A full street-address shortcut sends that address directly from your browser to the U.S. Census Geocoder for jurisdiction matching. You can always select the state and area manually instead.</p>
     </div>
     <div class="why-stats">
       <div class="why-stat">
@@ -1382,47 +1382,140 @@ footer { border-top:1px solid var(--border); padding:36px 48px; display:flex; al
     return matches.length===1 ? matches[0].name : '';
   }
 
+  function geocodeAddressViaCensusJsonp(address){
+    return new Promise(function(resolve,reject){
+      var callback='ptCensusAddress_'+Date.now()+'_'+Math.floor(Math.random()*100000);
+      var script=document.createElement('script');
+      var finished=false;
+      var timer=window.setTimeout(function(){ cleanup(); reject(new Error('address-timeout')); },7000);
+      function cleanup(){
+        if(finished) return;
+        finished=true;
+        window.clearTimeout(timer);
+        try{ delete window[callback]; }catch(e){ window[callback]=undefined; }
+        if(script.parentNode) script.parentNode.removeChild(script);
+      }
+      window[callback]=function(payload){
+        var match=payload&&payload.result&&payload.result.addressMatches&&payload.result.addressMatches[0];
+        var components=match&&match.addressComponents;
+        var groups=match&&match.geographies;
+        var counties=groups&&(groups.Counties||groups.counties);
+        var county=counties&&counties[0]&&(counties[0].NAME||counties[0].BASENAME);
+        var abbr=components&&components.state ? String(components.state).trim().toUpperCase() : '';
+        var place=components&&(components.city||components.place) ? String(components.city||components.place).trim() : '';
+        var lat=match&&match.coordinates ? match.coordinates.y : null;
+        var lon=match&&match.coordinates ? match.coordinates.x : null;
+        cleanup();
+
+        if(!match || !abbr){
+          reject(new Error('address-no-match'));
+          return;
+        }
+        if(county){
+          resolve({abbr:abbr,county:String(county).trim(),place:place,source:'address'});
+          return;
+        }
+        if(lat!==null && lon!==null){
+          lookupCountyFromCoordinates(lat,lon).then(function(found){
+            resolve({abbr:abbr,county:found || inferCountyFromPlace(place,abbr),place:place,source:'address'});
+          }).catch(function(){
+            resolve({abbr:abbr,county:inferCountyFromPlace(place,abbr),place:place,source:'address'});
+          });
+          return;
+        }
+        resolve({abbr:abbr,county:inferCountyFromPlace(place,abbr),place:place,source:'address'});
+      };
+      script.onerror=function(){ cleanup(); reject(new Error('address-script')); };
+      script.src='https://geocoding.geo.census.gov/geocoder/geographies/onelineaddress'
+        +'?address='+encodeURIComponent(address)
+        +'&benchmark=Public_AR_Current'
+        +'&vintage=Current_Current'
+        +'&layers=Counties'
+        +'&format=jsonp'
+        +'&callback='+encodeURIComponent(callback);
+      document.head.appendChild(script);
+    });
+  }
+
+  function applyResolvedJurisdiction(out){
+    if(!out || !out.abbr) throw new Error('nostate');
+    setState(out.abbr);
+
+    if(out.county){
+      var hit = out.abbr === 'DC'
+        ? (countyList && countyList.querySelector('.county-item'))
+        : findCountyItem(out.county, out.abbr);
+      var matchedName = hit && hit.dataset && hit.dataset.name ? hit.dataset.name : out.county;
+      var label = data && data.getJurisdictionLabel ? data.getJurisdictionLabel(out.abbr, matchedName) : matchedName;
+
+      if(hit){
+        hit.click();
+        try{ document.getElementById('step3').scrollIntoView({behavior:'smooth',block:'nearest'}); }catch(e){}
+        if(out.source==='address'){
+          setMsg('Matched jurisdiction: '+label+', '+out.abbr+' from the Census address match. Verify the local office before relying on it. ✓','ok');
+        } else {
+          setMsg('Matched jurisdiction: '+label+', '+out.abbr+' — ZIP-only lookup can be approximate near boundaries, so verify the local office before relying on it. ✓','ok');
+        }
+        return;
+      }
+
+      if(countyInput){
+        countyInput.value=out.county;
+        countyInput.dispatchEvent(new Event('input',{bubbles:true}));
+      }
+      setMsg('State set to '+out.abbr+', but the detected jurisdiction ('+out.county+') did not map uniquely to a listed area. Please choose the jurisdiction manually below.','');
+      return;
+    }
+
+    var placeText=out.place ? ' for '+out.place : '';
+    setMsg('State set to '+out.abbr+', but we could not resolve a unique county'+placeText+'. Pick the county from the list below.','');
+  }
+
   function resolve(){
     var raw=(input.value||'').trim();
+    if(!raw){
+      setMsg('Enter a 5-digit ZIP code or full U.S. street address so we can find the jurisdiction.','err');
+      input.focus();
+      return;
+    }
+
     var zips=raw.match(/\b\d{5}(?:-\d{4})?\b/g);
-    if(!zips){ setMsg('Enter a 5-digit ZIP code \u2014 or an address that includes one \u2014 so we can find the county.','err'); input.focus(); return; }
-    var zip=zips[zips.length-1].slice(0,5);
-    setMsg('Locating\u2026'); btn.disabled=true;
-    fetch('https://api.zippopotam.us/us/'+zip)
-      .then(function(r){ if(!r.ok) throw new Error('zip'); return r.json(); })
-      .then(function(z){
-        var p=z.places&&z.places[0];
-        if(!p) throw new Error('noplace');
-        var abbr=p['state abbreviation'], lat=p.latitude, lon=p.longitude, place=p['place name']||'';
-        return lookupCountyFromCoordinates(lat,lon)
-          .then(function(county){
-            return { abbr:abbr, county:county || inferCountyFromPlace(place,abbr), place:place };
-          });
-      })
-      .then(function(out){
-        if(!out.abbr) throw new Error('nostate');
-        setState(out.abbr);
-        if(out.county){
-          var hit = out.abbr === 'DC'
-            ? (countyList && countyList.querySelector('.county-item'))
-            : findCountyItem(out.county, out.abbr);
-          var matchedName = hit && hit.dataset && hit.dataset.name ? hit.dataset.name : out.county;
-          var label = data && data.getJurisdictionLabel ? data.getJurisdictionLabel(out.abbr, matchedName) : matchedName;
-          if(hit){
-            hit.click();
-            try{ document.getElementById('step3').scrollIntoView({behavior:'smooth',block:'nearest'}); }catch(e){}
-            setMsg('Matched jurisdiction: '+label+', '+out.abbr+' — ZIP-only lookup can be approximate near boundaries, so verify the local office before relying on it. ✓','ok');
-          } else {
-            if(countyInput){ countyInput.value=out.county; countyInput.dispatchEvent(new Event('input',{bubbles:true})); }
-            setMsg('State set to '+out.abbr+', but the detected jurisdiction ('+out.county+') did not map uniquely to a listed area. Please choose the jurisdiction manually below.','');
-          }
-        } else {
-          var placeText=out.place ? ' for '+out.place : '';
-          setMsg('State set to '+out.abbr+', but we could not resolve a unique county'+placeText+'. Pick the county from the list below.','');
-        }
-      })
+    setMsg(zips ? 'Locating ZIP…' : 'Matching address with the U.S. Census Geocoder…');
+    btn.disabled=true;
+
+    var task;
+    if(zips){
+      var zip=zips[zips.length-1].slice(0,5);
+      task=fetch('https://api.zippopotam.us/us/'+zip)
+        .then(function(r){ if(!r.ok) throw new Error('zip'); return r.json(); })
+        .then(function(z){
+          var p=z.places&&z.places[0];
+          if(!p) throw new Error('noplace');
+          var abbr=p['state abbreviation'], lat=p.latitude, lon=p.longitude, place=p['place name']||'';
+          return lookupCountyFromCoordinates(lat,lon)
+            .then(function(county){
+              return {abbr:abbr,county:county || inferCountyFromPlace(place,abbr),place:place,source:'zip'};
+            });
+        });
+    } else {
+      if(raw.length<8){
+        setMsg('Enter a complete U.S. street address, including city and state, or use a 5-digit ZIP code.','err');
+        btn.disabled=false;
+        input.focus();
+        return;
+      }
+      task=geocodeAddressViaCensusJsonp(raw);
+    }
+
+    task
+      .then(applyResolvedJurisdiction)
       .catch(function(){
-        setMsg('Couldn\u2019t auto-detect from that ZIP. Please select your state and county manually below.','err');
+        setMsg(
+          zips
+            ? 'Couldn’t auto-detect from that ZIP. Please select your state and county manually below.'
+            : 'Couldn’t match that address. Include the street, city, and state, or use a 5-digit ZIP code.',
+          'err'
+        );
       })
       .then(function(){ btn.disabled=false; });
   }
