@@ -101,6 +101,13 @@ jobs:
           grep -q 'id="countyCount" role="status" aria-live="polite"' /tmp/property-tax.html
           grep -q 'aria-describedby="countyCount"' /tmp/property-tax.html
           grep -q "e.target.closest('#step2')" /tmp/property-tax.html
+          grep -q 'class="pt-zip-box"' /tmp/property-tax.html
+          grep -q 'class="pt-related-card"' /tmp/property-tax.html
+          grep -q 'class="pt-faq-card"' /tmp/property-tax.html
+          grep -q "kind==='err' ? 'var(--red)'" /tmp/property-tax.html
+          grep -q "kind==='ok' ? 'var(--green)'" /tmp/property-tax.html
+          ! grep -q '.big-select option { background-color:#0f1d38' /tmp/property-tax.html
+          ! grep -q 'color:#0a1628' /tmp/property-tax.html
           grep -q 'routeType: "search"' /tmp/property-tax.html
           grep -q 'function normalizeAreaFilter' /tmp/property-tax.html
           grep -q "e.key === 'Home'" /tmp/property-tax.html
