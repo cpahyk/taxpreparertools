@@ -1,17 +1,17 @@
 /* =========================================================================
    property-tax-data.js
    --------------------------------------------------------------------------
-   Master directory of US property tax / assessor portal links.
+   Single source of truth for the US property tax / assessor portal directory.
    - 50 states + DC
-   - 200+ counties with verified direct-portal URLs (top counties by pop.)
-   - For any state/county not in the curated list, the UI falls back to a
-     Google search query, so coverage is effectively 100% of US counties.
+   - 300+ listed jurisdictions, including direct portals and municipal-level search fallbacks
+   - For an unlisted jurisdiction, the UI offers Google and NETR directory
+     fallbacks; users must verify the resulting local office.
 
    Each county entry shape:
      {
        name:        "Harris",                       // display name (no "County" suffix)
        portal:      "https://hcad.org/...",         // primary search URL
-       methods:     ["address","parcel","owner"],   // supported search inputs
+       methods:     ["address","parcel","owner"],   // expected search inputs
        notes:       "Free online search."           // short hint shown to user
      }
    ========================================================================= */
@@ -121,7 +121,7 @@ const COUNTY_PORTALS = {
     { name:"Jefferson",    portal:"https://jeffco.us/2412/Assessor",                             methods:ALL,         notes:"West Denver suburbs." },
     { name:"Adams",        portal:"https://gisapp.adcogov.org/PropertySearch",                                methods:ALL,         notes:"North Denver metro." },
     { name:"Larimer",      portal:"https://www.larimer.gov/assessor",                            methods:ALL,         notes:"Fort Collins." },
-    { name:"Douglas",      portal:"http://www.douglas.co.us/assessor/",                         methods:ALL,         notes:"Castle Rock / Highlands Ranch." },
+    { name:"Douglas",      portal:"https://www.douglasco.gov/assessor/",                         methods:ALL,         notes:"Castle Rock / Highlands Ranch." },
     { name:"Boulder",      portal:"https://www.bouldercounty.org/property-and-land/assessor/",   methods:ALL,         notes:"Boulder city + county." },
     { name:"Weld",         portal:"https://www.weldgov.com/government/departments/assessor",     methods:ALL,         notes:"Greeley / N Front Range." }
   ],
@@ -179,7 +179,7 @@ const COUNTY_PORTALS = {
     { name:"Cherokee",   portal:"https://www.cherokeega.com/Tax-Assessors-Office/",                             methods:ALL,         notes:"Canton / N Atlanta metro." },
     { name:"Henry",      portal:"https://qpublic.schneidercorp.com/Application.aspx?App=HenryCountyGA",         methods:ALL,         notes:"McDonough." },
     { name:"Forsyth",    portal:"https://www.forsythco.com/Departments-Offices/Board-of-Assessors",             methods:ALL,         notes:"Cumming." },
-    { name:"Chatham",    portal:"http://boa.chathamcounty.org/",                                             methods:ALL,         notes:"Savannah." },
+    { name:"Chatham",    portal:"https://boa.chathamcountyga.gov/",                                             methods:ALL,         notes:"Savannah." },
     { name:"Richmond",   portal:"https://qpublic.schneidercorp.com/Application.aspx?AppID=678&LayerID=11365&PageTypeID=2&PageID=4758",                              methods:ALL,         notes:"Augusta-Richmond consolidated." }
   ],
 
@@ -193,15 +193,15 @@ const COUNTY_PORTALS = {
 
   /* ───────────── IDAHO ───────────── */
   ID: [
-    { name:"Ada",        portal:"http://www.adacountyassessor.org/propsys/",                      methods:ALL,         notes:"Boise." },
+    { name:"Ada",        portal:"https://adacounty.id.gov/assessor/",                      methods:ALL,         notes:"Boise." },
     { name:"Canyon",     portal:"https://id-canyon.publicaccessnow.com/Assessor/PropertySearch.aspx",                         methods:ALL,         notes:"Nampa / Caldwell." },
-    { name:"Kootenai",   portal:"http://www.kcgov.us/departments/mapping/mapSearch/",                                            methods:ALL,         notes:"Coeur d'Alene." }
+    { name:"Kootenai",   portal:"https://www.kcgov.us/176/Assessor",                                            methods:ALL,         notes:"Coeur d'Alene." }
   ],
 
   /* ───────────── ILLINOIS ───────────── */
   IL: [
     { name:"Cook",       portal:"https://www.cookcountyassessor.com/advanced-search",                            methods:ALL,         notes:"Chicago. Comprehensive PIN/address/owner search." },
-    { name:"DuPage",     portal:"http://www.dupageco.org/PropertyInfo/PropertyLookup.aspx",                                  methods:ALL,         notes:"Naperville / W Chicago suburbs." },
+    { name:"DuPage",     portal:"https://propertylookup.dupagecounty.gov/forms/htmlframe.aspx?mode=content/home.htm",                                  methods:ALL,         notes:"Naperville / W Chicago suburbs." },
     { name:"Lake",       portal:"https://www.lakecountyil.gov/2854/Property-Tax-Assessment-Information",        methods:ALL,         notes:"Waukegan / N suburbs." },
     { name:"Will",       portal:"https://www.willcountysoa.com/",                                               methods:ALL,         notes:"Joliet." },
     { name:"Kane",       portal:"https://kaneil.devnetwedge.com/",                                              methods:ALL,         notes:"Aurora / Elgin." },
@@ -224,7 +224,7 @@ const COUNTY_PORTALS = {
   /* ───────────── IOWA ───────────── */
   IA: [
     { name:"Polk",       portal:"https://web.assess.co.polk.ia.us/cgi-bin/web/tt/infoqry.cgi",                  methods:ALL,         notes:"Des Moines." },
-    { name:"Linn",       portal:"http://linn.iowaassessors.com/search.php",                                  methods:ALL,         notes:"Cedar Rapids." },
+    { name:"Linn",       portal:"https://linn.iowaassessors.com/search/res/",                                  methods:ALL,         notes:"Cedar Rapids." },
     { name:"Scott",      portal:"https://www.scottcountyiowa.gov/assessor",                                     methods:ALL,         notes:"Davenport / Quad Cities." }
   ],
 
@@ -287,7 +287,7 @@ const COUNTY_PORTALS = {
   MI: [
     { name:"Wayne",       portal:"https://pta.waynecounty.com/",             methods:ALL,         notes:"Detroit." },
     { name:"Oakland",     portal:"https://www.oakgov.com/treasurer/Pages/property-tax-info.aspx",                methods:ALL,         notes:"Detroit's wealthier N suburbs." },
-    { name:"Macomb",      portal:"http://treasurer.macombgov.org/", methods:ALL,        notes:"NE Detroit metro." },
+    { name:"Macomb",      portal:"https://www.macombgov.org/departments/treasurers-office/tax-information", methods:ALL,        notes:"NE Detroit metro." },
     { name:"Kent",        portal:"https://www.accesskent.com/Departments/Equalization/property_search.htm",      methods:ALL,         notes:"Grand Rapids." },
     { name:"Genesee",     portal:"https://bsaonline.com/OnlinePayment/OnlinePaymentSearch?PaymentApplicationType=5&uid=304",                              methods:ALL,         notes:"Flint." },
     { name:"Washtenaw",   portal:"https://www.washtenaw.org/172/Equalization",                                   methods:ALL,         notes:"Ann Arbor." },
@@ -296,7 +296,7 @@ const COUNTY_PORTALS = {
 
   /* ───────────── MINNESOTA ───────────── */
   MN: [
-    { name:"Hennepin",    portal:"http://www.hennepin.us/residents/property/property-information-search",      methods:ALL,         notes:"Minneapolis." },
+    { name:"Hennepin",    portal:"https://www.hennepincounty.gov/services/property/property-information-search",      methods:ADDR_PARCEL, notes:"Minneapolis. Official search lists property address, PID, addition name, and map search." },
     { name:"Ramsey",      portal:"https://www.ramseycounty.us/residents/property-home/property-tax-and-value-lookup",                       methods:ALL,         notes:"St. Paul." },
     { name:"Dakota",      portal:"https://gis.co.dakota.mn.us/Webappbuilder/PropertyInformationPublic/index.html",    methods:ALL,         notes:"S Twin Cities suburbs." },
     { name:"Anoka",       portal:"https://www.anokacountymn.gov/313/Property-Records-Taxation",                  methods:ALL,         notes:"N Twin Cities suburbs." },
@@ -330,7 +330,7 @@ const COUNTY_PORTALS = {
   /* ───────────── NEBRASKA ───────────── */
   NE: [
     { name:"Douglas",   portal:"https://www.dcassessor.org/",                                                    methods:ALL,         notes:"Omaha." },
-    { name:"Lancaster", portal:"http://orion.lancaster.ne.gov/Appraisal/PublicAccess/",                                             methods:ALL,         notes:"Lincoln." }
+    { name:"Lancaster", portal:"https://orion.lancaster.ne.gov/Appraisal/PublicAccess/",                                             methods:ALL,         notes:"Lincoln." }
   ],
 
   /* ───────────── NEVADA ───────────── */
@@ -378,7 +378,7 @@ const COUNTY_PORTALS = {
     { name:"Suffolk",             portal:"https://www.suffolkcountyny.gov/Departments/Real-Property-Tax-Service-Agency", methods:ALL, notes:"Long Island east." },
     { name:"Nassau",              portal:"https://lrv.nassaucountyny.gov/",                                                methods:ALL, notes:"Long Island west." },
     { name:"Westchester",         portal:"https://www.westchestergov.com/property-tax",                                    methods:ALL, notes:"NYC northern suburbs." },
-    { name:"Erie",                portal:"http://www2.erie.gov/ecrpts/index.php?q=real-property-parcel-search",                                              methods:ALL, notes:"Buffalo." },
+    { name:"Erie",                portal:"https://www3.erie.gov/ecrpts/featured/search-property",                                              methods:ALL, notes:"Buffalo." },
     { name:"Monroe",              portal:"https://www.monroecounty.gov/etc/rp/",                                            methods:ALL, notes:"Rochester." },
     { name:"Onondaga",            portal:"https://ocfintax.ongov.net/",                                                     methods:ALL, notes:"Syracuse." },
     { name:"Albany",              portal:"https://www.albanycounty.com/government/departments/real-property-tax-service",   methods:ALL, notes:"State capital." },
@@ -391,8 +391,8 @@ const COUNTY_PORTALS = {
   NC: [
     { name:"Mecklenburg", portal:"https://property.spatialest.com/nc/mecklenburg/",                              methods:ALL,         notes:"Charlotte." },
     { name:"Wake",        portal:"https://services.wake.gov/realestate/",                                        methods:ALL,         notes:"Raleigh." },
-    { name:"Guilford",    portal:"http://taxcama.guilfordcountync.gov/camapwa/",      methods:ALL,         notes:"Greensboro." },
-    { name:"Forsyth",     portal:"http://www.co.forsyth.nc.us/tax/default.aspx",                              methods:ALL,         notes:"Winston-Salem." },
+    { name:"Guilford",    portal:"https://lrcpwa.ncptscloud.com/guilford",      methods:ALL,         notes:"Greensboro." },
+    { name:"Forsyth",     portal:"https://www.co.forsyth.nc.us/tax/",                              methods:ALL,         notes:"Winston-Salem." },
     { name:"Cumberland",  portal:"https://www.cumberlandcountync.gov/departments/tax-group/tax",                 methods:ALL,         notes:"Fayetteville." },
     { name:"Durham",      portal:"https://www.dconc.gov/county-departments/departments-f-z/tax-administration",  methods:ALL,         notes:"Durham." },
     { name:"Buncombe",    portal:"https://tax.buncombecounty.org/",                          methods:ALL,         notes:"Asheville." },
@@ -415,10 +415,10 @@ const COUNTY_PORTALS = {
     { name:"Summit",     portal:"https://fiscaloffice.summitoh.net/index.php/property-search",                   methods:ALL,         notes:"Akron." },
     { name:"Montgomery", portal:"https://www.mcrealestate.org/",                                                 methods:ALL,         notes:"Dayton." },
     { name:"Lucas",      portal:"https://www.co.lucas.oh.us/167/Auditor",                                        methods:ALL,         notes:"Toledo." },
-    { name:"Stark",      portal:"http://www.starkcountyohio.gov/treasurer",                                               methods:ALL,         notes:"Canton." },
-    { name:"Butler",     portal:"http://www.butlercountytreasurer.org/",                                          methods:ALL,         notes:"Cincinnati N suburbs." },
+    { name:"Stark",      portal:"https://www.starkcountyohio.gov/government/offices/treasurer/index.php",                                               methods:ALL,         notes:"Canton." },
+    { name:"Butler",     portal:"https://treasurer.bcohio.gov/",                                          methods:ALL,         notes:"Cincinnati N suburbs." },
     { name:"Lorain",     portal:"https://www.loraincounty.com/auditor/",                                         methods:ALL,         notes:"Elyria / W Cleveland metro." },
-    { name:"Mahoning",   portal:"http://treasurer.mahoningcountyoh.gov/",                                     methods:ALL,         notes:"Youngstown." }
+    { name:"Mahoning",   portal:"https://treasurer.mahoningcountyoh.gov/",                                     methods:ALL,         notes:"Youngstown." }
   ],
 
   /* ───────────── OKLAHOMA ───────────── */
@@ -434,7 +434,7 @@ const COUNTY_PORTALS = {
     { name:"Multnomah",  portal:"https://multcoproptax.com/Property-Search",                                     methods:ALL,         notes:"Portland." },
     { name:"Washington", portal:"https://www.washingtoncountyor.gov/at",                                         methods:ALL,         notes:"Hillsboro / W Portland metro." },
     { name:"Clackamas",  portal:"https://www.clackamas.us/at",                                                   methods:ALL,         notes:"Oregon City / S Portland metro." },
-    { name:"Lane",       portal:"http://apps.lanecounty.org/propertyaccountinformation/",     methods:ALL,         notes:"Eugene." },
+    { name:"Lane",       portal:"https://apps.lanecounty.org/propertyaccountinformation/",     methods:ALL,         notes:"Eugene." },
     { name:"Marion",     portal:"https://www.co.marion.or.us/AO/Pages/default.aspx",                             methods:ALL,         notes:"Salem (state capital)." },
     { name:"Jackson",    portal:"https://pdo.jacksoncountyor.gov/pdo/",                   methods:ALL,         notes:"Medford." }
   ],
@@ -443,7 +443,7 @@ const COUNTY_PORTALS = {
   PA: [
     { name:"Philadelphia",  portal:"https://property.phila.gov/",                                                methods:ALL,         notes:"Philadelphia OPA." },
     { name:"Allegheny",     portal:"https://www2.alleghenycounty.us/RealEstate/Search.aspx",                     methods:ALL,         notes:"Pittsburgh." },
-    { name:"Montgomery",    portal:"http://propertyrecords.montcopa.org/pt/forms/htmlframe.aspx?mode=content/home.htm",   methods:ALL,         notes:"Norristown / Philly suburbs." },
+    { name:"Montgomery",    portal:"https://propertyrecords.montcopa.org/pt/forms/htmlframe.aspx?mode=content/home.htm",   methods:ALL,         notes:"Norristown / Philly suburbs." },
     { name:"Bucks",         portal:"https://www.buckscountyboa.org/search/commonsearch.aspx?mode=owner",     methods:ALL,         notes:"Doylestown / Philly N suburbs." },
     { name:"Chester",       portal:"https://www.chesco.org/Assessment",                                          methods:ALL,         notes:"West Chester." },
     { name:"Delaware",      portal:"https://delcorealestate.co.delaware.pa.us/",                                  methods:ALL,         notes:"Media / Philly W suburbs." },
@@ -463,11 +463,11 @@ const COUNTY_PORTALS = {
 
   /* ───────────── SOUTH CAROLINA ───────────── */
   SC: [
-    { name:"Greenville",  portal:"http://www.greenvillecounty.org/appsAS400/RealProperty/",                        methods:ALL,         notes:"Upstate SC." },
+    { name:"Greenville",  portal:"https://www.greenvillecounty.org/appsAS400/RealProperty/",                        methods:ALL,         notes:"Upstate SC." },
     { name:"Richland",    portal:"https://richlandcountysc.gov/Government/Departments/Taxes/Assessor",                                                methods:ALL,         notes:"Columbia (state capital)." },
     { name:"Charleston",  portal:"https://sc-charleston.publicaccessnow.com/",                                   methods:ALL,         notes:"Charleston." },
     { name:"Horry",       portal:"https://www.horrycountysc.gov/departments/assessor/",                          methods:ALL,         notes:"Myrtle Beach." },
-    { name:"Spartanburg", portal:"http://www.spartanburgcounty.org/288/Assessor-Property-Records-Search",                                methods:ALL,         notes:"Spartanburg." },
+    { name:"Spartanburg", portal:"https://www.spartanburgcounty.org/288/Assessor-Property-Records-Search",                                methods:ALL,         notes:"Spartanburg." },
     { name:"Lexington",   portal:"https://www.lex-co.sc.gov/departments/assessor",                                methods:ALL,         notes:"W Columbia metro." }
   ],
 
@@ -481,11 +481,11 @@ const COUNTY_PORTALS = {
   TN: [
     { name:"Shelby",     portal:"https://www.assessormelvinburgess.com/propertysearch",                          methods:ALL,         notes:"Memphis." },
     { name:"Davidson",   portal:"https://www.padctn.org/",                                                       methods:ALL,         notes:"Nashville-Davidson consolidated." },
-    { name:"Knox",       portal:"http://www.knoxcounty.org/property/",                                          methods:ALL,         notes:"Knoxville." },
+    { name:"Knox",       portal:"https://propertyinfo.knoxcountytn.gov/",                                          methods:ALL,         notes:"Knoxville." },
     { name:"Hamilton",   portal:"https://assessor.hamiltontn.gov/",                                              methods:ALL,         notes:"Chattanooga." },
     { name:"Rutherford", portal:"https://secured.rutherfordcountytn.gov/propertydata/",                                                       methods:ALL,         notes:"Murfreesboro." },
-    { name:"Williamson", portal:"http://www.williamson-tn.org/assessor/",                                   methods:ALL,         notes:"Franklin / Nashville S suburbs." },
-    { name:"Montgomery", portal:"http://www.mcgtn.org/assessor",                                                methods:ALL,         notes:"Clarksville." }
+    { name:"Williamson", portal:"https://www.williamson-tn.org/property_search/",                                   methods:ALL,         notes:"Franklin / Nashville S suburbs." },
+    { name:"Montgomery", portal:"https://montgomerytn.gov/assessor",                                                methods:ALL,         notes:"Clarksville." }
   ],
 
   /* ───────────── TEXAS ───────────── */
@@ -501,7 +501,7 @@ const COUNTY_PORTALS = {
     { name:"Fort Bend",   portal:"https://www.fbcad.org/property-search/",                                       methods:ALL,         notes:"Sugar Land / SW Houston." },
     { name:"El Paso",     portal:"https://www.epcad.org/Search",                                                 methods:ALL,         notes:"El Paso." },
     { name:"Montgomery",  portal:"https://www.mcad-tx.org/Property-Search",                                      methods:ALL,         notes:"The Woodlands / N Houston." },
-    { name:"Williamson",  portal:"http://www.wcad.org/",                                        methods:ALL,         notes:"Round Rock / N Austin." },
+    { name:"Williamson",  portal:"https://www.wcad.org/",                                        methods:ALL,         notes:"Round Rock / N Austin." },
     { name:"Cameron",     portal:"https://www.cameroncad.org/",                                                  methods:ALL,         notes:"Brownsville / RGV." },
     { name:"Brazoria",    portal:"https://esearch.brazoriacad.org/",                             methods:ALL,         notes:"Pearland / Lake Jackson." },
     { name:"Galveston",   portal:"https://www.galvestoncountytx.gov/our-county/county-clerk/records-search",                                 methods:ALL,         notes:"Galveston / League City." },
@@ -547,8 +547,8 @@ const COUNTY_PORTALS = {
   WA: [
     { name:"King",       portal:"https://blue.kingcounty.com/Assessor/eRealProperty/default.aspx",                methods:ALL,         notes:"Seattle. eRealProperty portal." },
     { name:"Pierce",     portal:"https://www.piercecountywa.gov/736/Property-Search",                              methods:ALL,         notes:"Tacoma." },
-    { name:"Snohomish",  portal:"http://www.snohomishcountywa.gov/175/Assessor",                                      methods:ALL,         notes:"Everett / N Seattle metro." },
-    { name:"Spokane",    portal:"http://www.spokanecounty.org/pubpadal/",                                       methods:ALL,         notes:"Spokane." },
+    { name:"Snohomish",  portal:"https://www.snohomishcountywa.gov/5167/Assessor",                                      methods:ALL,         notes:"Everett / N Seattle metro." },
+    { name:"Spokane",    portal:"https://cp.spokanecounty.org/SCOUT/propertyinformation/Default.aspx",                                       methods:ADDR_PARCEL, notes:"SCOUT public entry search accepts parcel number or address." },
     { name:"Clark",      portal:"https://gis.clark.wa.gov/gishome/property/",                                      methods:ALL,         notes:"Vancouver WA." },
     { name:"Thurston",   portal:"https://www.thurstoncountywa.gov/departments/assessor",                           methods:ALL,         notes:"Olympia (state capital)." },
     { name:"Kitsap",     portal:"https://psearch.kitsapgov.com/pdetails/",                                             methods:ALL,         notes:"Bremerton." }
@@ -576,10 +576,44 @@ const COUNTY_PORTALS = {
   ]
 };
 
-/* Build a fallback Google search URL for any state/county not covered above. */
-function buildGoogleFallback(stateName, countyName) {
-  const q = encodeURIComponent(`${countyName} County ${stateName} property tax search`);
+const MUNICIPAL_LEVEL_STATES = new Set(["CT","MA","ME","NH","RI","VT"]);
+
+function getJurisdictionLabel(stateCode, name) {
+  const n = String(name || '').trim();
+  if (!n) return '';
+  if (stateCode === 'DC') return n === 'Washington DC' ? 'Washington, DC' : n;
+  if (stateCode === 'LA') return /Parish$/i.test(n) ? n : n + ' Parish';
+  if (stateCode === 'AK') {
+    if (/Municipality$/i.test(n)) return n;
+    return /Borough$/i.test(n) ? n : n + ' Borough';
+  }
+  if (stateCode === 'VA' && /^(Virginia Beach|Norfolk)$/i.test(n)) return n + ' City';
+  if (stateCode === 'VA' && /City$/i.test(n)) return n;
+  if (MUNICIPAL_LEVEL_STATES.has(stateCode)) return n + ' area';
+  return n + ' County';
+}
+
+function getJurisdictionNoun(stateCode) {
+  if (stateCode === 'LA') return 'parish';
+  if (stateCode === 'AK') return 'borough / municipality';
+  if (stateCode === 'DC') return 'district';
+  if (MUNICIPAL_LEVEL_STATES.has(stateCode)) return 'local area';
+  return 'county';
+}
+
+function isSearchFallback(county) {
+  return !!(county && /google\.com\/search/i.test(county.portal || ''));
+}
+
+/* Build a jurisdiction-neutral fallback search URL. */
+function buildGoogleFallback(stateName, jurisdictionName) {
+  const q = encodeURIComponent(`${jurisdictionName} ${stateName} property assessor tax records official`);
   return `https://www.google.com/search?q=${q}`;
+}
+
+/* Build a NETR Online state-directory URL as an alternative discovery path. */
+function buildNetrFallback(stateCode) {
+  return `https://publicrecords.netronline.com/state/${stateCode}`;
 }
 
 /* Get all county data for a state (curated list only). */
@@ -588,9 +622,24 @@ function getCounties(stateCode) {
 }
 
 /* Public API exposed to the page. */
+const TOTAL_ENTRIES = Object.values(COUNTY_PORTALS).reduce((n, arr) => n + arr.length, 0);
+const DIRECT_PORTAL_ENTRIES = Object.values(COUNTY_PORTALS)
+  .flat()
+  .filter(county => !isSearchFallback(county));
+const DIRECT_PORTAL_COUNT = DIRECT_PORTAL_ENTRIES.length;
+const UNIQUE_DIRECT_PORTAL_COUNT = new Set(
+  DIRECT_PORTAL_ENTRIES.map(county => county.portal)
+).size;
+
 window.PROPERTY_TAX_DATA = {
   states: US_STATES,
   getCounties,
   buildGoogleFallback,
-  totalCounties: Object.values(COUNTY_PORTALS).reduce((n, arr) => n + arr.length, 0)
+  buildNetrFallback,
+  getJurisdictionLabel,
+  getJurisdictionNoun,
+  isSearchFallback,
+  totalEntries: TOTAL_ENTRIES,
+  directPortalCount: DIRECT_PORTAL_COUNT,
+  uniqueDirectPortalCount: UNIQUE_DIRECT_PORTAL_COUNT
 };
