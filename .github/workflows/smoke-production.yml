@@ -62,9 +62,10 @@ jobs:
             'https://www.taxpreparertools.com/assets/js/property-tax-data.js' -o /tmp/property-tax-data.js
 
           grep -q 'US Property Tax &amp;<br>Assessor Search' /tmp/property-tax.html
-          grep -q 'src="/assets/js/property-tax-data.js"' /tmp/property-tax.html
+          grep -q 'src="/assets/js/property-tax-data.js?v=' /tmp/property-tax.html
           grep -q 'ZIP matches are approximate' /tmp/property-tax.html
           grep -q 'aria-activedescendant' /tmp/property-tax.html
+          grep -q "classList.toggle('kbd-focus'" /tmp/property-tax.html
           grep -q 'function getJurisdictionLabel' /tmp/property-tax-data.js
           grep -q 'UNIQUE_DIRECT_PORTAL_COUNT' /tmp/property-tax-data.js
           if grep -q 'portal:"http://' /tmp/property-tax-data.js; then
