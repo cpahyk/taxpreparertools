@@ -201,7 +201,7 @@ const COUNTY_PORTALS = {
 
   /* ───────────── ILLINOIS ───────────── */
   IL: [
-    { name:"Cook",       portal:"https://www.cookcountyassessor.com/advanced-search",                            methods:ALL,         notes:"Chicago. Comprehensive PIN/address/owner search." },
+    { name:"Cook",       portal:"https://www.cookcountypropertyinfo.com/",                                   methods:ALL,         notes:"Chicago and Cook County. Use the Cook County Property Information portal for property lookup." },
     { name:"DuPage",     portal:"https://propertylookup.dupagecounty.gov/forms/htmlframe.aspx?mode=content/home.htm",                                  methods:ALL,         notes:"Naperville / W Chicago suburbs." },
     { name:"Lake",       portal:"https://tax.lakecountyil.gov/search/commonsearch.aspx?mode=realprop",        methods:ALL,         notes:"Waukegan / N suburbs." },
     { name:"Will",       portal:"https://www.willcountysoa.com/",                                               methods:ALL,         notes:"Joliet." },
