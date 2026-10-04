@@ -109,6 +109,8 @@ jobs:
           grep -q 'aria-label="Ask AI Tax Assistant"' /tmp/dashboard.html
           grep -q 'id="dashboardDeadlines"' /tmp/dashboard.html
           grep -q 'function renderDashboardDeadlines' /tmp/dashboard.html
+          grep -q "event === 'SIGNED_OUT'" /tmp/dashboard.html
+          grep -q "button.textContent = 'Signing out…'" /tmp/dashboard.html
           grep -q "date:'2026-10-15'" /tmp/dashboard.html
           if grep -q '<div class="dl-d">15</div><div class="dl-m">Jun</div>' /tmp/dashboard.html; then
             echo 'Dashboard still contains stale June deadline markup' >&2
