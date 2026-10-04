@@ -73,6 +73,46 @@ jobs:
           console.log(`Validated inline JavaScript syntax in ${htmlFiles.length} HTML files.`);
           NODE
 
+      - name: Validate JSON-LD blocks
+        shell: bash
+        run: |
+          node <<'NODE'
+          const fs = require('fs');
+          const path = require('path');
+
+          function walk(dir) {
+            return fs.readdirSync(dir, { withFileTypes: true }).flatMap(entry => {
+              if (entry.name === '.git' || entry.name === '.wrangler' || entry.name === 'node_modules') return [];
+              const full = path.join(dir, entry.name);
+              return entry.isDirectory() ? walk(full) : [full];
+            });
+          }
+
+          const htmlFiles = walk('.').filter(file => file.endsWith('.html'));
+          const failures = [];
+
+          for (const file of htmlFiles) {
+            const html = fs.readFileSync(file, 'utf8');
+            const blocks = [...html.matchAll(/<script[^>]*type=["']application\/ld\+json["'][^>]*>([\s\S]*?)<\/script>/gi)];
+
+            blocks.forEach((match, index) => {
+              try {
+                JSON.parse(match[1].trim());
+              } catch (error) {
+                failures.push(`${file}: JSON-LD block #${index + 1}: ${error.message}`);
+              }
+            });
+          }
+
+          if (failures.length) {
+            console.error('JSON-LD validation failed:');
+            failures.forEach(f => console.error(' - ' + f));
+            process.exit(1);
+          }
+
+          console.log(`Validated JSON-LD in ${htmlFiles.length} HTML files.`);
+          NODE
+
       - name: Verify sitemap pages use the professional theme
         shell: bash
         run: |
@@ -183,4 +223,38 @@ jobs:
           }
 
           console.log(`Tools directory integrity passed with ${names.length} unique tools.`);
+          NODE
+
+      - name: Validate live tool routes
+        shell: bash
+        run: |
+          node <<'NODE'
+          const fs = require('fs');
+
+          const html = fs.readFileSync('tools.html', 'utf8');
+          const block = html.match(/const ALL_TOOLS = \[([\s\S]*?)\];\s*let currentCat/);
+          if (!block) throw new Error('Could not locate ALL_TOOLS data.');
+
+          const objects = [...block[1].matchAll(/\{\s*id:(\d+),([\s\S]*?)\}(?=,\s*(?:\{|\/\/)|\s*$)/g)];
+          const failures = [];
+
+          for (const [, id, body] of objects) {
+            if (/comingSoon\s*:\s*true/.test(body)) continue;
+            const name = (body.match(/name:"([^"]+)"/) || [])[1] || `Tool ${id}`;
+            const url = (body.match(/url:"([^"]+)"/) || [])[1];
+            if (!url || /^(?:https?:|#)/i.test(url)) continue;
+
+            const target = url.replace(/^\//, '');
+            if (!fs.existsSync(target)) {
+              failures.push(`${name} -> ${url}`);
+            }
+          }
+
+          if (failures.length) {
+            console.error('Live tool routes missing from repository:');
+            failures.forEach(f => console.error(' - ' + f));
+            process.exit(1);
+          }
+
+          console.log('All live tool routes resolve to repository files.');
           NODE
