@@ -57,11 +57,17 @@ jobs:
             --header 'Cache-Control: no-cache' \
             'https://www.taxpreparertools.com/property-tax-search.html' -o /tmp/property-tax.html
 
+          curl --fail --silent --show-error --location --retry 5 --retry-delay 4 \
+            --header 'Cache-Control: no-cache' \
+            'https://www.taxpreparertools.com/assets/js/property-tax-data.js' -o /tmp/property-tax-data.js
+
           grep -q 'US Property Tax &amp;<br>Assessor Search' /tmp/property-tax.html
-          grep -q 'function getJurisdictionLabel' /tmp/property-tax.html
-          grep -q 'UNIQUE_DIRECT_PORTAL_COUNT' /tmp/property-tax.html
+          grep -q 'src="/assets/js/property-tax-data.js"' /tmp/property-tax.html
           grep -q 'ZIP matches are approximate' /tmp/property-tax.html
-          if grep -q 'portal:"http://' /tmp/property-tax.html; then
-            echo 'Property tax production page still contains insecure HTTP portal data.'
+          grep -q 'aria-activedescendant' /tmp/property-tax.html
+          grep -q 'function getJurisdictionLabel' /tmp/property-tax-data.js
+          grep -q 'UNIQUE_DIRECT_PORTAL_COUNT' /tmp/property-tax-data.js
+          if grep -q 'portal:"http://' /tmp/property-tax-data.js; then
+            echo 'Property tax production data still contains insecure HTTP portal data.'
             exit 1
           fi
