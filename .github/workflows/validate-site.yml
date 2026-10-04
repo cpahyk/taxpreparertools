@@ -26,6 +26,10 @@ jobs:
         run: |
           node --check scripts/audit-property-tax-links.cjs
           test -f .github/workflows/property-tax-link-audit.yml
+          grep -q "function resultCategory" scripts/audit-property-tax-links.cjs
+          grep -q "async function probe" scripts/audit-property-tax-links.cjs
+          grep -q "attempts++" scripts/audit-property-tax-links.cjs
+          grep -q "Transient server errors, timeouts, and network failures are retried once" scripts/audit-property-tax-links.cjs
           echo "Validated property-tax maintenance automation."
 
       - name: Validate inline JavaScript syntax
