@@ -512,7 +512,7 @@ const _supabase = supabase.createClient(SUPABASE_URL, SUPABASE_ANON);
       .from('profiles')
       .select('first_name, last_name, role, plan')
       .eq('id', user.id)
-      .single();
+      .maybeSingle();
 
     const emailLocal = (user.email || 'user').split('@')[0];
     const firstName = profile?.first_name || meta.first_name || emailLocal;
