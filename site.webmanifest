@@ -1,13 +1,20 @@
 {
+  "id": "/",
   "name": "TaxPreparerTools",
   "short_name": "TaxPrepTools",
-  "description": "Free professional tax calculators and tools for CPAs, Enrolled Agents, and tax preparers.",
+  "description": "Professional tax calculators, deadline tools, decoders, and resources for CPAs, Enrolled Agents, and tax preparers.",
   "start_url": "/",
+  "scope": "/",
   "display": "standalone",
-  "background_color": "#08152a",
-  "theme_color": "#c8a84b",
+  "background_color": "#f7f9fc",
+  "theme_color": "#ffffff",
   "icons": [
     { "src": "/assets/android-chrome-192x192.png", "sizes": "192x192", "type": "image/png" },
     { "src": "/assets/android-chrome-512x512.png", "sizes": "512x512", "type": "image/png", "purpose": "any maskable" }
+  ],
+  "shortcuts": [
+    { "name": "Tax Tools", "short_name": "Tools", "url": "/tools" },
+    { "name": "Tax Deadlines", "short_name": "Deadlines", "url": "/deadlines" },
+    { "name": "Downloads", "short_name": "Downloads", "url": "/downloads" }
   ]
 }
