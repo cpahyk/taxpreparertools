@@ -479,6 +479,9 @@ jobs:
             'id = \'countyFallbackOption\'',
             'Unlisted area',
             "items.length === 1",
+            'counties.length === 0',
+            'listed match',
+            'No listed match',
             'function normalizeAreaFilter',
             "e.key === 'Home'",
             "e.key === 'End'"
