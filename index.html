@@ -1212,8 +1212,11 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
         },
         {
           "@type": "Question",
-          "name": "Are the tax calculators updated for 2025?",
-          "acceptedAnswer": { "@type": "Answer", "text": "Yes. All calculators reflect 2025 IRS tax brackets, standard deductions, mileage rates, and other inflation-adjusted figures. The quarterly payment tool uses 2026 rates." }
+          "name": "Are the tax calculators updated for 2026?",
+"acceptedAnswer": {
+  "@type": "Answer",
+  "text": "Core federal planning tools are being updated for 2026. The Federal Income Tax Estimator supports both 2025 and 2026 tax-year figures so professionals can work with current-year planning and prior-year returns."
+}
         },
         {
           "@type": "Question",
@@ -1282,8 +1285,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
     </div>
     <div class="hero-stats">
       <div class="stat-item">
-        <span class="stat-num">40+</span>
-        <span class="stat-label">Tax Tools</span>
+        <span class="stat-num">50+</span><span class="stat-label">Tax Tools</span>
       </div>
       <div class="stat-item">
         <span class="stat-num">2026</span>
@@ -1402,10 +1404,10 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
   <div class="featured-inner">
     <div>
       <div class="featured-label">⭐ Featured Tool</div>
-      <h2 class="featured-title">Federal Income Tax<br>Estimator 2025</h2>
-      <p class="featured-desc">Quickly estimate your federal tax liability using the latest 2025 tax brackets. Perfect for planning, paycheck adjustments, or client consultations.</p>
+      <h2 class="featured-title">Federal Income Tax<br>Estimator 2026</h2>
+      <p class="featured-desc">Quickly estimate your federal tax liability using the latest 2026 tax brackets. Perfect for planning, paycheck adjustments, or client consultations.</p>
       <ul class="feature-list">
-        <li>Updated 2025 tax brackets (all filing statuses)</li>
+        <li>Updated 2026 tax brackets (all filing statuses)</li>
         <li>Standard deduction auto-applied</li>
         <li>Effective vs. marginal rate breakdown</li>
         <li>Self-employment tax included</li>
@@ -1432,91 +1434,54 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
         <input type="number" id="extraDeductions" placeholder="e.g. 5000"  aria-label="Additional Deductions ($)"/>
       </div>
       <button class="calc-btn" onclick="calculateTax()">Calculate Tax →</button>
-      <div class="calc-result" id="calcResult">
-        <div class="calc-result-row"><span>Standard Deduction</span><span id="stdDed">—</span></div>
-        <div class="calc-result-row"><span>Taxable Income</span><span id="taxableInc">—</span></div>
-        <div class="calc-result-row"><span>Marginal Rate</span><span id="margRate">—</span></div>
-        <div class="calc-result-row"><span>Effective Rate</span><span id="effRate">—</span></div>
-        <div class="calc-result-row total"><span>Est. Federal Tax</span><span id="totalTax">—</span></div>
-      </div>
+      (m)=>{
+  if(m.includes("Open full 2025–2026 estimator")) return m;
+  return m.replace(/<\/div>\s*<\/div>\s*<\/section>$/,
+`</div>
+      <a href="federal-tax-estimator.html" class="btn-outline" style="display:inline-flex;margin-top:16px;width:100%;justify-content:center;">Open full 2025–2026 estimator →</a>
     </div>
   </div>
-</section>
+</section>`);
+}
 
 <!-- TAX DEADLINES -->
 <section class="deadlines-section" id="deadlines">
   <div class="deadlines-inner">
     <div class="section-header">
-      <div class="section-tag">2025 Calendar</div>
-      <h2>Key Tax Deadlines</h2>
-      <p class="section-sub">Never miss a filing deadline again. Updated for 2025 tax year.</p>
+      <div class="section-tag">Upcoming Calendar</div><h2>Key Federal Tax Deadlines</h2><p class="section-sub">Current and upcoming federal filing/payment dates. Status badges update automatically by date.</p>
     </div>
     <div class="deadline-list">
-      <div class="deadline-item">
-        <div class="deadline-date">Jan 15, 2026</div>
-        <div>
-          <div class="deadline-name">Q4 2025 Estimated Tax Payment</div>
-          <div class="deadline-who">Self-employed, sole proprietors, high-income individuals</div>
-        </div>
-        <span class="deadline-badge later">2026</span>
-      </div>
-      <div class="deadline-item">
-        <div class="deadline-date">Jan 31, 2026</div>
-        <div>
-          <div class="deadline-name">W-2 & 1099 Deadline</div>
-          <div class="deadline-who">Employers must furnish to employees / contractors</div>
-        </div>
-        <span class="deadline-badge later">2026</span>
-      </div>
-      <div class="deadline-item">
-        <div class="deadline-date">Mar 17, 2026</div>
-        <div>
-          <div class="deadline-name">S-Corp & Partnership Returns (Form 1120-S / 1065)</div>
-          <div class="deadline-who">Business entities — 6-month extension available</div>
-        </div>
-        <span class="deadline-badge upcoming">Upcoming</span>
-      </div>
-      <div class="deadline-item">
-        <div class="deadline-date">Apr 15, 2026</div>
-        <div>
-          <div class="deadline-name">Individual Tax Return Deadline (Form 1040)</div>
-          <div class="deadline-who">All individuals — extension to Oct 15 available</div>
-        </div>
-        <span class="deadline-badge upcoming">Upcoming</span>
-      </div>
-      <div class="deadline-item">
-        <div class="deadline-date">Apr 15, 2026</div>
-        <div>
-          <div class="deadline-name">Q1 2026 Estimated Tax Payment</div>
-          <div class="deadline-who">Self-employed and individuals with non-wage income</div>
-        </div>
-        <span class="deadline-badge upcoming">Upcoming</span>
-      </div>
-      <div class="deadline-item">
-        <div class="deadline-date">Jun 16, 2026</div>
-        <div>
-          <div class="deadline-name">Q2 2026 Estimated Tax Payment</div>
-          <div class="deadline-who">Self-employed and individuals with non-wage income</div>
-        </div>
-        <span class="deadline-badge later">Later</span>
-      </div>
-      <div class="deadline-item">
-        <div class="deadline-date">Sep 15, 2026</div>
-        <div>
-          <div class="deadline-name">Q3 2026 Estimated Tax Payment</div>
-          <div class="deadline-who">Self-employed and individuals with non-wage income</div>
-        </div>
-        <span class="deadline-badge later">Later</span>
-      </div>
-      <div class="deadline-item">
+      <div class="deadline-item" data-deadline="2026-10-15">
         <div class="deadline-date">Oct 15, 2026</div>
-        <div>
-          <div class="deadline-name">Extended Individual Return Deadline</div>
-          <div class="deadline-who">For those who filed a 6-month extension in April</div>
-        </div>
+        <div><div class="deadline-name">Extended Individual Return Deadline</div><div class="deadline-who">2025 Form 1040 returns filed under a valid Form 4868 extension</div></div>
+        <span class="deadline-badge upcoming">Upcoming</span>
+      </div>
+      <div class="deadline-item" data-deadline="2027-01-15">
+        <div class="deadline-date">Jan 15, 2027</div>
+        <div><div class="deadline-name">Q4 2026 Estimated Tax Payment</div><div class="deadline-who">Individuals with estimated tax obligations for the Sept.–Dec. 2026 payment period</div></div>
         <span class="deadline-badge later">Later</span>
       </div>
-    </div>
+      <div class="deadline-item" data-deadline="2027-03-15">
+        <div class="deadline-date">Mar 15, 2027</div>
+        <div><div class="deadline-name">S-Corp & Partnership Returns</div><div class="deadline-who">Calendar-year Forms 1120-S and 1065 for tax year 2026</div></div>
+        <span class="deadline-badge later">Later</span>
+      </div>
+      <div class="deadline-item" data-deadline="2027-04-15">
+        <div class="deadline-date">Apr 15, 2027</div>
+        <div><div class="deadline-name">Individual Return & Q1 Estimated Tax</div><div class="deadline-who">Calendar-year 2026 Form 1040 returns and first 2027 estimated tax installment</div></div>
+        <span class="deadline-badge later">Later</span>
+      </div>
+      <div class="deadline-item" data-deadline="2027-06-15">
+        <div class="deadline-date">Jun 15, 2027</div>
+        <div><div class="deadline-name">Q2 2027 Estimated Tax Payment</div><div class="deadline-who">Second estimated tax installment for calendar-year individuals</div></div>
+        <span class="deadline-badge later">Later</span>
+      </div>
+      <div class="deadline-item" data-deadline="2027-09-15">
+        <div class="deadline-date">Sep 15, 2027</div>
+        <div><div class="deadline-name">Q3 2027 Estimated Tax Payment</div><div class="deadline-who">Third estimated tax installment for calendar-year individuals</div></div>
+        <span class="deadline-badge later">Later</span>
+      </div>
+    </div></div>
   </div>
 </section>
 
@@ -1640,7 +1605,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 
 <script>
 const tools = [
-  { name: "Federal Tax Estimator", icon: "🧮", cat: "calc", tag: "tag-calc", label: "Calculator", desc: "Estimate 2025 federal income tax across all filing statuses with bracket breakdown.", url: "federal-tax-estimator.html" },
+  { name: "Federal Tax Estimator", icon: "🧮", cat: "calc", tag: "tag-calc", label: "Calculator", desc: "Estimate 2025 or 2026 federal income tax across all filing statuses with bracket breakdown.", url: "federal-tax-estimator.html" },
   { name: "Self-Employment Tax Calc", icon: "💼", cat: "calc", tag: "tag-calc", label: "Calculator", desc: "Calculate SE tax (Social Security + Medicare) and the deductible portion on Schedule SE.", url: "se-tax-calculator.html" },
   { name: "Quarterly Estimated Payments", icon: "📆", cat: "calc", tag: "tag-calc", label: "Calculator", desc: "Determine safe-harbor amounts and compute quarterly payment schedules automatically.", url: "quarterly-payments.html" },
   { name: "W-4 Withholding Optimizer", icon: "📝", cat: "individual", tag: "tag-individual", label: "Individual", desc: "Help employees complete Form W-4 to withhold the right amount from each paycheck.", url: "/tools/w4-optimizer", coming_soon: true },
@@ -1716,18 +1681,17 @@ function calculateTax() {
   const gross = parseFloat(document.getElementById('grossIncome').value) || 0;
   const extra = parseFloat(document.getElementById('extraDeductions').value) || 0;
   const status = document.getElementById('filingStatus').value;
-
-  const stdDeds = { single: 15000, mfj: 30000, mfs: 15000, hoh: 22500 };
+  const stdDeds = { single: 16100, mfj: 32200, mfs: 16100, hoh: 24150 };
   const stdDed = stdDeds[status];
   const totalDed = stdDed + extra;
   const taxable = Math.max(0, gross - totalDed);
 
-  // 2025 brackets (approximate)
+  // 2026 ordinary-income tax brackets
   const brackets = {
-    single: [[11925,0.10],[48475,0.12],[103350,0.22],[197300,0.24],[250525,0.32],[626350,0.35],[Infinity,0.37]],
-    mfj:    [[23850,0.10],[96950,0.12],[206700,0.22],[394600,0.24],[501050,0.32],[751600,0.35],[Infinity,0.37]],
-    mfs:    [[11925,0.10],[48475,0.12],[103350,0.22],[197300,0.24],[250525,0.32],[375800,0.35],[Infinity,0.37]],
-    hoh:    [[17000,0.10],[64850,0.12],[103350,0.22],[197300,0.24],[250500,0.32],[626350,0.35],[Infinity,0.37]],
+    single: [[12400,0.10],[50400,0.12],[105700,0.22],[201775,0.24],[256225,0.32],[640600,0.35],[Infinity,0.37]],
+    mfj: [[24800,0.10],[100800,0.12],[211400,0.22],[403550,0.24],[512450,0.32],[768700,0.35],[Infinity,0.37]],
+    mfs: [[12400,0.10],[50400,0.12],[105700,0.22],[201775,0.24],[256225,0.32],[384350,0.35],[Infinity,0.37]],
+    hoh: [[17700,0.10],[67450,0.12],[105700,0.22],[201750,0.24],[256200,0.32],[640600,0.35],[Infinity,0.37]]
   };
 
   let tax = 0, prev = 0, marginalRate = 0.10;
@@ -1748,6 +1712,29 @@ function calculateTax() {
   document.getElementById('totalTax').textContent = fmt(tax);
   document.getElementById('calcResult').classList.add('visible');
 }
+</script>
+<script>
+function refreshDeadlineBadges() {
+  const now = new Date();
+  now.setHours(0,0,0,0);
+  document.querySelectorAll('.deadline-item[data-deadline]').forEach(item => {
+    const due = new Date(item.dataset.deadline + 'T23:59:59');
+    const badge = item.querySelector('.deadline-badge');
+    if (!badge || Number.isNaN(due.getTime())) return;
+    const days = Math.ceil((due - now) / 86400000);
+    badge.classList.remove('upcoming','later');
+    if (days < 0) {
+      badge.textContent = 'Past';
+    } else if (days <= 30) {
+      badge.textContent = days === 0 ? 'Today' : 'Upcoming';
+      badge.classList.add('upcoming');
+    } else {
+      badge.textContent = 'Later';
+      badge.classList.add('later');
+    }
+  });
+}
+refreshDeadlineBadges();
 </script>
 <script>
 (function(){
