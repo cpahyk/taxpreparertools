@@ -476,6 +476,10 @@ jobs:
             'id="btnResetSearch"',
             'Reset all search state',
             "history.replaceState(null, '', window.location.pathname)",
+            'function createSearchFallback',
+            'id = \'countyFallbackOption\'',
+            'Unlisted area',
+            "items.length === 1",
             'function normalizeAreaFilter',
             "e.key === 'Home'",
             "e.key === 'End'"
