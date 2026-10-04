@@ -465,6 +465,11 @@ jobs:
             'routeType: "search"',
             'var detectedFallback = {',
             'No curated direct portal is listed yet',
+            'matchSource:"manual"',
+            'matchSource: "shared"',
+            'matchSource: "detected"',
+            'CURATED DIRECT DESTINATION',
+            'DETECTED JURISDICTION · SEARCH FALLBACK',
             'function normalizeAreaFilter',
             "e.key === 'Home'",
             "e.key === 'End'"
