@@ -306,7 +306,7 @@ const COUNTY_PORTALS = {
 
   /* ───────────── MISSISSIPPI ───────────── */
   MS: [
-    { name:"Hinds",       portal:"https://www.hindscountyms.com/elected-offices/tax-assessor-collector",         methods:ALL,         notes:"Jackson." },
+    { name:"Hinds",       portal:"https://www.co.hinds.ms.us/pgs/apps/real_property_billing_roll_query.asp",         methods:ALL,         notes:"Jackson." },
     { name:"Harrison",    portal:"https://www.co.harrison.ms.us/elected/tax_assessor.asp",                       methods:ALL,         notes:"Gulfport / Biloxi." },
     { name:"DeSoto",      portal:"https://www.desotocountyms.gov/106/Tax-Assessor",                              methods:ALL,         notes:"Memphis suburbs." }
   ],
