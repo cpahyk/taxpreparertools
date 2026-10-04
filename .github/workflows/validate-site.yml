@@ -25,12 +25,19 @@ jobs:
         shell: bash
         run: |
           node --check scripts/audit-property-tax-links.cjs
+          node --check scripts/audit-site.cjs
           test -f .github/workflows/property-tax-link-audit.yml
           grep -q "function resultCategory" scripts/audit-property-tax-links.cjs
           grep -q "async function probe" scripts/audit-property-tax-links.cjs
           grep -q "attempts++" scripts/audit-property-tax-links.cjs
           grep -q "Transient server errors, timeouts, and network failures are retried once" scripts/audit-property-tax-links.cjs
           echo "Validated property-tax maintenance automation."
+
+      - name: Audit whole site quality
+        shell: bash
+        run: |
+          node scripts/audit-site.cjs
+          cat site-audit.md >> "$GITHUB_STEP_SUMMARY"
 
       - name: Validate inline JavaScript syntax
         shell: bash
