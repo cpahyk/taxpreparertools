@@ -7,18 +7,26 @@
   X-Permitted-Cross-Domain-Policies: none
 
 /login.html
+  Cache-Control: private, no-store, max-age=0
+  X-Robots-Tag: noindex, nofollow
   X-Frame-Options: DENY
   Content-Security-Policy: frame-ancestors 'none'
 
 /signup.html
+  Cache-Control: private, no-store, max-age=0
+  X-Robots-Tag: noindex, nofollow
   X-Frame-Options: DENY
   Content-Security-Policy: frame-ancestors 'none'
 
 /forgot-password.html
+  Cache-Control: private, no-store, max-age=0
+  X-Robots-Tag: noindex, nofollow
   X-Frame-Options: DENY
   Content-Security-Policy: frame-ancestors 'none'
 
 /dashboard.html
+  Cache-Control: private, no-store, max-age=0
+  X-Robots-Tag: noindex, nofollow
   X-Frame-Options: DENY
   Content-Security-Policy: frame-ancestors 'none'
 

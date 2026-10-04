@@ -33,6 +33,15 @@ jobs:
           grep -q "attempts++" scripts/audit-property-tax-links.cjs
           grep -q "Transient server errors, timeouts, and network failures are retried once" scripts/audit-property-tax-links.cjs
           echo "Validated property-tax maintenance automation."
+          for page in login.html signup.html forgot-password.html dashboard.html; do
+            grep -A5 "^/$page$" _headers | grep -q "Cache-Control: private, no-store, max-age=0"
+            grep -A5 "^/$page$" _headers | grep -q "X-Robots-Tag: noindex, nofollow"
+            grep -A7 "for = \"/$page\"" netlify.toml | grep -q 'Cache-Control = "private, no-store, max-age=0"'
+            grep -A7 "for = \"/$page\"" netlify.toml | grep -q 'X-Robots-Tag = "noindex, nofollow"'
+          done
+          grep -qi 'name="robots" content="noindex, nofollow"' login.html
+          grep -qi 'name="robots" content="noindex, nofollow"' dashboard.html
+          echo "Validated sensitive-page cache and indexing policy."
 
       - name: Check repository secret hygiene
         shell: bash

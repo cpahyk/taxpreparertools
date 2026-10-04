@@ -254,24 +254,32 @@
 [[headers]]
   for = "/login.html"
   [headers.values]
+    Cache-Control = "private, no-store, max-age=0"
+    X-Robots-Tag = "noindex, nofollow"
     X-Frame-Options = "DENY"
     Content-Security-Policy = "frame-ancestors 'none'"
 
 [[headers]]
   for = "/signup.html"
   [headers.values]
+    Cache-Control = "private, no-store, max-age=0"
+    X-Robots-Tag = "noindex, nofollow"
     X-Frame-Options = "DENY"
     Content-Security-Policy = "frame-ancestors 'none'"
 
 [[headers]]
   for = "/forgot-password.html"
   [headers.values]
+    Cache-Control = "private, no-store, max-age=0"
+    X-Robots-Tag = "noindex, nofollow"
     X-Frame-Options = "DENY"
     Content-Security-Policy = "frame-ancestors 'none'"
 
 [[headers]]
   for = "/dashboard.html"
   [headers.values]
+    Cache-Control = "private, no-store, max-age=0"
+    X-Robots-Tag = "noindex, nofollow"
     X-Frame-Options = "DENY"
     Content-Security-Policy = "frame-ancestors 'none'"
 
