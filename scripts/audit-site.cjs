@@ -169,6 +169,15 @@ console.log(`Site audit scanned ${htmlFiles.length} HTML files: ${counts.error} 
 for (const [code,count] of Object.entries(counts.byCode).sort((a,b)=>b[1]-a[1])) {
   console.log(` - ${code}: ${count}`);
 }
+
+const actionable = issues.filter(issue => issue.severity === 'error' || !['missing-main'].includes(issue.code));
+if (actionable.length) {
+  console.log('Actionable site-audit findings:');
+  for (const issue of actionable) {
+    console.log(` [${issue.severity}] ${issue.file} :: ${issue.code} :: ${issue.message}`);
+  }
+}
+
 console.log(`Wrote ${OUTPUT_JSON} and ${OUTPUT_MD}.`);
 
 if (STRICT && counts.error) {
