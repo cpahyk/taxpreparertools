@@ -1,149 +1,84 @@
-# 🚀 GitHub Pages Deployment Guide — TaxPreparerTools.com
+# TaxPreparerTools Deployment Guide
 
-## Quick Deploy (5 minutes)
+TaxPreparerTools is a **static site** published directly from the repository root. There is no application build step for the public site.
 
-### Step 1 — Create the GitHub Repository
+## Recommended production setup: Cloudflare Pages
 
-1. Go to **https://github.com/new**
-2. Set **Repository name** → `taxpreparertools` *(or any name you like)*
-3. Set visibility → **Public** *(required for free GitHub Pages)*
-4. ✅ Do **NOT** check "Initialize this repository" — leave it empty
-5. Click **Create repository**
+Connect the GitHub repository:
 
----
+- Repository: `cpahyk/taxpreparertools`
+- Production branch: `main`
+- Framework preset: **None**
+- Build command: `exit 0`
+- Build output directory: `.`
 
-### Step 2 — Push the Code
+Every commit pushed to `main` should create a new production deployment.
 
-Open your terminal, `cd` into the extracted folder, then run:
+### Custom domains
 
-```bash
-cd taxpreparertools
+Attach both:
 
-# Initialize git
-git init
-git add .
-git commit -m "Initial deploy — full site with all tools and pages"
+- `taxpreparertools.com`
+- `www.taxpreparertools.com`
 
-# Replace YOUR_USERNAME with your GitHub username
-git remote add origin https://github.com/YOUR_USERNAME/taxpreparertools.git
-git branch -M main
-git push -u origin main
-```
+Choose one canonical host and redirect the other to it. The HTML currently uses `https://www.taxpreparertools.com/` as the canonical public origin.
 
----
+Before changing DNS or removing an older host, verify:
 
-### Step 3 — Enable GitHub Pages
+1. Homepage loads over HTTPS.
+2. `/tools.html`, `/resources.html`, `/deadlines.html`, and `/blog/` load.
+3. Calculator pages execute JavaScript normally.
+4. `professional-light.css` is served and the white theme is visible.
+5. Images, downloads, PDF tools, and converter pages load.
+6. `sitemap.xml`, `robots.txt`, `ads.txt`, and `llms.txt` are accessible.
+7. Legacy routes in `_redirects` resolve correctly.
+8. The custom 404 page works.
+9. Both apex and `www` domains have valid SSL.
 
-1. In your repo on GitHub, go to **Settings → Pages**
-2. Under **Source**, select **Deploy from a branch**
-3. Branch: **main** · Folder: **/ (root)**
-4. Click **Save**
+## Static-host compatibility files
 
-GitHub will show a green banner: *"Your site is live at https://YOUR_USERNAME.github.io/taxpreparertools/"*
+The repository includes:
 
-⏱ Takes **1–3 minutes** to go live after first push.
+- `_headers` — Cloudflare Pages/static-host security headers.
+- `_redirects` — legacy-route redirects for Cloudflare Pages-compatible hosts.
+- `404.html` — branded not-found and clean-URL recovery page.
+- `.nojekyll` — prevents GitHub Pages Jekyll processing if GitHub Pages is used as a fallback.
+- `CNAME` — retained for GitHub Pages compatibility.
+- `netlify.toml` — compatibility configuration if the site is temporarily deployed through Netlify.
+- `_config.yml` — legacy GitHub Pages metadata only; the production site does not require a Jekyll build.
 
----
+## GitHub validation
 
-### Step 4 (Optional) — Connect Your Custom Domain
+The workflow at `.github/workflows/validate-site.yml` runs on every push to `main` and checks:
 
-If you own `taxpreparertools.com`:
+- inline JavaScript syntax,
+- JSON-LD validity,
+- sitemap file coverage,
+- professional-light theme coverage,
+- internal HTML links,
+- tools-directory integrity, and
+- live tool routes.
 
-1. In **Settings → Pages → Custom domain**, enter `taxpreparertools.com`
-2. Click **Save** — GitHub creates a `CNAME` file automatically *(already included in this repo)*
-3. At your domain registrar (Namecheap, GoDaddy, Cloudflare, etc.), add these DNS records:
+A failed validation should be fixed before treating the deployment as production-ready.
 
-```
-Type    Host    Value
-A       @       185.199.108.153
-A       @       185.199.109.153
-A       @       185.199.110.153
-A       @       185.199.111.153
-CNAME   www     YOUR_USERNAME.github.io
-```
+## Normal update workflow
 
-4. ✅ Check **Enforce HTTPS** in Settings → Pages (after DNS propagates, ~10 min)
+1. Make the site change.
+2. Commit it to `main`.
+3. Confirm the validation workflow passes.
+4. Confirm the hosting provider created a deployment for the same commit.
+5. Verify the live site before considering the change complete.
 
----
+## Deployment troubleshooting
 
-## Updating the Site Later
+If GitHub `main` contains newer content but the public site still shows an older version:
 
-```bash
-# Make your edits, then:
-git add .
-git commit -m "Update: describe what changed"
-git push
-```
+1. Check the hosting provider's latest production deployment SHA.
+2. Confirm the connected repository is `cpahyk/taxpreparertools`.
+3. Confirm the production branch is `main`.
+4. Confirm build output is the repository root (`.`).
+5. Trigger a new deployment from the latest `main` commit.
+6. Purge the CDN cache only after confirming the deployment contains the new files.
+7. Verify `index.html` and `professional-light.css` directly on the production domain.
 
-GitHub Pages auto-redeploys within ~60 seconds.
-
----
-
-## Clean URL Routing
-
-GitHub Pages serves static `.html` files. To make `/tools/se-tax-calculator` work
-instead of `/tools/se-tax-calculator.html`, two approaches are included:
-
-**Option A (Recommended) — Jekyll permalink trick:**
-The `_config.yml` and `.nojekyll` files are both included. For clean URLs with Jekyll off,
-links like `/tools/se-tax-calculator` need either server-side routing (not available on
-free Pages) or a hosting provider that supports it (see Netlify below).
-
-**Option B — Netlify (free, better clean URLs):**
-Netlify handles clean URLs natively. Just connect your GitHub repo at
-**https://app.netlify.com** → "Import from Git" → select repo → deploy.
-Add a `netlify.toml` (included in this repo) and clean URLs work instantly.
-
----
-
-## Netlify Deploy (Alternative — Recommended for Clean URLs)
-
-```bash
-# Install Netlify CLI
-npm install -g netlify-cli
-
-# Deploy from the project folder
-netlify deploy --prod --dir .
-```
-
-Or use the Netlify dashboard: https://app.netlify.com → New site → Import from Git
-
-The included `netlify.toml` already configures:
-- Clean URL redirects (`/tools/se-tax-calculator` → works)
-- Custom 404 page
-- Security headers (X-Frame-Options, CSP, etc.)
-
----
-
-## File Structure
-
-```
-taxpreparertools/
-├── index.html                    # Homepage
-├── tools.html                    # Tools directory
-├── ai-assistant.html             # AI Tax Assistant
-├── dashboard.html                # User dashboard
-├── deadlines.html                # Tax deadline calendar
-├── resources.html                # Resource library
-├── login.html / signup.html      # Auth pages
-├── contact.html                  # Contact form
-├── privacy.html / terms.html     # Legal pages
-├── forgot-password.html          # Password reset
-├── 404.html                      # Custom 404
-├── tools/
-│   ├── federal-tax-estimator.html
-│   ├── se-tax-calculator.html
-│   ├── quarterly-payments.html
-│   ├── qbi.html
-│   ├── capital-gains.html
-│   ├── penalty-calculator.html
-│   ├── home-office.html          ← NEW
-│   ├── mileage.html              ← NEW
-│   └── depreciation.html         ← NEW
-├── sitemap.xml                   # SEO sitemap
-├── robots.txt                    # Search engine directives
-├── CNAME                         # Custom domain config
-├── _config.yml                   # Jekyll config
-├── .nojekyll                     # Disables Jekyll processing
-└── netlify.toml                  # Netlify deploy config
-```
+Do not delete the old hosting configuration until the new production host, custom domains, SSL, redirects, calculators, images, downloads, and principal pages have all been verified.
