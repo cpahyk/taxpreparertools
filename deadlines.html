@@ -191,6 +191,21 @@
     .nav-right,.nav-cta-wrap{display:none!important;}
   }
 
+  .main.calendar-view { display:block; }
+  .main.calendar-view .deadlines-content { display:none; }
+  .main.calendar-view .mini-cal-section { width:min(720px,100%); margin:0 auto; }
+  .main.calendar-view .mini-cal-wrap,
+  .main.calendar-view .upcoming-section { max-width:720px; margin-left:auto; margin-right:auto; }
+
+  @media print {
+    nav, .header-actions, .controls, .mini-cal-section, .view-toggle, .remind-btn, .toast, footer { display:none !important; }
+    body, .page-header, .deadlines-content, .main { background:#fff !important; color:#111 !important; }
+    .main { display:block !important; max-width:none !important; padding:0 !important; }
+    .deadlines-content { width:100% !important; }
+    .dl-card, .month-group { break-inside:avoid; box-shadow:none !important; }
+    .dl-card { border:1px solid #ddd !important; }
+    .month-past { opacity:1 !important; }
+  }
 </style>
   <!-- Open Graph / Social Sharing -->
   <meta property="og:type" content="website" />
@@ -257,9 +272,9 @@
     <h1>2025–2026 Tax<br>Deadline Calendar</h1>
     <p class="header-sub">Every IRS filing deadline for individuals, businesses, payroll, and estimated payments — updated for 2025 and 2026.</p>
     <div class="header-actions">
-      <button class="action-btn action-btn-gold" onclick="exportCal()">📅 Export to Google Calendar</button>
-      <button class="action-btn action-btn-outline" onclick="showReminderModal()">🔔 Set Email Reminders</button>
-      <button class="action-btn action-btn-outline" onclick="downloadPDF()">⬇ Download PDF</button>
+      <button class="action-btn action-btn-gold" onclick="exportCal()">📅 Download Calendar (.ics)</button>
+      <button class="action-btn action-btn-outline" onclick="showReminderModal()">🔔 Get Deadline Alerts</button>
+      <button class="action-btn action-btn-outline" onclick="downloadPDF()">🖨 Print / Save PDF</button>
     </div>
     <div class="legend">
       <div class="legend-item"><div class="legend-dot" style="background:var(--red)"></div> Urgent (≤7 days)</div>
@@ -612,14 +627,88 @@ function renderUpcoming() {
   }).join('');
 }
 
-function setReminder(name, date) {
-  showToast(`🔔 Reminder set for "${name.substring(0,30)}…"`);
+function icsEscape(value) {
+  return String(value ?? '')
+    .replace(/\\/g, '\\\\')
+    .replace(/;/g, '\\;')
+    .replace(/,/g, '\\,')
+    .replace(/\r?\n/g, '\\n');
 }
 
-function exportCal() { showToast('📅 Calendar export started — check your downloads'); }
-function showReminderModal() { showToast('📧 Enter your email in settings to receive deadline alerts'); }
-function downloadPDF() { showToast('⬇ PDF download starting — check your downloads'); }
-function showDetail(date, name) { /* would open a modal */ }
+function icsDate(dateStr) {
+  return dateStr.replace(/-/g, '');
+}
+
+function nextDate(dateStr) {
+  const d = new Date(dateStr + 'T12:00:00');
+  d.setDate(d.getDate() + 1);
+  return d.toISOString().slice(0,10).replace(/-/g, '');
+}
+
+function downloadICS(items, filename) {
+  const stamp = new Date().toISOString().replace(/[-:]/g,'').replace(/\.\d{3}/,'');
+  const lines = [
+    'BEGIN:VCALENDAR',
+    'VERSION:2.0',
+    'PRODID:-//TaxPreparerTools//Tax Deadlines//EN',
+    'CALSCALE:GREGORIAN',
+    'METHOD:PUBLISH'
+  ];
+
+  items.forEach((d, index) => {
+    lines.push(
+      'BEGIN:VEVENT',
+      `UID:taxpreparertools-${d.date}-${index}@taxpreparertools.com`,
+      `DTSTAMP:${stamp}`,
+      `DTSTART;VALUE=DATE:${icsDate(d.date)}`,
+      `DTEND;VALUE=DATE:${nextDate(d.date)}`,
+      `SUMMARY:${icsEscape(d.name)}`,
+      `DESCRIPTION:${icsEscape(d.desc || 'Federal tax deadline. Verify current IRS guidance before filing or paying.')}`,
+      'URL:https://www.taxpreparertools.com/deadlines',
+      'END:VEVENT'
+    );
+  });
+
+  lines.push('END:VCALENDAR');
+  const blob = new Blob([lines.join('\r\n')], { type:'text/calendar;charset=utf-8' });
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement('a');
+  a.href = url;
+  a.download = filename;
+  document.body.appendChild(a);
+  a.click();
+  a.remove();
+  setTimeout(() => URL.revokeObjectURL(url), 1000);
+}
+
+function setReminder(name, date) {
+  const item = DEADLINES.find(d => d.date === date && d.name === name) ||
+    { date, name, desc:'Federal tax deadline reminder.' };
+  downloadICS([item], `tax-deadline-${date}.ics`);
+  showToast('🔔 Calendar reminder downloaded');
+}
+
+function exportCal() {
+  const future = DEADLINES
+    .filter(d => new Date(d.date + 'T12:00:00') >= TODAY)
+    .sort((a,b) => a.date.localeCompare(b.date));
+  if (!future.length) {
+    showToast('No future deadlines are currently loaded.');
+    return;
+  }
+  downloadICS(future, 'taxpreparertools-upcoming-deadlines.ics');
+  showToast(`📅 Downloaded ${future.length} upcoming deadline${future.length === 1 ? '' : 's'}`);
+}
+
+function showReminderModal() {
+  window.location.href = 'signup.html?source=deadlines&alerts=1';
+}
+
+function downloadPDF() {
+  window.print();
+}
+
+function showDetail(date, name) { /* detail modal can be added later */ }
 
 function showToast(msg) {
   const t = document.getElementById('toast');
@@ -629,8 +718,9 @@ function showToast(msg) {
 }
 
 function setView(v) {
-  document.getElementById('listVBtn').classList.toggle('on', v==='list');
-  document.getElementById('calVBtn').classList.toggle('on', v==='cal');
+  document.getElementById('listVBtn').classList.toggle('on', v === 'list');
+  document.getElementById('calVBtn').classList.toggle('on', v === 'cal');
+  document.querySelector('.main')?.classList.toggle('calendar-view', v === 'cal');
 }
 
 // Init
