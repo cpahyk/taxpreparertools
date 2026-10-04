@@ -107,6 +107,13 @@ jobs:
           grep -q 'class="skip-link"' /tmp/dashboard.html
           grep -q 'aria-current="page"' /tmp/dashboard.html
           grep -q 'aria-label="Ask AI Tax Assistant"' /tmp/dashboard.html
+          grep -q 'id="dashboardDeadlines"' /tmp/dashboard.html
+          grep -q 'function renderDashboardDeadlines' /tmp/dashboard.html
+          grep -q "date:'2026-10-15'" /tmp/dashboard.html
+          if grep -q '<div class="dl-d">15</div><div class="dl-m">Jun</div>' /tmp/dashboard.html; then
+            echo 'Dashboard still contains stale June deadline markup' >&2
+            exit 1
+          fi
           if grep -q 'Sunday, May 3, 2026' /tmp/dashboard.html; then
             echo 'Dashboard still contains stale hard-coded date' >&2
             exit 1
