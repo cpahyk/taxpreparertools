@@ -446,3 +446,30 @@ pre {
   outline: 3px solid rgba(21, 95, 160, 0.36) !important;
   outline-offset: 2px !important;
 }
+
+
+/* Legacy interactive-state cleanup */
+.nav-links {
+  background: rgba(255, 255, 255, 0.985) !important;
+  border-color: #e0e7ef !important;
+  box-shadow: 0 16px 36px rgba(15, 34, 56, 0.10) !important;
+}
+
+.ac-card.open {
+  background: #ffffff !important;
+  border-color: #b9ccdc !important;
+  box-shadow: 0 12px 30px rgba(15, 34, 56, 0.08) !important;
+}
+
+.big-select option:checked {
+  background: #eaf3fb !important;
+  color: #0f2238 !important;
+}
+
+.modal-content,
+.modal-card,
+.dialog-card {
+  background: #ffffff !important;
+  color: #24364b !important;
+  border-color: #dce4ec !important;
+}
