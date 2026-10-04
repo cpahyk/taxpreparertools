@@ -462,7 +462,10 @@ jobs:
             "source:'address'",
             'function applyResolvedJurisdiction',
             'routeType:"search"',
-            'routeType: "search"'
+            'routeType: "search"',
+            'function normalizeAreaFilter',
+            "e.key === 'Home'",
+            "e.key === 'End'"
           ];
           for (const marker of htmlMarkers) {
             if (!html.includes(marker)) failures.push(`Missing property-tax UI safety marker: ${marker}`);
