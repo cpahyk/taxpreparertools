@@ -188,16 +188,16 @@
 <div class="auth-layout">
   <!-- LEFT: FORM -->
   <div class="auth-left">
-    <div class="auth-tag">Welcome Back</div>
-    <div class="auth-title">Sign in to<br>your account</div>
-    <p class="auth-sub">Access your saved calculations, Pro resources, and personalized tax dashboard.</p>
+    <div class="auth-tag" id="loginTag">Welcome Back</div>
+    <div class="auth-title" id="loginTitle">Sign in to<br>your account</div>
+    <p class="auth-sub" id="loginSub">Access your saved calculations, Pro resources, and personalized tax dashboard.</p>
 
-    <div class="social-btns">
-      <button class="social-btn" onclick="signInWithGoogle()"><span class="social-icon">🔵</span> Continue with Google</button>
-      <button class="social-btn" onclick="signInWithMicrosoft()"><span class="social-icon">🔷</span> Continue with Microsoft</button>
+    <div class="social-btns" id="loginSocialBtns">
+      <button type="button" class="social-btn" onclick="signInWithGoogle()"><span class="social-icon">🔵</span> Continue with Google</button>
+      <button type="button" class="social-btn" onclick="signInWithMicrosoft()"><span class="social-icon">🔷</span> Continue with Microsoft</button>
     </div>
 
-    <div class="divider">
+    <div class="divider" id="loginDivider">
       <div class="divider-line"></div>
       <div class="divider-text">or sign in with email</div>
       <div class="divider-line"></div>
@@ -243,7 +243,30 @@
       </div>
     </form>
 
-    <div class="auth-switch">New to TaxPreparerTools? <a href="signup.html">Create a free account</a></div>
+
+    <form class="auth-form" id="recoveryForm" hidden onsubmit="event.preventDefault(); handleRecoveryPassword()">
+      <div class="field">
+        <div class="field-label">New Password</div>
+        <div class="field-input-wrap">
+          <span class="field-icon">🔒</span>
+          <input type="password" id="recoveryPassword" name="new-password" placeholder="At least 8 characters" autocomplete="new-password" aria-label="New Password"/>
+          <button type="button" class="pw-toggle" onclick="togglePw('recoveryPassword',this)" aria-label="Show or hide new password">👁</button>
+        </div>
+        <div class="field-err" id="recoveryPwErr">Password must be at least 8 characters.</div>
+      </div>
+      <div class="field">
+        <div class="field-label">Confirm New Password</div>
+        <div class="field-input-wrap">
+          <span class="field-icon">🔒</span>
+          <input type="password" id="recoveryPasswordConfirm" name="confirm-password" placeholder="Re-enter your new password" autocomplete="new-password" aria-label="Confirm New Password"/>
+        </div>
+        <div class="field-err" id="recoveryConfirmErr">Passwords do not match.</div>
+      </div>
+      <button type="submit" class="submit-btn" id="recoverySubmitBtn">Update Password →</button>
+      <div class="field-err" id="recoveryGeneralErr" role="alert" aria-live="polite"></div>
+    </form>
+
+    <div class="auth-switch" id="loginSwitch">New to TaxPreparerTools? <a href="signup.html">Create a free account</a></div>
   </div>
 
   <!-- RIGHT: BENEFITS -->
@@ -315,6 +338,110 @@ function togglePw(id, btn) {
 const SUPABASE_URL  = 'https://jvaxyaroohrrrbqpztkq.supabase.co';
 const SUPABASE_ANON = 'sb_publishable_TQ5Ft8riuscoFDrN2_M-VQ_HMQaGjxZ';
 const _supabase = supabase.createClient(SUPABASE_URL, SUPABASE_ANON);
+
+function setLoginGeneralError(message) {
+  const box = document.getElementById('loginGeneralErr');
+  box.textContent = message || '';
+  box.classList.toggle('show', !!message);
+}
+
+async function signInWithProvider(provider, scopes) {
+  setLoginGeneralError('');
+  try {
+    const options = { redirectTo: 'https://www.taxpreparertools.com/dashboard.html' };
+    if (scopes) options.scopes = scopes;
+    const { error } = await _supabase.auth.signInWithOAuth({ provider, options });
+    if (error) throw error;
+  } catch (error) {
+    console.error('OAuth sign-in error:', error);
+    setLoginGeneralError('Social sign-in is unavailable right now. Please use email/password or try again later.');
+  }
+}
+
+function signInWithGoogle() {
+  return signInWithProvider('google');
+}
+
+function signInWithMicrosoft() {
+  return signInWithProvider('azure', 'email');
+}
+
+function showRecoveryForm() {
+  document.getElementById('loginTag').textContent = 'Password Recovery';
+  document.getElementById('loginTitle').innerHTML = 'Choose a new<br>password';
+  document.getElementById('loginSub').textContent = 'Enter a new password for your TaxPreparerTools account.';
+  document.getElementById('loginSocialBtns').hidden = true;
+  document.getElementById('loginDivider').hidden = true;
+  document.getElementById('loginForm').hidden = true;
+  document.getElementById('loginSwitch').hidden = true;
+  document.getElementById('recoveryForm').hidden = false;
+  document.getElementById('recoveryPassword').focus();
+}
+
+function showLoginAfterRecovery() {
+  document.getElementById('loginTag').textContent = 'Password Updated';
+  document.getElementById('loginTitle').innerHTML = 'Sign in with<br>your new password';
+  document.getElementById('loginSub').textContent = 'Your password was updated successfully.';
+  document.getElementById('loginSocialBtns').hidden = false;
+  document.getElementById('loginDivider').hidden = false;
+  document.getElementById('loginForm').hidden = false;
+  document.getElementById('loginSwitch').hidden = false;
+  document.getElementById('recoveryForm').hidden = true;
+  setLoginGeneralError('Password updated. Sign in with your new password.');
+  history.replaceState(null, '', 'login.html');
+}
+
+async function handleRecoveryPassword() {
+  const password = document.getElementById('recoveryPassword');
+  const confirm = document.getElementById('recoveryPasswordConfirm');
+  const pwErr = document.getElementById('recoveryPwErr');
+  const confirmErr = document.getElementById('recoveryConfirmErr');
+  const generalErr = document.getElementById('recoveryGeneralErr');
+  const button = document.getElementById('recoverySubmitBtn');
+
+  pwErr.classList.remove('show');
+  confirmErr.classList.remove('show');
+  generalErr.classList.remove('show');
+  generalErr.textContent = '';
+
+  if (!password.value || password.value.length < 8) {
+    pwErr.classList.add('show');
+    password.focus();
+    return;
+  }
+  if (password.value !== confirm.value) {
+    confirmErr.classList.add('show');
+    confirm.focus();
+    return;
+  }
+
+  button.disabled = true;
+  button.textContent = 'Updating…';
+  try {
+    const { error } = await _supabase.auth.updateUser({ password: password.value });
+    if (error) throw error;
+    await _supabase.auth.signOut();
+    showLoginAfterRecovery();
+  } catch (error) {
+    console.error('Password recovery update failed:', error);
+    generalErr.textContent = 'This recovery link may be invalid or expired. Request a new password-reset email and try again.';
+    generalErr.classList.add('show');
+  } finally {
+    button.disabled = false;
+    button.textContent = 'Update Password →';
+  }
+}
+
+_supabase.auth.onAuthStateChange((event) => {
+  if (event === 'PASSWORD_RECOVERY') showRecoveryForm();
+});
+
+if (new URLSearchParams(window.location.search).get('reset') === '1') {
+  _supabase.auth.getSession().then(({ data: { session } }) => {
+    if (session) showRecoveryForm();
+  });
+}
+
 async function handleLogin() {
   const email    = document.getElementById('loginEmail');
   const pw       = document.getElementById('loginPassword');
