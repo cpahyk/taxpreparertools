@@ -589,7 +589,8 @@ function getJurisdictionLabel(stateCode, name) {
   }
   if (stateCode === 'VA' && /^(Virginia Beach|Norfolk)$/i.test(n)) return n + ' City';
   if (stateCode === 'VA' && /City$/i.test(n)) return n;
-  if (MUNICIPAL_LEVEL_STATES.has(stateCode)) return n + ' area';
+  if (MUNICIPAL_LEVEL_STATES.has(stateCode)) return /area$/i.test(n) ? n : n + ' area';
+  if (/\b(County|City|Parish|Borough|Municipality|Census Area)$/i.test(n)) return n;
   return n + ' County';
 }
 
