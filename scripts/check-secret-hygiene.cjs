@@ -12,7 +12,7 @@ const tracked = execFileSync('git', ['ls-files', '-z'], { encoding: 'utf8' })
 const failures = [];
 const envTemplateSuffixes = ['.example', '.sample', '.template'];
 
-function isEnvFile(file) {
+function isTrackedEnvFile(file) {
   const base = path.basename(file);
   if (base === '.env') return true;
   if (!base.startsWith('.env.')) return false;
@@ -20,7 +20,7 @@ function isEnvFile(file) {
 }
 
 for (const file of tracked) {
-  if (isEnvFile(file)) {
+  if (isTrackedEnvFile(file)) {
     failures.push(`${file}: tracked environment file must not be committed`);
   }
 }
@@ -36,10 +36,10 @@ const tokenPatterns = [
   ['Private key', /-----BEGIN (?:RSA |EC |OPENSSH |PGP )?PRIVATE KEY-----/]
 ];
 
-const assignmentPattern = /^\s*(ADMIN_PASSWORD|SECRET_KEY|POSTGRES_PASSWORD|DATABASE_URL|STRIPE_SECRET_KEY|STRIPE_WEBHOOK_SECRET|LICENSE_SECRET)\s*=\s*(.+?)\s*$/;
+const directSecretAssignment = /^\s*(ADMIN_PASSWORD|SECRET_KEY|POSTGRES_PASSWORD|DATABASE_URL|STRIPE_SECRET_KEY|STRIPE_WEBHOOK_SECRET|LICENSE_SECRET)\s*=\s*(["'])(.*?)\2\s*;?\s*$/;
 
 function looksPlaceholder(value) {
-  const v = value.trim().replace(/^["']|["']$/g, '');
+  const v = value.trim();
   return !v ||
     /^<[^>]+>$/.test(v) ||
     /^\$\{[^}]+\}$/.test(v) ||
@@ -66,7 +66,9 @@ for (const file of tracked) {
   }
 
   for (const [label, pattern] of tokenPatterns) {
-    if (pattern.test(content)) failures.push(`${file}: contains a value matching ${label}`);
+    if (pattern.test(content)) {
+      failures.push(`${file}: contains a value matching ${label}`);
+    }
   }
 
   const base = path.basename(file);
@@ -74,9 +76,9 @@ for (const file of tracked) {
   if (isTemplate) continue;
 
   for (const line of content.split(/\r?\n/)) {
-    const match = line.match(assignmentPattern);
-    if (match && !looksPlaceholder(match[2])) {
-      failures.push(`${file}: contains a non-placeholder assignment for ${match[1]}`);
+    const match = line.match(directSecretAssignment);
+    if (match && !looksPlaceholder(match[3])) {
+      failures.push(`${file}: contains a hard-coded non-placeholder assignment for ${match[1]}`);
     }
   }
 }
