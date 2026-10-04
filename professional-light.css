@@ -560,3 +560,80 @@ select option,
   background: #edf7f2 !important;
   color: #166b57 !important;
 }
+
+
+/* Accessibility and document-use polish */
+:target {
+  scroll-margin-top: 96px;
+}
+
+.sr-only {
+  position: absolute !important;
+  width: 1px !important;
+  height: 1px !important;
+  padding: 0 !important;
+  margin: -1px !important;
+  overflow: hidden !important;
+  clip: rect(0, 0, 0, 0) !important;
+  white-space: nowrap !important;
+  border: 0 !important;
+}
+
+button,
+a,
+input,
+select,
+textarea {
+  -webkit-tap-highlight-color: rgba(21, 95, 160, 0.12);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto !important;
+  }
+
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    transition-delay: 0ms !important;
+  }
+}
+
+@media print {
+  html,
+  body {
+    background: #ffffff !important;
+    color: #000000 !important;
+  }
+
+  nav,
+  .nav-hamburger,
+  .hero-bg,
+  .hero-grid,
+  .cta-section,
+  footer {
+    display: none !important;
+  }
+
+  .tool-card,
+  .who-card,
+  .resource-card,
+  .launch-card,
+  .calc-widget,
+  .calc-card,
+  .info-card,
+  .results-panel,
+  .deadline-item {
+    box-shadow: none !important;
+    border-color: #cfd6de !important;
+    break-inside: avoid;
+  }
+
+  a {
+    color: #000000 !important;
+    text-decoration: underline;
+  }
+}
