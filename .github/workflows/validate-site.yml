@@ -318,6 +318,7 @@ jobs:
 
             let total = 0;
             let direct = 0;
+            const uniqueDirect = new Set();
 
             for (const match of stateBlocks) {
               const code = match[1];
@@ -334,7 +335,10 @@ jobs:
                 names.add(key);
 
                 if (!/^https:\/\//i.test(portal)) failures.push(`${code} / ${name}: portal is not HTTPS: ${portal}`);
-                if (!/google\.com\/search/i.test(portal)) direct++;
+                if (!/google\.com\/search/i.test(portal)) {
+                  direct++;
+                  uniqueDirect.add(portal);
+                }
                 if (!['ALL','ADDR_PARCEL'].includes(methods)) failures.push(`${code} / ${name}: unexpected methods token ${methods}.`);
               }
 
@@ -345,13 +349,15 @@ jobs:
             }
 
             if (total < 300) failures.push(`Expected at least 300 listed jurisdictions; found ${total}.`);
-            if (direct < 300) failures.push(`Expected at least 300 direct HTTPS links; found ${direct}.`);
+            if (direct < 300) failures.push(`Expected at least 300 direct HTTPS jurisdiction entries; found ${direct}.`);
+            if (uniqueDirect.size < 290) failures.push(`Expected at least 290 unique direct HTTPS destinations; found ${uniqueDirect.size}.`);
           }
 
           const requiredMarkers = [
             'function getJurisdictionLabel',
             'function getJurisdictionNoun',
             'DIRECT_PORTAL_COUNT',
+            'UNIQUE_DIRECT_PORTAL_COUNT',
             'ZIP matches are approximate',
             'Expected Search Options'
           ];
