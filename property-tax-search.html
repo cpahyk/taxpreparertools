@@ -1676,8 +1676,7 @@ footer { border-top:1px solid var(--border); padding:36px 48px; display:flex; al
   }
 
   function lookupZipJurisdiction(zip){
-    return fetch('https://api.zippopotam.us/us/'+zip)
-      .then(function(r){ if(!r.ok) throw new Error('zip'); return r.json(); })
+    return fetchJsonWithTimeout('https://api.zippopotam.us/us/'+encodeURIComponent(zip),5000)
       .then(function(z){
         var p=z.places&&z.places[0];
         if(!p) throw new Error('noplace');
