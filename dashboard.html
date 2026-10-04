@@ -31,6 +31,11 @@
   *,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
   html,body{height:100%;}
   body{font-family:'DM Sans',sans-serif;background:var(--navy);color:var(--text);display:flex;min-height:100vh;}
+  body.auth-pending .sidebar,
+  body.auth-pending .main-content,
+  body.auth-pending .dash-footer{visibility:hidden;}
+  .auth-gate{display:none;position:fixed;inset:0;z-index:1000;align-items:center;justify-content:center;background:var(--navy);color:var(--text);font-size:.9rem;letter-spacing:.01em;}
+  body.auth-pending .auth-gate{display:flex;}
 
   /* SIDEBAR */
   .sidebar{width:var(--sidebar-w);flex-shrink:0;background:var(--navy-mid);border-right:1px solid var(--border);display:flex;flex-direction:column;position:fixed;top:0;left:0;bottom:0;z-index:100;overflow-y:auto;}
@@ -190,7 +195,8 @@
 </script>
   <link rel="stylesheet" href="/professional-light.css">
 </head>
-<body>
+<body class="auth-pending">
+<div class="auth-gate" id="authGate" role="status" aria-live="polite">Checking your session…</div>
 <h1 class="sr-only">TaxPreparerTools Dashboard</h1>
 
 <!-- SIDEBAR -->
@@ -490,43 +496,53 @@ const SUPABASE_ANON = 'sb_publishable_TQ5Ft8riuscoFDrN2_M-VQ_HMQaGjxZ';
 const _supabase = supabase.createClient(SUPABASE_URL, SUPABASE_ANON);
 
 (async () => {
-  // Auth guard — redirect to login if no session
-  const { data: { session } } = await _supabase.auth.getSession();
-  if (!session) {
-    window.location.href = 'login.html';
-    return;
+  try {
+    // Auth guard — do not reveal dashboard UI until a valid session is confirmed.
+    const { data: { session }, error: sessionError } = await _supabase.auth.getSession();
+    if (sessionError || !session) {
+      window.location.replace('login.html');
+      return;
+    }
+
+    const user = session.user;
+    const meta = user.user_metadata || {};
+
+    // Try to get profile row. A profile lookup failure should not block a valid session.
+    const { data: profile } = await _supabase
+      .from('profiles')
+      .select('first_name, last_name, role, plan')
+      .eq('id', user.id)
+      .single();
+
+    const emailLocal = (user.email || 'user').split('@')[0];
+    const firstName = profile?.first_name || meta.first_name || emailLocal;
+    const lastName  = profile?.last_name  || meta.last_name  || '';
+    const roleLabel = profile?.role || meta.role || 'Tax Professional';
+    // Auth metadata is user controlled; only a server-managed profile plan is displayable.
+    const plan      = (profile?.plan || 'Free').toUpperCase();
+    const initials  = ((firstName[0] || '') + (lastName[0] || '')).toUpperCase() || 'U';
+
+    document.getElementById('sbAvatar').textContent    = initials;
+    document.getElementById('sbUserName').textContent  = firstName + (lastName ? ' ' + lastName : '');
+
+    // Dynamic time-based greeting
+    const hour = new Date().getHours();
+    const greet = hour < 12 ? 'Good morning' : hour < 17 ? 'Good afternoon' : 'Good evening';
+    const greetEl = document.getElementById('dashGreeting');
+    if (greetEl) greetEl.textContent = greet + ', ' + firstName + ' 👋';
+    document.getElementById('sbUserRole').textContent  = roleLabel;
+    document.getElementById('sbPlanBadge').textContent = plan;
+    document.getElementById('accountPlanTitle').textContent = plan === 'FREE' ? 'Free account' : plan + ' account';
+    document.getElementById('accountPlanSub').textContent = 'See billing for current subscription details.';
+    document.getElementById('sbUserBlock').style.opacity = '1';
+
+    document.body.classList.remove('auth-pending');
+    const gate = document.getElementById('authGate');
+    if (gate) gate.setAttribute('hidden', '');
+  } catch (error) {
+    console.error('Dashboard session check failed:', error);
+    window.location.replace('login.html');
   }
-
-  const user = session.user;
-  const meta = user.user_metadata || {};
-
-  // Try to get profile row
-  const { data: profile } = await _supabase
-    .from('profiles')
-    .select('first_name, last_name, role, plan')
-    .eq('id', user.id)
-    .single();
-
-  const firstName = profile?.first_name || meta.first_name || user.email.split('@')[0];
-  const lastName  = profile?.last_name  || meta.last_name  || '';
-  const roleLabel = profile?.role || meta.role || 'Tax Professional';
-  // Auth metadata is user controlled; only a server-managed profile plan is displayable.
-  const plan      = (profile?.plan || 'Free').toUpperCase();
-  const initials  = (firstName[0] + (lastName[0] || '')).toUpperCase();
-
-  document.getElementById('sbAvatar').textContent    = initials;
-  document.getElementById('sbUserName').textContent  = firstName + (lastName ? ' ' + lastName : '');
-
-  // Dynamic time-based greeting
-  const hour = new Date().getHours();
-  const greet = hour < 12 ? 'Good morning' : hour < 17 ? 'Good afternoon' : 'Good evening';
-  const greetEl = document.getElementById('dashGreeting');
-  if (greetEl) greetEl.textContent = greet + ', ' + firstName + ' 👋';
-  document.getElementById('sbUserRole').textContent  = roleLabel;
-  document.getElementById('sbPlanBadge').textContent = plan;
-  document.getElementById('accountPlanTitle').textContent = plan === 'FREE' ? 'Free account' : plan + ' account';
-  document.getElementById('accountPlanSub').textContent = 'See billing for current subscription details.';
-  document.getElementById('sbUserBlock').style.opacity = '1';
 })();
 
 // Logout handler — add to any logout button
