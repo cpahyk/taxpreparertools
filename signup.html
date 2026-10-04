@@ -373,7 +373,7 @@
         <div class="field-input-wrap">
           <span class="field-icon">🔒</span>
           <input type="password" id="signupPassword" placeholder="Min. 8 characters" autocomplete="new-password" oninput="checkStrength(this.value)" aria-label="Password"/>
-          <button class="pw-toggle" onclick="togglePw('signupPassword',this)" tabindex="-1">👁</button>
+          <button type="button" class="pw-toggle" onclick="togglePw('signupPassword',this)" aria-label="Show or hide password">👁</button>
         </div>
         <div class="pw-strength">
           <div class="pw-bar-track"><div class="pw-bar" id="pwBar"></div></div>
@@ -383,7 +383,7 @@
       </div>
 
       <div class="terms-check">
-        <input type="checkbox" id="termsCheck" aria-label="Enter a password"/>
+        <input type="checkbox" id="termsCheck" aria-label="Agree to Terms of Service and Privacy Policy"/>
         <span>I agree to the <a href="terms.html">Terms of Service</a> and <a href="privacy.html">Privacy Policy</a>. I understand that TaxPreparerTools.com provides tools for informational purposes and is not a substitute for professional tax advice.</span>
       </div>
       <div class="field-err" id="termsErr" style="margin-bottom:14px;">Please accept the terms to continue.</div>
