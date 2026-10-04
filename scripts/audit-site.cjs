@@ -182,6 +182,12 @@ if (actionable.length) {
   }
 }
 
+const missingMain = issues.filter(issue => issue.code === 'missing-main').map(issue => issue.file);
+if (missingMain.length) {
+  console.log('Pages missing a main landmark:');
+  for (const file of missingMain) console.log(' [main] ' + file);
+}
+
 console.log(`Wrote ${OUTPUT_JSON} and ${OUTPUT_MD}.`);
 
 if (STRICT && counts.error) {
