@@ -312,8 +312,8 @@
       </div>
 
       <div class="social-btns">
-        <button class="social-btn" onclick="signInWithGoogle()">🔵 Google</button>
-        <button class="social-btn" onclick="signInWithMicrosoft()">🔷 Microsoft</button>
+        <button type="button" class="social-btn" onclick="signInWithGoogle()">🔵 Google</button>
+        <button type="button" class="social-btn" onclick="signInWithMicrosoft()">🔷 Microsoft</button>
       </div>
 
       <div class="divider">
@@ -503,6 +503,34 @@ const SUPABASE_ANON = 'sb_publishable_TQ5Ft8riuscoFDrN2_M-VQ_HMQaGjxZ';
 const _supabase = (typeof supabase !== 'undefined')
   ? supabase.createClient(SUPABASE_URL, SUPABASE_ANON)
   : null;
+
+function setSignupGeneralError(message) {
+  const box = document.getElementById('signupGeneralErr');
+  box.textContent = message || '';
+  box.classList.toggle('show', !!message);
+}
+
+async function signInWithProvider(provider, scopes) {
+  setSignupGeneralError('');
+  try {
+    if (!_supabase) throw new Error('Supabase client unavailable');
+    const options = { redirectTo: 'https://www.taxpreparertools.com/dashboard.html' };
+    if (scopes) options.scopes = scopes;
+    const { error } = await _supabase.auth.signInWithOAuth({ provider, options });
+    if (error) throw error;
+  } catch (error) {
+    console.error('OAuth sign-in error:', error);
+    setSignupGeneralError('Social sign-up is unavailable right now. Please create an account with email/password or try again later.');
+  }
+}
+
+function signInWithGoogle() {
+  return signInWithProvider('google');
+}
+
+function signInWithMicrosoft() {
+  return signInWithProvider('azure', 'email');
+}
 
 async function handleSignup() {
   const first = document.getElementById('firstName');
