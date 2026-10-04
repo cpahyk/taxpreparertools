@@ -473,3 +473,47 @@ pre {
   color: #24364b !important;
   border-color: #dce4ec !important;
 }
+
+
+/* Final light-theme consistency pass */
+.controls,
+.search-filter-bar,
+.filter-bar,
+.toolbar,
+.tool-controls {
+  background: #ffffff !important;
+  border-color: #e0e7ef !important;
+  box-shadow: 0 8px 24px rgba(15, 34, 56, 0.05) !important;
+}
+
+select option,
+.big-select option {
+  background: #ffffff !important;
+  color: #182b40 !important;
+}
+
+.cat-chip.on .cc-count,
+.cat-chip.active .cc-count {
+  background: #155fa0 !important;
+  color: #ffffff !important;
+  border-color: #155fa0 !important;
+}
+
+@media (min-width: 901px) {
+  nav .nav-links,
+  nav ul.nav-links {
+    background: transparent !important;
+    border-color: transparent !important;
+    box-shadow: none !important;
+  }
+}
+
+@media (max-width: 900px) {
+  nav .nav-links,
+  nav .nav-links.mobile-open,
+  nav ul.nav-links {
+    background: rgba(255, 255, 255, 0.99) !important;
+    border-color: #e0e7ef !important;
+    box-shadow: 0 16px 36px rgba(15, 34, 56, 0.10) !important;
+  }
+}
