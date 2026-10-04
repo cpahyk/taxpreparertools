@@ -520,7 +520,9 @@ function goAI(q) {
 
 const RECENT_TOOLS_KEY = 'tpt_recent_tools_v1';
 
-function readRecentTools() {
+function isSafeRecentToolUrl(url) {
+  return typeof url === 'string' &&
+    /^[A-Za-z0-9][A-Za-z0-9._-]*\.html(?:[?#][A-Za-z0-9._~!function readRecentTools() {
   try {
     const parsed = JSON.parse(localStorage.getItem(RECENT_TOOLS_KEY) || '[]');
     if (!Array.isArray(parsed)) return [];
@@ -535,7 +537,24 @@ function readRecentTools() {
 }
 
 function rememberToolVisit(name, url, emoji, description) {
-  if (!name || !url || !/^[A-Za-z0-9._/-]+\.html(?:[?#].*)?$/.test(url)) return;
+  if (!name || !url || !/^[A-Za-z0-9._/-]+\.html(?:[?#].*)?$/.test(url)) return;'()*+,;=:@/?%-]*)?$/.test(url);
+}
+
+function readRecentTools() {
+  try {
+    const parsed = JSON.parse(localStorage.getItem(RECENT_TOOLS_KEY) || '[]');
+    if (!Array.isArray(parsed)) return [];
+    return parsed.filter(item =>
+      item && typeof item.name === 'string' &&
+      isSafeRecentToolUrl(item.url)
+    ).slice(0, 5);
+  } catch (_) {
+    return [];
+  }
+}
+
+function rememberToolVisit(name, url, emoji, description) {
+  if (!name || !isSafeRecentToolUrl(url)) return;
   const current = readRecentTools().filter(item => item.url !== url);
   current.unshift({
     name: String(name).slice(0, 80),

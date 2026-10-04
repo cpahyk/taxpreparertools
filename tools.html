@@ -808,9 +808,16 @@ function renderTools(list) {
 
 const RECENT_TOOLS_KEY = 'tpt_recent_tools_v1';
 
+function isSafeRecentToolUrl(url) {
+  return typeof url === 'string' &&
+    /^[A-Za-z0-9][A-Za-z0-9._-]*\.html(?:[?#][A-Za-z0-9._~!function recordRecentToolFromCard(link) {
+  const href = link?.getAttribute('href') || '';
+  if (!/^[A-Za-z0-9._/-]+\.html(?:[?#].*)?$/.test(href)) return;'()*+,;=:@/?%-]*)?$/.test(url);
+}
+
 function recordRecentToolFromCard(link) {
   const href = link?.getAttribute('href') || '';
-  if (!/^[A-Za-z0-9._/-]+\.html(?:[?#].*)?$/.test(href)) return;
+  if (!isSafeRecentToolUrl(href)) return;
   const name = link.querySelector('.card-name,.list-name')?.textContent?.trim();
   if (!name) return;
   const emoji = link.querySelector('.tool-emoji,.list-emoji')?.textContent?.trim() || '🧮';
