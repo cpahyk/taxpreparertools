@@ -941,11 +941,22 @@ footer { border-top:1px solid var(--border); padding:36px 48px; display:flex; al
       }
     }
 
-    var q = countyInput.value.trim().toLowerCase();
+    function normalizeAreaFilter(value) {
+      return String(value || '')
+        .toLowerCase()
+        .replace(/[.\u2019']/g,'')
+        .replace(/[-_/]+/g,' ')
+        .replace(/[^a-z0-9\s&]/g,' ')
+        .replace(/\s+/g,' ')
+        .trim();
+    }
+
+    var q = normalizeAreaFilter(countyInput.value);
     var counties = DATA.getCounties(currentState.code);
     var filtered = q ? counties.filter(function(item){
-      var label = DATA.getJurisdictionLabel(currentState.code, item.name).toLowerCase();
-      return item.name.toLowerCase().indexOf(q) >= 0 || label.indexOf(q) >= 0;
+      var name = normalizeAreaFilter(item.name);
+      var label = normalizeAreaFilter(DATA.getJurisdictionLabel(currentState.code, item.name));
+      return name.indexOf(q) >= 0 || label.indexOf(q) >= 0;
     }) : counties;
     renderCountyList(filtered);
     countyList.classList.add('show');
@@ -985,6 +996,16 @@ footer { border-top:1px solid var(--border); padding:36px 48px; display:flex; al
       countyList.classList.add('show');
       countyInput.setAttribute('aria-expanded','true');
       setActiveCountyOption(activeCountyOption < 0 ? items.length - 1 : activeCountyOption - 1);
+    } else if (e.key === 'Home' && items.length) {
+      e.preventDefault();
+      countyList.classList.add('show');
+      countyInput.setAttribute('aria-expanded','true');
+      setActiveCountyOption(0);
+    } else if (e.key === 'End' && items.length) {
+      e.preventDefault();
+      countyList.classList.add('show');
+      countyInput.setAttribute('aria-expanded','true');
+      setActiveCountyOption(items.length - 1);
     } else if (e.key === 'Enter' && activeCountyOption >= 0 && items[activeCountyOption]) {
       e.preventDefault();
       items[activeCountyOption].click();
