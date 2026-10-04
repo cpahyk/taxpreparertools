@@ -1304,6 +1304,84 @@ footer { border-top:1px solid var(--border); padding:36px 48px; display:flex; al
     return baseMatches.length===1 ? baseMatches[0] : null;
   }
 
+  function fetchJsonWithTimeout(url, timeoutMs){
+    var controller = typeof AbortController !== 'undefined' ? new AbortController() : null;
+    var timer = window.setTimeout(function(){ if(controller) controller.abort(); }, timeoutMs || 4500);
+    return fetch(url, controller ? {signal:controller.signal} : undefined)
+      .then(function(r){ if(!r.ok) throw new Error('http-'+r.status); return r.json(); })
+      .finally(function(){ window.clearTimeout(timer); });
+  }
+
+  function lookupCountyFromCoordinates(lat, lon){
+    var areaUrl='https://geo.fcc.gov/api/census/area?lat='+encodeURIComponent(lat)+'&lon='+encodeURIComponent(lon)+'&format=json';
+    var blockUrl='https://geo.fcc.gov/api/census/block/find?latitude='+encodeURIComponent(lat)+'&longitude='+encodeURIComponent(lon)+'&format=json';
+
+    return fetchJsonWithTimeout(areaUrl,4500)
+      .then(function(a){
+        var res=a&&a.results&&a.results[0];
+        var county=res&&res.county_name ? String(res.county_name).trim() : '';
+        if(county) return county;
+        throw new Error('fcc-area-empty');
+      })
+      .catch(function(){
+        return fetchJsonWithTimeout(blockUrl,4500)
+          .then(function(b){
+            var county=b&&b.County&&b.County.name ? String(b.County.name).trim() : '';
+            if(county) return county;
+            throw new Error('fcc-block-empty');
+          });
+      })
+      .catch(function(){
+        return lookupCountyViaCensusJsonp(lat,lon);
+      })
+      .catch(function(){ return ''; });
+  }
+
+  function lookupCountyViaCensusJsonp(lat, lon){
+    return new Promise(function(resolve,reject){
+      var callback='ptCensusCounty_'+Date.now()+'_'+Math.floor(Math.random()*100000);
+      var script=document.createElement('script');
+      var finished=false;
+      var timer=window.setTimeout(function(){ cleanup(); reject(new Error('census-timeout')); },5000);
+      function cleanup(){
+        if(finished) return;
+        finished=true;
+        window.clearTimeout(timer);
+        try{ delete window[callback]; }catch(e){ window[callback]=undefined; }
+        if(script.parentNode) script.parentNode.removeChild(script);
+      }
+      window[callback]=function(payload){
+        var groups=payload&&payload.result&&payload.result.geographies;
+        var counties=groups&&(groups.Counties||groups.counties);
+        var county=counties&&counties[0]&&(counties[0].NAME||counties[0].BASENAME);
+        cleanup();
+        if(county) resolve(String(county).trim());
+        else reject(new Error('census-empty'));
+      };
+      script.onerror=function(){ cleanup(); reject(new Error('census-script')); };
+      script.src='https://geocoding.geo.census.gov/geocoder/geographies/coordinates'
+        +'?x='+encodeURIComponent(lon)
+        +'&y='+encodeURIComponent(lat)
+        +'&benchmark=Public_AR_Current'
+        +'&vintage=Current_Current'
+        +'&layers=Counties'
+        +'&format=jsonp'
+        +'&callback='+encodeURIComponent(callback);
+      document.head.appendChild(script);
+    });
+  }
+
+  function inferCountyFromPlace(placeName, stateCode){
+    if(!data || !data.getCounties || !placeName) return '';
+    var place=normalizeJurisdiction(placeName);
+    if(!place) return '';
+    var matches=data.getCounties(stateCode).filter(function(item){
+      var hay=normalizeJurisdiction((item.name||'')+' '+(item.notes||''));
+      return hay.indexOf(place)>=0;
+    });
+    return matches.length===1 ? matches[0].name : '';
+  }
+
   function resolve(){
     var raw=(input.value||'').trim();
     var zips=raw.match(/\b\d{5}(?:-\d{4})?\b/g);
@@ -1315,12 +1393,10 @@ footer { border-top:1px solid var(--border); padding:36px 48px; display:flex; al
       .then(function(z){
         var p=z.places&&z.places[0];
         if(!p) throw new Error('noplace');
-        var abbr=p['state abbreviation'], lat=p.latitude, lon=p.longitude;
-        return fetch('https://geo.fcc.gov/api/census/area?lat='+encodeURIComponent(lat)+'&lon='+encodeURIComponent(lon)+'&format=json')
-          .then(function(r){ return r.ok ? r.json() : {}; })
-          .then(function(a){
-            var res=a&&a.results&&a.results[0];
-            return { abbr:abbr, county: res && res.county_name ? String(res.county_name).trim() : '' };
+        var abbr=p['state abbreviation'], lat=p.latitude, lon=p.longitude, place=p['place name']||'';
+        return lookupCountyFromCoordinates(lat,lon)
+          .then(function(county){
+            return { abbr:abbr, county:county || inferCountyFromPlace(place,abbr), place:place };
           });
       })
       .then(function(out){
@@ -1341,7 +1417,8 @@ footer { border-top:1px solid var(--border); padding:36px 48px; display:flex; al
             setMsg('State set to '+out.abbr+', but the detected jurisdiction ('+out.county+') did not map uniquely to a listed area. Please choose the jurisdiction manually below.','');
           }
         } else {
-          setMsg('State set to '+out.abbr+'. Pick your county from the list below.','');
+          var placeText=out.place ? ' for '+out.place : '';
+          setMsg('State set to '+out.abbr+', but we could not resolve a unique county'+placeText+'. Pick the county from the list below.','');
         }
       })
       .catch(function(){
