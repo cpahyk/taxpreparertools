@@ -560,6 +560,12 @@ const SUPABASE_URL  = 'https://jvaxyaroohrrrbqpztkq.supabase.co';
 const SUPABASE_ANON = 'sb_publishable_TQ5Ft8riuscoFDrN2_M-VQ_HMQaGjxZ';
 const _supabase = supabase.createClient(SUPABASE_URL, SUPABASE_ANON);
 
+_supabase.auth.onAuthStateChange((event) => {
+  if (event === 'SIGNED_OUT' || event === 'USER_DELETED') {
+    window.location.replace('login.html');
+  }
+});
+
 (async () => {
   try {
     // Auth guard — do not reveal dashboard UI until a valid session is confirmed.
@@ -638,8 +644,16 @@ const _supabase = supabase.createClient(SUPABASE_URL, SUPABASE_ANON);
 
 // Logout handler — add to any logout button
 async function handleLogout() {
-  await _supabase.auth.signOut();
-  window.location.replace('login.html');
+  const button = document.querySelector('.sb-signout');
+  if (button) {
+    button.disabled = true;
+    button.textContent = 'Signing out…';
+  }
+  try {
+    await _supabase.auth.signOut();
+  } finally {
+    window.location.replace('login.html');
+  }
 }
 </script>
 
