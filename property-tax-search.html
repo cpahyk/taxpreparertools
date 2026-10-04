@@ -1488,10 +1488,11 @@ footer { border-top:1px solid var(--border); padding:36px 48px; display:flex; al
     setState(out.abbr);
 
     if(out.county){
+      var municipalLevel = data && data.getJurisdictionNoun && data.getJurisdictionNoun(out.abbr) === 'local area';
       var hit = out.abbr === 'DC'
         ? (countyList && countyList.querySelector('.county-item'))
-        : findCountyItem(out.county, out.abbr);
-      var matchedName = hit && hit.dataset && hit.dataset.name ? hit.dataset.name : out.county;
+        : (municipalLevel && out.place ? null : findCountyItem(out.county, out.abbr));
+      var matchedName = hit && hit.dataset && hit.dataset.name ? hit.dataset.name : (municipalLevel && out.place ? out.place : out.county);
       var label = data && data.getJurisdictionLabel ? data.getJurisdictionLabel(out.abbr, matchedName) : matchedName;
 
       if(hit){
@@ -1505,17 +1506,26 @@ footer { border-top:1px solid var(--border); padding:36px 48px; display:flex; al
         return;
       }
 
+      var detectedName = municipalLevel && out.place ? out.place : out.county;
+      var detectedNotes = municipalLevel
+        ? "This state generally administers property assessment at the city/town level. The ZIP/address shortcut detected this local place; use the search result to locate its official assessor or tax office and verify the government source before relying on it."
+        : "Detected from the ZIP/address shortcut, but this jurisdiction does not yet have a curated direct portal in our directory. Use the search result to locate the official assessor or tax office and verify the government source before relying on it.";
       var detectedFallback = {
-        name: out.county,
-        portal: data.buildGoogleFallback(currentState.name, out.county),
+        name: detectedName,
+        portal: data.buildGoogleFallback(currentState.name, detectedName),
         routeType: "search",
         matchSource: "detected",
         methods: ["address","parcel","owner"],
-        notes: "Detected from the ZIP/address shortcut, but this jurisdiction does not yet have a curated direct portal in our directory. Use the search result to locate the official assessor or tax office and verify the government source before relying on it."
+        notes: detectedNotes
       };
       selectCounty(detectedFallback);
       try{ document.getElementById('step3').scrollIntoView({behavior:'smooth',block:'nearest'}); }catch(e){}
-      setMsg('Detected jurisdiction: '+label+', '+out.abbr+'. No curated direct portal is listed yet, so a verified-source search fallback is shown below.','');
+      setMsg(
+        municipalLevel
+          ? 'Detected local area: '+label+', '+out.abbr+'. Property assessment is generally municipal here, so a city/town search fallback is shown below.'
+          : 'Detected jurisdiction: '+label+', '+out.abbr+'. No curated direct portal is listed yet, so a verified-source search fallback is shown below.',
+        ''
+      );
       return;
     }
 
