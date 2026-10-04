@@ -389,6 +389,7 @@
       <div class="field-err" id="termsErr" style="margin-bottom:14px;">Please accept the terms to continue.</div>
 
       <button class="submit-btn" onclick="handleSignup()">Create Free Account →</button>
+      <div class="field-err" id="signupGeneralErr" role="alert" aria-live="polite" style="margin-top:10px;"></div>
 
       <div class="secure-note">🔒 256-bit SSL · No spam · Unsubscribe anytime</div>
       <div class="auth-switch" style="margin-top:16px;">Already have an account? <a href="login.html">Sign in</a></div>
@@ -511,8 +512,10 @@ async function handleSignup() {
 
   // — Validation —
   let valid = true;
-  ['firstErr','lastErr','signupEmailErr','signupPwErr','termsErr'].forEach(id => {
-    document.getElementById(id).classList.remove('show');
+  ['firstErr','lastErr','signupEmailErr','signupPwErr','termsErr','signupGeneralErr'].forEach(id => {
+    const el = document.getElementById(id);
+    el.classList.remove('show');
+    if (id === 'signupGeneralErr') el.textContent = '';
   });
   [first, last, email, pw].forEach(el => el.classList.remove('error'));
 
@@ -575,7 +578,9 @@ async function handleSignup() {
       document.getElementById('signupEmailErr').textContent = 'This email is already registered. Try logging in.';
       email.classList.add('error');
     } else {
-      alert('Sign-up failed: ' + msg + '\nPlease try again or contact support.');
+      const generalErr = document.getElementById('signupGeneralErr');
+      generalErr.textContent = 'Sign-up failed. Please try again or contact support if the problem continues.';
+      generalErr.classList.add('show');
     }
     console.error('Signup error:', err);
   }
