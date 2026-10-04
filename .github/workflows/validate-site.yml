@@ -419,7 +419,17 @@ jobs:
             'https://www.laramiecountywy.gov/government/elected-officials/assessor/',
             'https://www.natronacounty-wy.gov/176/Assessor',
             'https://mylandinfo.sbcounty.gov/',
-            'https://www.westchestergov.com/property-tax'
+            'https://www.westchestergov.com/property-tax',
+            'https://propertytax.newcastlede.gov/',
+            'https://www.allencounty.us/assessor',
+            'https://www.gallatin.mt.gov/treasurer',
+            'https://www.carson.org/government/departments-a-f/assessor',
+            'https://www.lehighcounty.org/Departments/Assessment',
+            'https://www.co.berks.pa.us/Dept/Assessment/Pages/default.aspx',
+            'https://www.assessormelvinburgess.com/propertysearch',
+            'https://www3.co.weber.ut.us/assessor/',
+            'https://www.vbgov.com/government/departments/assessor',
+            'https://pbcpao.gov/Property/Search'
           ];
           for (const staleUrl of knownStalePropertyTaxUrls) {
             if (data.includes(staleUrl)) failures.push(`Known stale property-tax URL returned: ${staleUrl}`);
