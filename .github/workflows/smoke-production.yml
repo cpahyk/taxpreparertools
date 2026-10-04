@@ -130,6 +130,8 @@ jobs:
           ! grep -q '{ name:"Cook",       portal:"https://www.cookcountyassessor.com/advanced-search"' /tmp/property-tax-data.js
           grep -q '{ name:"Tippecanoe", portal:"https://www.tippecanoe.in.gov/150/Assessor"' /tmp/property-tax-data.js
           ! grep -q 'https://www.tippecanoe.in.gov/137/Assessor' /tmp/property-tax-data.js
+          grep -q '{ name:"Manatee",     portal:"https://www.manateepao.gov/"' /tmp/property-tax-data.js
+          ! grep -q '{ name:"Manatee",     portal:"https://www.manateepao.gov/search/"' /tmp/property-tax-data.js
           grep -q 'function getJurisdictionLabel' /tmp/property-tax-data.js
           grep -q 'UNIQUE_DIRECT_PORTAL_COUNT' /tmp/property-tax-data.js
           if grep -q 'portal:"http://' /tmp/property-tax-data.js; then
