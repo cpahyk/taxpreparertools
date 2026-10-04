@@ -308,7 +308,7 @@ jobs:
             failures.push(`Expected 51 unique state/DC entries; found ${stateCodes.length} rows / ${uniqueStates.size} unique.`);
           }
 
-          if (!html.includes('src="/assets/js/property-tax-data.js"')) {
+          if (!html.includes('src="/assets/js/property-tax-data.js?v=')) {
             failures.push('property-tax-search.html must load the shared property-tax data file.');
           }
           if (html.includes('const COUNTY_PORTALS = {')) {
@@ -376,7 +376,8 @@ jobs:
             'ZIP matches are approximate',
             'Expected Search Options',
             'aria-autocomplete="list"',
-            'aria-activedescendant'
+            'aria-activedescendant',
+            "classList.toggle('kbd-focus'"
           ];
           for (const marker of htmlMarkers) {
             if (!html.includes(marker)) failures.push(`Missing property-tax UI safety marker: ${marker}`);
