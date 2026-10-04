@@ -36,7 +36,7 @@ jobs:
       - name: Audit whole site quality
         shell: bash
         run: |
-          node scripts/audit-site.cjs
+          node scripts/audit-site.cjs --strict
           cat site-audit.md >> "$GITHUB_STEP_SUMMARY"
 
       - name: Validate inline JavaScript syntax
