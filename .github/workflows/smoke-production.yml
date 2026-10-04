@@ -77,6 +77,9 @@ jobs:
           grep -q '/geocoder/geographies/onelineaddress' /tmp/property-tax.html
           grep -q "source:'address'" /tmp/property-tax.html
           grep -q 'function applyResolvedJurisdiction' /tmp/property-tax.html
+          grep -q 'routeType:"search"' /tmp/property-tax.html
+          grep -q 'routeType: "search"' /tmp/property-tax.html
+          grep -q "county.routeType === 'search'" /tmp/property-tax-data.js
           grep -q 'function getJurisdictionLabel' /tmp/property-tax-data.js
           grep -q 'UNIQUE_DIRECT_PORTAL_COUNT' /tmp/property-tax-data.js
           if grep -q 'portal:"http://' /tmp/property-tax-data.js; then
