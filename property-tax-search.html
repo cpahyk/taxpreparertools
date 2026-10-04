@@ -1675,6 +1675,20 @@ footer { border-top:1px solid var(--border); padding:36px 48px; display:flex; al
     });
   }
 
+  function lookupZipJurisdiction(zip){
+    return fetch('https://api.zippopotam.us/us/'+zip)
+      .then(function(r){ if(!r.ok) throw new Error('zip'); return r.json(); })
+      .then(function(z){
+        var p=z.places&&z.places[0];
+        if(!p) throw new Error('noplace');
+        var abbr=p['state abbreviation'], lat=p.latitude, lon=p.longitude, place=p['place name']||'';
+        return lookupCountyFromCoordinates(lat,lon)
+          .then(function(county){
+            return {abbr:abbr,county:county || inferCountyFromPlace(place,abbr),place:place,source:'zip'};
+          });
+      });
+  }
+
   function applyResolvedJurisdiction(out){
     if(!out || !out.abbr) throw new Error('nostate');
     setState(out.abbr);
@@ -1734,40 +1748,45 @@ footer { border-top:1px solid var(--border); padding:36px 48px; display:flex; al
     }
 
     var zips=raw.match(/\b\d{5}(?:-\d{4})?\b/g);
-    setMsg(zips ? 'Locating ZIP…' : 'Matching address with the U.S. Census Geocoder…');
+    var bareZip=/^\d{5}(?:-\d{4})?$/.test(raw);
+    var fallbackZip=zips ? zips[zips.length-1].slice(0,5) : '';
+
+    if(!bareZip && raw.length<8){
+      setMsg('Enter a complete U.S. street address, including city and state, or use a 5-digit ZIP code.','err');
+      input.focus();
+      return;
+    }
+
+    setMsg(
+      bareZip
+        ? 'Locating ZIP…'
+        : (fallbackZip
+            ? 'Matching the full address first; ZIP will be used only as a fallback…'
+            : 'Matching address with the U.S. Census Geocoder…')
+    );
     btn.disabled=true;
 
     var task;
-    if(zips){
-      var zip=zips[zips.length-1].slice(0,5);
-      task=fetch('https://api.zippopotam.us/us/'+zip)
-        .then(function(r){ if(!r.ok) throw new Error('zip'); return r.json(); })
-        .then(function(z){
-          var p=z.places&&z.places[0];
-          if(!p) throw new Error('noplace');
-          var abbr=p['state abbreviation'], lat=p.latitude, lon=p.longitude, place=p['place name']||'';
-          return lookupCountyFromCoordinates(lat,lon)
-            .then(function(county){
-              return {abbr:abbr,county:county || inferCountyFromPlace(place,abbr),place:place,source:'zip'};
-            });
-        });
+    if(bareZip){
+      task=lookupZipJurisdiction(fallbackZip);
     } else {
-      if(raw.length<8){
-        setMsg('Enter a complete U.S. street address, including city and state, or use a 5-digit ZIP code.','err');
-        btn.disabled=false;
-        input.focus();
-        return;
-      }
       task=geocodeAddressViaCensusJsonp(raw);
+      if(fallbackZip){
+        task=task.catch(function(){
+          return lookupZipJurisdiction(fallbackZip);
+        });
+      }
     }
 
     task
       .then(applyResolvedJurisdiction)
       .catch(function(){
         setMsg(
-          zips
+          bareZip
             ? 'Couldn’t auto-detect from that ZIP. Please select your state and county manually below.'
-            : 'Couldn’t match that address. Include the street, city, and state, or use a 5-digit ZIP code.',
+            : (fallbackZip
+                ? 'Couldn’t match that address or its ZIP. Please select your state and jurisdiction manually below.'
+                : 'Couldn’t match that address. Include the street, city, and state, or use a 5-digit ZIP code.'),
           'err'
         );
       })
