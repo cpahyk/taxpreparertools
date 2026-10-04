@@ -1,0 +1,177 @@
+#!/usr/bin/env node
+'use strict';
+
+const fs = require('fs');
+const path = require('path');
+
+const STRICT = process.argv.includes('--strict') || process.env.SITE_AUDIT_STRICT === '1';
+const OUTPUT_JSON = process.env.SITE_AUDIT_JSON || 'site-audit.json';
+const OUTPUT_MD = process.env.SITE_AUDIT_MD || 'site-audit.md';
+
+function walk(dir) {
+  return fs.readdirSync(dir, { withFileTypes: true }).flatMap(entry => {
+    if (['.git','.wrangler','node_modules'].includes(entry.name)) return [];
+    const full = path.join(dir, entry.name);
+    return entry.isDirectory() ? walk(full) : [full];
+  });
+}
+
+function attr(tag, name) {
+  const match = tag.match(new RegExp('\\b' + name + '\\s*=\\s*["\\\']([^"\\\']*)["\\\']','i'));
+  return match ? match[1] : '';
+}
+
+function sitemapFiles() {
+  if (!fs.existsSync('sitemap.xml')) return new Set();
+  const xml = fs.readFileSync('sitemap.xml','utf8');
+  const urls = [...xml.matchAll(/<loc>(.*?)<\/loc>/g)].map(m => m[1]);
+  const files = new Set();
+
+  for (const value of urls) {
+    try {
+      const pathname = new URL(value).pathname;
+      let file;
+      if (pathname === '/') file = 'index.html';
+      else if (pathname.endsWith('/')) file = pathname.slice(1) + 'index.html';
+      else file = pathname.slice(1) + '.html';
+      if (fs.existsSync(file)) files.add(path.normalize(file));
+    } catch (_) {}
+  }
+  return files;
+}
+
+const sitemap = sitemapFiles();
+const excludedTheme = new Set(['fo-verify.html']);
+const htmlFiles = walk('.').filter(file => file.endsWith('.html')).map(file => file.replace(/^\.\//,'')).sort();
+const issues = [];
+const pages = [];
+
+function add(file, severity, code, message) {
+  issues.push({ file, severity, code, message });
+}
+
+for (const file of htmlFiles) {
+  const html = fs.readFileSync(file,'utf8');
+  const noindex = /<meta[^>]+name=["']robots["'][^>]+content=["'][^"']*noindex/i.test(html);
+  const inSitemap = sitemap.has(path.normalize(file));
+  const title = html.match(/<title>([\s\S]*?)<\/title>/i)?.[1]?.trim() || '';
+  const description = html.match(/<meta[^>]+name=["']description["'][^>]+content=["']([^"']+)["']/i)?.[1]?.trim() || '';
+  const canonical = html.match(/<link[^>]+rel=["']canonical["'][^>]+href=["']([^"']+)["']/i)?.[1]?.trim()
+    || html.match(/<link[^>]+href=["']([^"']+)["'][^>]+rel=["']canonical["']/i)?.[1]?.trim()
+    || '';
+  const h1Count = (html.match(/<h1\b/gi) || []).length;
+  const hasMain = /<main\b|role=["']main["']/i.test(html);
+  const usesTheme = /professional-light\.css/.test(html);
+  const hasViewport = /<meta[^>]+name=["']viewport["']/i.test(html);
+  const hasLang = /<html[^>]+lang=["'][^"']+["']/i.test(html);
+  const hasCharset = /<meta[^>]+charset=/i.test(html);
+
+  if (!title) add(file,'error','missing-title','Missing <title>.');
+  if (!hasViewport) add(file,'error','missing-viewport','Missing viewport meta tag.');
+  if (!hasLang) add(file,'error','missing-lang','Missing language on <html>.');
+  if (!hasCharset) add(file,'warning','missing-charset','Missing charset declaration.');
+  if (!excludedTheme.has(file) && !usesTheme) add(file,'error','missing-theme','Missing professional-light.css.');
+
+  if (inSitemap && !noindex) {
+    if (!description) add(file,'error','missing-description','Indexable sitemap page has no meta description.');
+    if (!canonical) add(file,'error','missing-canonical','Indexable sitemap page has no canonical URL.');
+    if (h1Count !== 1) add(file,'warning','h1-count',`Expected one H1 on indexable page; found ${h1Count}.`);
+    if (!hasMain) add(file,'warning','missing-main','Indexable page has no <main> or role="main" landmark.');
+  }
+
+  const ids = [...html.matchAll(/\bid=["']([^"']+)["']/gi)].map(m => m[1]);
+  const seen = new Set();
+  for (const id of ids) {
+    if (seen.has(id)) add(file,'error','duplicate-id',`Duplicate id="${id}".`);
+    seen.add(id);
+  }
+
+  const anchors = [...html.matchAll(/<a\b[^>]*>/gi)].map(m => m[0]);
+  for (const tag of anchors) {
+    if (attr(tag,'target').toLowerCase() !== '_blank') continue;
+    const rel = attr(tag,'rel').toLowerCase().split(/\s+/).filter(Boolean);
+    if (!rel.includes('noopener')) {
+      add(file,'warning','unsafe-blank','target="_blank" link is missing rel="noopener".');
+    }
+  }
+
+  if (/\balert\s*\(/.test(html) || /\bprompt\s*\(/.test(html)) {
+    add(file,'warning','native-dialog','Uses browser alert()/prompt() instead of inline UI.');
+  }
+
+  const images = [...html.matchAll(/<img\b[^>]*>/gi)].map(m => m[0]);
+  for (const tag of images) {
+    if (!/\balt\s*=/.test(tag)) add(file,'warning','missing-img-alt','Image tag is missing alt attribute.');
+  }
+
+  pages.push({
+    file,
+    inSitemap,
+    noindex,
+    title: !!title,
+    description: !!description,
+    canonical: !!canonical,
+    theme: usesTheme,
+    viewport: hasViewport,
+    lang: hasLang,
+    h1Count,
+    main: hasMain
+  });
+}
+
+const counts = issues.reduce((acc, issue) => {
+  acc[issue.severity] = (acc[issue.severity] || 0) + 1;
+  acc.byCode[issue.code] = (acc.byCode[issue.code] || 0) + 1;
+  return acc;
+},{ error:0, warning:0, byCode:{} });
+
+const report = {
+  generatedAt: new Date().toISOString(),
+  htmlFiles: htmlFiles.length,
+  sitemapPages: sitemap.size,
+  strict: STRICT,
+  counts,
+  issues,
+  pages
+};
+
+fs.writeFileSync(OUTPUT_JSON, JSON.stringify(report,null,2)+'\n');
+
+const md = [
+  '# Site-wide HTML Audit',
+  '',
+  `Generated: ${report.generatedAt}`,
+  `HTML files scanned: ${htmlFiles.length}`,
+  `Sitemap-backed pages: ${sitemap.size}`,
+  `Errors: ${counts.error}`,
+  `Warnings: ${counts.warning}`,
+  '',
+  '## Issue counts',
+  '',
+  ...Object.entries(counts.byCode).sort((a,b)=>b[1]-a[1]).map(([code,count])=>`- **${code}**: ${count}`),
+  '',
+  '## Issues',
+  ''
+];
+
+if (!issues.length) {
+  md.push('No issues found.');
+} else {
+  md.push('| Severity | File | Code | Message |','|---|---|---|---|');
+  for (const issue of issues) {
+    md.push(`| ${issue.severity} | ${issue.file.replace(/\|/g,'\\|')} | ${issue.code} | ${issue.message.replace(/\|/g,'\\|')} |`);
+  }
+}
+
+fs.writeFileSync(OUTPUT_MD, md.join('\n')+'\n');
+
+console.log(`Site audit scanned ${htmlFiles.length} HTML files: ${counts.error} errors, ${counts.warning} warnings.`);
+for (const [code,count] of Object.entries(counts.byCode).sort((a,b)=>b[1]-a[1])) {
+  console.log(` - ${code}: ${count}`);
+}
+console.log(`Wrote ${OUTPUT_JSON} and ${OUTPUT_MD}.`);
+
+if (STRICT && counts.error) {
+  console.error('Strict site audit failed.');
+  process.exit(1);
+}
