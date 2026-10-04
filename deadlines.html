@@ -444,12 +444,20 @@ const DEADLINES = [
   { date:'2026-09-15', name:'Q3 2026 Estimated Tax Payment', desc:'Third quarter 2026 estimated tax payment due.', tags:['est','ind'], year:2026 },
   { date:'2026-09-15', name:'Extended S-Corp & Partnership Returns', desc:'Extended deadline for S-Corp and Partnership returns that requested extension in March.', tags:['biz','ext'], year:2026 },
   { date:'2026-10-15', name:'Extended Individual Return (Form 1040)', desc:'Final extended deadline for 2025 individual returns. No further extensions available.', tags:['ind','ext'], year:2026 },
+  { date:'2027-01-15', name:'Q4 2026 Estimated Tax Payment', desc:'Fourth-quarter 2026 estimated tax payment due for individuals who need to make estimated payments.', tags:['est','ind'], year:2027 },
 ];
 
 let currentFilter = 'all';
-let currentYear = 2025;
-let calYear = 2026;
-let calMonth = 4; // May = 4 (0-indexed)
+const availableYears = [...new Set(DEADLINES.filter(d => d.year <= 2026).map(d => d.year))].sort();
+let currentYear = availableYears.includes(TODAY.getFullYear()) ? TODAY.getFullYear() : Math.max(...availableYears);
+let calYear = TODAY.getFullYear();
+let calMonth = TODAY.getMonth();
+
+function syncYearButtons() {
+  document.querySelectorAll('.year-btn').forEach(b => {
+    b.classList.toggle('on', Number(b.dataset.year) === currentYear);
+  });
+}
 
 function getStatus(dateStr) {
   const d = new Date(dateStr + 'T12:00:00');
@@ -584,7 +592,10 @@ function nextMonth() { calMonth++; if(calMonth>11){calMonth=0;calYear++;} render
 
 function renderUpcoming() {
   const upcoming = DEADLINES
-    .filter(d => { const diff = Math.ceil((new Date(d.date+'T12:00:00') - TODAY)/86400000); return diff >= 0 && diff <= 90; })
+    .filter(d => {
+      const diff = Math.ceil((new Date(d.date+'T12:00:00') - TODAY)/86400000);
+      return diff >= 0;
+    })
     .sort((a,b) => a.date.localeCompare(b.date))
     .slice(0,5);
 
@@ -623,6 +634,7 @@ function setView(v) {
 }
 
 // Init
+syncYearButtons();
 renderMiniCal();
 renderUpcoming();
 renderDeadlines();
