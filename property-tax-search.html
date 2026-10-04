@@ -621,6 +621,9 @@ footer { border-top:1px solid var(--border); padding:36px 48px; display:flex; al
         <button class="btn-tertiary" id="btnCopySelection" type="button">
           <span>🔗</span><span id="btnCopySelectionText">Copy selection link</span>
         </button>
+        <button class="btn-tertiary" id="btnResetSearch" type="button">
+          <span>↺</span><span>Reset search</span>
+        </button>
 
         <details class="access-help">
           <summary>⚠️ Portal not loading or link looks stale?</summary>
@@ -812,6 +815,7 @@ footer { border-top:1px solid var(--border); padding:36px 48px; display:flex; al
   var btnNetr            = document.getElementById('btnNetr');
   var btnCopySelection   = document.getElementById('btnCopySelection');
   var btnCopySelectionText = document.getElementById('btnCopySelectionText');
+  var btnResetSearch     = document.getElementById('btnResetSearch');
 
   // Meta header: distinguish true direct links from search fallbacks.
   document.getElementById('metaCounties').textContent = DATA.uniqueDirectPortalCount + ' Unique Direct Destinations';
@@ -893,8 +897,15 @@ footer { border-top:1px solid var(--border); padding:36px 48px; display:flex; al
     renderStateGuidance(code);
 
     if (!currentState) {
+      step1.classList.remove('completed');
+      step1.classList.add('active');
       step2.classList.remove('active','completed');
       step3.classList.remove('active','completed');
+      currentMethod = 'address';
+      methodBtns.forEach(function(b){
+        b.disabled = true;
+        b.classList.toggle('active', b.dataset.method === 'address');
+      });
       countyInput.disabled = true;
       countyInput.value = '';
       countyList.classList.remove('show');
@@ -1131,6 +1142,31 @@ footer { border-top:1px solid var(--border); padding:36px 48px; display:flex; al
         temp.remove();
       }
       window.setTimeout(function(){ btnCopySelectionText.textContent = 'Copy selection link'; }, 1800);
+    });
+  }
+
+  // ── Reset all search state.
+  if (btnResetSearch) {
+    btnResetSearch.addEventListener('click', function(){
+      var zipInput = document.getElementById('ptZipInput');
+      var zipMsg = document.getElementById('ptZipMsg');
+      if (zipInput) zipInput.value = '';
+      if (zipMsg) {
+        zipMsg.textContent = 'Enter a 5-digit ZIP or full U.S. street address. ZIP matches are approximate near jurisdiction boundaries; full addresses use the U.S. Census Geocoder.';
+        zipMsg.style.color = 'var(--muted,#8a9bb5)';
+      }
+
+      stateSelect.value = '';
+      stateSelect.dispatchEvent(new Event('change',{bubbles:true}));
+      countyList.innerHTML = '';
+      countyInput.removeAttribute('aria-activedescendant');
+      countyInput.setAttribute('aria-expanded','false');
+
+      try {
+        history.replaceState(null, '', window.location.pathname);
+      } catch (e) {}
+
+      try { stateSelect.focus(); } catch (e) {}
     });
   }
 
