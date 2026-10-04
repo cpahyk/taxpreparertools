@@ -68,11 +68,11 @@ jobs:
           grep -q 'autocomplete="current-password"' /tmp/login.html
           grep -q "event === 'PASSWORD_RECOVERY'" /tmp/login.html
           grep -q "updateUser({ password:" /tmp/login.html
-          grep -q "provider: 'google'" /tmp/login.html
+          grep -q "signInWithProvider('google')" /tmp/login.html
           grep -q "signInWithProvider('azure', 'email')" /tmp/login.html
           grep -q '<form id="signupForm"' /tmp/signup.html
           grep -q 'autocomplete="new-password"' /tmp/signup.html
-          grep -q "provider: 'google'" /tmp/signup.html
+          grep -q "signInWithProvider('google')" /tmp/signup.html
           grep -q "signInWithProvider('azure', 'email')" /tmp/signup.html
           grep -q '<form id="formSection"' /tmp/forgot-password.html
           grep -q 'name="email"' /tmp/forgot-password.html
