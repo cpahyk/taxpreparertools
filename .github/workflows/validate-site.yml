@@ -338,19 +338,26 @@ jobs:
             for (const match of stateBlocks) {
               const code = match[1];
               const body = match[2];
-              const entries = [...body.matchAll(/\{\s*name:"([^"]+)"\s*,\s*portal:"([^"]+)"\s*,\s*methods:(ALL|ADDR_PARCEL)[\s\S]*?notes:"([^"]*)"\s*\}/g)];
+              const entries = [...body.matchAll(/\{\s*name:"([^"]+)"\s*,\s*portal:"([^"]+)"\s*,\s*(?:routeType:"(search)"\s*,\s*)?methods:(ALL|ADDR_PARCEL)[\s\S]*?notes:"([^"]*)"\s*\}/g)];
               total += entries.length;
 
               const names = new Set();
               for (const entry of entries) {
-                const [, name, portal, methods] = entry;
+                const [, name, portal, routeType, methods] = entry;
                 const key = name.trim().toLowerCase();
 
                 if (names.has(key)) failures.push(`${code}: duplicate jurisdiction name "${name}".`);
                 names.add(key);
 
                 if (!/^https:\/\//i.test(portal)) failures.push(`${code} / ${name}: portal is not HTTPS: ${portal}`);
-                if (!/google\.com\/search/i.test(portal)) {
+                const googleSearch = /google\.com\/search/i.test(portal);
+                if (googleSearch && routeType !== 'search') {
+                  failures.push(`${code} / ${name}: Google search fallback must declare routeType:"search".`);
+                }
+                if (!googleSearch && routeType === 'search') {
+                  failures.push(`${code} / ${name}: routeType:"search" is reserved for explicit search fallback destinations.`);
+                }
+                if (routeType !== 'search') {
                   direct++;
                   uniqueDirect.add(portal);
                 }
@@ -371,6 +378,7 @@ jobs:
           const dataMarkers = [
             'function getJurisdictionLabel',
             'function getJurisdictionNoun',
+            "county.routeType === 'search'",
             'DIRECT_PORTAL_COUNT',
             'UNIQUE_DIRECT_PORTAL_COUNT',
             'window.PROPERTY_TAX_DATA'
@@ -452,7 +460,9 @@ jobs:
             'function geocodeAddressViaCensusJsonp',
             '/geocoder/geographies/onelineaddress',
             "source:'address'",
-            'function applyResolvedJurisdiction'
+            'function applyResolvedJurisdiction',
+            'routeType:"search"',
+            'routeType: "search"'
           ];
           for (const marker of htmlMarkers) {
             if (!html.includes(marker)) failures.push(`Missing property-tax UI safety marker: ${marker}`);
