@@ -361,7 +361,7 @@
       <p id="currentDateLabel">Loading today’s date…</p>
     </div>
     <div class="topbar-right">
-      <input class="tb-search" id="dashboardSearch" type="search" placeholder="Search tools…" aria-label="Search tools" onkeydown="if(event.key==='Enter') searchDashboardTools()"/>
+      <input class="tb-search" id="dashboardSearch" type="search" placeholder="Search tools…  ⌘/Ctrl K" aria-label="Search tools" title="Press Ctrl+K or Command+K to search tools" onkeydown="if(event.key==='Enter') searchDashboardTools()"/>
       <a class="notif-btn" href="deadlines.html" aria-label="Open tax deadline calendar" title="Tax deadline calendar">🔔</a>
       <a href="tools.html" class="tb-btn tb-btn-gold">Browse Tools</a>
     </div>
@@ -378,7 +378,7 @@
       </a>
       <a class="stat-card" href="deadlines.html" style="text-decoration:none;">
         <div class="stat-top"><div class="stat-icon si-green">📅</div><span class="stat-trend trend-up">Calendar</span></div>
-        <div class="stat-num">2026</div><div class="stat-label">Federal Tax Deadlines</div>
+        <div class="stat-num" id="deadlineYearStat">2026</div><div class="stat-label">Federal Tax Deadlines</div>
       </a>
       <a class="stat-card" href="ai-assistant.html" style="text-decoration:none;">
         <div class="stat-top"><div class="stat-icon si-blue">⚖️</div><span class="stat-trend trend-up">Signed-in</span></div>
@@ -816,15 +816,31 @@ function closeSidebar() {
 
 document.addEventListener('keydown', (event) => {
   if (event.key === 'Escape') closeSidebar();
+
+  const target = event.target;
+  const typing = target instanceof HTMLInputElement || target instanceof HTMLTextAreaElement || target?.isContentEditable;
+  const searchShortcut = (event.ctrlKey || event.metaKey) && event.key.toLowerCase() === 'k';
+  const slashShortcut = event.key === '/' && !typing;
+
+  if (searchShortcut || slashShortcut) {
+    event.preventDefault();
+    const search = document.getElementById('dashboardSearch');
+    if (search) {
+      search.focus();
+      search.select();
+    }
+  }
 });
 
 const dateLabel = document.getElementById('currentDateLabel');
+const dashboardNow = new Date();
 if (dateLabel) {
-  const now = new Date();
-  dateLabel.textContent = now.toLocaleDateString(undefined, {
+  dateLabel.textContent = dashboardNow.toLocaleDateString(undefined, {
     weekday:'long', year:'numeric', month:'long', day:'numeric'
-  }) + ' · Tax Year ' + (now.getFullYear() - 1);
+  }) + ' · Account dashboard';
 }
+const deadlineYearStat = document.getElementById('deadlineYearStat');
+if (deadlineYearStat) deadlineYearStat.textContent = String(dashboardNow.getFullYear());
 
 const DASHBOARD_DEADLINES = [
   { date:'2026-10-15', name:'Extended Individual & C-Corp Returns', who:'Forms 1040 / 1120 and extended FBAR' },
