@@ -162,7 +162,7 @@ const COUNTY_PORTALS = {
     { name:"Seminole",    portal:"https://parceldetails.scpafl.org/",                                           methods:ALL,         notes:"N Orlando metro." },
     { name:"Pasco",       portal:"https://search.pascopa.com/",                                                 methods:ALL,         notes:"N Tampa metro." },
     { name:"Sarasota",    portal:"https://www.sc-pa.com/propertysearch/",                                       methods:ALL,         notes:"Gulf coast / SW FL." },
-    { name:"Manatee",     portal:"https://www.manateepao.gov/search/",                                          methods:ALL,         notes:"Bradenton." },
+    { name:"Manatee",     portal:"https://www.manateepao.gov/",                                                methods:ALL,         notes:"Bradenton. Official homepage includes Quick Property Search." },
     { name:"Marion",      portal:"https://www.pa.marion.fl.us/",                                                methods:ALL,         notes:"Ocala." },
     { name:"Collier",     portal:"https://www.collierappraiser.com/",                                           methods:ALL,         notes:"Naples." },
     { name:"Lake",        portal:"https://www.lakecopropappr.com/",                                             methods:ALL,         notes:"Central FL." },
