@@ -79,6 +79,9 @@ jobs:
           grep -q 'function applyResolvedJurisdiction' /tmp/property-tax.html
           grep -q 'routeType:"search"' /tmp/property-tax.html
           grep -q 'routeType: "search"' /tmp/property-tax.html
+          grep -q 'function normalizeAreaFilter' /tmp/property-tax.html
+          grep -q "e.key === 'Home'" /tmp/property-tax.html
+          grep -q "e.key === 'End'" /tmp/property-tax.html
           grep -q "county.routeType === 'search'" /tmp/property-tax-data.js
           grep -q 'function getJurisdictionLabel' /tmp/property-tax-data.js
           grep -q 'UNIQUE_DIRECT_PORTAL_COUNT' /tmp/property-tax-data.js
