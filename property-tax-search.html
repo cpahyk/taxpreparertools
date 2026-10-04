@@ -548,9 +548,9 @@ footer { border-top:1px solid var(--border); padding:36px 48px; display:flex; al
         <div class="step-header">
           <div class="step-num">02</div>
           <div class="step-label">Select Jurisdiction</div>
-          <div class="step-hint" id="countyCount"></div>
+          <div class="step-hint" id="countyCount" role="status" aria-live="polite"></div>
         </div>
-        <input class="big-input" id="countyInput" type="text" placeholder="Type to filter listed areas…" autocomplete="off" aria-label="Filter and select a jurisdiction" role="combobox" aria-autocomplete="list" aria-controls="countyList" aria-expanded="false" disabled />
+        <input class="big-input" id="countyInput" type="text" placeholder="Type to filter listed areas…" autocomplete="off" aria-label="Filter and select a jurisdiction" aria-describedby="countyCount" role="combobox" aria-autocomplete="list" aria-controls="countyList" aria-expanded="false" disabled />
         <div class="county-list" id="countyList" role="listbox" aria-label="Matching jurisdictions"></div>
         <div class="fallback-row">
           Jurisdiction not listed?
@@ -998,6 +998,15 @@ footer { border-top:1px solid var(--border); padding:36px 48px; display:flex; al
 
   countyInput.addEventListener('focus', function(){
     if (currentState) { countyList.classList.add('show'); countyInput.setAttribute('aria-expanded','true'); }
+  });
+
+  document.addEventListener('click', function(e){
+    if (!e.target.closest('#step2')) {
+      countyList.classList.remove('show');
+      countyInput.setAttribute('aria-expanded','false');
+      activeCountyOption = -1;
+      countyInput.removeAttribute('aria-activedescendant');
+    }
   });
 
   // Keyboard support for the custom combobox/listbox.
