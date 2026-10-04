@@ -113,6 +113,8 @@ jobs:
           grep -q "e.key === 'Home'" /tmp/property-tax.html
           grep -q "e.key === 'End'" /tmp/property-tax.html
           grep -q "county.routeType === 'search'" /tmp/property-tax-data.js
+          grep -q '{ name:"Cook",       portal:"https://www.cookcountypropertyinfo.com/"' /tmp/property-tax-data.js
+          ! grep -q '{ name:"Cook",       portal:"https://www.cookcountyassessor.com/advanced-search"' /tmp/property-tax-data.js
           grep -q 'function getJurisdictionLabel' /tmp/property-tax-data.js
           grep -q 'UNIQUE_DIRECT_PORTAL_COUNT' /tmp/property-tax-data.js
           if grep -q 'portal:"http://' /tmp/property-tax-data.js; then
