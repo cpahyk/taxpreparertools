@@ -485,12 +485,30 @@ jobs:
             'id="countyCount" role="status" aria-live="polite"',
             'aria-describedby="countyCount"',
             "e.target.closest('#step2')",
+            'class="pt-zip-box"',
+            'class="pt-zip-input"',
+            'class="pt-related-card"',
+            'class="pt-related-tools-card"',
+            'class="pt-faq-card"',
+            "kind==='err' ? 'var(--red)'",
+            "kind==='ok' ? 'var(--green)'",
             'function normalizeAreaFilter',
             "e.key === 'Home'",
             "e.key === 'End'"
           ];
           for (const marker of htmlMarkers) {
             if (!html.includes(marker)) failures.push(`Missing property-tax UI safety marker: ${marker}`);
+          }
+
+          const legacyLightThemePatterns = [
+            '.big-select option { background-color:#0f1d38',
+            'color:#0a1628',
+            'background:var(--navy-mid,#122040)',
+            "kind==='err' ? '#e8a0a0'",
+            "kind==='ok' ? '#9fd5a0'"
+          ];
+          for (const legacyPattern of legacyLightThemePatterns) {
+            if (html.includes(legacyPattern)) failures.push(`Legacy dark-theme property-tax styling returned: ${legacyPattern}`);
           }
 
           if (failures.length) {
