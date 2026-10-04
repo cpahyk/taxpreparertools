@@ -177,6 +177,21 @@ h1 { font-family:'Playfair Display',serif; font-size:clamp(2rem,4vw,3.2rem); fon
 .fallback-row a { color:var(--gold); text-decoration:none; font-weight:600; }
 .fallback-row a:hover { text-decoration:underline; }
 
+.state-guidance {
+  margin-top:12px;
+  padding:11px 13px;
+  border:1px solid var(--border);
+  border-radius:9px;
+  background:rgba(21,95,160,.05);
+  color:var(--muted);
+  font-size:.79rem;
+  line-height:1.55;
+}
+.state-guidance[hidden] { display:none !important; }
+.state-guidance a { color:var(--gold); font-weight:700; text-decoration:none; margin-left:4px; }
+.state-guidance a:hover { text-decoration:underline; }
+.lookup-privacy { margin-top:10px; color:var(--muted); font-size:.76rem; line-height:1.5; }
+
 .method-tabs { display:grid; grid-template-columns: repeat(3, 1fr); gap:8px; }
 .method-btn {
   background: rgba(255,255,255,0.04);
@@ -501,7 +516,7 @@ footer { border-top:1px solid var(--border); padding:36px 48px; display:flex; al
     <!-- LEFT: Search Panel -->
     <div class="search-panel">
       <div class="panel-title">Property Tax Search</div>
-      <p class="panel-sub">Pick a state, then a listed jurisdiction, then the search method you plan to use. We hand you off to the local assessor, tax office, or its linked records vendor.</p>
+      <p class="panel-sub">Pick a state and listed jurisdiction, then choose the lookup field you expect to use. That field is guidance only—we do not transmit an owner name, street address, or parcel number to the destination.</p>
 
       <!-- Shortcut: ZIP -> county auto-resolver -->
       <div id="ptZipBox" style="background:rgba(200,168,75,0.06);border:1px solid rgba(200,168,75,0.18);border-radius:12px;padding:16px 18px;margin-bottom:22px;">
@@ -522,6 +537,10 @@ footer { border-top:1px solid var(--border); padding:36px 48px; display:flex; al
         <select class="big-select" id="stateSelect" aria-label="Select a state">
           <option value="">— Choose a state —</option>
         </select>
+        <div class="state-guidance" id="stateGuidance" hidden>
+          <span id="stateGuidanceText"></span>
+          <a id="stateGuidanceLink" href="#" target="_blank" rel="noopener noreferrer">Official state guidance ↗</a>
+        </div>
       </div>
 
       <!-- Step 2: County -->
@@ -539,17 +558,18 @@ footer { border-top:1px solid var(--border); padding:36px 48px; display:flex; al
         </div>
       </div>
 
-      <!-- Step 3: Search Method -->
+      <!-- Step 3: Lookup guidance -->
       <div class="step" id="step3">
         <div class="step-header">
           <div class="step-num">03</div>
-          <div class="step-label">Search Method</div>
+          <div class="step-label">Preferred Lookup Field</div>
         </div>
         <div class="method-tabs">
           <button class="method-btn active" data-method="address" disabled><span class="method-emoji">📍</span>By Address</button>
           <button class="method-btn"        data-method="parcel"  disabled><span class="method-emoji">🔢</span>By Parcel / PIN</button>
           <button class="method-btn"        data-method="owner"   disabled><span class="method-emoji">👤</span>By Owner Name</button>
         </div>
+        <div class="lookup-privacy">Nothing typed into this directory is sent as a property-record query. Enter the actual lookup value after opening the destination portal.</div>
       </div>
     </div>
 
@@ -559,7 +579,7 @@ footer { border-top:1px solid var(--border); padding:36px 48px; display:flex; al
       <div class="result-empty" id="resultEmpty">
         <div class="result-empty-icon">🏛️</div>
         <div class="result-empty-title">Pick a state to begin</div>
-        <div class="result-empty-sub">We'll show you the local assessor or tax-record destination, supported search methods, and important access notes.</div>
+        <div class="result-empty-sub">We'll show you the local assessor or tax-record destination, expected lookup options, and important access notes.</div>
       </div>
 
       <!-- Result content (filled dynamically) -->
@@ -570,7 +590,7 @@ footer { border-top:1px solid var(--border); padding:36px 48px; display:flex; al
 
         <div class="result-info-grid">
           <div class="result-info">
-            <div class="result-info-label">Selected Method</div>
+            <div class="result-info-label">Lookup Guidance</div>
             <div class="result-info-value" id="resultMethod">By Address</div>
           </div>
           <div class="result-info">
@@ -668,7 +688,7 @@ footer { border-top:1px solid var(--border); padding:36px 48px; display:flex; al
       </div>
       <div class="why-stat">
         <div class="why-stat-num">$0</div>
-        <div class="why-stat-label">API Fees</div>
+        <div class="why-stat-label">Directory Fee</div>
       </div>
       <div class="why-stat">
         <div class="why-stat-num">3</div>
@@ -758,7 +778,7 @@ footer { border-top:1px solid var(--border); padding:36px 48px; display:flex; al
      {
        name:        "Harris",                       // display name (no "County" suffix)
        portal:      "https://hcad.org/...",         // primary search URL
-       methods:     ["address","parcel","owner"],   // supported search inputs
+       methods:     ["address","parcel","owner"],   // expected search inputs
        notes:       "Free online search."           // short hint shown to user
      }
    ========================================================================= */
@@ -1408,7 +1428,10 @@ window.PROPERTY_TAX_DATA = {
   var step2          = document.getElementById('step2');
   var step3          = document.getElementById('step3');
   var step1          = document.getElementById('step1');
-  var customLink     = document.getElementById('customCountyLink');
+  var customLink        = document.getElementById('customCountyLink');
+  var stateGuidance      = document.getElementById('stateGuidance');
+  var stateGuidanceText  = document.getElementById('stateGuidanceText');
+  var stateGuidanceLink  = document.getElementById('stateGuidanceLink');
 
   // Result panel refs
   var resultEmpty     = document.getElementById('resultEmpty');
@@ -1445,16 +1468,49 @@ window.PROPERTY_TAX_DATA = {
 
   var METHOD_LABEL = { address:'By Property Address', parcel:'By Parcel / PIN', owner:'By Owner Name' };
   var METHOD_TIP = {
-    address: "Enter the full street address. Most portals tolerate variations like 'Street' vs 'St'.",
-    parcel:  "Parcel/PIN/APN format varies by county. If you don't have it, search by address first.",
-    owner:   "Use last name first when possible (e.g., 'Smith John'). Partial matches usually work."
+    address: "Enter the full street address on the destination portal. Most portals tolerate common street suffix variations.",
+    parcel:  "Parcel/PIN/APN format varies by jurisdiction. If you do not have it, try address lookup first.",
+    owner:   "Owner-name lookup varies widely by jurisdiction and may not be available on every portal."
   };
+
+  var STATE_GUIDANCE = {
+    CT: {
+      text: "Connecticut property assessment and tax collection are municipal functions. County names in this directory are search regions; confirm the specific town or city assessor.",
+      url: "https://portal.ct.gov/OPM/IGPP/Directories/Municipal-Assessors"
+    },
+    MA: {
+      text: "Massachusetts property valuation is administered by cities and towns. County names here are search regions rather than the assessing authority.",
+      url: "https://www.mass.gov/property-assessment-valuation-guidance"
+    },
+    AK: {
+      text: "Alaska property tax is municipal. Boroughs and some cities levy property tax, while substantial unincorporated areas do not.",
+      url: "https://www.commerce.alaska.gov/web/dcra/OfficeoftheStateAssessor/TaxJurisdictions"
+    },
+    LA: {
+      text: "Louisiana uses parishes instead of counties. Select the parish area, then verify the assessor or tax destination.",
+      url: "https://www.louisiana.gov/local-louisiana"
+    }
+  };
+
+  function renderStateGuidance(code) {
+    var guidance = STATE_GUIDANCE[code];
+    if (!guidance) {
+      stateGuidance.hidden = true;
+      stateGuidanceText.textContent = '';
+      stateGuidanceLink.removeAttribute('href');
+      return;
+    }
+    stateGuidanceText.textContent = guidance.text;
+    stateGuidanceLink.href = guidance.url;
+    stateGuidance.hidden = false;
+  }
 
   // ── State change
   stateSelect.addEventListener('change', function(){
     var code = stateSelect.value;
     currentState  = DATA.states.find(function(s){ return s.code === code; }) || null;
     currentCounty = null;
+    renderStateGuidance(code);
 
     if (!currentState) {
       step2.classList.remove('active','completed');
@@ -1703,7 +1759,7 @@ window.PROPERTY_TAX_DATA = {
     resultEmpty.style.display = 'flex';
     resultContent.classList.remove('show');
     resultEmpty.querySelector('.result-empty-title').textContent = 'Pick a state to begin';
-    resultEmpty.querySelector('.result-empty-sub').textContent  = "We'll show you the local assessor or tax-record destination, expected search methods, and important access notes.";
+    resultEmpty.querySelector('.result-empty-sub').textContent  = "We'll show you the local assessor or tax-record destination, expected lookup options, and important access notes.";
   }
 
   // ── Click outside county list closes it
