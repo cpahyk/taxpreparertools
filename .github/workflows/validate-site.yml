@@ -394,6 +394,35 @@ jobs:
             failures.push('Florida Polk County / Lakeland ZIP fallback fixture is missing.');
           }
 
+          const knownStalePropertyTaxUrls = [
+            'https://www.mc-ala.org/residents/online-services/property-search',
+            'https://www.muni.org/Departments/finance/treasury/PropertyTax/Pages/default.aspx',
+            'https://baldwincountyal.gov/government/county-departments/revenue-commission',
+            'https://www.fresnocountyca.gov/Departments/Assessor-Recorder',
+            'https://www.sjgov.org/department/asr',
+            'https://www.countyofsb.org/132/Assessor',
+            'https://www.lakecountyil.gov/2854/Property-Tax-Assessment-Information',
+            'https://www.wycokck.org/Departments/Appraiser',
+            'https://kentonpva.org/property-search/',
+            'https://www.oakgov.com/treasurer/Pages/property-tax-info.aspx',
+            'https://www.hindscountyms.com/elected-offices/tax-assessor-collector',
+            'https://www.jacksongov.org/Residents/Pay-Taxes',
+            'https://www.sccmo.org/189/Assessor',
+            'https://www.albanycounty.com/government/departments/real-property-tax-service',
+            'https://fiscaloffice.summitoh.net/index.php/property-search',
+            'https://www.co.lucas.oh.us/167/Auditor',
+            'https://www.fbcad.org/property-search/',
+            'https://www.arlingtonva.us/Government/Departments/Real-Estate-Assessments',
+            'https://www.norfolk.gov/4225/Real-Estate-Search',
+            'https://www.rva.gov/finance/real-estate-assessor',
+            'https://www.racinecounty.com/government/treasurer/property-tax-information',
+            'https://www.laramiecountywy.gov/government/elected-officials/assessor/',
+            'https://www.natronacounty-wy.gov/176/Assessor'
+          ];
+          for (const staleUrl of knownStalePropertyTaxUrls) {
+            if (data.includes(staleUrl)) failures.push(`Known stale property-tax URL returned: ${staleUrl}`);
+          }
+
           const htmlMarkers = [
             'ZIP matches are approximate',
             'Expected Search Options',
