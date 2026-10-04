@@ -482,6 +482,9 @@ jobs:
             'counties.length === 0',
             'listed match',
             'No listed match',
+            'id="countyCount" role="status" aria-live="polite"',
+            'aria-describedby="countyCount"',
+            "e.target.closest('#step2')",
             'function normalizeAreaFilter',
             "e.key === 'Home'",
             "e.key === 'End'"
