@@ -30,6 +30,9 @@
   }
   *,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
   html,body{height:100%;}
+  .skip-link{position:fixed;left:12px;top:12px;z-index:2000;transform:translateY(-180%);background:var(--gold);color:var(--navy);padding:9px 13px;border-radius:8px;font-weight:700;text-decoration:none;transition:transform .16s ease;}
+  .skip-link:focus{transform:translateY(0);}
+  a:focus-visible,button:focus-visible,input:focus-visible{outline:3px solid var(--gold);outline-offset:3px;}
   body{font-family:'DM Sans',sans-serif;background:var(--navy);color:var(--text);display:flex;min-height:100vh;}
   body.auth-pending .sidebar,
   body.auth-pending .main-content,
@@ -228,6 +231,7 @@
   <link rel="stylesheet" href="/professional-light.css">
 </head>
 <body class="auth-pending">
+<a class="skip-link" href="#dashboardMain">Skip to dashboard content</a>
 <div class="auth-gate" id="authGate" role="status" aria-live="polite">Checking your session…</div>
 <h1 class="sr-only">TaxPreparerTools Dashboard</h1>
 
@@ -252,7 +256,7 @@
 
   <nav class="sb-nav">
     <div class="sb-section-label">Main</div>
-    <a href="dashboard.html" class="sb-nav-item on"><span class="sb-nav-icon">🏠</span> Dashboard</a>
+    <a href="dashboard.html" class="sb-nav-item on" aria-current="page"><span class="sb-nav-icon">🏠</span> Dashboard</a>
     <a href="tools.html" class="sb-nav-item"><span class="sb-nav-icon">🧮</span> All Tools</a>
     <a href="ai-assistant.html" class="sb-nav-item"><span class="sb-nav-icon">⚖️</span> AI Assistant</a>
     <a href="deadlines.html" class="sb-nav-item"><span class="sb-nav-icon">📅</span> Deadlines <span class="sb-badge">3 soon</span></a>
@@ -279,7 +283,7 @@
 <div class="mobile-backdrop" id="mobileBackdrop" onclick="closeSidebar()" aria-hidden="true"></div>
 
 <!-- MAIN CONTENT -->
-<div class="main-content">
+<main class="main-content" id="dashboardMain" tabindex="-1">
 
   <!-- TOPBAR -->
   <div class="topbar">
@@ -436,13 +440,13 @@
             <div><div class="ai-title">AI Tax Assistant</div><div class="ai-sub">Ask any tax question instantly</div></div>
           </div>
           <div class="ai-starters">
-            <button class="ai-starter" onclick="goAI('What is the 2025 standard deduction?')">What is the 2025 standard deduction?</button>
-            <button class="ai-starter" onclick="goAI('Explain QBI deduction for a sole proprietor')">Explain QBI for a sole proprietor</button>
-            <button class="ai-starter" onclick="goAI('How does S-Corp reasonable compensation work?')">S-Corp reasonable compensation rules</button>
+            <button type="button" class="ai-starter" onclick="goAI('What is the 2025 standard deduction?')">What is the 2025 standard deduction?</button>
+            <button type="button" class="ai-starter" onclick="goAI('Explain QBI deduction for a sole proprietor')">Explain QBI for a sole proprietor</button>
+            <button type="button" class="ai-starter" onclick="goAI('How does S-Corp reasonable compensation work?')">S-Corp reasonable compensation rules</button>
           </div>
           <div class="ai-input-wrap">
             <input class="ai-input" type="text" placeholder="Type a tax question…" id="aiInput" onkeydown="if(event.key==='Enter')goAI()"  aria-label="Ai Input"/>
-            <button class="ai-send" onclick="goAI()">↑</button>
+            <button type="button" class="ai-send" onclick="goAI()" aria-label="Ask AI Tax Assistant">↑</button>
           </div>
           <div class="usage-section">
             <div class="usage-label"><span>AI access</span><strong>Authenticated session required</strong></div>
@@ -481,7 +485,7 @@
     <span>© 2026 <a href="index.html">taxpreparertools.com</a> · Not affiliated with the IRS · For informational use only</span>
     <span><a href="privacy.html">Privacy</a> · <a href="terms.html">Terms</a> · <a href="contact.html">Contact</a></span>
   </div>
-</div>
+</main>
 
 <script>
 function goAI(q) {
