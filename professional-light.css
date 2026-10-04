@@ -517,3 +517,46 @@ select option,
     box-shadow: 0 16px 36px rgba(15, 34, 56, 0.10) !important;
   }
 }
+
+
+/* AI assistant + converter surfaces */
+:root {
+  --user-bubble: #eef6fc !important;
+  --ai-bubble: #ffffff !important;
+  --msg-border-user: #bfd8ea !important;
+  --msg-border-ai: #dfe6ee !important;
+}
+
+.nav,
+.topic-bar,
+.input-area {
+  background: rgba(255, 255, 255, 0.96) !important;
+  border-color: #e0e7ef !important;
+  color: #24364b !important;
+  box-shadow: 0 8px 24px rgba(15, 34, 56, 0.05) !important;
+  backdrop-filter: blur(16px) saturate(135%) !important;
+}
+
+.user-msg,
+.user-message,
+.message.user,
+.chat-message.user {
+  background: #eef6fc !important;
+  border-color: #bfd8ea !important;
+  color: #18324d !important;
+}
+
+.ai-msg,
+.ai-message,
+.message.ai,
+.chat-message.ai,
+.assistant-message {
+  background: #ffffff !important;
+  border-color: #dfe6ee !important;
+  color: #24364b !important;
+}
+
+.toggle-save {
+  background: #edf7f2 !important;
+  color: #166b57 !important;
+}
