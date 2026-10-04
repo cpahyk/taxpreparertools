@@ -460,8 +460,17 @@ const DEADLINES = [
   { date:'2026-09-15', name:'Extended S-Corp & Partnership Returns', desc:'Extended deadline for S-Corp and Partnership returns that requested extension in March.', tags:['biz','ext'], year:2026 },
   { date:'2026-10-15', name:'Extended Individual Return (Form 1040)', desc:'Final extended deadline for 2025 individual returns. No further extensions available.', tags:['ind','ext'], year:2026 },
   { date:'2027-01-15', name:'Q4 2026 Estimated Tax Payment', desc:'Fourth-quarter 2026 estimated tax payment due for individuals who need to make estimated payments.', tags:['est','ind'], year:2027 },
+  { date:'2026-03-02', name:'Paper Information Returns Due (1099 series)', desc:'Paper-filed information returns other than Form 1099-NEC are due to the IRS. February 28 falls on a Saturday in 2026.', tags:['pay','biz'], year:2026 },
+  { date:'2026-03-31', name:'Electronic 1099 Filing Deadline', desc:'Electronic filing deadline for many non-NEC information returns, including Forms 1099-MISC, INT, DIV, B, and R.', tags:['pay','biz'], year:2026 },
+  { date:'2026-04-15', name:'FBAR Deadline (FinCEN Form 114)', desc:'Report qualifying foreign financial accounts. An automatic extension generally applies through October 15.', tags:['ind','ext'], year:2026 },
+  { date:'2026-04-30', name:'Form 941 – Q1 2026 Payroll Tax Return', desc:'Quarterly federal payroll tax return for wages paid January through March 2026.', tags:['pay','biz'], year:2026 },
+  { date:'2026-05-15', name:'Nonprofit Return Due (Form 990 series)', desc:'Calendar-year tax-exempt organizations generally file the applicable Form 990-series return by this date.', tags:['biz','ext'], year:2026 },
+  { date:'2026-06-15', name:'U.S. Expat Individual Return Deadline', desc:'Automatic two-month filing extension date for qualifying U.S. citizens and resident aliens living abroad.', tags:['ind','ext'], year:2026 },
+  { date:'2026-07-31', name:'Form 941 – Q2 2026 Payroll Tax Return', desc:'Quarterly federal payroll tax return for wages paid April through June 2026.', tags:['pay','biz'], year:2026 },
+  { date:'2026-10-15', name:'Extended FBAR Deadline', desc:'Automatic extended due date for FinCEN Form 114 when the April deadline was missed.', tags:['ind','ext'], year:2026 },
+  { date:'2026-11-02', name:'Form 941 – Q3 2026 Payroll Tax Return', desc:'Quarterly payroll return deadline shifts from October 31 because that date falls on a Saturday in 2026.', tags:['pay','biz'], year:2026 },
+  { date:'2027-02-01', name:'Form 941 – Q4 2026 Payroll Tax Return', desc:'Quarterly payroll tax return for October through December 2026; January 31 falls on a Sunday in 2027.', tags:['pay','biz'], year:2027 }
 ];
-
 let currentFilter = 'all';
 const availableYears = [...new Set(DEADLINES.filter(d => d.year <= 2026).map(d => d.year))].sort();
 let currentYear = availableYears.includes(TODAY.getFullYear()) ? TODAY.getFullYear() : Math.max(...availableYears);
