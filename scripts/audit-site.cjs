@@ -80,6 +80,7 @@ for (const file of htmlFiles) {
   }
 
   const htmlForDomChecks = html
+    .replace(/<!--[\s\S]*?-->/g, '')
     .replace(/<script\b[^>]*>[\s\S]*?<\/script>/gi, '')
     .replace(/<style\b[^>]*>[\s\S]*?<\/style>/gi, '');
 
