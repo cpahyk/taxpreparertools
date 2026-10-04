@@ -140,6 +140,7 @@ jobs:
             const hrefs = [...html.matchAll(/href\s*=\s*["']([^"'#?]+\.html)(?:[#?][^"']*)?["']/gi)].map(m => m[1]);
 
             for (const href of hrefs) {
+              if (href.includes('${')) continue;
               if (/^(?:https?:|mailto:|tel:)/i.test(href)) continue;
               const target = href.startsWith('/')
                 ? href.slice(1)
