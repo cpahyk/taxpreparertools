@@ -99,19 +99,51 @@ async function request(url, method) {
   }
 }
 
-async function inspect(entry) {
-  let result = await request(entry.url, 'HEAD');
+function resultCategory(result) {
+  return result.ok
+    ? classify(result.status, result.redirected)
+    : (result.error === 'timeout' ? 'timeout' : 'network-error');
+}
+
+function sleep(ms) {
+  return new Promise(resolve => setTimeout(resolve, ms));
+}
+
+async function probe(url) {
+  let result = await request(url, 'HEAD');
 
   if (!result.ok || [400, 403, 405, 406, 501].includes(result.status)) {
-    const getResult = await request(entry.url, 'GET');
+    const getResult = await request(url, 'GET');
     if (getResult.ok || !result.ok) result = getResult;
+  }
+
+  return result;
+}
+
+async function inspect(entry) {
+  let attempts = 1;
+  let result = await probe(entry.url);
+  let category = resultCategory(result);
+
+  if (['server-error', 'timeout', 'network-error'].includes(category)) {
+    await sleep(750);
+    attempts++;
+    const retry = await probe(entry.url);
+    const retryCategory = resultCategory(retry);
+
+    // Prefer the retry when it recovers or provides a concrete HTTP response.
+    if (!['server-error', 'timeout', 'network-error'].includes(retryCategory) || retry.status !== null) {
+      result = retry;
+      category = retryCategory;
+    }
   }
 
   return {
     ...entry,
     checkedAt: new Date().toISOString(),
+    attempts,
     status: result.status,
-    category: result.ok ? classify(result.status, result.redirected) : (result.error === 'timeout' ? 'timeout' : 'network-error'),
+    category,
     finalUrl: result.finalUrl,
     redirected: result.redirected,
     method: result.method,
@@ -130,7 +162,8 @@ async function mapConcurrent(items, worker, concurrency) {
       if (index >= items.length) return;
       results[index] = await worker(items[index]);
       const r = results[index];
-      process.stdout.write(`[${index + 1}/${items.length}] ${r.category} ${r.status || '-'} ${items[index].url}\n`);
+      const retryNote = r.attempts > 1 ? ` retry=${r.attempts}` : '';
+      process.stdout.write(`[${index + 1}/${items.length}] ${r.category} ${r.status || '-'}${retryNote} ${items[index].url}\n`);
     }
   }
 
@@ -187,6 +220,7 @@ function markdown(results) {
   lines.push(
     '',
     '> 401/403/429 responses are reported as protected/rate-limited rather than broken because many government portals block automated requests.',
+    '> Transient server errors, timeouts, and network failures are retried once before being reported.',
     '> Link failures do not fail the site deployment; this audit is advisory.'
   );
 
