@@ -407,7 +407,11 @@ jobs:
             '/api/census/block/find?latitude=',
             'function lookupCountyViaCensusJsonp',
             'format=jsonp',
-            'function inferCountyFromPlace'
+            'function inferCountyFromPlace',
+            'function geocodeAddressViaCensusJsonp',
+            '/geocoder/geographies/onelineaddress',
+            "source:'address'",
+            'function applyResolvedJurisdiction'
           ];
           for (const marker of htmlMarkers) {
             if (!html.includes(marker)) failures.push(`Missing property-tax UI safety marker: ${marker}`);
