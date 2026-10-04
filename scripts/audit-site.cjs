@@ -147,6 +147,36 @@ for (const file of htmlFiles) {
     if (!attr(tag,'title').trim()) add(file,'warning','missing-iframe-title','Iframe is missing a descriptive title attribute.');
   }
 
+  const inlineHandlerNames = new Set();
+  const handlerAttrs = [...htmlForDomChecks.matchAll(/\bon(?:click|change|input|submit|keydown|keyup|blur|focus)\s*=\s*["']([^"']+)["']/gi)];
+  const ignoredHandlerCalls = new Set([
+    'if','for','while','switch','return','typeof','Number','String','Boolean','Date','Array','Object','JSON',
+    'parseInt','parseFloat','encodeURIComponent','decodeURIComponent','setTimeout','setInterval',
+    'requestAnimationFrame','cancelAnimationFrame','confirm','fetch'
+  ]);
+  for (const match of handlerAttrs) {
+    for (const call of match[1].matchAll(/(?<![.\w$])([A-Za-z_$][\w$]*)\s*\(/g)) {
+      if (!ignoredHandlerCalls.has(call[1])) inlineHandlerNames.add(call[1]);
+    }
+  }
+  for (const name of inlineHandlerNames) {
+    const escaped = name.replace(/[.*+?^$(){}|[\]\\]/g, '\\  const iframes = [...htmlForDomChecks.matchAll(/<iframe\b[^>]*>/gi)].map(m => m[0]);
+  for (const tag of iframes) {
+    if (!attr(tag,'title').trim()) add(file,'warning','missing-iframe-title','Iframe is missing a descriptive title attribute.');
+  }
+
+  pages.push({');
+    const definitions = [
+      new RegExp('\\bfunction\\s+' + escaped + '\\s*\\('),
+      new RegExp('\\b(?:const|let|var)\\s+' + escaped + '\\s*='),
+      new RegExp('\\bwindow\\.' + escaped + '\\s*='),
+      new RegExp('\\b' + escaped + '\\s*=\\s*(?:async\\s+)?function\\b')
+    ];
+    if (!definitions.some(pattern => pattern.test(html))) {
+      add(file,'warning','missing-inline-handler','Inline event handler references "' + name + '()" but no local definition was found.');
+    }
+  }
+
   pages.push({
     file,
     inSitemap,
