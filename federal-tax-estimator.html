@@ -226,12 +226,16 @@ footer{border-top:1px solid var(--border);padding:28px 48px;display:flex;align-i
   "@graph": [
     {
       "@type": "WebApplication",
-      "name": 'Federal Income Tax Estimator 2025–2026',
-      "url": 'https://www.taxpreparertools.com/federal-tax-estimator',
-      "description": 'Free 2025–2026 federal income tax calculator. Estimate your tax liability across all filing statuses with full bracket breakdown, effective rate, and quarterly payment amounts.',
+      "name": "Federal Income Tax Estimator 2025–2026",
+      "url": "https://www.taxpreparertools.com/federal-tax-estimator",
+      "description": "Free 2025–2026 federal income tax calculator. Estimate your tax liability across all filing statuses with full bracket breakdown, effective rate, and quarterly payment amounts.",
       "applicationCategory": "FinanceApplication",
       "operatingSystem": "Web",
-      "offers": {"@type": "Offer", "price": "0", "priceCurrency": "USD"},
+      "offers": {
+        "@type": "Offer",
+        "price": "0",
+        "priceCurrency": "USD"
+      },
       "provider": {
         "@type": "Organization",
         "name": "TaxPreparerTools",
@@ -241,9 +245,30 @@ footer{border-top:1px solid var(--border);padding:28px 48px;display:flex;align-i
     {
       "@type": "FAQPage",
       "mainEntity": [
-        {"@type": "Question", "name": 'What federal income tax years does this estimator support?', "acceptedAnswer": {"@type": "Answer", "text": 'The estimator supports both tax year 2025 and tax year 2026. Use the Tax Year selector to switch between the published IRS bracket schedules.'}},
-        {"@type": "Question", "name": 'What standard deductions does the estimator use?', "acceptedAnswer": {"@type": "Answer", "text": 'For 2025, it uses $15,750 for Single/MFS, $31,500 for MFJ, and $23,625 for HOH. For 2026, it uses $16,100, $32,200, and $24,150 respectively.'}},
-        {"@type": "Question", "name": 'What is the difference between marginal and effective tax rate?', "acceptedAnswer": {"@type": "Answer", "text": 'Your marginal rate is the rate on your last dollar of income. Your effective rate is the average rate across all income — typically lower than your marginal rate due to progressive brackets.'}}
+        {
+          "@type": "Question",
+          "name": "What federal income tax years does this estimator support?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "The estimator supports both tax year 2025 and tax year 2026. Use the Tax Year selector to switch between the published IRS bracket schedules."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "What standard deductions does the estimator use?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "For 2025, it uses $15,750 for Single/MFS, $31,500 for MFJ, and $23,625 for HOH. For 2026, it uses $16,100, $32,200, and $24,150 respectively."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "What is the difference between marginal and effective tax rate?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Your marginal rate is the rate on your last dollar of income. Your effective rate is the average rate across all income — typically lower than your marginal rate due to progressive brackets."
+          }
+        }
       ]
     }
   ]
