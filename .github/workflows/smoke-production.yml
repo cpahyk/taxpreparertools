@@ -115,6 +115,10 @@ jobs:
           grep -q 'function togglePinnedTool' /tmp/dashboard.html
           grep -q 'id="deadlineSoonBadge"' /tmp/dashboard.html
           grep -q 'All 54 tools →' /tmp/dashboard.html
+          grep -q 'id="deadlineYearStat"' /tmp/dashboard.html
+          grep -q "event.ctrlKey || event.metaKey" /tmp/dashboard.html
+          grep -q "slashShortcut" /tmp/dashboard.html
+          grep -q "Account dashboard" /tmp/dashboard.html
           grep -q 'id="accountSecurity"' /tmp/dashboard.html
           grep -q 'id="accountEmail"' /tmp/dashboard.html
           grep -q 'id="accountEmailStatus"' /tmp/dashboard.html
