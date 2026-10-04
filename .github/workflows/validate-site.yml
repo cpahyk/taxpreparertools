@@ -21,6 +21,13 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v6
 
+      - name: Validate maintenance scripts
+        shell: bash
+        run: |
+          node --check scripts/audit-property-tax-links.cjs
+          test -f .github/workflows/property-tax-link-audit.yml
+          echo "Validated property-tax maintenance automation."
+
       - name: Validate inline JavaScript syntax
         shell: bash
         run: |
