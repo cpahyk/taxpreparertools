@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
 
-  <url><loc>https://www.taxpreparertools.com/</loc><lastmod>2026-05-30</lastmod><changefreq>weekly</changefreq><priority>1.0</priority></url>
+  <url><loc>https://www.taxpreparertools.com/</loc><lastmod>2026-10-04</lastmod><changefreq>weekly</changefreq><priority>1.0</priority></url>
   <url><loc>https://www.taxpreparertools.com/about</loc><lastmod>2026-05-30</lastmod><changefreq>yearly</changefreq><priority>0.6</priority></url>
   <url><loc>https://www.taxpreparertools.com/deadlines</loc><lastmod>2026-05-30</lastmod><changefreq>monthly</changefreq><priority>0.9</priority></url>
   <url><loc>https://www.taxpreparertools.com/resources</loc><lastmod>2026-05-30</lastmod><changefreq>monthly</changefreq><priority>0.6</priority></url>
-  <url><loc>https://www.taxpreparertools.com/tools</loc><lastmod>2026-05-30</lastmod><changefreq>monthly</changefreq><priority>0.9</priority></url>
+  <url><loc>https://www.taxpreparertools.com/tools</loc><lastmod>2026-10-04</lastmod><changefreq>monthly</changefreq><priority>0.9</priority></url>
   <url><loc>https://www.taxpreparertools.com/blog/</loc><lastmod>2026-05-30</lastmod><changefreq>weekly</changefreq><priority>1.0</priority></url>
   <url><loc>https://www.taxpreparertools.com/blog/2025-bonus-depreciation</loc><lastmod>2026-05-30</lastmod><changefreq>yearly</changefreq><priority>0.7</priority></url>
   <url><loc>https://www.taxpreparertools.com/blog/first-time-penalty-abatement</loc><lastmod>2026-05-30</lastmod><changefreq>yearly</changefreq><priority>0.7</priority></url>
@@ -33,7 +33,7 @@
   <url><loc>https://www.taxpreparertools.com/depreciation</loc><lastmod>2026-05-30</lastmod><changefreq>yearly</changefreq><priority>0.8</priority></url>
   <url><loc>https://www.taxpreparertools.com/education-credits</loc><lastmod>2026-05-30</lastmod><changefreq>yearly</changefreq><priority>0.8</priority></url>
   <url><loc>https://www.taxpreparertools.com/extension-toolkit</loc><lastmod>2026-05-30</lastmod><changefreq>yearly</changefreq><priority>0.8</priority></url>
-  <url><loc>https://www.taxpreparertools.com/federal-tax-estimator</loc><lastmod>2026-05-30</lastmod><changefreq>yearly</changefreq><priority>0.9</priority></url>
+  <url><loc>https://www.taxpreparertools.com/federal-tax-estimator</loc><lastmod>2026-10-04</lastmod><changefreq>yearly</changefreq><priority>0.9</priority></url>
   <url><loc>https://www.taxpreparertools.com/home-office</loc><lastmod>2026-05-30</lastmod><changefreq>yearly</changefreq><priority>0.8</priority></url>
   <url><loc>https://www.taxpreparertools.com/irs-efile-reject-decoder</loc><lastmod>2026-05-30</lastmod><changefreq>yearly</changefreq><priority>0.8</priority></url>
   <url><loc>https://www.taxpreparertools.com/irs-notice-decoder</loc><lastmod>2026-05-30</lastmod><changefreq>yearly</changefreq><priority>0.9</priority></url>
@@ -58,4 +58,9 @@
   <url><loc>https://www.taxpreparertools.com/no-tax-on-overtime-calculator</loc><lastmod>2026-06-15</lastmod><changefreq>monthly</changefreq><priority>0.8</priority></url>
   <url><loc>https://www.taxpreparertools.com/no-tax-on-tips-calculator</loc><lastmod>2026-06-15</lastmod><changefreq>monthly</changefreq><priority>0.8</priority></url>
   <url><loc>https://www.taxpreparertools.com/eitc-calculator</loc><lastmod>2026-05-31</lastmod><changefreq>monthly</changefreq><priority>0.8</priority></url>
+  <url><loc>https://www.taxpreparertools.com/downloads</loc><lastmod>2026-10-04</lastmod><changefreq>monthly</changefreq><priority>0.7</priority></url>
+  <url><loc>https://www.taxpreparertools.com/pdf-insight</loc><lastmod>2026-10-04</lastmod><changefreq>monthly</changefreq><priority>0.7</priority></url>
+  <url><loc>https://www.taxpreparertools.com/pdf-to-qbo-converter</loc><lastmod>2026-10-04</lastmod><changefreq>monthly</changefreq><priority>0.8</priority></url>
+  <url><loc>https://www.taxpreparertools.com/spreadsheet-converters-benefits</loc><lastmod>2026-10-04</lastmod><changefreq>monthly</changefreq><priority>0.7</priority></url>
+  <url><loc>https://www.taxpreparertools.com/cancellation-refund-policy</loc><lastmod>2026-10-04</lastmod><changefreq>yearly</changefreq><priority>0.4</priority></url>
 </urlset>
