@@ -1416,8 +1416,15 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
     </div>
     <div class="calc-widget">
       <div class="calc-title">Quick Tax Estimate</div>
-      <div class="calc-field">
-        <label>Filing Status</label>
+    <div class="calc-field">
+      <label>Tax Year</label>
+      <select id="quickTaxYear" aria-label="Tax Year">
+        <option value="2026" selected>2026</option>
+        <option value="2025">2025</option>
+      </select>
+    </div>
+    <div class="calc-field">
+      <label>Filing Status</label>
         <select id="filingStatus" aria-label="Filing Status">
           <option value="single">Single</option>
           <option value="mfj">Married Filing Jointly</option>
@@ -1448,40 +1455,36 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 <section class="deadlines-section" id="deadlines">
   <div class="deadlines-inner">
     <div class="section-header">
-      <div class="section-tag">Upcoming Calendar</div><h2>Key Federal Tax Deadlines</h2><p class="section-sub">Current and upcoming federal filing/payment dates. Status badges update automatically by date.</p>
+      <div class="section-tag">2026–2027 Calendar</div>
+      <h2>Next Key Tax Deadlines</h2>
+      <p class="section-sub">A short list of the next major federal dates from the current filing calendar.</p>
     </div>
     <div class="deadline-list">
-      <div class="deadline-item" data-deadline="2026-10-15">
+      <div class="deadline-item">
         <div class="deadline-date">Oct 15, 2026</div>
-        <div><div class="deadline-name">Extended Individual Return Deadline</div><div class="deadline-who">2025 Form 1040 returns filed under a valid Form 4868 extension</div></div>
-        <span class="deadline-badge upcoming">Upcoming</span>
+        <div>
+          <div class="deadline-name">Extended Individual Return Deadline</div>
+          <div class="deadline-who">Form 1040 filers who requested a valid extension; tax was still due by the April deadline.</div>
+        </div>
+        <span class="deadline-badge upcoming">Next</span>
       </div>
-      <div class="deadline-item" data-deadline="2027-01-15">
+      <div class="deadline-item">
         <div class="deadline-date">Jan 15, 2027</div>
-        <div><div class="deadline-name">Q4 2026 Estimated Tax Payment</div><div class="deadline-who">Individuals with estimated tax obligations for the Sept.–Dec. 2026 payment period</div></div>
-        <span class="deadline-badge later">Later</span>
+        <div>
+          <div class="deadline-name">Q4 2026 Estimated Tax Payment</div>
+          <div class="deadline-who">Individuals with income not fully covered by withholding.</div>
+        </div>
+        <span class="deadline-badge later">2027</span>
       </div>
-      <div class="deadline-item" data-deadline="2027-03-15">
-        <div class="deadline-date">Mar 15, 2027</div>
-        <div><div class="deadline-name">S-Corp & Partnership Returns</div><div class="deadline-who">Calendar-year Forms 1120-S and 1065 for tax year 2026</div></div>
-        <span class="deadline-badge later">Later</span>
-      </div>
-      <div class="deadline-item" data-deadline="2027-04-15">
+      <div class="deadline-item">
         <div class="deadline-date">Apr 15, 2027</div>
-        <div><div class="deadline-name">Individual Return & Q1 Estimated Tax</div><div class="deadline-who">Calendar-year 2026 Form 1040 returns and first 2027 estimated tax installment</div></div>
-        <span class="deadline-badge later">Later</span>
+        <div>
+          <div class="deadline-name">2026 Individual Return &amp; Q1 2027 Estimated Tax</div>
+          <div class="deadline-who">Calendar-year individual filers and taxpayers making quarterly estimated payments.</div>
+        </div>
+        <span class="deadline-badge later">2027</span>
       </div>
-      <div class="deadline-item" data-deadline="2027-06-15">
-        <div class="deadline-date">Jun 15, 2027</div>
-        <div><div class="deadline-name">Q2 2027 Estimated Tax Payment</div><div class="deadline-who">Second estimated tax installment for calendar-year individuals</div></div>
-        <span class="deadline-badge later">Later</span>
-      </div>
-      <div class="deadline-item" data-deadline="2027-09-15">
-        <div class="deadline-date">Sep 15, 2027</div>
-        <div><div class="deadline-name">Q3 2027 Estimated Tax Payment</div><div class="deadline-who">Third estimated tax installment for calendar-year individuals</div></div>
-        <span class="deadline-badge later">Later</span>
-      </div>
-    </div></div>
+    </div>
   </div>
 </section>
 
@@ -1613,7 +1616,7 @@ const tools = [
   { name: "Depreciation Calculator", icon: "📉", cat: "business", tag: "tag-business", label: "Business", desc: "MACRS depreciation schedules, Section 179 election, and bonus depreciation for 2025.", url: "depreciation.html" },
   { name: "S-Corp Payroll Optimizer", icon: "🏢", cat: "business", tag: "tag-business", label: "Business", desc: "Determine reasonable compensation and model S-Corp tax savings versus LLC/sole prop.", url: "se-tax-calculator.html" },
   { name: "IRS Penalty Calculator", icon: "⚠️", cat: "pro", tag: "tag-pro", label: "CPA / EA Pro", desc: "Compute failure-to-file and failure-to-pay penalties with daily interest accruals.", url: "penalty-calculator.html" },
-  { name: "QBI Deduction Calculator", icon: "🏗️", cat: "business", tag: "tag-business", label: "Business", desc: "Calculate your Section 199A qualified business income deduction with SSTB phase-out and W-2 wage limits.", url: "qbi.html" },
+  { name: "QBI Deduction Calculator", icon: "🏗️", cat: "business", tag: "tag-business", label: "Business", desc: "Calculate your Section 199A qualified business income deduction with SSTB phase-out and W-2 wage limits.", url: "qbi-deduction-calculator.html" },
   { name: "Capital Gains Tax Calculator", icon: "📈", cat: "calc", tag: "tag-calc", label: "Calculator", desc: "Calculate short-term and long-term capital gains tax for 2025, including NIIT on investment income.", url: "capital-gains.html" },
   { name: "Home Office Deduction Calculator", icon: "🏠", cat: "individual", tag: "tag-individual", label: "Individual", desc: "Calculate your home office deduction using the simplified or actual expense method — picks the larger.", url: "home-office.html" },
   { name: "IRS Notice Decoder", icon: "📋", cat: "ref", tag: "tag-ref", label: "Reference", desc: "Paste any IRS notice number (CP2000, CP14, CP504, LT11…) and get a plain-English explanation, deadline, and response action plan.", url: "irs-notice-decoder.html" },
@@ -1681,21 +1684,33 @@ function calculateTax() {
   const gross = parseFloat(document.getElementById('grossIncome').value) || 0;
   const extra = parseFloat(document.getElementById('extraDeductions').value) || 0;
   const status = document.getElementById('filingStatus').value;
-  const stdDeds = { single: 16100, mfj: 32200, mfs: 16100, hoh: 24150 };
-  const stdDed = stdDeds[status];
-  const totalDed = stdDed + extra;
-  const taxable = Math.max(0, gross - totalDed);
-
-  // 2026 ordinary-income tax brackets
-  const brackets = {
-    single: [[12400,0.10],[50400,0.12],[105700,0.22],[201775,0.24],[256225,0.32],[640600,0.35],[Infinity,0.37]],
-    mfj: [[24800,0.10],[100800,0.12],[211400,0.22],[403550,0.24],[512450,0.32],[768700,0.35],[Infinity,0.37]],
-    mfs: [[12400,0.10],[50400,0.12],[105700,0.22],[201775,0.24],[256225,0.32],[384350,0.35],[Infinity,0.37]],
-    hoh: [[17700,0.10],[67450,0.12],[105700,0.22],[201750,0.24],[256200,0.32],[640600,0.35],[Infinity,0.37]]
+  const year = Number(document.getElementById('quickTaxYear')?.value || 2026);
+  const taxData = {
+    2025: {
+      std: { single:15750, mfj:31500, mfs:15750, hoh:23625 },
+      brackets: {
+        single:[[11925,.10],[48475,.12],[103350,.22],[197300,.24],[250525,.32],[626350,.35],[Infinity,.37]],
+        mfj:[[23850,.10],[96950,.12],[206700,.22],[394600,.24],[501050,.32],[751600,.35],[Infinity,.37]],
+        mfs:[[11925,.10],[48475,.12],[103350,.22],[197300,.24],[250525,.32],[375800,.35],[Infinity,.37]],
+        hoh:[[17000,.10],[64850,.12],[103350,.22],[197300,.24],[250500,.32],[626350,.35],[Infinity,.37]]
+      }
+    },
+    2026: {
+      std: { single:16100, mfj:32200, mfs:16100, hoh:24150 },
+      brackets: {
+        single:[[12400,.10],[50400,.12],[105700,.22],[201775,.24],[256225,.32],[640600,.35],[Infinity,.37]],
+        mfj:[[24800,.10],[100800,.12],[211400,.22],[403550,.24],[512450,.32],[768700,.35],[Infinity,.37]],
+        mfs:[[12400,.10],[50400,.12],[105700,.22],[201775,.24],[256225,.32],[384350,.35],[Infinity,.37]],
+        hoh:[[17700,.10],[67450,.12],[105700,.22],[201750,.24],[256200,.32],[640600,.35],[Infinity,.37]]
+      }
+    }
   };
+  const data = taxData[year] || taxData[2026];
+  const stdDed = data.std[status];
+  const taxable = Math.max(0, gross - stdDed - extra);
 
-  let tax = 0, prev = 0, marginalRate = 0.10;
-  for (const [upper, rate] of brackets[status]) {
+  let tax = 0, prev = 0, marginalRate = .10;
+  for (const [upper, rate] of data.brackets[status]) {
     if (taxable <= prev) break;
     const chunk = Math.min(taxable, upper) - prev;
     tax += chunk * rate;
@@ -1704,7 +1719,52 @@ function calculateTax() {
     if (taxable <= upper) break;
   }
 
-  const fmt = n => '$' + Math.round(n).toLocaleString();
+  const fmt = n => '
+</script>
+<script>
+function refreshDeadlineBadges() {
+  const now = new Date();
+  now.setHours(0,0,0,0);
+  document.querySelectorAll('.deadline-item[data-deadline]').forEach(item => {
+    const due = new Date(item.dataset.deadline + 'T23:59:59');
+    const badge = item.querySelector('.deadline-badge');
+    if (!badge || Number.isNaN(due.getTime())) return;
+    const days = Math.ceil((due - now) / 86400000);
+    badge.classList.remove('upcoming','later');
+    if (days < 0) {
+      badge.textContent = 'Past';
+    } else if (days <= 30) {
+      badge.textContent = days === 0 ? 'Today' : 'Upcoming';
+      badge.classList.add('upcoming');
+    } else {
+      badge.textContent = 'Later';
+      badge.classList.add('later');
+    }
+  });
+}
+refreshDeadlineBadges();
+</script>
+<script>
+(function(){
+  var btn = document.getElementById('navHamburger');
+  var ul  = document.querySelector('nav ul, nav .nav-links');
+  if(!btn || !ul) return;
+  btn.addEventListener('click', function(){
+    btn.classList.toggle('open');
+    ul.classList.toggle('mobile-open');
+  });
+  // Close on outside click
+  document.addEventListener('click', function(e){
+    if(!e.target.closest('nav')){
+      btn.classList.remove('open');
+      ul && ul.classList.remove('mobile-open');
+    }
+  });
+})();
+</script>
+</body>
+</html>
+ + Math.round(n).toLocaleString();
   document.getElementById('stdDed').textContent = fmt(stdDed);
   document.getElementById('taxableInc').textContent = fmt(taxable);
   document.getElementById('margRate').textContent = (marginalRate * 100).toFixed(0) + '%';
