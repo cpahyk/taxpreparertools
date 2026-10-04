@@ -234,6 +234,7 @@
       </div>
 
       <button class="submit-btn" onclick="handleLogin()">Sign In →</button>
+      <div class="field-err" id="loginGeneralErr" role="alert" aria-live="polite"></div>
 
       <div class="success-state" id="loginSuccess">
         <span class="success-icon">✅</span>
@@ -319,10 +320,13 @@ async function handleLogin() {
   const pw       = document.getElementById('loginPassword');
   const emailErr = document.getElementById('emailErr');
   const pwErr    = document.getElementById('pwErr');
+  const generalErr = document.getElementById('loginGeneralErr');
   let valid = true;
 
   email.classList.remove('error'); emailErr.classList.remove('show');
   pw.classList.remove('error');    pwErr.classList.remove('show');
+  generalErr.classList.remove('show');
+  generalErr.textContent = '';
 
   if (!email.value || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email.value)) {
     email.classList.add('error'); emailErr.classList.add('show'); valid = false;
@@ -360,7 +364,8 @@ async function handleLogin() {
       emailErr.textContent = 'Please verify your email first — check your inbox.';
       email.classList.add('error'); emailErr.classList.add('show');
     } else {
-      alert('Login failed: ' + msg);
+      generalErr.textContent = 'Login failed. Please try again or contact support if the problem continues.';
+      generalErr.classList.add('show');
     }
     console.error('Login error:', err);
   }
