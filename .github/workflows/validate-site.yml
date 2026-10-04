@@ -1,0 +1,185 @@
+name: Validate static site
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  validate:
+    name: Validate HTML, scripts and links
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v6
+
+      - name: Validate inline JavaScript syntax
+        shell: bash
+        run: |
+          node <<'NODE'
+          const fs = require('fs');
+          const path = require('path');
+
+          function walk(dir) {
+            return fs.readdirSync(dir, { withFileTypes: true }).flatMap(entry => {
+              if (entry.name === '.git' || entry.name === '.wrangler' || entry.name === 'node_modules') return [];
+              const full = path.join(dir, entry.name);
+              return entry.isDirectory() ? walk(full) : [full];
+            });
+          }
+
+          const htmlFiles = walk('.').filter(file => file.endsWith('.html'));
+          const failures = [];
+
+          for (const file of htmlFiles) {
+            const html = fs.readFileSync(file, 'utf8');
+            const scriptRe = /<script([^>]*)>([\s\S]*?)<\/script>/gi;
+            let match;
+            let index = 0;
+
+            while ((match = scriptRe.exec(html))) {
+              const attrs = match[1] || '';
+              const code = match[2] || '';
+              const isJsonLd = /type\s*=\s*["']application\/ld\+json["']/i.test(attrs);
+              const isExternal = /src\s*=/i.test(attrs);
+              if (isJsonLd || isExternal || !code.trim()) {
+                index++;
+                continue;
+              }
+
+              try {
+                new Function(code);
+              } catch (error) {
+                failures.push(`${file}: inline script #${index + 1}: ${error.message}`);
+              }
+              index++;
+            }
+          }
+
+          if (failures.length) {
+            console.error('JavaScript syntax validation failed:');
+            failures.forEach(f => console.error(' - ' + f));
+            process.exit(1);
+          }
+
+          console.log(`Validated inline JavaScript syntax in ${htmlFiles.length} HTML files.`);
+          NODE
+
+      - name: Verify sitemap pages use the professional theme
+        shell: bash
+        run: |
+          node <<'NODE'
+          const fs = require('fs');
+
+          const sitemap = fs.readFileSync('sitemap.xml', 'utf8');
+          const urls = [...sitemap.matchAll(/<loc>(.*?)<\/loc>/g)].map(m => m[1]);
+          const missingFiles = [];
+          const missingTheme = [];
+
+          for (const url of urls) {
+            const pathname = new URL(url).pathname;
+            let file;
+            if (pathname === '/') file = 'index.html';
+            else if (pathname.endsWith('/')) file = pathname.slice(1) + 'index.html';
+            else file = pathname.slice(1) + '.html';
+
+            if (!fs.existsSync(file)) {
+              missingFiles.push(file);
+              continue;
+            }
+
+            const html = fs.readFileSync(file, 'utf8');
+            if (!html.includes('professional-light.css')) {
+              missingTheme.push(file);
+            }
+          }
+
+          if (missingFiles.length || missingTheme.length) {
+            if (missingFiles.length) {
+              console.error('Sitemap targets without a matching HTML file:');
+              missingFiles.forEach(f => console.error(' - ' + f));
+            }
+            if (missingTheme.length) {
+              console.error('Sitemap pages missing professional-light.css:');
+              missingTheme.forEach(f => console.error(' - ' + f));
+            }
+            process.exit(1);
+          }
+
+          console.log(`Verified theme coverage for ${urls.length} sitemap URLs.`);
+          NODE
+
+      - name: Check internal HTML links
+        shell: bash
+        run: |
+          node <<'NODE'
+          const fs = require('fs');
+          const path = require('path');
+
+          function walk(dir) {
+            return fs.readdirSync(dir, { withFileTypes: true }).flatMap(entry => {
+              if (entry.name === '.git' || entry.name === '.wrangler' || entry.name === 'node_modules') return [];
+              const full = path.join(dir, entry.name);
+              return entry.isDirectory() ? walk(full) : [full];
+            });
+          }
+
+          const htmlFiles = walk('.').filter(file => file.endsWith('.html'));
+          const failures = [];
+
+          for (const file of htmlFiles) {
+            const html = fs.readFileSync(file, 'utf8');
+            const hrefs = [...html.matchAll(/href\s*=\s*["']([^"'#?]+\.html)(?:[#?][^"']*)?["']/gi)].map(m => m[1]);
+
+            for (const href of hrefs) {
+              if (/^(?:https?:|mailto:|tel:)/i.test(href)) continue;
+              const target = href.startsWith('/')
+                ? href.slice(1)
+                : path.normalize(path.join(path.dirname(file), href));
+
+              if (!fs.existsSync(target)) {
+                failures.push(`${file} -> ${href}`);
+              }
+            }
+          }
+
+          if (failures.length) {
+            console.error('Broken internal HTML links:');
+            [...new Set(failures)].forEach(f => console.error(' - ' + f));
+            process.exit(1);
+          }
+
+          console.log('Internal .html links resolve to repository files.');
+          NODE
+
+      - name: Validate tools directory integrity
+        shell: bash
+        run: |
+          node <<'NODE'
+          const fs = require('fs');
+          const html = fs.readFileSync('tools.html', 'utf8');
+
+          if (html.includes('},,')) {
+            throw new Error('tools.html contains a double-comma array syntax error.');
+          }
+
+          const block = html.match(/const ALL_TOOLS = \[([\s\S]*?)\];\s*let currentCat/);
+          if (!block) throw new Error('Could not locate ALL_TOOLS data.');
+
+          const names = [...block[1].matchAll(/name:"([^"]+)"/g)].map(m => m[1]);
+          const duplicates = names.filter((name, index) => names.indexOf(name) !== index);
+
+          if (duplicates.length) {
+            throw new Error('Duplicate tool names: ' + [...new Set(duplicates)].join(', '));
+          }
+
+          console.log(`Tools directory integrity passed with ${names.length} unique tools.`);
+          NODE
