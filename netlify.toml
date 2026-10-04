@@ -4,47 +4,47 @@
 # Clean URL redirects — maps /page → /page.html
 [[redirects]]
   from = "/tools/federal-tax-estimator"
-  to   = "/tools/federal-tax-estimator.html"
+  to   = "/federal-tax-estimator.html"
   status = 200
 
 [[redirects]]
   from = "/tools/se-tax-calculator"
-  to   = "/tools/se-tax-calculator.html"
+  to   = "/se-tax-calculator.html"
   status = 200
 
 [[redirects]]
   from = "/tools/quarterly-payments"
-  to   = "/tools/quarterly-payments.html"
+  to   = "/quarterly-payments.html"
   status = 200
 
 [[redirects]]
   from = "/tools/qbi"
-  to   = "/tools/qbi.html"
+  to   = "/qbi-deduction-calculator.html"
   status = 200
 
 [[redirects]]
   from = "/tools/capital-gains"
-  to   = "/tools/capital-gains.html"
+  to   = "/capital-gains.html"
   status = 200
 
 [[redirects]]
   from = "/tools/penalty-calculator"
-  to   = "/tools/penalty-calculator.html"
+  to   = "/penalty-calculator.html"
   status = 200
 
 [[redirects]]
   from = "/tools/home-office"
-  to   = "/tools/home-office.html"
+  to   = "/home-office.html"
   status = 200
 
 [[redirects]]
   from = "/tools/mileage"
-  to   = "/tools/mileage.html"
+  to   = "/mileage.html"
   status = 200
 
 [[redirects]]
   from = "/tools/depreciation"
-  to   = "/tools/depreciation.html"
+  to   = "/depreciation.html"
   status = 200
 
 [[redirects]]
@@ -209,7 +209,7 @@
 
 [[redirects]]
   from = "/deadline-calendar"
-  to   = "/deadline-calendar.html"
+  to   = "/deadlines.html"
   status = 200
 
 [[redirects]]
