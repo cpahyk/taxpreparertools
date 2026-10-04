@@ -70,10 +70,16 @@ jobs:
           grep -q "updateUser({ password:" /tmp/login.html
           grep -q "signInWithProvider('google')" /tmp/login.html
           grep -q "signInWithProvider('azure', 'email')" /tmp/login.html
+          grep -q "/auth/v1/settings" /tmp/login.html
+          grep -q 'id="googleLoginBtn"' /tmp/login.html
+          grep -q 'id="microsoftLoginBtn"' /tmp/login.html
           grep -q '<form id="signupForm"' /tmp/signup.html
           grep -q 'autocomplete="new-password"' /tmp/signup.html
           grep -q "signInWithProvider('google')" /tmp/signup.html
           grep -q "signInWithProvider('azure', 'email')" /tmp/signup.html
+          grep -q "/auth/v1/settings" /tmp/signup.html
+          grep -q 'id="googleSignupBtn"' /tmp/signup.html
+          grep -q 'id="microsoftSignupBtn"' /tmp/signup.html
           grep -q '<form id="formSection"' /tmp/forgot-password.html
           grep -q 'name="email"' /tmp/forgot-password.html
 
