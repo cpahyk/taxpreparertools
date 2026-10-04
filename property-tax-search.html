@@ -574,7 +574,7 @@ footer { border-top:1px solid var(--border); padding:36px 48px; display:flex; al
             <div class="result-info-value" id="resultMethod">By Address</div>
           </div>
           <div class="result-info">
-            <div class="result-info-label">Methods Supported</div>
+            <div class="result-info-label">Expected Search Options</div>
             <div class="result-info-value" id="resultMethods">—</div>
           </div>
           <div class="result-info">
@@ -1040,7 +1040,7 @@ const COUNTY_PORTALS = {
 
   /* ───────────── MINNESOTA ───────────── */
   MN: [
-    { name:"Hennepin",    portal:"https://www.hennepincounty.gov/services/property/property-information-search",      methods:ALL,         notes:"Minneapolis." },
+    { name:"Hennepin",    portal:"https://www.hennepincounty.gov/services/property/property-information-search",      methods:ADDR_PARCEL, notes:"Minneapolis. Official search lists property address, PID, addition name, and map search." },
     { name:"Ramsey",      portal:"https://www.ramseycounty.us/residents/property-home/property-tax-and-value-lookup",                       methods:ALL,         notes:"St. Paul." },
     { name:"Dakota",      portal:"https://gis.co.dakota.mn.us/Webappbuilder/PropertyInformationPublic/index.html",    methods:ALL,         notes:"S Twin Cities suburbs." },
     { name:"Anoka",       portal:"https://www.anokacountymn.gov/313/Property-Records-Taxation",                  methods:ALL,         notes:"N Twin Cities suburbs." },
@@ -1292,7 +1292,7 @@ const COUNTY_PORTALS = {
     { name:"King",       portal:"https://blue.kingcounty.com/Assessor/eRealProperty/default.aspx",                methods:ALL,         notes:"Seattle. eRealProperty portal." },
     { name:"Pierce",     portal:"https://www.piercecountywa.gov/736/Property-Search",                              methods:ALL,         notes:"Tacoma." },
     { name:"Snohomish",  portal:"https://www.snohomishcountywa.gov/5167/Assessor",                                      methods:ALL,         notes:"Everett / N Seattle metro." },
-    { name:"Spokane",    portal:"https://cp.spokanecounty.org/SCOUT/propertyinformation/Default.aspx",                                       methods:ALL,         notes:"Spokane." },
+    { name:"Spokane",    portal:"https://cp.spokanecounty.org/SCOUT/propertyinformation/Default.aspx",                                       methods:ADDR_PARCEL, notes:"SCOUT public entry search accepts parcel number or address." },
     { name:"Clark",      portal:"https://gis.clark.wa.gov/gishome/property/",                                      methods:ALL,         notes:"Vancouver WA." },
     { name:"Thurston",   portal:"https://www.thurstoncountywa.gov/departments/assessor",                           methods:ALL,         notes:"Olympia (state capital)." },
     { name:"Kitsap",     portal:"https://psearch.kitsapgov.com/pdetails/",                                             methods:ALL,         notes:"Bremerton." }
@@ -1420,8 +1420,8 @@ window.PROPERTY_TAX_DATA = {
   var btnNetr          = document.getElementById('btnNetr');
 
   // Meta header: distinguish true direct links from search fallbacks.
-  document.getElementById('metaCounties').textContent = DATA.directPortalCount + '+ Curated Direct Links';
-  document.getElementById('statCounties').textContent = DATA.totalEntries + '+';
+  document.getElementById('metaCounties').textContent = DATA.directPortalCount + ' Curated Direct Links';
+  document.getElementById('statCounties').textContent = DATA.totalEntries;
 
   // ── Populate state dropdown
   DATA.states.forEach(function(s){
@@ -1455,6 +1455,7 @@ window.PROPERTY_TAX_DATA = {
       countyInput.disabled = true;
       countyInput.value = '';
       countyList.classList.remove('show');
+      countyInput.setAttribute('aria-expanded','false');
       countyCountEl.textContent = '';
       methodBtns.forEach(function(b){ b.disabled = true; });
       showEmpty();
@@ -1516,10 +1517,10 @@ window.PROPERTY_TAX_DATA = {
     countyList.innerHTML = '';
     if (!counties.length) {
       var empty = document.createElement('div');
-      empty.className = 'county-item';
-      empty.style.color = 'var(--muted)';
-      empty.style.cursor = 'default';
-      empty.innerHTML = '<span>No matches. Try the Google fallback below.</span>';
+      empty.className = 'county-empty';
+      empty.setAttribute('role','status');
+      empty.style.cssText = 'padding:12px 16px;color:var(--muted);font-size:.86rem;';
+      empty.textContent = 'No listed match. Use the fallback search below.';
       countyList.appendChild(empty);
       return;
     }
@@ -1528,9 +1529,11 @@ window.PROPERTY_TAX_DATA = {
       div.type = 'button';
       div.className = 'county-item';
       div.setAttribute('role','option');
+      div.setAttribute('aria-selected','false');
       div.dataset.name = county.name;
+      var routeType = DATA.isSearchFallback(county) ? 'Search fallback' : 'Direct link';
       div.innerHTML = '<span>' + escapeHTML(DATA.getJurisdictionLabel(currentState.code, county.name)) + '</span>'
-                    + '<span class="county-meta">' + county.methods.length + ' methods</span>';
+                    + '<span class="county-meta">' + routeType + '</span>';
       div.addEventListener('click', function(){ selectCounty(county); });
       countyList.appendChild(div);
     });
@@ -1546,21 +1549,25 @@ window.PROPERTY_TAX_DATA = {
     step2.classList.add('completed');
     step3.classList.add('active');
 
-    methodBtns.forEach(function(b){
-      var m = b.dataset.method;
-      b.disabled = county.methods.indexOf(m) === -1;
-      if (b.disabled && b.classList.contains('active')) {
-        b.classList.remove('active');
-      }
+    countyList.querySelectorAll('.county-item').forEach(function(item){
+      var selected = item.dataset.name === county.name;
+      item.classList.toggle('selected', selected);
+      item.setAttribute('aria-selected', selected ? 'true' : 'false');
     });
 
-    // If current method isn't supported by this county, fall back to first supported
-    if (county.methods.indexOf(currentMethod) === -1 && county.methods.length) {
+    var fallbackRoute = DATA.isSearchFallback(county);
+    methodBtns.forEach(function(b){
+      var m = b.dataset.method;
+      b.disabled = fallbackRoute || county.methods.indexOf(m) === -1;
+      if (b.disabled && b.classList.contains('active')) b.classList.remove('active');
+    });
+
+    if (!fallbackRoute && county.methods.indexOf(currentMethod) === -1 && county.methods.length) {
       currentMethod = county.methods[0];
-      methodBtns.forEach(function(b){
-        b.classList.toggle('active', b.dataset.method === currentMethod);
-      });
     }
+    methodBtns.forEach(function(b){
+      b.classList.toggle('active', !fallbackRoute && b.dataset.method === currentMethod);
+    });
 
     renderResult();
     syncUrl();
@@ -1612,22 +1619,26 @@ window.PROPERTY_TAX_DATA = {
     var isFallback = DATA.isSearchFallback(currentCounty);
     resultCountyName.textContent = displayName;
     resultStateName.textContent  = currentState.name;
-    resultMethod.textContent     = METHOD_LABEL[currentMethod] || '—';
+    resultMethod.textContent     = isFallback ? 'Varies by destination' : (METHOD_LABEL[currentMethod] || '—');
 
-    // Methods list
+    // Search-option metadata is a directory hint; the destination portal is authoritative.
     var allMethods = ['address','parcel','owner'];
-    resultMethods.innerHTML = allMethods.map(function(m){
-      var supported = currentCounty.methods.indexOf(m) >= 0;
-      var label = m === 'address' ? 'Address' : m === 'parcel' ? 'Parcel' : 'Owner';
-      return '<span style="margin-right:10px;font-size:0.82rem;">'
-             + '<span class="' + (supported ? 'check' : 'x') + '">' + (supported ? '✓' : '✕') + '</span>'
-             + label + '</span>';
-    }).join('');
+    if (isFallback) {
+      resultMethods.textContent = 'Verify on destination';
+    } else {
+      resultMethods.innerHTML = allMethods.map(function(m){
+        var supported = currentCounty.methods.indexOf(m) >= 0;
+        var label = m === 'address' ? 'Address' : m === 'parcel' ? 'Parcel' : 'Owner';
+        return '<span style="margin-right:10px;font-size:0.82rem;">'
+               + '<span class="' + (supported ? 'check' : 'x') + '">' + (supported ? '✓' : '—') + '</span>'
+               + label + '</span>';
+      }).join('');
+    }
 
-    // Notes: county notes + method tip
     var notesParts = [];
     if (currentCounty.notes) notesParts.push(currentCounty.notes);
-    if (METHOD_TIP[currentMethod]) notesParts.push(METHOD_TIP[currentMethod]);
+    if (!isFallback && METHOD_TIP[currentMethod]) notesParts.push(METHOD_TIP[currentMethod]);
+    notesParts.push('Search options are guidance only; verify the fields and current data on the destination portal.');
     resultNotes.textContent = notesParts.join(' ');
 
     btnPrimary.href = currentCounty.portal;
