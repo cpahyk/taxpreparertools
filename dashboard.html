@@ -507,16 +507,42 @@ const _supabase = supabase.createClient(SUPABASE_URL, SUPABASE_ANON);
     const user = session.user;
     const meta = user.user_metadata || {};
 
-    // Try to get profile row. A profile lookup failure should not block a valid session.
-    const { data: profile } = await _supabase
+    // Load the self-owned profile. First-time OAuth users may not have a row yet,
+    // so initialize one from non-privileged auth metadata when needed.
+    let { data: profile, error: profileError } = await _supabase
       .from('profiles')
       .select('first_name, last_name, role, plan')
       .eq('id', user.id)
       .maybeSingle();
 
     const emailLocal = (user.email || 'user').split('@')[0];
-    const firstName = profile?.first_name || meta.first_name || emailLocal;
-    const lastName  = profile?.last_name  || meta.last_name  || '';
+    const oauthName = (meta.full_name || meta.name || '').trim();
+    const oauthParts = oauthName ? oauthName.split(/\s+/) : [];
+    const fallbackFirst = meta.first_name || meta.given_name || oauthParts[0] || emailLocal;
+    const fallbackLast = meta.last_name || meta.family_name || oauthParts.slice(1).join(' ') || '';
+
+    if (!profile && !profileError) {
+      const { data: createdProfile, error: createError } = await _supabase
+        .from('profiles')
+        .insert({
+          id: user.id,
+          first_name: fallbackFirst,
+          last_name: fallbackLast,
+          email: user.email || '',
+          role: meta.role || '',
+          created_at: new Date().toISOString()
+        })
+        .select('first_name, last_name, role, plan')
+        .single();
+
+      if (!createError) profile = createdProfile;
+      else if (createError.code !== '23505') console.warn('Profile initialization warning:', createError);
+    } else if (profileError) {
+      console.warn('Profile lookup warning:', profileError);
+    }
+
+    const firstName = profile?.first_name || fallbackFirst;
+    const lastName  = profile?.last_name  || fallbackLast;
     const roleLabel = profile?.role || meta.role || 'Tax Professional';
     // Auth metadata is user controlled; only a server-managed profile plan is displayable.
     const plan      = (profile?.plan || 'Free').toUpperCase();
