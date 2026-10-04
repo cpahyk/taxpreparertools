@@ -1481,11 +1481,16 @@ footer { border-top:1px solid var(--border); padding:36px 48px; display:flex; al
         return;
       }
 
-      if(countyInput){
-        countyInput.value=out.county;
-        countyInput.dispatchEvent(new Event('input',{bubbles:true}));
-      }
-      setMsg('State set to '+out.abbr+', but the detected jurisdiction ('+out.county+') did not map uniquely to a listed area. Please choose the jurisdiction manually below.','');
+      var detectedFallback = {
+        name: out.county,
+        portal: data.buildGoogleFallback(currentState.name, out.county),
+        routeType: "search",
+        methods: ["address","parcel","owner"],
+        notes: "Detected from the ZIP/address shortcut, but this jurisdiction does not yet have a curated direct portal in our directory. Use the search result to locate the official assessor or tax office and verify the government source before relying on it."
+      };
+      selectCounty(detectedFallback);
+      try{ document.getElementById('step3').scrollIntoView({behavior:'smooth',block:'nearest'}); }catch(e){}
+      setMsg('Detected jurisdiction: '+label+', '+out.abbr+'. No curated direct portal is listed yet, so a verified-source search fallback is shown below.','');
       return;
     }
 
