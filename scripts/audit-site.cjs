@@ -147,6 +147,15 @@ for (const file of htmlFiles) {
     if (!attr(tag,'title').trim()) add(file,'warning','missing-iframe-title','Iframe is missing a descriptive title attribute.');
   }
 
+  const forms = [...htmlForDomChecks.matchAll(/<form\b[^>]*>[\s\S]*?<\/form>/gi)].map(m => m[0]);
+  for (const form of forms) {
+    const formButtons = [...form.matchAll(/<button\b[^>]*>/gi)].map(m => m[0]);
+    for (const tag of formButtons) {
+      if (!attr(tag,'type').trim()) {
+        add(file,'warning','implicit-form-button','Button inside a form is missing an explicit type attribute.');
+      }
+    }
+  }
   const inlineHandlerNames = new Set();
   const handlerAttrs = [...htmlForDomChecks.matchAll(/\bon(?:click|change|input|submit|keydown|keyup|blur|focus)\s*=\s*["']([^"']+)["']/gi)];
   const ignoredHandlerCalls = new Set([
