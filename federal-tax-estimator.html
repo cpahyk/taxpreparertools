@@ -13,10 +13,10 @@
   <meta name="msapplication-TileColor" content="#08152a">
   <meta name="msapplication-config" content="/browserconfig.xml">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Federal Income Tax Estimator 2025 | TaxPreparerTools.com</title>
+<title>Federal Income Tax Estimator 2025–2026 | TaxPreparerTools.com</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<meta name="description" content="Free 2025 federal income tax calculator. Estimate liability for all filing statuses with a full bracket breakdown, effective rate, and quarterly amounts.">
+<meta name="description" content="Free 2025–2026 federal income tax calculator. Estimate liability for all filing statuses with a full bracket breakdown, effective rate, and quarterly amounts.">
 <link rel="canonical" href="https://www.taxpreparertools.com/federal-tax-estimator" />
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700;900&family=DM+Sans:wght@300;400;500;600&family=DM+Mono:wght@400;500&display=swap" media="print" onload="this.media='all'">
 <noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700;900&family=DM+Sans:wght@300;400;500;600&family=DM+Mono:wght@400;500&display=swap"></noscript>
@@ -213,12 +213,12 @@ footer{border-top:1px solid var(--border);padding:28px 48px;display:flex;align-i
   <!-- Open Graph / Social Sharing -->
   <meta property="og:type" content="website" />
   <meta property="og:url" content="https://www.taxpreparertools.com/federal-tax-estimator" />
-  <meta property="og:title" content="Federal Income Tax Estimator 2025" />
-  <meta property="og:description" content="Estimate 2025 federal income tax with full bracket breakdown, effective rate, and quarterly payment amounts." />
+  <meta property="og:title" content="Federal Income Tax Estimator 2025–2026" />
+  <meta property="og:description" content="Estimate 2025–2026 federal income tax with full bracket breakdown, effective rate, and quarterly payment amounts." />
   <meta property="og:image" content="https://www.taxpreparertools.com/assets/og-image.png" />
   <meta name="twitter:card" content="summary_large_image" />
-  <meta name="twitter:title" content="Federal Income Tax Estimator 2025" />
-  <meta name="twitter:description" content="Estimate 2025 federal income tax with full bracket breakdown, effective rate, and quarterly payment amounts." />
+  <meta name="twitter:title" content="Federal Income Tax Estimator 2025–2026" />
+  <meta name="twitter:description" content="Estimate 2025–2026 federal income tax with full bracket breakdown, effective rate, and quarterly payment amounts." />
   <meta name="twitter:image" content="https://www.taxpreparertools.com/assets/og-image.png" />
 <script type="application/ld+json">
 {
@@ -226,9 +226,9 @@ footer{border-top:1px solid var(--border);padding:28px 48px;display:flex;align-i
   "@graph": [
     {
       "@type": "WebApplication",
-      "name": 'Federal Income Tax Estimator 2025',
+      "name": 'Federal Income Tax Estimator 2025–2026',
       "url": 'https://www.taxpreparertools.com/federal-tax-estimator',
-      "description": 'Free 2025 federal income tax calculator. Estimate your tax liability across all filing statuses with full bracket breakdown, effective rate, and quarterly payment amounts.',
+      "description": 'Free 2025–2026 federal income tax calculator. Estimate your tax liability across all filing statuses with full bracket breakdown, effective rate, and quarterly payment amounts.',
       "applicationCategory": "FinanceApplication",
       "operatingSystem": "Web",
       "offers": {"@type": "Offer", "price": "0", "priceCurrency": "USD"},
@@ -295,11 +295,11 @@ footer{border-top:1px solid var(--border);padding:28px 48px;display:flex;align-i
     <div class="tool-header-meta">
       <div class="tool-badges">
         <span class="badge badge-free">Free</span>
-        <span class="badge badge-updated">Updated Jan 2026</span>
+        <span class="badge badge-updated">Updated Oct 2026</span>
         <span class="badge badge-cat">Calculator</span>
       </div>
       <h1>Federal Income Tax<br>Estimator 2025</h1>
-      <p class="tool-desc">Estimate your 2025 federal income tax liability with full bracket-by-bracket breakdown, effective rate, marginal rate, and quarterly estimated payment amounts. Works for all four filing statuses.</p>
+      <p class="tool-desc">Estimate federal income tax for 2025 or 2026 with bracket-by-bracket breakdown, effective rate, marginal rate, and quarterly estimated payment amounts. Works for all four filing statuses.</p>
     </div>
   </div>
 
@@ -309,7 +309,7 @@ footer{border-top:1px solid var(--border);padding:28px 48px;display:flex;align-i
       <div class="calc-card">
         <div class="calc-card-header">
           <div class="calc-card-title">Enter Your Information</div>
-          <div class="calc-card-sub">All figures are for the 2025 tax year (filed in 2026)</div>
+          <div class="calc-card-sub"><span id="calcYearSub">Using 2026 IRS tax-year figures. Switch to 2025 when preparing or reviewing a 2025 return.</span></div>
         </div>
         <div class="calc-body">
           <div class="tabs">
@@ -335,9 +335,7 @@ footer{border-top:1px solid var(--border);padding:28px 48px;display:flex;align-i
               </div>
               <div class="field">
                 <div class="label">Tax Year</div>
-                <select class="no-prefix" disabled style="opacity:.6;padding:11px 13px;background:rgba(255,255,255,.05);border:1px solid rgba(200,168,75,.18);border-radius:9px;color:var(--muted);font-size:.9rem;font-family:'DM Sans',sans-serif;" aria-label="Tax Year">
-                  <option>2025</option>
-                </select>
+                <select class="no-prefix" id="taxYear" onchange="handleTaxYearChange()" aria-label="Tax Year"><option value="2026" selected>2026</option><option value="2025">2025</option></select>
               </div>
             </div>
 
@@ -392,7 +390,7 @@ footer{border-top:1px solid var(--border);padding:28px 48px;display:flex;align-i
             <div class="field" style="margin-bottom:24px;"><div class="label">Rental / Passive Income</div><div class="input-wrap"><span class="input-prefix">$</span><input type="number" id="d_rental" placeholder="0" oninput="updateCalc()" min="0" aria-label="Rental / Passive Income"/></div></div>
             <div class="section-title">Itemized Deductions</div>
             <div class="field" style="margin-bottom:14px;"><div class="label">Mortgage Interest</div><div class="input-wrap"><span class="input-prefix">$</span><input type="number" id="d_mort" placeholder="0" oninput="updateCalc()" min="0" aria-label="Mortgage Interest"/></div></div>
-            <div class="field" style="margin-bottom:14px;"><div class="label">State & Local Taxes (SALT — max $10k)</div><div class="input-wrap"><span class="input-prefix">$</span><input type="number" id="d_salt" placeholder="0" oninput="updateCalc()" min="0" aria-label="State &amp; Local Taxes (SALT — max $10k)"/></div></div>
+            <div class="field" style="margin-bottom:14px;"><div class="label">State & Local Taxes (SALT — annual limit applies)</div><div class="input-wrap"><span class="input-prefix">$</span><input type="number" id="d_salt" placeholder="0" oninput="updateCalc()" min="0" aria-label="State &amp; Local Taxes (SALT — max $10k)"/></div></div>
             <div class="field" style="margin-bottom:24px;"><div class="label">Charitable Contributions</div><div class="input-wrap"><span class="input-prefix">$</span><input type="number" id="d_charity" placeholder="0" oninput="updateCalc()" min="0" aria-label="Charitable Contributions"/></div></div>
           </div>
 
@@ -404,15 +402,15 @@ footer{border-top:1px solid var(--border);padding:28px 48px;display:flex;align-i
             <div class="field" style="margin-bottom:14px;"><div class="label">Home Office Deduction</div><div class="input-wrap"><span class="input-prefix">$</span><input type="number" id="se_homeoffice" placeholder="0" oninput="updateCalc()" min="0" aria-label="Home Office Deduction"/></div></div>
             <div class="field" style="margin-bottom:14px;"><div class="label">Vehicle Deduction (mileage or actual)</div><div class="input-wrap"><span class="input-prefix">$</span><input type="number" id="se_vehicle" placeholder="0" oninput="updateCalc()" min="0" aria-label="Vehicle Deduction (mileage or actual)"/></div></div>
             <div class="field" style="margin-bottom:24px;"><div class="label">Other W-2 Income (if any)</div><div class="input-wrap"><span class="input-prefix">$</span><input type="number" id="se_wages" placeholder="0" oninput="updateCalc()" min="0" aria-label="Other W-2 Income (if any)"/></div></div>
-            <div class="field" style="margin-bottom:14px;"><div class="label">Filing Status</div><select class="no-prefix" id="se_status" onchange="updateCalc()" aria-label="Filing Status"><option value="single">Single</option><option value="mfj">Married Filing Jointly</option><option value="hoh">Head of Household</option></select></div>
+            <div class="field" style="margin-bottom:14px;"><div class="label">Filing Status</div><select class="no-prefix" id="se_status" onchange="updateCalc()" aria-label="Filing Status"><option value="single">Single</option><option value="mfj">Married Filing Jointly</option><option value="hoh">Head of Household</option><option value="mfs">Married Filing Separately</option></select></div>
           </div>
 
-          <button class="calc-btn" onclick="calculate()">Calculate My 2025 Tax →</button>
+          <button class="calc-btn" id="calcButton" onclick="calculate()">Calculate My 2026 Tax →</button>
 
           <!-- RESULTS -->
           <div class="results-panel" id="resultsPanel">
             <div class="result-summary">
-              <div class="result-label">Estimated 2025 Federal Tax</div>
+              <div class="result-label" id="resultYearLabel">Estimated 2026 Federal Tax</div>
               <div class="result-big" id="r_totalTax">$0</div>
               <div class="result-sub" id="r_summary">Based on your inputs above</div>
             </div>
@@ -459,11 +457,11 @@ footer{border-top:1px solid var(--border);padding:28px 48px;display:flex;align-i
         </div>
         <div class="exp-section">
           <div class="exp-h">Standard vs. Itemized Deductions</div>
-          <div class="exp-p">The <strong>standard deduction</strong> for 2025 is $15,000 (Single), $30,000 (MFJ), $22,500 (HOH). You should itemize only if your allowable deductions — mortgage interest, SALT (capped at $10k), charitable contributions — exceed the standard deduction.</div>
+          <div class="exp-p" id="deductionExplainer">For 2026, the standard deduction is $16,100 (Single/MFS), $32,200 (MFJ), and $24,150 (HOH). Itemizing may be beneficial when allowable deductions exceed the standard deduction; SALT limits and high-income limitations may apply.</div>
         </div>
         <div class="exp-section">
           <div class="exp-h">Self-Employment Tax</div>
-          <div class="exp-p">Self-employed individuals pay <strong>15.3% SE tax</strong> (12.4% Social Security + 2.9% Medicare) on net self-employment income up to the SS wage base ($176,100 for 2025). Half of the SE tax is deductible as an above-the-line adjustment.</div>
+          <div class="exp-p" id="seExplainer">Self-employed individuals generally pay 12.4% Social Security tax up to the annual wage base plus 2.9% Medicare tax, with Additional Medicare Tax potentially applying at higher income levels. One-half of regular self-employment tax is generally deductible.</div>
         </div>
       </div>
     </div>
@@ -471,21 +469,21 @@ footer{border-top:1px solid var(--border);padding:28px 48px;display:flex;align-i
     <!-- RIGHT COLUMN -->
     <div class="right-col">
       <div class="info-card">
-        <div class="ic-title">📊 2025 Tax Reference</div>
-        <div class="ic-row"><span class="ic-k">Standard Ded. (Single)</span><span class="ic-v gold">$15,000</span></div>
-        <div class="ic-row"><span class="ic-k">Standard Ded. (MFJ)</span><span class="ic-v gold">$30,000</span></div>
-        <div class="ic-row"><span class="ic-k">Standard Ded. (HOH)</span><span class="ic-v gold">$22,500</span></div>
+        <div class="ic-title" id="taxRefTitle">📊 2026 Tax Reference</div>
+        <div class="ic-row"><span class="ic-k">Standard Ded. (Single)</span><span class="ic-v gold" id="refStdSingle">$16,100</span></div>
+        <div class="ic-row"><span class="ic-k">Standard Ded. (MFJ)</span><span class="ic-v gold" id="refStdMFJ">$32,200</span></div>
+        <div class="ic-row"><span class="ic-k">Standard Ded. (HOH)</span><span class="ic-v gold" id="refStdHOH">$24,150</span></div>
         <div class="ic-row"><span class="ic-k">Top Bracket Rate</span><span class="ic-v">37%</span></div>
-        <div class="ic-row"><span class="ic-k">SS Wage Base (2025)</span><span class="ic-v">$176,100</span></div>
+        <div class="ic-row"><span class="ic-k" id="refSSLabel">SS Wage Base (2026)</span><span class="ic-v" id="refSSBase">$184,500</span></div>
         <div class="ic-row"><span class="ic-k">Medicare Add'l (>$200k)</span><span class="ic-v">+0.9%</span></div>
-        <div class="ic-row"><span class="ic-k">SALT Deduction Cap</span><span class="ic-v">$10,000</span></div>
+        <div class="ic-row"><span class="ic-k">SALT Deduction Cap</span><span class="ic-v" id="refSaltCap">$40,400*</span></div>
         <div class="ic-row"><span class="ic-k">AMT Exemption (Single)</span><span class="ic-v">$88,100</span></div>
       </div>
 
       <div class="tips-card">
         <div class="ic-title">💡 Tax-Saving Tips</div>
-        <div class="tip-item"><div class="tip-icon">🏦</div><div class="tip-text"><strong>Max your 401(k):</strong> Contributing $23,500 (2025 limit) reduces taxable income dollar-for-dollar.</div></div>
-        <div class="tip-item"><div class="tip-icon">📈</div><div class="tip-text"><strong>HSA contributions:</strong> Up to $4,300 (self) or $8,550 (family) — triple tax advantage.</div></div>
+        <div class="tip-item"><div class="tip-icon">🏦</div><div class="tip-text"><strong>Max retirement contributions:</strong> Eligible pre-tax contributions can reduce taxable income, subject to annual plan limits.</div></div>
+        <div class="tip-item"><div class="tip-icon">📈</div><div class="tip-text"><strong>HSA contributions:</strong> Eligible contributions can provide a triple tax advantage, subject to annual limits.</div></div>
         <div class="tip-item"><div class="tip-icon">💼</div><div class="tip-text"><strong>Self-employed?</strong> Consider an S-Corp election to reduce SE tax on net profit above ~$50k.</div></div>
         <div class="tip-item"><div class="tip-icon">🎁</div><div class="tip-text"><strong>Bunch charitable gifts</strong> in alternating years to exceed the standard deduction threshold.</div></div>
         <div class="tip-item"><div class="tip-icon">📉</div><div class="tip-text"><strong>Harvest capital losses</strong> before Dec 31 to offset capital gains and up to $3,000 of ordinary income.</div></div>
@@ -540,20 +538,56 @@ footer{border-top:1px solid var(--border);padding:28px 48px;display:flex;align-i
   </a>
 </div>
 <footer>
-  <div class="footer-left">© 2026 <a href="index.html">TaxPreparerTools.com</a> · Estimates based on 2025 IRS published rates. Not tax advice. Verify with a qualified professional.</div>
+  <div class="footer-left">© 2026 <a href="index.html">TaxPreparerTools.com</a> · Estimates based on 2025–2026 IRS published rates. Not tax advice. Verify with a qualified professional.</div>
   <div class="footer-links"><a href="privacy.html">Privacy</a><a href="terms.html">Terms</a><a href="https://irs.gov" target="_blank">IRS.gov ↗</a></div>
 </footer>
 
 <script>
-// 2025 Tax Brackets
-const BRACKETS = {
-  single: [[11925,.10],[48475,.12],[103350,.22],[197300,.24],[250525,.32],[626350,.35],[Infinity,.37]],
-  mfj:    [[23850,.10],[96950,.12],[206700,.22],[394600,.24],[501050,.32],[751600,.35],[Infinity,.37]],
-  mfs:    [[11925,.10],[48475,.12],[103350,.22],[197300,.24],[250525,.32],[375800,.35],[Infinity,.37]],
-  hoh:    [[17000,.10],[64850,.12],[103350,.22],[197300,.24],[250500,.32],[626350,.35],[Infinity,.37]],
+// Tax-year data verified against IRS/SSA published figures
+const TAX_DATA = {
+  2025: {
+    brackets: {
+      single: [[11925,.10],[48475,.12],[103350,.22],[197300,.24],[250525,.32],[626350,.35],[Infinity,.37]],
+      mfj: [[23850,.10],[96950,.12],[206700,.22],[394600,.24],[501050,.32],[751600,.35],[Infinity,.37]],
+      mfs: [[11925,.10],[48475,.12],[103350,.22],[197300,.24],[250525,.32],[375800,.35],[Infinity,.37]],
+      hoh: [[17000,.10],[64850,.12],[103350,.22],[197300,.24],[250500,.32],[626350,.35],[Infinity,.37]]
+    },
+    stdDed: {single:15750, mfj:31500, mfs:15750, hoh:23625},
+    seWageBase: 176100,
+    saltCap: 40000, saltCapMfs: 20000,
+    saltPhaseout: 500000, saltPhaseoutMfs: 250000
+  },
+  2026: {
+    brackets: {
+      single: [[12400,.10],[50400,.12],[105700,.22],[201775,.24],[256225,.32],[640600,.35],[Infinity,.37]],
+      mfj: [[24800,.10],[100800,.12],[211400,.22],[403550,.24],[512450,.32],[768700,.35],[Infinity,.37]],
+      mfs: [[12400,.10],[50400,.12],[105700,.22],[201775,.24],[256225,.32],[384350,.35],[Infinity,.37]],
+      hoh: [[17700,.10],[67450,.12],[105700,.22],[201750,.24],[256200,.32],[640600,.35],[Infinity,.37]]
+    },
+    stdDed: {single:16100, mfj:32200, mfs:16100, hoh:24150},
+    seWageBase: 184500,
+    saltCap: 40400, saltCapMfs: 20200,
+    saltPhaseout: 505000, saltPhaseoutMfs: 252500
+  }
 };
-const STD_DED = {single:15000, mfj:30000, mfs:15000, hoh:22500};
-const SE_WAGE_BASE = 176100;
+function getTaxYear() {
+  const el = document.getElementById('taxYear');
+  return el ? Number(el.value) : 2026;
+}
+function getTaxData() { return TAX_DATA[getTaxYear()] || TAX_DATA[2026]; }
+function getSaltDeduction(amount, status, magi) {
+  const d = getTaxData();
+  const isMfs = status === 'mfs';
+  const maxCap = isMfs ? d.saltCapMfs : d.saltCap;
+  const threshold = isMfs ? d.saltPhaseoutMfs : d.saltPhaseout;
+  const floor = isMfs ? 5000 : 10000;
+  const phasedCap = magi > threshold ? Math.max(floor, maxCap - 0.30 * (magi - threshold)) : maxCap;
+  return Math.min(amount, phasedCap);
+}
+function handleTaxYearChange() {
+  const year = getTaxYear();
+  const d = getTaxData();
+  const fmt0 = n => '
 
 let activeTab = 'basic';
 
@@ -583,7 +617,186 @@ function getInputs() {
     const w2 = +document.getElementById('se_wages').value||0;
     const status = document.getElementById('se_status').value;
     const netSE = Math.max(0, rev - exp - ho - veh);
-    return { gross: w2 + netSE, wages: w2, business: netSE, other: 0, status, deductionAmt: STD_DED[status], credits: 0, adjustments: 0 };
+    return { gross: w2 + netSE, wages: w2, business: netSE, other: 0, status, deductionAmt: getTaxData().stdDed[status], credits: 0, adjustments: 0 };
+  }
+  if (activeTab === 'detailed') {
+    const wages = +document.getElementById('d_wages').value||0;
+    const interest = +document.getElementById('d_interest').value||0;
+    const qdiv = +document.getElementById('d_qdiv').value||0;
+    const odiv = +document.getElementById('d_odiv').value||0;
+    const capgain = +document.getElementById('d_capgain').value||0;
+    const rental = +document.getElementById('d_rental').value||0;
+    const mort = +document.getElementById('d_mort').value||0;
+    const charity = +document.getElementById('d_charity').value||0;
+    const status = document.getElementById('filingStatus').value;
+    const provisionalMagi = wages+interest+qdiv+odiv+capgain+rental;
+    const salt = getSaltDeduction(+document.getElementById('d_salt').value||0, status, provisionalMagi);
+    const itemized = mort + salt + charity;
+    const std = getTaxData().stdDed[status];
+    return { gross: wages+interest+qdiv+odiv+capgain+rental, wages, business: 0, other: interest+qdiv+odiv+capgain+rental, status, deductionAmt: Math.max(itemized, std), credits: 0, adjustments: 0 };
+  }
+  const wages = +document.getElementById('wages').value||0;
+  const business = +document.getElementById('businessIncome').value||0;
+  const other = +document.getElementById('otherIncome').value||0;
+  const status = document.getElementById('filingStatus').value;
+  const method = document.getElementById('deductionMethod').value;
+  const itemized = +document.getElementById('itemizedAmt').value||0;
+  const std = getTaxData().stdDed[status];
+  const deductionAmt = method === 'itemized' ? Math.max(itemized, std) : std;
+  const credits = +document.getElementById('credits').value||0;
+  const adjustments = +document.getElementById('adjustments').value||0;
+  return { gross: wages+business+other, wages, business, other, status, deductionAmt, credits, adjustments };
+}
+
+function calcTax(taxable, status) {
+  const brackets = getTaxData().brackets[status];
+  let tax = 0, prev = 0, marginalRate = .10;
+  const rows = [];
+  for (const [upper, rate] of brackets) {
+    if (taxable <= prev) { rows.push({rate, lower:prev, upper, income:0, tax:0, active:false}); continue; }
+    const chunk = Math.min(taxable, upper) - prev;
+    const rowTax = chunk * rate;
+    tax += rowTax;
+    marginalRate = rate;
+    rows.push({rate, lower:prev, upper, income:chunk, tax:rowTax, active:chunk>0});
+    prev = upper;
+    if (taxable <= upper) break;
+  }
+  return {tax, marginalRate, rows};
+}
+
+function calculate() {
+  const inp = getInputs();
+  const { gross, business, status, deductionAmt, credits, adjustments } = inp;
+
+  // Self-employment tax (simplified planning estimate)
+  const netSE = business;
+  const data = getTaxData();
+  const netEarningsSE = Math.max(0, netSE * 0.9235);
+  const wageIncome = inp.wages || 0;
+  const ssBaseRemaining = Math.max(0, data.seWageBase - wageIncome);
+  const ssTax = Math.min(netEarningsSE, ssBaseRemaining) * 0.124;
+  const medicareTax = netEarningsSE * 0.029;
+  const addlThreshold = status === 'mfj' ? 250000 : status === 'mfs' ? 125000 : 200000;
+  const additionalMedicare = Math.max(0, wageIncome + netEarningsSE - addlThreshold) * 0.009;
+  const seTax = ssTax + medicareTax + additionalMedicare;
+  const seDeduction = (ssTax + medicareTax) / 2;
+
+  const agi = Math.max(0, gross - adjustments - seDeduction);
+  const taxable = Math.max(0, agi - deductionAmt);
+  const { tax: incomeTax, marginalRate, rows } = calcTax(taxable, status);
+  const totalBeforeCredits = incomeTax + seTax;
+  const afterCredits = Math.max(0, totalBeforeCredits - credits);
+
+  // Render summary
+  document.getElementById('r_totalTax').textContent = fmt(afterCredits);
+  document.getElementById('r_summary').textContent = `${getTaxYear()} · ${status.toUpperCase()} filer · Taxable income ${fmt(taxable)}`;
+  document.getElementById('r_gross').textContent = fmt(gross);
+  document.getElementById('r_taxable').textContent = fmt(taxable);
+  document.getElementById('r_effRate').textContent = gross > 0 ? pct(afterCredits/gross) : '0.0%';
+  document.getElementById('r_margRate').textContent = pct(marginalRate);
+  document.getElementById('r_seTax').textContent = netSE > 0 ? fmt(seTax) : 'N/A';
+  document.getElementById('r_afterCredits').textContent = fmt(afterCredits);
+
+  // Bracket rows
+  const bracketHTML = rows.map(r => `
+    <div class="bracket-row${r.active?' active':''}">
+      <span class="br-rate">${(r.rate*100).toFixed(0)}%</span>
+      <span class="br-range">${fmt(r.lower)} – ${r.upper===Infinity?'∞':fmt(r.upper)}</span>
+      <span class="br-income">${r.income>0?fmt(r.income):'—'}</span>
+      <span class="br-tax">${r.tax>0?fmt(r.tax):'—'}</span>
+    </div>`).join('');
+  document.getElementById('bracketRows').innerHTML = bracketHTML;
+
+  // Quarterly payments
+  const qAmt = fmt(afterCredits / 4);
+  ['q1','q2','q3','q4'].forEach(id => document.getElementById(id).textContent = qAmt);
+
+  document.getElementById('resultsPanel').classList.add('show');
+  document.getElementById('resultsPanel').scrollIntoView({behavior:'smooth', block:'nearest'});
+}
+
+function updateCalc() {}
+handleTaxYearChange();
+</script>
+<script>
+(function(){
+  var btn = document.getElementById('navHamburger');
+  var ul  = document.querySelector('nav ul, nav .nav-links');
+  if(!btn || !ul) return;
+  btn.addEventListener('click', function(){
+    btn.classList.toggle('open');
+    ul.classList.toggle('mobile-open');
+  });
+  // Close on outside click
+  document.addEventListener('click', function(e){
+    if(!e.target.closest('nav')){
+      btn.classList.remove('open');
+      ul && ul.classList.remove('mobile-open');
+    }
+  });
+})();
+</script>
+<!-- Tax acronym tooltips (definitions on hover for related terms) -->
+<script src="assets/js/tax-acronyms.js" defer></script>
+<script>
+document.addEventListener('DOMContentLoaded', () => {
+  TaxAcronyms.init({
+    onlyAcronyms: ['AGI','MAGI','AMT','NIIT','QBI','SSTB','SALT','HSA','CTC','EITC','IRA','TCJA','OBBBA','FICA','SE'],
+    baseUrl: 'acronyms.html',
+  });
+});
+</script>
+</body>
+</html>
+ + Math.round(n).toLocaleString();
+  const byId = (id, value) => { const el = document.getElementById(id); if (el) el.textContent = value; };
+  byId('calcYearSub', `Using ${year} IRS tax-year figures. Switch years anytime for planning or return review.`);
+  byId('calcButton', `Calculate My ${year} Tax →`);
+  byId('resultYearLabel', `Estimated ${year} Federal Tax`);
+  byId('taxRefTitle', `📊 ${year} Tax Reference`);
+  byId('refStdSingle', fmt0(d.stdDed.single));
+  byId('refStdMFJ', fmt0(d.stdDed.mfj));
+  byId('refStdHOH', fmt0(d.stdDed.hoh));
+  byId('refSSLabel', `SS Wage Base (${year})`);
+  byId('refSSBase', fmt0(d.seWageBase));
+  byId('refSaltCap', fmt0(d.saltCap) + '*');
+  byId('deductionExplainer',
+    `For ${year}, the standard deduction is ${fmt0(d.stdDed.single)} (Single/MFS), ${fmt0(d.stdDed.mfj)} (MFJ), and ${fmt0(d.stdDed.hoh)} (HOH). Itemizing may be beneficial when allowable deductions exceed the standard deduction; SALT phaseouts and other high-income limitations may apply.`);
+  const panel = document.getElementById('resultsPanel');
+  if (panel) panel.classList.remove('show');
+}
+
+
+let activeTab = 'basic';
+
+function setTab(tab, el) {
+  document.querySelectorAll('.tab').forEach(t => t.classList.remove('on'));
+  el.classList.add('on');
+  ['basic','detailed','selfemployed'].forEach(t => {
+    document.getElementById('tab-'+t).style.display = t === tab ? '' : 'none';
+  });
+  activeTab = tab;
+}
+
+function toggleItemized() {
+  const method = document.getElementById('deductionMethod').value;
+  document.getElementById('itemizedField').style.display = method === 'itemized' ? '' : 'none';
+}
+
+function fmt(n) { return '$' + Math.round(n).toLocaleString(); }
+function pct(n) { return (n*100).toFixed(1)+'%'; }
+
+function getInputs() {
+  if (activeTab === 'selfemployed') {
+    const rev = +document.getElementById('se_revenue').value||0;
+    const exp = +document.getElementById('se_expenses').value||0;
+    const ho = +document.getElementById('se_homeoffice').value||0;
+    const veh = +document.getElementById('se_vehicle').value||0;
+    const w2 = +document.getElementById('se_wages').value||0;
+    const status = document.getElementById('se_status').value;
+    const netSE = Math.max(0, rev - exp - ho - veh);
+    return { gross: w2 + netSE, wages: w2, business: netSE, other: 0, status, deductionAmt: getTaxData().stdDed[status], credits: 0, adjustments: 0 };
   }
   if (activeTab === 'detailed') {
     const wages = +document.getElementById('d_wages').value||0;
@@ -597,7 +810,7 @@ function getInputs() {
     const charity = +document.getElementById('d_charity').value||0;
     const status = document.getElementById('filingStatus').value;
     const itemized = mort + salt + charity;
-    const std = STD_DED[status];
+    const std = getTaxData().stdDed[status];
     return { gross: wages+interest+qdiv+odiv+capgain+rental, wages, business: 0, other: interest+qdiv+odiv+capgain+rental, status, deductionAmt: Math.max(itemized, std), credits: 0, adjustments: 0 };
   }
   const wages = +document.getElementById('wages').value||0;
@@ -606,7 +819,7 @@ function getInputs() {
   const status = document.getElementById('filingStatus').value;
   const method = document.getElementById('deductionMethod').value;
   const itemized = +document.getElementById('itemizedAmt').value||0;
-  const std = STD_DED[status];
+  const std = getTaxData().stdDed[status];
   const deductionAmt = method === 'itemized' ? Math.max(itemized, std) : std;
   const credits = +document.getElementById('credits').value||0;
   const adjustments = +document.getElementById('adjustments').value||0;
@@ -614,7 +827,7 @@ function getInputs() {
 }
 
 function calcTax(taxable, status) {
-  const brackets = BRACKETS[status];
+  const brackets = getTaxData().brackets[status];
   let tax = 0, prev = 0, marginalRate = .10;
   const rows = [];
   for (const [upper, rate] of brackets) {
