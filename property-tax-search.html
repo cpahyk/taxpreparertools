@@ -860,7 +860,7 @@ footer { border-top:1px solid var(--border); padding:36px 48px; display:flex; al
 </footer>
 
 <!-- PROPERTY TAX DIRECTORY DATA — single source of truth -->
-<script src="/assets/js/property-tax-data.js?v=20261004-7"></script>
+<script src="/assets/js/property-tax-data.js?v=20261004-8"></script>
 
 
 <!-- LOGIC -->
@@ -1543,8 +1543,17 @@ footer { border-top:1px solid var(--border); padding:36px 48px; display:flex; al
   function findCountyItem(name, stateCode){
     if(!countyList || !name) return null;
     var items=Array.prototype.slice.call(countyList.querySelectorAll('.county-item'));
-    var want=normalizeJurisdiction(name);
 
+    if(data && typeof data.matchJurisdiction === 'function'){
+      var matched=data.matchJurisdiction(stateCode,name);
+      if(!matched) return null;
+      var matches=items.filter(function(it){
+        return it.dataset && it.dataset.name === matched.name;
+      });
+      return matches.length===1 ? matches[0] : null;
+    }
+
+    var want=normalizeJurisdiction(name);
     var exact=items.filter(function(it){
       var stored=(it.dataset&&it.dataset.name)?it.dataset.name:'';
       var label=data&&data.getJurisdictionLabel ? data.getJurisdictionLabel(stateCode,stored) : stored;
