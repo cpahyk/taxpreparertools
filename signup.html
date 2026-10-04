@@ -311,12 +311,12 @@
         <p class="signup-sub">No credit card required for Free or Pro trial.</p>
       </div>
 
-      <div class="social-btns">
-        <button type="button" class="social-btn" onclick="signInWithGoogle()">🔵 Google</button>
-        <button type="button" class="social-btn" onclick="signInWithMicrosoft()">🔷 Microsoft</button>
+      <div class="social-btns" id="signupSocialBtns" hidden>
+        <button type="button" class="social-btn" id="googleSignupBtn" onclick="signInWithGoogle()" hidden>🔵 Google</button>
+        <button type="button" class="social-btn" id="microsoftSignupBtn" onclick="signInWithMicrosoft()" hidden>🔷 Microsoft</button>
       </div>
 
-      <div class="divider">
+      <div class="divider" id="signupDivider" hidden>
         <div class="divider-line"></div>
         <div class="divider-text">or sign up with email</div>
         <div class="divider-line"></div>
@@ -509,6 +509,37 @@ function setSignupGeneralError(message) {
   box.textContent = message || '';
   box.classList.toggle('show', !!message);
 }
+
+async function loadSocialProviders() {
+  const container = document.getElementById('signupSocialBtns');
+  const divider = document.getElementById('signupDivider');
+  const google = document.getElementById('googleSignupBtn');
+  const microsoft = document.getElementById('microsoftSignupBtn');
+
+  try {
+    const response = await fetch(SUPABASE_URL + '/auth/v1/settings', {
+      headers: { apikey: SUPABASE_ANON },
+      cache: 'no-store'
+    });
+    if (!response.ok) throw new Error('Auth settings unavailable');
+
+    const settings = await response.json();
+    const external = settings?.external || {};
+    const googleEnabled = external.google === true;
+    const azureEnabled = external.azure === true;
+
+    google.hidden = !googleEnabled;
+    microsoft.hidden = !azureEnabled;
+    container.hidden = !(googleEnabled || azureEnabled);
+    divider.hidden = !(googleEnabled || azureEnabled);
+  } catch (error) {
+    console.warn('Social provider availability check failed:', error);
+    container.hidden = true;
+    divider.hidden = true;
+  }
+}
+
+loadSocialProviders();
 
 async function signInWithProvider(provider, scopes) {
   setSignupGeneralError('');
