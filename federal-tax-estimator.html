@@ -587,169 +587,7 @@ function getSaltDeduction(amount, status, magi) {
 function handleTaxYearChange() {
   const year = getTaxYear();
   const d = getTaxData();
-  const fmt0 = n => '
-
-let activeTab = 'basic';
-
-function setTab(tab, el) {
-  document.querySelectorAll('.tab').forEach(t => t.classList.remove('on'));
-  el.classList.add('on');
-  ['basic','detailed','selfemployed'].forEach(t => {
-    document.getElementById('tab-'+t).style.display = t === tab ? '' : 'none';
-  });
-  activeTab = tab;
-}
-
-function toggleItemized() {
-  const method = document.getElementById('deductionMethod').value;
-  document.getElementById('itemizedField').style.display = method === 'itemized' ? '' : 'none';
-}
-
-function fmt(n) { return '$' + Math.round(n).toLocaleString(); }
-function pct(n) { return (n*100).toFixed(1)+'%'; }
-
-function getInputs() {
-  if (activeTab === 'selfemployed') {
-    const rev = +document.getElementById('se_revenue').value||0;
-    const exp = +document.getElementById('se_expenses').value||0;
-    const ho = +document.getElementById('se_homeoffice').value||0;
-    const veh = +document.getElementById('se_vehicle').value||0;
-    const w2 = +document.getElementById('se_wages').value||0;
-    const status = document.getElementById('se_status').value;
-    const netSE = Math.max(0, rev - exp - ho - veh);
-    return { gross: w2 + netSE, wages: w2, business: netSE, other: 0, status, deductionAmt: getTaxData().stdDed[status], credits: 0, adjustments: 0 };
-  }
-  if (activeTab === 'detailed') {
-    const wages = +document.getElementById('d_wages').value||0;
-    const interest = +document.getElementById('d_interest').value||0;
-    const qdiv = +document.getElementById('d_qdiv').value||0;
-    const odiv = +document.getElementById('d_odiv').value||0;
-    const capgain = +document.getElementById('d_capgain').value||0;
-    const rental = +document.getElementById('d_rental').value||0;
-    const mort = +document.getElementById('d_mort').value||0;
-    const charity = +document.getElementById('d_charity').value||0;
-    const status = document.getElementById('filingStatus').value;
-    const provisionalMagi = wages+interest+qdiv+odiv+capgain+rental;
-    const salt = getSaltDeduction(+document.getElementById('d_salt').value||0, status, provisionalMagi);
-    const itemized = mort + salt + charity;
-    const std = getTaxData().stdDed[status];
-    return { gross: wages+interest+qdiv+odiv+capgain+rental, wages, business: 0, other: interest+qdiv+odiv+capgain+rental, status, deductionAmt: Math.max(itemized, std), credits: 0, adjustments: 0 };
-  }
-  const wages = +document.getElementById('wages').value||0;
-  const business = +document.getElementById('businessIncome').value||0;
-  const other = +document.getElementById('otherIncome').value||0;
-  const status = document.getElementById('filingStatus').value;
-  const method = document.getElementById('deductionMethod').value;
-  const itemized = +document.getElementById('itemizedAmt').value||0;
-  const std = getTaxData().stdDed[status];
-  const deductionAmt = method === 'itemized' ? Math.max(itemized, std) : std;
-  const credits = +document.getElementById('credits').value||0;
-  const adjustments = +document.getElementById('adjustments').value||0;
-  return { gross: wages+business+other, wages, business, other, status, deductionAmt, credits, adjustments };
-}
-
-function calcTax(taxable, status) {
-  const brackets = getTaxData().brackets[status];
-  let tax = 0, prev = 0, marginalRate = .10;
-  const rows = [];
-  for (const [upper, rate] of brackets) {
-    if (taxable <= prev) { rows.push({rate, lower:prev, upper, income:0, tax:0, active:false}); continue; }
-    const chunk = Math.min(taxable, upper) - prev;
-    const rowTax = chunk * rate;
-    tax += rowTax;
-    marginalRate = rate;
-    rows.push({rate, lower:prev, upper, income:chunk, tax:rowTax, active:chunk>0});
-    prev = upper;
-    if (taxable <= upper) break;
-  }
-  return {tax, marginalRate, rows};
-}
-
-function calculate() {
-  const inp = getInputs();
-  const { gross, business, status, deductionAmt, credits, adjustments } = inp;
-
-  // Self-employment tax (simplified planning estimate)
-  const netSE = business;
-  const data = getTaxData();
-  const netEarningsSE = Math.max(0, netSE * 0.9235);
-  const wageIncome = inp.wages || 0;
-  const ssBaseRemaining = Math.max(0, data.seWageBase - wageIncome);
-  const ssTax = Math.min(netEarningsSE, ssBaseRemaining) * 0.124;
-  const medicareTax = netEarningsSE * 0.029;
-  const addlThreshold = status === 'mfj' ? 250000 : status === 'mfs' ? 125000 : 200000;
-  const additionalMedicare = Math.max(0, wageIncome + netEarningsSE - addlThreshold) * 0.009;
-  const seTax = ssTax + medicareTax + additionalMedicare;
-  const seDeduction = (ssTax + medicareTax) / 2;
-
-  const agi = Math.max(0, gross - adjustments - seDeduction);
-  const taxable = Math.max(0, agi - deductionAmt);
-  const { tax: incomeTax, marginalRate, rows } = calcTax(taxable, status);
-  const totalBeforeCredits = incomeTax + seTax;
-  const afterCredits = Math.max(0, totalBeforeCredits - credits);
-
-  // Render summary
-  document.getElementById('r_totalTax').textContent = fmt(afterCredits);
-  document.getElementById('r_summary').textContent = `${getTaxYear()} · ${status.toUpperCase()} filer · Taxable income ${fmt(taxable)}`;
-  document.getElementById('r_gross').textContent = fmt(gross);
-  document.getElementById('r_taxable').textContent = fmt(taxable);
-  document.getElementById('r_effRate').textContent = gross > 0 ? pct(afterCredits/gross) : '0.0%';
-  document.getElementById('r_margRate').textContent = pct(marginalRate);
-  document.getElementById('r_seTax').textContent = netSE > 0 ? fmt(seTax) : 'N/A';
-  document.getElementById('r_afterCredits').textContent = fmt(afterCredits);
-
-  // Bracket rows
-  const bracketHTML = rows.map(r => `
-    <div class="bracket-row${r.active?' active':''}">
-      <span class="br-rate">${(r.rate*100).toFixed(0)}%</span>
-      <span class="br-range">${fmt(r.lower)} – ${r.upper===Infinity?'∞':fmt(r.upper)}</span>
-      <span class="br-income">${r.income>0?fmt(r.income):'—'}</span>
-      <span class="br-tax">${r.tax>0?fmt(r.tax):'—'}</span>
-    </div>`).join('');
-  document.getElementById('bracketRows').innerHTML = bracketHTML;
-
-  // Quarterly payments
-  const qAmt = fmt(afterCredits / 4);
-  ['q1','q2','q3','q4'].forEach(id => document.getElementById(id).textContent = qAmt);
-
-  document.getElementById('resultsPanel').classList.add('show');
-  document.getElementById('resultsPanel').scrollIntoView({behavior:'smooth', block:'nearest'});
-}
-
-function updateCalc() {}
-handleTaxYearChange();
-</script>
-<script>
-(function(){
-  var btn = document.getElementById('navHamburger');
-  var ul  = document.querySelector('nav ul, nav .nav-links');
-  if(!btn || !ul) return;
-  btn.addEventListener('click', function(){
-    btn.classList.toggle('open');
-    ul.classList.toggle('mobile-open');
-  });
-  // Close on outside click
-  document.addEventListener('click', function(e){
-    if(!e.target.closest('nav')){
-      btn.classList.remove('open');
-      ul && ul.classList.remove('mobile-open');
-    }
-  });
-})();
-</script>
-<!-- Tax acronym tooltips (definitions on hover for related terms) -->
-<script src="assets/js/tax-acronyms.js" defer></script>
-<script>
-document.addEventListener('DOMContentLoaded', () => {
-  TaxAcronyms.init({
-    onlyAcronyms: ['AGI','MAGI','AMT','NIIT','QBI','SSTB','SALT','HSA','CTC','EITC','IRA','TCJA','OBBBA','FICA','SE'],
-    baseUrl: 'acronyms.html',
-  });
-});
-</script>
-</body>
-</html>
- + Math.round(n).toLocaleString();
+  const fmt0 = n => '$' + Math.round(n).toLocaleString();
   const byId = (id, value) => { const el = document.getElementById(id); if (el) el.textContent = value; };
   byId('calcYearSub', `Using ${year} IRS tax-year figures. Switch years anytime for planning or return review.`);
   byId('calcButton', `Calculate My ${year} Tax →`);
@@ -761,13 +599,10 @@ document.addEventListener('DOMContentLoaded', () => {
   byId('refSSLabel', `SS Wage Base (${year})`);
   byId('refSSBase', fmt0(d.seWageBase));
   byId('refSaltCap', fmt0(d.saltCap) + '*');
-  byId('deductionExplainer',
-    `For ${year}, the standard deduction is ${fmt0(d.stdDed.single)} (Single/MFS), ${fmt0(d.stdDed.mfj)} (MFJ), and ${fmt0(d.stdDed.hoh)} (HOH). Itemizing may be beneficial when allowable deductions exceed the standard deduction; SALT phaseouts and other high-income limitations may apply.`);
+  byId('deductionExplainer', `For ${year}, the standard deduction is ${fmt0(d.stdDed.single)} (Single/MFS), ${fmt0(d.stdDed.mfj)} (MFJ), and ${fmt0(d.stdDed.hoh)} (HOH). Itemizing may be beneficial when allowable deductions exceed the standard deduction; SALT phaseouts and other high-income limitations may apply.`);
   const panel = document.getElementById('resultsPanel');
   if (panel) panel.classList.remove('show');
 }
-
-
 let activeTab = 'basic';
 
 function setTab(tab, el) {
