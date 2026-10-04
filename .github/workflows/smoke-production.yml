@@ -104,6 +104,9 @@ jobs:
           grep -q 'matchSource: source || "manual"' /tmp/property-tax.html
           grep -q "countyFallbackOption" /tmp/property-tax.html
           grep -q 'Unlisted area' /tmp/property-tax.html
+          grep -q 'Choose a state first' /tmp/property-tax.html
+          grep -q 'Type an unlisted county, city, parish, borough, or town' /tmp/property-tax.html
+          ! grep -Eq '\b(alert|prompt)\s*\(' /tmp/property-tax.html
           grep -q "items.length === 1" /tmp/property-tax.html
           grep -q 'counties.length === 0' /tmp/property-tax.html
           grep -q 'listed match' /tmp/property-tax.html
