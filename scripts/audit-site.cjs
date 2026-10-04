@@ -75,7 +75,7 @@ for (const file of htmlFiles) {
   if (inSitemap && !noindex) {
     if (!description) add(file,'error','missing-description','Indexable sitemap page has no meta description.');
     if (!canonical) add(file,'error','missing-canonical','Indexable sitemap page has no canonical URL.');
-    if (h1Count !== 1) add(file,'warning','h1-count',`Expected one H1 on indexable page; found ${h1Count}.`);
+    if (h1Count !== 1) add(file,'error','h1-count',`Expected one H1 on indexable page; found ${h1Count}.`);
     if (!hasMain) add(file,'warning','missing-main','Indexable page has no <main> or role="main" landmark.');
   }
 
@@ -95,12 +95,12 @@ for (const file of htmlFiles) {
     if (attr(tag,'target').toLowerCase() !== '_blank') continue;
     const rel = attr(tag,'rel').toLowerCase().split(/\s+/).filter(Boolean);
     if (!rel.includes('noopener')) {
-      add(file,'warning','unsafe-blank','target="_blank" link is missing rel="noopener".');
+      add(file,'error','unsafe-blank','target="_blank" link is missing rel="noopener".');
     }
   }
 
   if (/\balert\s*\(/.test(html) || /\bprompt\s*\(/.test(html)) {
-    add(file,'warning','native-dialog','Uses browser alert()/prompt() instead of inline UI.');
+    add(file,'error','native-dialog','Uses browser alert()/prompt() instead of inline UI.');
   }
 
   const images = [...htmlForDomChecks.matchAll(/<img\b[^>]*>/gi)].map(m => m[0]);
