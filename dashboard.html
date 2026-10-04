@@ -136,6 +136,17 @@
   .tool-item-used{font-size:0.68rem;color:var(--muted);font-family:'DM Mono',monospace;margin-top:2px;}
   .tool-item-arr{margin-left:auto;color:var(--muted);font-size:0.85rem;transition:all .18s;}
   .tool-item:hover .tool-item-arr{color:var(--gold);transform:translateX(3px);}
+  .tool-row{display:flex;align-items:center;gap:8px;border-bottom:1px solid rgba(255,255,255,.05);}
+  .tool-row:last-child{border-bottom:none;}
+  .tool-row .tool-item{flex:1;border-bottom:0;min-width:0;}
+  .pin-btn{width:34px;height:34px;border-radius:8px;border:1px solid var(--border);background:var(--card);color:var(--muted);cursor:pointer;display:flex;align-items:center;justify-content:center;font-size:15px;flex-shrink:0;transition:all .18s;}
+  .pin-btn:hover,.pin-btn:focus-visible{border-color:var(--gold);color:var(--gold);}
+  .pin-btn.on{background:var(--gold-dim);color:var(--gold);border-color:rgba(200,168,75,.3);}
+  .pinned-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(170px,1fr));gap:10px;}
+  .pinned-card{display:flex;align-items:center;gap:10px;padding:12px;border:1px solid var(--border);border-radius:10px;background:var(--card);text-decoration:none;min-width:0;}
+  .pinned-card:hover{background:var(--card-h);border-color:rgba(200,168,75,.28);}
+  .pinned-card-icon{font-size:1.15rem;flex-shrink:0;}
+  .pinned-card-name{font-size:.78rem;font-weight:700;color:var(--text);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
 
   /* UPCOMING DEADLINES */
   .dl-item{display:flex;align-items:center;gap:12px;padding:10px 0;border-bottom:1px solid rgba(255,255,255,.05);}
@@ -316,7 +327,7 @@
     <a href="dashboard.html" class="sb-nav-item on" aria-current="page"><span class="sb-nav-icon">🏠</span> Dashboard</a>
     <a href="tools.html" class="sb-nav-item"><span class="sb-nav-icon">🧮</span> All Tools</a>
     <a href="ai-assistant.html" class="sb-nav-item"><span class="sb-nav-icon">⚖️</span> AI Assistant</a>
-    <a href="deadlines.html" class="sb-nav-item"><span class="sb-nav-icon">📅</span> Deadlines <span class="sb-badge">3 soon</span></a>
+    <a href="deadlines.html" class="sb-nav-item"><span class="sb-nav-icon">📅</span> Deadlines <span class="sb-badge" id="deadlineSoonBadge">—</span></a>
     <a href="resources.html" class="sb-nav-item"><span class="sb-nav-icon">📚</span> Resources</a>
 
     <div class="sb-section-label">My Work</div>
@@ -363,7 +374,7 @@
     <div class="stats-row" aria-label="Dashboard shortcuts">
       <a class="stat-card" href="tools.html" style="text-decoration:none;">
         <div class="stat-top"><div class="stat-icon si-gold">🧮</div><span class="stat-trend trend-up">Directory</span></div>
-        <div class="stat-num">54+</div><div class="stat-label">Tax Tools & Calculators</div>
+        <div class="stat-num">54</div><div class="stat-label">Tax Tools & Calculators</div>
       </a>
       <a class="stat-card" href="deadlines.html" style="text-decoration:none;">
         <div class="stat-top"><div class="stat-icon si-green">📅</div><span class="stat-trend trend-up">Calendar</span></div>
@@ -375,7 +386,7 @@
       </a>
       <a class="stat-card" href="resources.html" style="text-decoration:none;">
         <div class="stat-top"><div class="stat-icon si-purple">📚</div><span class="stat-trend trend-up">Library</span></div>
-        <div class="stat-num">38+</div><div class="stat-label">Guides & Resources</div>
+        <div class="stat-num">Library</div><div class="stat-label">Guides & Resources</div>
       </a>
     </div>
 
@@ -384,6 +395,22 @@
 
       <!-- LEFT: Recent Tools + Saved Calcs -->
       <div style="display:flex;flex-direction:column;gap:18px;">
+
+        <!-- Pinned Tools -->
+        <div class="widget" id="pinnedToolsWidget">
+          <div class="widget-header">
+            <span class="widget-title">Pinned Tools</span>
+            <button type="button" class="widget-action" id="clearPinnedTools" style="background:none;border:0;cursor:pointer;" hidden onclick="clearPinnedTools()">Clear all</button>
+          </div>
+          <div class="widget-body" id="pinnedToolsList">
+            <div class="empty-state">
+              <div class="empty-state-icon">📌</div>
+              <div class="empty-state-title">No pinned tools yet</div>
+              <div class="empty-state-copy">Open tools from the directory, then use the pin button in Recently Visited Tools to keep your favorites here.</div>
+              <a class="empty-state-link" href="tools.html">Browse tools →</a>
+            </div>
+          </div>
+        </div>
 
         <!-- Recent Tools -->
         <div class="widget">
@@ -440,7 +467,7 @@
         <div class="widget">
           <div class="widget-header">
             <span class="widget-title">Quick Access</span>
-            <a href="tools.html" class="widget-action">All 42 tools →</a>
+            <a href="tools.html" class="widget-action">All 54 tools →</a>
           </div>
           <div class="widget-body">
             <div class="quick-grid">
@@ -564,6 +591,7 @@ function goAI(q) {
 }
 
 const RECENT_TOOLS_KEY = 'tpt_recent_tools_v1';
+const PINNED_TOOLS_KEY = 'tpt_pinned_tools_v1';
 
 function isSafeRecentToolUrl(url) {
   return typeof url === 'string' &&
@@ -595,6 +623,82 @@ function rememberToolVisit(name, url, emoji, description) {
   });
   try { localStorage.setItem(RECENT_TOOLS_KEY, JSON.stringify(current.slice(0, 5))); } catch (_) {}
 }
+function readPinnedTools() {
+  try {
+    const parsed = JSON.parse(localStorage.getItem(PINNED_TOOLS_KEY) || '[]');
+    if (!Array.isArray(parsed)) return [];
+    return parsed.filter(item =>
+      item && typeof item.name === 'string' && isSafeRecentToolUrl(item.url)
+    ).slice(0, 8);
+  } catch (_) {
+    return [];
+  }
+}
+
+function writePinnedTools(items) {
+  try { localStorage.setItem(PINNED_TOOLS_KEY, JSON.stringify(items.slice(0, 8))); } catch (_) {}
+}
+
+function isToolPinned(url) {
+  return readPinnedTools().some(item => item.url === url);
+}
+
+function togglePinnedTool(item) {
+  if (!item || !isSafeRecentToolUrl(item.url)) return;
+  const current = readPinnedTools();
+  const index = current.findIndex(existing => existing.url === item.url);
+  if (index >= 0) current.splice(index, 1);
+  else current.unshift({
+    name:String(item.name || 'Tool').slice(0,80),
+    url:item.url,
+    emoji:String(item.emoji || '📌').slice(0,8)
+  });
+  writePinnedTools(current);
+  renderPinnedTools();
+  renderRecentTools();
+}
+
+function clearPinnedTools() {
+  try { localStorage.removeItem(PINNED_TOOLS_KEY); } catch (_) {}
+  renderPinnedTools();
+  renderRecentTools();
+}
+
+function renderPinnedTools() {
+  const list = document.getElementById('pinnedToolsList');
+  const clear = document.getElementById('clearPinnedTools');
+  if (!list || !clear) return;
+
+  const pinned = readPinnedTools();
+  clear.hidden = pinned.length === 0;
+
+  if (!pinned.length) {
+    list.innerHTML = '<div class="empty-state"><div class="empty-state-icon">📌</div><div class="empty-state-title">No pinned tools yet</div><div class="empty-state-copy">Open tools from the directory, then use the pin button in Recently Visited Tools to keep your favorites here.</div><a class="empty-state-link" href="tools.html">Browse tools →</a></div>';
+    return;
+  }
+
+  const grid = document.createElement('div');
+  grid.className = 'pinned-grid';
+  pinned.forEach(item => {
+    const link = document.createElement('a');
+    link.className = 'pinned-card';
+    link.href = item.url;
+
+    const icon = document.createElement('span');
+    icon.className = 'pinned-card-icon';
+    icon.textContent = item.emoji || '📌';
+
+    const name = document.createElement('span');
+    name.className = 'pinned-card-name';
+    name.textContent = item.name;
+
+    link.append(icon, name);
+    grid.append(link);
+  });
+
+  list.replaceChildren(grid);
+}
+
 function formatRecentVisit(timestamp) {
   const value = Number(timestamp);
   if (!Number.isFinite(value) || value <= 0) return 'Recently visited';
@@ -655,7 +759,20 @@ function renderRecentTools() {
 
     link.append(icon, body, arrow);
     link.addEventListener('click', () => rememberToolVisit(item.name, item.url, item.emoji, item.description));
-    list.append(link);
+
+    const row = document.createElement('div');
+    row.className = 'tool-row';
+
+    const pin = document.createElement('button');
+    pin.type = 'button';
+    pin.className = 'pin-btn' + (isToolPinned(item.url) ? ' on' : '');
+    pin.textContent = isToolPinned(item.url) ? '★' : '☆';
+    pin.setAttribute('aria-label', (isToolPinned(item.url) ? 'Unpin ' : 'Pin ') + item.name);
+    pin.title = isToolPinned(item.url) ? 'Remove from pinned tools' : 'Pin this tool';
+    pin.addEventListener('click', () => togglePinnedTool(item));
+
+    row.append(link, pin);
+    list.append(row);
   });
 }
 
@@ -671,6 +788,7 @@ document.addEventListener('click', event => {
 });
 
 renderRecentTools();
+renderPinnedTools();
 
 function searchDashboardTools() {
   const input = document.getElementById('dashboardSearch');
@@ -746,6 +864,19 @@ function renderDashboardDeadlines() {
 }
 
 renderDashboardDeadlines();
+
+(function updateDeadlineSoonBadge() {
+  const badge = document.getElementById('deadlineSoonBadge');
+  if (!badge) return;
+  const now = new Date();
+  const today = new Date(now.getFullYear(), now.getMonth(), now.getDate());
+  const soon = DASHBOARD_DEADLINES.filter(item => {
+    const due = new Date(item.date + 'T12:00:00');
+    const days = Math.ceil((due - today) / 86400000);
+    return days >= 0 && days <= 30;
+  }).length;
+  badge.textContent = soon ? (soon + ' soon') : 'View';
+})();
 </script>
 
 <script>
