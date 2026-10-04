@@ -49,6 +49,28 @@ jobs:
           done
 
 
+      - name: Verify auth pages production
+        shell: bash
+        run: |
+          set -euo pipefail
+          curl --fail --silent --show-error --location --retry 4 --retry-delay 3 \
+            --header 'Cache-Control: no-cache' \
+            'https://www.taxpreparertools.com/login.html' -o /tmp/login.html
+          curl --fail --silent --show-error --location --retry 4 --retry-delay 3 \
+            --header 'Cache-Control: no-cache' \
+            'https://www.taxpreparertools.com/signup.html' -o /tmp/signup.html
+          curl --fail --silent --show-error --location --retry 4 --retry-delay 3 \
+            --header 'Cache-Control: no-cache' \
+            'https://www.taxpreparertools.com/forgot-password.html' -o /tmp/forgot-password.html
+
+          grep -q '<form class="auth-form" id="loginForm"' /tmp/login.html
+          grep -q 'autocomplete="username"' /tmp/login.html
+          grep -q 'autocomplete="current-password"' /tmp/login.html
+          grep -q '<form id="signupForm"' /tmp/signup.html
+          grep -q 'autocomplete="new-password"' /tmp/signup.html
+          grep -q '<form id="formSection"' /tmp/forgot-password.html
+          grep -q 'name="email"' /tmp/forgot-password.html
+
       - name: Verify property tax search production
         shell: bash
         run: |
