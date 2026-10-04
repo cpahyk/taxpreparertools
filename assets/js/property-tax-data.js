@@ -219,7 +219,7 @@ const COUNTY_PORTALS = {
     { name:"Allen",      portal:"https://www.allencounty.in.gov/164/Assessor",                                          methods:ALL,         notes:"Fort Wayne." },
     { name:"Hamilton",   portal:"https://www.hamiltoncounty.in.gov/180/Assessor",                               methods:ALL,         notes:"Carmel / Fishers." },
     { name:"St. Joseph", portal:"https://www.sjcindiana.com/156/Assessor",                                      methods:ALL,         notes:"South Bend." },
-    { name:"Tippecanoe", portal:"https://www.tippecanoe.in.gov/137/Assessor",                                   methods:ALL,         notes:"Lafayette / Purdue." }
+    { name:"Tippecanoe", portal:"https://www.tippecanoe.in.gov/150/Assessor",                                   methods:ALL,         notes:"Lafayette / Purdue. Official Assessor page links current property records and imagery." }
   ],
 
   /* ───────────── IOWA ───────────── */
