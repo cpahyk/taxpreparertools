@@ -165,6 +165,14 @@ for (const file of htmlFiles) {
       }
     }
   }
+  const cdnPackageUrls = [...html.matchAll(/https:\/\/(?:cdn\.jsdelivr\.net\/npm|unpkg\.com)\/([^\"'\s<>]+)/gi)].map(m => m[1]);
+  for (const spec of cdnPackageUrls) {
+    const packageSpec = spec.split('/').slice(0, spec.startsWith('@') ? 2 : 1).join('/');
+    const versionMatch = packageSpec.match(/^(.+?)@([^@/]+)$/);
+    if (!versionMatch || !/^\d+\.\d+\.\d+(?:[-+][0-9A-Za-z.-]+)?$/.test(versionMatch[2])) {
+      add(file,'warning','floating-cdn-dependency','Browser CDN package is not pinned to an exact version: ' + packageSpec);
+    }
+  }
   const inlineHandlerNames = new Set();
   const handlerAttrs = [...htmlForDomChecks.matchAll(/\bon(?:click|change|input|submit|keydown|keyup|blur|focus)\s*=\s*["']([^"']+)["']/gi)];
   const ignoredHandlerCalls = new Set([
