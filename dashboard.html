@@ -229,8 +229,48 @@
 {"@context":"https://schema.org","@type":"WebPage","name":"Dashboard — TaxPreparerTools","url":"https://www.taxpreparertools.com/dashboard"}
 </script>
   <link rel="stylesheet" href="/professional-light.css">
+<style>
+  .dashboard-page .sidebar{
+    background:#fff !important;
+    border-right:1px solid #e3eaf2 !important;
+    box-shadow:8px 0 28px rgba(15,34,56,.04);
+  }
+  .dashboard-page .topbar{
+    background:rgba(255,255,255,.94) !important;
+    border-bottom:1px solid #e3eaf2 !important;
+    box-shadow:0 8px 28px rgba(15,34,56,.05);
+    backdrop-filter:blur(18px) saturate(140%);
+  }
+  .dashboard-page .stat-card,
+  .dashboard-page .widget,
+  .dashboard-page .ai-widget{
+    background:#fff !important;
+    border-color:#e3eaf2 !important;
+    box-shadow:0 10px 28px rgba(15,34,56,.05);
+  }
+  .dashboard-page .stat-card:hover,
+  .dashboard-page .quick-card:hover{
+    background:#f7faff !important;
+    border-color:#b9cee2 !important;
+  }
+  .dashboard-page .tb-search,
+  .dashboard-page .ai-input{
+    background:#fff !important;
+    border-color:#cdd8e5 !important;
+    color:#24364b !important;
+  }
+  .dashboard-page .notif-btn,
+  .dashboard-page .mobile-menu-btn,
+  .dashboard-page .sidebar-close{
+    background:#fff !important;
+    border-color:#d7e1eb !important;
+    color:#24364b !important;
+  }
+  .dashboard-page .auth-gate{background:#f7f9fc !important;color:#24364b !important;}
+  .dashboard-page .upgrade-box{background:#f7faff !important;border-color:#d9e5f0 !important;}
+</style>
 </head>
-<body class="auth-pending">
+<body class="auth-pending dashboard-page">
 <a class="skip-link" href="#dashboardMain">Skip to dashboard content</a>
 <div class="auth-gate" id="authGate" role="status" aria-live="polite">Checking your session…</div>
 <h1 class="sr-only">TaxPreparerTools Dashboard</h1>
@@ -331,10 +371,10 @@
         <!-- Recent Tools -->
         <div class="widget">
           <div class="widget-header">
-            <span class="widget-title">Recommended Tools</span>
+            <span class="widget-title" id="recentToolsTitle">Recommended Tools</span>
             <a href="tools.html" class="widget-action">View all →</a>
           </div>
-          <div class="widget-body">
+          <div class="widget-body" id="recentToolsList">
             <a href="federal-tax-estimator.html" class="tool-item">
               <div class="tool-item-icon">🧮</div>
               <div><div class="tool-item-name">Federal Tax Estimator</div><div class="tool-item-used">Federal income tax estimate</div></div>
@@ -477,6 +517,87 @@ function goAI(q) {
   if (!query) return;
   window.location.href = 'ai-assistant.html?q=' + encodeURIComponent(query);
 }
+
+const RECENT_TOOLS_KEY = 'tpt_recent_tools_v1';
+
+function readRecentTools() {
+  try {
+    const parsed = JSON.parse(localStorage.getItem(RECENT_TOOLS_KEY) || '[]');
+    if (!Array.isArray(parsed)) return [];
+    return parsed.filter(item =>
+      item && typeof item.name === 'string' &&
+      typeof item.url === 'string' &&
+      /^[A-Za-z0-9._/-]+\.html(?:[?#].*)?$/.test(item.url)
+    ).slice(0, 5);
+  } catch (_) {
+    return [];
+  }
+}
+
+function rememberToolVisit(name, url, emoji, description) {
+  if (!name || !url || !/^[A-Za-z0-9._/-]+\.html(?:[?#].*)?$/.test(url)) return;
+  const current = readRecentTools().filter(item => item.url !== url);
+  current.unshift({
+    name: String(name).slice(0, 80),
+    url: String(url).slice(0, 160),
+    emoji: String(emoji || '🧮').slice(0, 8),
+    description: String(description || 'Recently opened tool').slice(0, 100),
+    visitedAt: Date.now()
+  });
+  try { localStorage.setItem(RECENT_TOOLS_KEY, JSON.stringify(current.slice(0, 5))); } catch (_) {}
+}
+
+function renderRecentTools() {
+  const list = document.getElementById('recentToolsList');
+  const title = document.getElementById('recentToolsTitle');
+  if (!list || !title) return;
+
+  const recent = readRecentTools();
+  if (!recent.length) return;
+
+  title.textContent = 'Recently Visited Tools';
+  list.replaceChildren();
+
+  recent.forEach(item => {
+    const link = document.createElement('a');
+    link.href = item.url;
+    link.className = 'tool-item';
+
+    const icon = document.createElement('div');
+    icon.className = 'tool-item-icon';
+    icon.textContent = item.emoji || '🧮';
+
+    const body = document.createElement('div');
+    const name = document.createElement('div');
+    name.className = 'tool-item-name';
+    name.textContent = item.name;
+    const used = document.createElement('div');
+    used.className = 'tool-item-used';
+    used.textContent = item.description || 'Recently opened tool';
+    body.append(name, used);
+
+    const arrow = document.createElement('span');
+    arrow.className = 'tool-item-arr';
+    arrow.textContent = '→';
+
+    link.append(icon, body, arrow);
+    link.addEventListener('click', () => rememberToolVisit(item.name, item.url, item.emoji, item.description));
+    list.append(link);
+  });
+}
+
+document.addEventListener('click', event => {
+  const link = event.target.closest('a.quick-card, a.tool-item');
+  if (!link) return;
+  const href = link.getAttribute('href') || '';
+  if (!href.endsWith('.html') && !href.includes('.html?') && !href.includes('.html#')) return;
+  const name = link.querySelector('.quick-name,.tool-item-name')?.textContent?.trim();
+  const emoji = link.querySelector('.quick-icon,.tool-item-icon')?.textContent?.trim();
+  const description = link.querySelector('.tool-item-used')?.textContent?.trim() || 'Opened from dashboard';
+  if (name) rememberToolVisit(name, href, emoji, description);
+});
+
+renderRecentTools();
 
 function searchDashboardTools() {
   const input = document.getElementById('dashboardSearch');

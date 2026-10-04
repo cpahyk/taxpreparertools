@@ -806,6 +806,35 @@ function renderTools(list) {
   container.innerHTML = html;
 }
 
+const RECENT_TOOLS_KEY = 'tpt_recent_tools_v1';
+
+function recordRecentToolFromCard(link) {
+  const href = link?.getAttribute('href') || '';
+  if (!/^[A-Za-z0-9._/-]+\.html(?:[?#].*)?$/.test(href)) return;
+  const name = link.querySelector('.card-name,.list-name')?.textContent?.trim();
+  if (!name) return;
+  const emoji = link.querySelector('.tool-emoji,.list-emoji')?.textContent?.trim() || '🧮';
+  const description = link.querySelector('.card-desc,.list-desc')?.textContent?.trim() || 'Opened from tools directory';
+
+  try {
+    const parsed = JSON.parse(localStorage.getItem(RECENT_TOOLS_KEY) || '[]');
+    const current = Array.isArray(parsed) ? parsed.filter(item => item && item.url !== href) : [];
+    current.unshift({
+      name:name.slice(0,80),
+      url:href.slice(0,160),
+      emoji:emoji.slice(0,8),
+      description:description.slice(0,100),
+      visitedAt:Date.now()
+    });
+    localStorage.setItem(RECENT_TOOLS_KEY, JSON.stringify(current.slice(0,5)));
+  } catch (_) {}
+}
+
+document.getElementById('toolsContainer')?.addEventListener('click', event => {
+  const link = event.target.closest('a.tool-card[href]');
+  if (link) recordRecentToolFromCard(link);
+});
+
 // Init
 const initialSearch = new URLSearchParams(window.location.search).get('search');
 if (initialSearch) {

@@ -103,6 +103,11 @@ jobs:
           grep -q 'function openSidebar' /tmp/dashboard.html
           grep -q 'No saved calculations yet' /tmp/dashboard.html
           grep -q 'Recommended Tools' /tmp/dashboard.html
+          grep -q 'id="recentToolsList"' /tmp/dashboard.html
+          grep -q "RECENT_TOOLS_KEY = 'tpt_recent_tools_v1'" /tmp/dashboard.html
+          grep -q 'function renderRecentTools' /tmp/dashboard.html
+          grep -q 'class="auth-pending dashboard-page"' /tmp/dashboard.html
+          grep -q '.dashboard-page .topbar' /tmp/dashboard.html
           grep -q '<main class="main-content" id="dashboardMain"' /tmp/dashboard.html
           grep -q 'class="skip-link"' /tmp/dashboard.html
           grep -q 'aria-current="page"' /tmp/dashboard.html
@@ -121,6 +126,8 @@ jobs:
             exit 1
           fi
           grep -q "new URLSearchParams(window.location.search).get('search')" /tmp/tools.html
+          grep -q "RECENT_TOOLS_KEY = 'tpt_recent_tools_v1'" /tmp/tools.html
+          grep -q 'function recordRecentToolFromCard' /tmp/tools.html
 
       - name: Verify property tax search production
         shell: bash
