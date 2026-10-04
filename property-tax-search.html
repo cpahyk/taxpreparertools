@@ -598,6 +598,9 @@ footer { border-top:1px solid var(--border); padding:36px 48px; display:flex; al
         <a class="btn-tertiary" id="btnNetr" href="#" target="_blank" rel="noopener noreferrer">
           <span>🗂️</span><span>NETR Online directory (alternative path)</span>
         </a>
+        <button class="btn-tertiary" id="btnCopySelection" type="button">
+          <span>🔗</span><span id="btnCopySelectionText">Copy selection link</span>
+        </button>
 
         <details class="access-help">
           <summary>⚠️ Portal not loading or link looks stale?</summary>
@@ -1418,8 +1421,10 @@ window.PROPERTY_TAX_DATA = {
   var resultSourceType = document.getElementById('resultSourceType');
   var btnPrimary       = document.getElementById('btnPrimary');
   var btnPrimaryText   = document.getElementById('btnPrimaryText');
-  var btnGoogle        = document.getElementById('btnGoogle');
-  var btnNetr          = document.getElementById('btnNetr');
+  var btnGoogle          = document.getElementById('btnGoogle');
+  var btnNetr            = document.getElementById('btnNetr');
+  var btnCopySelection   = document.getElementById('btnCopySelection');
+  var btnCopySelectionText = document.getElementById('btnCopySelectionText');
 
   // Meta header: distinguish true direct links from search fallbacks.
   document.getElementById('metaCounties').textContent = DATA.uniqueDirectPortalCount + ' Unique Direct Destinations';
@@ -1581,6 +1586,8 @@ window.PROPERTY_TAX_DATA = {
       var params = new URLSearchParams(window.location.search);
       if (currentState) params.set('state', currentState.code); else params.delete('state');
       if (currentCounty) params.set('area', currentCounty.name); else params.delete('area');
+      if (currentCounty && !DATA.isSearchFallback(currentCounty)) params.set('method', currentMethod);
+      else params.delete('method');
       var qs = params.toString();
       history.replaceState(null, '', window.location.pathname + (qs ? '?' + qs : ''));
     } catch (e) {}
@@ -1593,9 +1600,36 @@ window.PROPERTY_TAX_DATA = {
       methodBtns.forEach(function(b){ b.classList.remove('active'); });
       btn.classList.add('active');
       currentMethod = btn.dataset.method;
-      if (currentCounty) renderResult();
+      if (currentCounty) {
+        renderResult();
+        syncUrl();
+      }
     });
   });
+
+  // ── Copy a shareable selection link (state + area + method).
+  if (btnCopySelection) {
+    btnCopySelection.addEventListener('click', async function(){
+      syncUrl();
+      var value = window.location.href;
+      try {
+        await navigator.clipboard.writeText(value);
+        btnCopySelectionText.textContent = 'Link copied ✓';
+      } catch (e) {
+        var temp = document.createElement('textarea');
+        temp.value = value;
+        temp.setAttribute('readonly','');
+        temp.style.position = 'fixed';
+        temp.style.opacity = '0';
+        document.body.appendChild(temp);
+        temp.select();
+        try { document.execCommand('copy'); btnCopySelectionText.textContent = 'Link copied ✓'; }
+        catch (err) { btnCopySelectionText.textContent = 'Copy failed — use address bar'; }
+        temp.remove();
+      }
+      window.setTimeout(function(){ btnCopySelectionText.textContent = 'Copy selection link'; }, 1800);
+    });
+  }
 
   // ── Custom (Google) fallback
   customLink.addEventListener('click', function(e){
@@ -1685,13 +1719,28 @@ window.PROPERTY_TAX_DATA = {
       var params = new URLSearchParams(window.location.search);
       var stateCode = (params.get('state') || '').toUpperCase();
       var area = params.get('area') || '';
+      var method = (params.get('method') || '').toLowerCase();
       if (!stateCode) return;
       if (!DATA.states.some(function(s){ return s.code === stateCode; })) return;
       stateSelect.value = stateCode;
       stateSelect.dispatchEvent(new Event('change',{bubbles:true}));
       if (area) {
         var match = DATA.getCounties(stateCode).find(function(item){ return item.name.toLowerCase() === area.toLowerCase(); });
-        if (match) selectCounty(match);
+        if (!match) {
+          match = {
+            name: area,
+            portal: DATA.buildGoogleFallback(currentState.name, area),
+            methods: ["address","parcel","owner"],
+            notes: "Shared fallback area. Verify the local assessor or tax office from the search results."
+          };
+        }
+        selectCounty(match);
+        if (!DATA.isSearchFallback(match) && ['address','parcel','owner'].includes(method) && match.methods.indexOf(method) >= 0) {
+          currentMethod = method;
+          methodBtns.forEach(function(b){ b.classList.toggle('active', b.dataset.method === currentMethod); });
+          renderResult();
+          syncUrl();
+        }
       }
     } catch(e) {}
   })();
