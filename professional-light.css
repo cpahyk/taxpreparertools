@@ -1,0 +1,448 @@
+/* TaxPreparerTools — Professional Light Theme
+   White-first financial/professional UI layered over legacy page styles.
+   Loaded after each page's embedded stylesheet so functionality/layout remain intact. */
+
+:root {
+  color-scheme: light;
+
+  /* Legacy design-token remap */
+  --navy: #f7f9fc !important;
+  --navy-mid: #ffffff !important;
+  --slate: #e8eef6 !important;
+  --gold: #155fa0 !important;
+  --gold-light: #2b78b9 !important;
+  --gold-bright: #2b78b9 !important;
+  --gold-pale: #eaf3fb !important;
+  --gold-dim: rgba(21, 95, 160, 0.09) !important;
+  --cream: #f8fafc !important;
+  --white: #0f2238 !important;
+  --muted: #607086 !important;
+  --text: #24364b !important;
+  --border: rgba(15, 34, 56, 0.12) !important;
+  --card: #ffffff !important;
+  --card-bg: #ffffff !important;
+  --card-h: #f7faff !important;
+  --card-hover: #f7faff !important;
+  --input-bg: #ffffff !important;
+  --input-border: #cdd8e5 !important;
+
+  /* Downloads page token remap */
+  --bg: #f7f9fc !important;
+  --bg-raised: #ffffff !important;
+  --bg-card: #ffffff !important;
+  --line: rgba(15, 34, 56, 0.10) !important;
+  --line-strong: rgba(15, 34, 56, 0.18) !important;
+  --text-dim: #607086 !important;
+  --text-faint: #8291a3 !important;
+  --teal: #167c6a !important;
+
+  /* Status colors tuned for light surfaces */
+  --green: #15803d !important;
+  --blue: #2563eb !important;
+  --purple: #7c3aed !important;
+  --orange: #c2410c !important;
+  --red: #b91c1c !important;
+  --pink: #be185d !important;
+  --red-dim: rgba(185, 28, 28, 0.08) !important;
+  --orange-dim: rgba(194, 65, 12, 0.08) !important;
+  --green-dim: rgba(21, 128, 61, 0.08) !important;
+  --blue-dim: rgba(37, 99, 235, 0.08) !important;
+}
+
+html {
+  background: #f7f9fc !important;
+}
+
+body {
+  background: #f7f9fc !important;
+  color: #24364b !important;
+}
+
+body::before {
+  opacity: 0.05 !important;
+  mix-blend-mode: multiply;
+}
+
+::selection {
+  background: rgba(21, 95, 160, 0.16);
+  color: #0f2238;
+}
+
+/* Typography */
+h1, h2, h3, h4, h5, h6,
+.logo-text,
+.launch-title,
+.who-title,
+.tool-name,
+.featured-title,
+.calc-title,
+.resource-title,
+.deadline-name,
+.team-name,
+.cred-title {
+  color: #0f2238 !important;
+}
+
+p,
+.hero-sub,
+.section-sub,
+.launch-desc,
+.who-desc,
+.tool-desc,
+.featured-desc,
+.resource-desc,
+.deadline-who,
+.footer-copy {
+  color: #607086 !important;
+}
+
+a {
+  text-underline-offset: 3px;
+}
+
+/* Navigation */
+nav {
+  background: rgba(255, 255, 255, 0.94) !important;
+  border-bottom: 1px solid #e3eaf2 !important;
+  box-shadow: 0 8px 28px rgba(15, 34, 56, 0.06) !important;
+  backdrop-filter: blur(18px) saturate(140%) !important;
+}
+
+.logo-icon {
+  background: #155fa0 !important;
+  color: #ffffff !important;
+  box-shadow: 0 6px 16px rgba(21, 95, 160, 0.18);
+}
+
+.logo-text {
+  color: #0f2238 !important;
+}
+
+.logo-text span {
+  color: #155fa0 !important;
+}
+
+nav ul a {
+  color: #53657a !important;
+}
+
+nav ul a:hover {
+  color: #155fa0 !important;
+}
+
+.nav-cta,
+.btn-primary,
+.launch-cta,
+.calc-btn,
+.cta-btn,
+button[type="submit"] {
+  background: #155fa0 !important;
+  color: #ffffff !important;
+  border-color: #155fa0 !important;
+  box-shadow: 0 8px 22px rgba(21, 95, 160, 0.16) !important;
+}
+
+.nav-cta:hover,
+.btn-primary:hover,
+.launch-cta:hover,
+.calc-btn:hover,
+.cta-btn:hover,
+button[type="submit"]:hover {
+  background: #104f87 !important;
+  color: #ffffff !important;
+  box-shadow: 0 10px 26px rgba(21, 95, 160, 0.22) !important;
+}
+
+.nav-hamburger span {
+  background: #0f2238 !important;
+}
+
+/* Hero */
+.hero {
+  background: #ffffff !important;
+}
+
+.hero-bg {
+  background:
+    radial-gradient(ellipse 62% 46% at 50% 18%, rgba(21, 95, 160, 0.09) 0%, transparent 72%),
+    radial-gradient(ellipse 32% 32% at 85% 72%, rgba(21, 95, 160, 0.05) 0%, transparent 68%) !important;
+}
+
+.hero-grid {
+  background-image:
+    linear-gradient(rgba(15, 34, 56, 0.035) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(15, 34, 56, 0.035) 1px, transparent 1px) !important;
+}
+
+.hero-badge,
+.section-tag,
+.featured-label,
+.resource-type,
+.launch-eyebrow,
+.tool-tag {
+  color: #155fa0 !important;
+}
+
+.hero-badge {
+  background: #eef6fc !important;
+  border-color: #c9dfef !important;
+}
+
+.hero-badge::before,
+.launch-eyebrow::before {
+  background: #155fa0 !important;
+  box-shadow: none !important;
+}
+
+h1,
+.hero h1 {
+  color: #0f2238 !important;
+}
+
+h1 em,
+.hero h1 em,
+.launch-title span {
+  color: #155fa0 !important;
+}
+
+h1 em::after {
+  background: #155fa0 !important;
+  opacity: 0.26 !important;
+}
+
+.btn-outline {
+  background: #ffffff !important;
+  color: #18324d !important;
+  border-color: #cad5e2 !important;
+  box-shadow: 0 5px 16px rgba(15, 34, 56, 0.05);
+}
+
+.btn-outline:hover {
+  background: #f3f7fb !important;
+  color: #155fa0 !important;
+  border-color: #9ebbd3 !important;
+}
+
+.stat-num,
+.launch-stat-num {
+  color: #155fa0 !important;
+}
+
+.stat-label,
+.launch-stat-label {
+  color: #718095 !important;
+}
+
+/* Section surfaces */
+.launch-section,
+.tools-section,
+.deadlines-section,
+.cta-section {
+  background: #f7f9fc !important;
+}
+
+.who-section,
+.featured-section,
+.resources-section {
+  background: #ffffff !important;
+}
+
+.launch-card,
+.who-card,
+.tool-card,
+.resource-card,
+.calc-widget,
+.deadline-item,
+.team-card,
+.cred-card,
+.form-card,
+.pricing-card,
+.download-card,
+.feature-card {
+  background: #ffffff !important;
+  border-color: #e0e7ef !important;
+  box-shadow: 0 10px 30px rgba(15, 34, 56, 0.055) !important;
+}
+
+.launch-card {
+  background:
+    linear-gradient(135deg, #ffffff 0%, #f5f9fd 100%) !important;
+  border-color: #dce6ef !important;
+}
+
+.launch-card::before {
+  background: radial-gradient(circle, rgba(21, 95, 160, 0.08) 0%, transparent 72%) !important;
+}
+
+.launch-mini {
+  background: #ffffff !important;
+  border-color: #dbe5ee !important;
+  box-shadow: 0 7px 20px rgba(15, 34, 56, 0.05);
+}
+
+.launch-mini-acro {
+  color: #155fa0 !important;
+}
+
+.launch-mini-name {
+  color: #0f2238 !important;
+}
+
+.launch-mini-def {
+  color: #68788c !important;
+}
+
+.who-card:hover,
+.tool-card:hover,
+.resource-card:hover,
+.download-card:hover {
+  background: #f9fbfd !important;
+  border-color: #b9ccdc !important;
+  box-shadow: 0 14px 32px rgba(15, 34, 56, 0.085) !important;
+}
+
+/* Filters, pills and secondary controls */
+.filter-btn {
+  background: #ffffff !important;
+  color: #52647a !important;
+  border-color: #d7e0e9 !important;
+}
+
+.filter-btn:hover {
+  color: #155fa0 !important;
+  border-color: #aec7da !important;
+  background: #f5f9fc !important;
+}
+
+.filter-btn.active {
+  background: #155fa0 !important;
+  color: #ffffff !important;
+  border-color: #155fa0 !important;
+}
+
+.deadline-badge,
+.badge,
+.pill {
+  box-shadow: none !important;
+}
+
+/* Forms */
+input,
+select,
+textarea {
+  background: #ffffff !important;
+  color: #182b40 !important;
+  border-color: #cfd9e4 !important;
+}
+
+input::placeholder,
+textarea::placeholder {
+  color: #8a98aa !important;
+}
+
+input:focus,
+select:focus,
+textarea:focus {
+  border-color: #4e8cbd !important;
+  box-shadow: 0 0 0 3px rgba(21, 95, 160, 0.10) !important;
+  outline: none !important;
+}
+
+.calc-result {
+  background: #f5f8fb !important;
+  border-color: #dce5ee !important;
+}
+
+.calc-result-row {
+  color: #4f6175 !important;
+}
+
+.calc-result-row.total {
+  color: #0f2238 !important;
+  border-top-color: #dce5ee !important;
+}
+
+/* Tables and data-heavy areas */
+table,
+.table,
+.data-table {
+  background: #ffffff !important;
+  color: #24364b !important;
+}
+
+thead,
+.table-head {
+  background: #f3f6fa !important;
+}
+
+th,
+td {
+  border-color: #e3e9f0 !important;
+}
+
+/* Footer */
+footer {
+  background: #eef3f7 !important;
+  border-top-color: #dce4ec !important;
+  color: #52647a !important;
+}
+
+footer a,
+.footer-links a {
+  color: #52647a !important;
+}
+
+footer a:hover,
+.footer-links a:hover {
+  color: #155fa0 !important;
+}
+
+/* Downloads page hard-coded dark surfaces */
+.downloads-hero,
+.download-shell,
+.download-wrap,
+.download-section {
+  background: transparent !important;
+}
+
+code,
+pre {
+  background: #eef3f7 !important;
+  color: #18324d !important;
+  border-color: #dbe3ec !important;
+}
+
+/* Remove dark-theme glow where legacy rules use it */
+* {
+  text-shadow: none;
+}
+
+/* Keep animations subtle and professional */
+@media (prefers-reduced-motion: no-preference) {
+  .tool-card,
+  .who-card,
+  .resource-card,
+  .launch-card,
+  .download-card {
+    transition:
+      transform 160ms ease,
+      box-shadow 160ms ease,
+      border-color 160ms ease,
+      background 160ms ease !important;
+  }
+}
+
+/* Mobile menu */
+@media (max-width: 900px) {
+  nav ul {
+    background: rgba(255, 255, 255, 0.985) !important;
+    border-color: #e0e7ef !important;
+    box-shadow: 0 16px 36px rgba(15, 34, 56, 0.10) !important;
+  }
+}
+
+/* Accessibility */
+:focus-visible {
+  outline: 3px solid rgba(21, 95, 160, 0.36) !important;
+  outline-offset: 2px !important;
+}
