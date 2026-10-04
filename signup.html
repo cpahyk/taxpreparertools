@@ -322,12 +322,13 @@
         <div class="divider-line"></div>
       </div>
 
+      <form id="signupForm" onsubmit="event.preventDefault(); handleSignup()">
       <div class="form-row">
         <div class="field">
           <div class="field-label">First Name</div>
           <div class="field-input-wrap">
             <span class="field-icon">👤</span>
-            <input type="text" id="firstName" placeholder="Jane" autocomplete="given-name" aria-label="First Name"/>
+            <input type="text" id="firstName" name="firstName" placeholder="Jane" autocomplete="given-name" aria-label="First Name"/>
           </div>
           <div class="field-err" id="firstErr">Required.</div>
         </div>
@@ -335,7 +336,7 @@
           <div class="field-label">Last Name</div>
           <div class="field-input-wrap">
             <span class="field-icon">👤</span>
-            <input type="text" id="lastName" placeholder="Smith" autocomplete="family-name" aria-label="Last Name"/>
+            <input type="text" id="lastName" name="lastName" placeholder="Smith" autocomplete="family-name" aria-label="Last Name"/>
           </div>
           <div class="field-err" id="lastErr">Required.</div>
         </div>
@@ -345,7 +346,7 @@
         <div class="field-label">Email Address</div>
         <div class="field-input-wrap">
           <span class="field-icon">✉️</span>
-          <input type="email" id="signupEmail" placeholder="jane@example.com" autocomplete="email" aria-label="Email Address"/>
+          <input type="email" id="signupEmail" name="email" placeholder="jane@example.com" autocomplete="email" aria-label="Email Address"/>
         </div>
         <div class="field-err" id="signupEmailErr">Please enter a valid email.</div>
       </div>
@@ -354,7 +355,7 @@
         <div class="field-label">Role</div>
         <div class="field-input-wrap">
           <span class="field-icon">💼</span>
-          <select id="userRole" aria-label="Role">
+          <select id="userRole" name="role" aria-label="Role">
             <option value="">Select your role…</option>
             <option>CPA</option>
             <option>Enrolled Agent (EA)</option>
@@ -372,7 +373,7 @@
         <div class="field-label">Password</div>
         <div class="field-input-wrap">
           <span class="field-icon">🔒</span>
-          <input type="password" id="signupPassword" placeholder="Min. 8 characters" autocomplete="new-password" oninput="checkStrength(this.value)" aria-label="Password"/>
+          <input type="password" id="signupPassword" name="password" placeholder="Min. 8 characters" autocomplete="new-password" oninput="checkStrength(this.value)" aria-label="Password"/>
           <button type="button" class="pw-toggle" onclick="togglePw('signupPassword',this)" aria-label="Show or hide password">👁</button>
         </div>
         <div class="pw-strength">
@@ -383,13 +384,14 @@
       </div>
 
       <div class="terms-check">
-        <input type="checkbox" id="termsCheck" aria-label="Agree to Terms of Service and Privacy Policy"/>
+        <input type="checkbox" id="termsCheck" name="terms" aria-label="Agree to Terms of Service and Privacy Policy"/>
         <span>I agree to the <a href="terms.html">Terms of Service</a> and <a href="privacy.html">Privacy Policy</a>. I understand that TaxPreparerTools.com provides tools for informational purposes and is not a substitute for professional tax advice.</span>
       </div>
       <div class="field-err" id="termsErr" style="margin-bottom:14px;">Please accept the terms to continue.</div>
 
-      <button class="submit-btn" onclick="handleSignup()">Create Free Account →</button>
+      <button type="submit" class="submit-btn">Create Free Account →</button>
       <div class="field-err" id="signupGeneralErr" role="alert" aria-live="polite" style="margin-top:10px;"></div>
+      </form>
 
       <div class="secure-note">🔒 256-bit SSL · No spam · Unsubscribe anytime</div>
       <div class="auth-switch" style="margin-top:16px;">Already have an account? <a href="login.html">Sign in</a></div>
