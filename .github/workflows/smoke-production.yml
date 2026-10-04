@@ -82,12 +82,16 @@ jobs:
           grep -q 'id="microsoftSignupBtn"' /tmp/signup.html
           grep -q '<form id="formSection"' /tmp/forgot-password.html
           grep -q 'name="email"' /tmp/forgot-password.html
+          grep -q '@supabase/supabase-js@2.117.2/dist/umd/supabase.js' /tmp/login.html
+          grep -q '@supabase/supabase-js@2.117.2/dist/umd/supabase.js' /tmp/signup.html
+          grep -q '@supabase/supabase-js@2.117.2/dist/umd/supabase.js' /tmp/forgot-password.html
 
           curl --fail --silent --show-error --location --retry 4 --retry-delay 3 \
             --header 'Cache-Control: no-cache' \
             'https://www.taxpreparertools.com/dashboard.html' -o /tmp/dashboard.html
           grep -q 'class="auth-pending"' /tmp/dashboard.html
           grep -q 'id="authGate"' /tmp/dashboard.html
+          grep -q '@supabase/supabase-js@2.117.2/dist/umd/supabase.js' /tmp/dashboard.html
           grep -q "window.location.replace('login.html')" /tmp/dashboard.html
           grep -q "fallbackFirst" /tmp/dashboard.html
           grep -q "Profile initialization warning" /tmp/dashboard.html

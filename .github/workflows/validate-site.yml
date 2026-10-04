@@ -42,6 +42,14 @@ jobs:
           grep -qi 'name="robots" content="noindex, nofollow"' login.html
           grep -qi 'name="robots" content="noindex, nofollow"' dashboard.html
           echo "Validated sensitive-page cache and indexing policy."
+          for page in login.html signup.html forgot-password.html dashboard.html; do
+            grep -q '@supabase/supabase-js@2.117.2/dist/umd/supabase.js' "$page"
+            if grep -q '@supabase/supabase-js@2/dist/umd/supabase.js' "$page"; then
+              echo "Floating Supabase JS version found in $page" >&2
+              exit 1
+            fi
+          done
+          echo "Validated pinned Supabase browser dependency."
 
       - name: Check repository secret hygiene
         shell: bash
