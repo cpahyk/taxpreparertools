@@ -372,12 +372,26 @@ jobs:
             if (!data.includes(marker)) failures.push(`Missing property-tax data marker: ${marker}`);
           }
 
+          // Regression checks for independent-city/county name collisions.
+          if (!data.includes("if (/\\b(County|City|Parish|Borough|Municipality|Census Area)$/i.test(n)) return n;")) {
+            failures.push('Jurisdiction labels must preserve explicit City/County/Parish/Borough suffixes.');
+          }
+          if (!data.includes('{ name:"Baltimore County"') || !data.includes('{ name:"Baltimore City"')) {
+            failures.push('Baltimore City/County regression fixtures are missing.');
+          }
+          if (!data.includes('{ name:"St. Louis County"') || !data.includes('{ name:"St. Louis City"')) {
+            failures.push('St. Louis City/County regression fixtures are missing.');
+          }
+
           const htmlMarkers = [
             'ZIP matches are approximate',
             'Expected Search Options',
             'aria-autocomplete="list"',
             'aria-activedescendant',
-            "classList.toggle('kbd-focus'"
+            "classList.toggle('kbd-focus'",
+            'function normalizeJurisdiction',
+            'baseMatches.length===1',
+            'findCountyItem(out.county, out.abbr)'
           ];
           for (const marker of htmlMarkers) {
             if (!html.includes(marker)) failures.push(`Missing property-tax UI safety marker: ${marker}`);
