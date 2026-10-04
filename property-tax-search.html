@@ -133,8 +133,8 @@ h1 { font-family:'Playfair Display',serif; font-size:clamp(2rem,4vw,3.2rem); fon
 .big-select:focus, .big-input:focus { border-color:var(--gold); background:rgba(255,255,255,0.06); }
 .big-select { appearance:none; background-image:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'><path fill='%237a8fac' d='M6 8L0 0h12z'/></svg>"); background-repeat:no-repeat; background-position:right 16px center; padding-right:42px; cursor:pointer; }
 .big-select:disabled, .big-input:disabled { opacity:0.5; cursor:not-allowed; }
-.big-select option { background-color:#0f1d38; color:#e8edf5; }
-.big-select option:checked { background-color:#1a2f52; color:#ffffff; }
+.big-select option { background-color:var(--card); color:var(--text); }
+.big-select option:checked { background-color:var(--gold-dim); color:var(--text); }
 .big-input::placeholder { color:var(--muted); }
 
 .county-list {
@@ -1310,7 +1310,7 @@ footer { border-top:1px solid var(--border); padding:36px 48px; display:flex; al
       if (zipInput) zipInput.value = '';
       if (zipMsg) {
         zipMsg.textContent = 'Enter a 5-digit ZIP or full U.S. street address. ZIP matches are approximate near jurisdiction boundaries; full addresses use the U.S. Census Geocoder.';
-        zipMsg.style.color = 'var(--muted,#8a9bb5)';
+        zipMsg.style.color = 'var(--muted)';
       }
 
       stateSelect.value = '';
@@ -1499,7 +1499,7 @@ footer { border-top:1px solid var(--border); padding:36px 48px; display:flex; al
 
   function setMsg(t,kind){
     msg.textContent=t;
-    msg.style.color = kind==='err' ? '#e8a0a0' : (kind==='ok' ? '#9fd5a0' : 'var(--muted,#8a9bb5)');
+    msg.style.color = kind==='err' ? 'var(--red)' : (kind==='ok' ? 'var(--green)' : 'var(--muted)');
   }
   var data=window.PROPERTY_TAX_DATA;
 
