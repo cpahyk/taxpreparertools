@@ -135,7 +135,7 @@ const COUNTY_PORTALS = {
 
   /* ───────────── DELAWARE ───────────── */
   DE: [
-    { name:"New Castle",  portal:"https://propertytax.newcastlede.gov/",                                       methods:ALL,         notes:"Wilmington / N Delaware." },
+    { name:"New Castle",  portal:"https://www3.newcastlede.gov/parcel.search/",                                       methods:ALL,         notes:"Wilmington / N Delaware." },
     { name:"Sussex",      portal:"https://property.sussexcountyde.gov/PT/forms/htmlframe.aspx?mode=content/home.htm",                                  methods:ALL,         notes:"Beaches / S Delaware." },
     { name:"Kent",        portal:"https://www.co.kent.de.us/finance-dept/assessment-division.aspx",             methods:ALL,         notes:"Dover / Central." }
   ],
@@ -149,7 +149,7 @@ const COUNTY_PORTALS = {
   FL: [
     { name:"Miami-Dade",  portal:"https://www.miamidade.gov/Apps/PA/propertysearch/#/",                          methods:ALL,         notes:"Property Appraiser. Free, fast lookup." },
     { name:"Broward",     portal:"https://web.bcpa.net/bcpaclient/",                                            methods:ALL,         notes:"Fort Lauderdale. BCPA portal." },
-    { name:"Palm Beach",  portal:"https://pbcpao.gov/Property/Search",                                                methods:ALL,         notes:"PAPA - Property Appraiser Public Access." },
+    { name:"Palm Beach",  portal:"https://pbcpao.gov/search.htm",                                                methods:ALL,         notes:"PAPA - Property Appraiser Public Access." },
     { name:"Hillsborough",portal:"https://www.hcpafl.org/Property-Search",                                      methods:ALL,         notes:"Tampa." },
     { name:"Orange",      portal:"https://ocpaweb.ocpafl.org/parcelsearch",                                    methods:ALL,         notes:"Orlando." },
     { name:"Pinellas",    portal:"https://www.pcpao.gov/",                                       methods:ALL,         notes:"St. Petersburg / Clearwater." },
@@ -161,7 +161,7 @@ const COUNTY_PORTALS = {
     { name:"Seminole",    portal:"https://parceldetails.scpafl.org/",                                           methods:ALL,         notes:"N Orlando metro." },
     { name:"Pasco",       portal:"https://search.pascopa.com/",                                                 methods:ALL,         notes:"N Tampa metro." },
     { name:"Sarasota",    portal:"https://www.sc-pa.com/propertysearch/",                                       methods:ALL,         notes:"Gulf coast / SW FL." },
-    { name:"Manatee",     portal:"https://www.manateepao.gov/search/",                                          methods:ALL,         notes:"Bradenton." },
+    { name:"Manatee",     portal:"https://www.manateepao.gov/",                                          methods:ALL,         notes:"Bradenton." },
     { name:"Marion",      portal:"https://www.pa.marion.fl.us/",                                                methods:ALL,         notes:"Ocala." },
     { name:"Collier",     portal:"https://www.collierappraiser.com/",                                           methods:ALL,         notes:"Naples." },
     { name:"Lake",        portal:"https://www.lakecopropappr.com/",                                             methods:ALL,         notes:"Central FL." },
@@ -215,7 +215,7 @@ const COUNTY_PORTALS = {
   IN: [
     { name:"Marion",     portal:"https://www.indy.gov/agency/marion-county-assessors-office",                   methods:ALL,         notes:"Indianapolis." },
     { name:"Lake",       portal:"https://engage.xsoftinc.com/lake",              methods:ALL,         notes:"Gary / NW Indiana." },
-    { name:"Allen",      portal:"https://www.allencounty.us/assessor",                                          methods:ALL,         notes:"Fort Wayne." },
+    { name:"Allen",      portal:"https://www.allencounty.in.gov/164/Assessor",                                          methods:ALL,         notes:"Fort Wayne." },
     { name:"Hamilton",   portal:"https://www.hamiltoncounty.in.gov/180/Assessor",                               methods:ALL,         notes:"Carmel / Fishers." },
     { name:"St. Joseph", portal:"https://www.sjcindiana.com/156/Assessor",                                      methods:ALL,         notes:"South Bend." },
     { name:"Tippecanoe", portal:"https://www.tippecanoe.in.gov/137/Assessor",                                   methods:ALL,         notes:"Lafayette / Purdue." }
@@ -324,7 +324,7 @@ const COUNTY_PORTALS = {
   MT: [
     { name:"Yellowstone",  portal:"https://www.yellowstonecountymt.gov/treasurer/",                              methods:ALL,         notes:"Billings." },
     { name:"Missoula",     portal:"https://svc.mt.gov/dor/property",   methods:ALL,         notes:"Missoula." },
-    { name:"Gallatin",     portal:"https://www.gallatin.mt.gov/treasurer",                                       methods:ALL,         notes:"Bozeman." }
+    { name:"Gallatin",     portal:"https://svc.mt.gov/dor/oriondataportal/Public/PropertyMTGov/PropertySearch.aspx",                                       methods:ALL,         notes:"Bozeman." }
   ],
 
   /* ───────────── NEBRASKA ───────────── */
@@ -337,7 +337,7 @@ const COUNTY_PORTALS = {
   NV: [
     { name:"Clark",       portal:"https://www.clarkcountynv.gov/government/assessor/property_search/index.php", methods:ALL, notes:"Las Vegas." },
     { name:"Washoe",      portal:"https://www.washoecounty.gov/assessor/",                                       methods:ALL,         notes:"Reno." },
-    { name:"Carson City", portal:"https://www.carson.org/government/departments-a-f/assessor",                    methods:ALL,         notes:"State capital." }
+    { name:"Carson City", portal:"https://www.carsoncity.gov/government/departments-a-f/assessor",                    methods:ALL,         notes:"State capital." }
   ],
 
   /* ───────────── NEW HAMPSHIRE ───────────── */
@@ -449,8 +449,8 @@ const COUNTY_PORTALS = {
     { name:"Delaware",      portal:"https://delcorealestate.co.delaware.pa.us/",                                  methods:ALL,         notes:"Media / Philly W suburbs." },
     { name:"Lancaster",     portal:"https://lancasterpa.devnetwedge.com/",                                       methods:ALL,         notes:"Lancaster." },
     { name:"York",          portal:"https://assessmentpublic.yorkcountypa.gov/",  methods:ALL,         notes:"York." },
-    { name:"Berks",         portal:"https://www.co.berks.pa.us/Dept/Assessment/Pages/default.aspx",              methods:ALL,         notes:"Reading." },
-    { name:"Lehigh",        portal:"https://www.lehighcounty.org/Departments/Assessment",                        methods:ALL,         notes:"Allentown." },
+    { name:"Berks",         portal:"https://propertyrecords.berkspa.gov/forms/htmlframe.aspx?mode=content/home.htm",              methods:ALL,         notes:"Reading." },
+    { name:"Lehigh",        portal:"https://home.lehighcounty.org/ORA.UI/Public/PropertySearch",                        methods:ALL,         notes:"Allentown." },
     { name:"Westmoreland",  portal:"https://www.co.westmoreland.pa.us/216/Assessment",                            methods:ALL,         notes:"Greensburg / Pittsburgh E suburbs." },
     { name:"Luzerne",       portal:"https://www.luzernecounty.org/199/Assessors-Office",                          methods:ALL,         notes:"Wilkes-Barre / Scranton metro." }
   ],
@@ -479,7 +479,7 @@ const COUNTY_PORTALS = {
 
   /* ───────────── TENNESSEE ───────────── */
   TN: [
-    { name:"Shelby",     portal:"https://www.assessormelvinburgess.com/propertysearch",                          methods:ALL,         notes:"Memphis." },
+    { name:"Shelby",     portal:"https://www.assessor.shelbycountytn.gov/propertySearch",                          methods:ALL,         notes:"Memphis." },
     { name:"Davidson",   portal:"https://www.padctn.org/",                                                       methods:ALL,         notes:"Nashville-Davidson consolidated." },
     { name:"Knox",       portal:"https://propertyinfo.knoxcountytn.gov/",                                          methods:ALL,         notes:"Knoxville." },
     { name:"Hamilton",   portal:"https://assessor.hamiltontn.gov/",                                              methods:ALL,         notes:"Chattanooga." },
@@ -522,7 +522,7 @@ const COUNTY_PORTALS = {
     { name:"Salt Lake",   portal:"https://slco.org/assessor/",                                                   methods:ALL,         notes:"SLC metro." },
     { name:"Utah",        portal:"https://www.utahcounty.gov/landrecords/",                                      methods:ALL,         notes:"Provo / Orem." },
     { name:"Davis",       portal:"https://www.daviscountyutah.gov/assessor",                                     methods:ALL,         notes:"N SLC suburbs." },
-    { name:"Weber",       portal:"https://www3.co.weber.ut.us/assessor/",                                        methods:ALL,         notes:"Ogden." }
+    { name:"Weber",       portal:"https://www.webercountyutah.gov/Assessor/",                                        methods:ALL,         notes:"Ogden." }
   ],
 
   /* ───────────── VERMONT ───────────── */
@@ -535,7 +535,7 @@ const COUNTY_PORTALS = {
     { name:"Fairfax",        portal:"https://icare.fairfaxcounty.gov/ffxcare/search/commonsearch.aspx?mode=address", methods:ALL,    notes:"DC suburbs. iCare portal." },
     { name:"Prince William", portal:"https://www.pwcgov.org/realestate",                                          methods:ALL,         notes:"Manassas / Woodbridge." },
     { name:"Loudoun",        portal:"https://loudounportal.com/taxes",                            methods:ALL,         notes:"Leesburg / NoVA." },
-    { name:"Virginia Beach", portal:"https://www.vbgov.com/government/departments/assessor",                       methods:ALL,         notes:"Independent city." },
+    { name:"Virginia Beach", portal:"https://assessor.virginiabeach.gov/",                       methods:ALL,         notes:"Independent city." },
     { name:"Chesterfield",   portal:"https://www.chesterfield.gov/828/Real-Estate-Assessment-Data#/",                    methods:ALL,         notes:"Richmond suburbs." },
     { name:"Henrico",        portal:"https://henrico.us/finance/disclaimer/",                                              methods:ALL,         notes:"Richmond suburbs." },
     { name:"Arlington",      portal:"https://propertysearch.arlingtonva.us/home/search",   methods:ALL,         notes:"DC suburbs." },
