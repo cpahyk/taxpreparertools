@@ -113,6 +113,44 @@ jobs:
           console.log(`Validated JSON-LD in ${htmlFiles.length} HTML files.`);
           NODE
 
+      - name: Validate sitemap SEO metadata
+        shell: bash
+        run: |
+          node <<'NODE'
+          const fs = require('fs');
+
+          const sitemap = fs.readFileSync('sitemap.xml', 'utf8');
+          const urls = [...sitemap.matchAll(/<loc>(.*?)<\/loc>/g)].map(m => m[1]);
+          const failures = [];
+
+          for (const url of urls) {
+            const pathname = new URL(url).pathname;
+            let file;
+            if (pathname === '/') file = 'index.html';
+            else if (pathname.endsWith('/')) file = pathname.slice(1) + 'index.html';
+            else file = pathname.slice(1) + '.html';
+
+            if (!fs.existsSync(file)) continue;
+
+            const html = fs.readFileSync(file, 'utf8');
+            const title = html.match(/<title>([\s\S]*?)<\/title>/i)?.[1]?.trim();
+            const description = html.match(/<meta\s+name=["']description["']\s+content=["']([^"']+)["']/i)?.[1]?.trim();
+            const canonical = html.match(/<link\s+rel=["']canonical["']\s+href=["']([^"']+)["']/i)?.[1]?.trim();
+
+            if (!title) failures.push(`${file}: missing <title>`);
+            if (!description) failures.push(`${file}: missing meta description`);
+            if (!canonical) failures.push(`${file}: missing canonical URL`);
+          }
+
+          if (failures.length) {
+            console.error('Sitemap SEO metadata validation failed:');
+            failures.forEach(f => console.error(' - ' + f));
+            process.exit(1);
+          }
+
+          console.log(`Validated SEO metadata on ${urls.length} sitemap pages.`);
+          NODE
+
       - name: Verify sitemap pages use the professional theme
         shell: bash
         run: |
