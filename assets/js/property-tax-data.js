@@ -55,15 +55,15 @@ const COUNTY_PORTALS = {
     { name:"Jefferson",  portal:"https://eringcapture.jccal.org/caportal/CAPortal_MainPage.aspx",                methods:ALL,         notes:"Birmingham metro. Free online property records." },
     { name:"Mobile",     portal:"https://www.mobilecopropertytax.com/",                                          methods:ALL,         notes:"Search by name, address, or parcel ID." },
     { name:"Madison",    portal:"https://www.madisoncountyal.gov/government/county-departments/tax-assessor",   methods:ALL,         notes:"Huntsville area. Online assessor portal." },
-    { name:"Montgomery", portal:"https://www.mc-ala.org/residents/online-services/property-search",            methods:ALL,         notes:"Capital city. Tax & valuation lookup." },
+    { name:"Montgomery", portal:"https://www.montgomerycountyal.gov/departments/appraisal",            methods:ALL,         notes:"Capital city. Tax & valuation lookup." },
     { name:"Tuscaloosa", portal:"https://www.tuscco.com/",                                                       methods:ALL,         notes:"Click Revenue → Property Search." },
     { name:"Shelby",     portal:"https://www.shelbyal.com/177/Property-Tax",                                     methods:ALL,         notes:"Birmingham suburb. Online payments + lookup." },
-    { name:"Baldwin",    portal:"https://baldwincountyal.gov/government/county-departments/revenue-commission", methods:ALL,         notes:"Gulf Coast / Mobile metro." }
+    { name:"Baldwin",    portal:"https://baldwincountyal.gov/government/revenue-commission", methods:ALL,         notes:"Gulf Coast / Mobile metro." }
   ],
 
   /* ───────────── ALASKA ───────────── */
   AK: [
-    { name:"Anchorage Municipality", portal:"https://www.muni.org/Departments/finance/treasury/PropertyTax/Pages/default.aspx", methods:ALL,         notes:"AK uses boroughs/municipalities, not counties." },
+    { name:"Anchorage Municipality", portal:"https://property.muni.org/search/commonsearch.aspx?mode=realprop", methods:ALL,         notes:"AK uses boroughs/municipalities, not counties." },
     { name:"Matanuska-Susitna",      portal:"https://www.matsugov.us/myproperty/",                                                  methods:ALL,         notes:"Wasilla / Palmer area." },
     { name:"Fairbanks North Star",   portal:"https://fnsb.gov/153/Assessing",                                                    methods:ALL,         notes:"Fairbanks borough." }
   ],
@@ -95,17 +95,17 @@ const COUNTY_PORTALS = {
     { name:"Alameda",         portal:"https://www.acgov.org/ptax_pub_app/RealSearchInit.do",                       methods:ALL,         notes:"Oakland / East Bay tax search." },
     { name:"Sacramento",      portal:"https://eproptax.saccounty.gov/",                                            methods:ALL,         notes:"State capital region." },
     { name:"Contra Costa",    portal:"https://www.cccounty.us/assessor",                                           methods:ALL,         notes:"East Bay. Records + parcel viewer." },
-    { name:"Fresno",          portal:"https://www.fresnocountyca.gov/Departments/Assessor-Recorder",               methods:ALL,         notes:"Central Valley." },
+    { name:"Fresno",          portal:"https://assrmaps.co.fresno.ca.us/binlookup/ParcelLookup.aspx",               methods:ALL,         notes:"Central Valley." },
     { name:"Kern",            portal:"https://www.kerncounty.com/government/departments/assessor-recorder/property/assessor-property-search",                                           methods:ALL,         notes:"Bakersfield. Use Assessor link." },
     { name:"Ventura",         portal:"https://assessor.countyofventura.org/",                                      methods:ALL,         notes:"Coastal county north of LA." },
     { name:"San Francisco",   portal:"https://sfassessor.org/property-information/property-search",                methods:ALL,         notes:"City & County of SF." },
     { name:"San Mateo",       portal:"https://www.smcacre.gov/assessor",                                           methods:ALL,         notes:"Peninsula. Assessor-Recorder portal." },
-    { name:"San Joaquin",     portal:"https://www.sjgov.org/department/asr",                                       methods:ALL,         notes:"Stockton area." },
+    { name:"San Joaquin",     portal:"https://www.sjgov.org/department/assessor/property-information/homeowners/assessed-value---homeowner",                                       methods:ALL,         notes:"Stockton area." },
     { name:"Stanislaus",      portal:"https://www.stancounty.com/assessor/",                                       methods:ALL,         notes:"Modesto." },
     { name:"Sonoma",          portal:"https://common1.mptsweb.com/mbap/sonoma/asr",               methods:ALL,         notes:"Wine country." },
     { name:"Tulare",          portal:"https://tularecounty.ca.gov/assessor/",                                      methods:ALL,         notes:"Visalia / Sequoia region." },
     { name:"Solano",          portal:"https://ca-solano.publicaccessnow.com/Assessor/PropertySearch.aspx",                                     methods:ALL,         notes:"Vallejo / Fairfield." },
-    { name:"Santa Barbara",   portal:"https://www.countyofsb.org/132/Assessor",                                    methods:ALL,         notes:"Coastal central." },
+    { name:"Santa Barbara",   portal:"https://sbcassessor.com/assessor/AssessorParcelMap.aspx",                                    methods:ALL,         notes:"Coastal central." },
     { name:"Monterey",        portal:"https://www.countyofmonterey.gov/government/departments-a-h/assessor",      methods:ALL,         notes:"Salinas / Monterey Bay." },
     { name:"Placer",          portal:"https://www.placer.ca.gov/1791/Assessor",                                    methods:ALL,         notes:"Roseville / Tahoe gateway." },
     { name:"Marin",           portal:"https://www.marincounty.org/depts/ar",                                       methods:ALL,         notes:"North of Golden Gate." },
@@ -202,7 +202,7 @@ const COUNTY_PORTALS = {
   IL: [
     { name:"Cook",       portal:"https://www.cookcountyassessor.com/advanced-search",                            methods:ALL,         notes:"Chicago. Comprehensive PIN/address/owner search." },
     { name:"DuPage",     portal:"https://propertylookup.dupagecounty.gov/forms/htmlframe.aspx?mode=content/home.htm",                                  methods:ALL,         notes:"Naperville / W Chicago suburbs." },
-    { name:"Lake",       portal:"https://www.lakecountyil.gov/2854/Property-Tax-Assessment-Information",        methods:ALL,         notes:"Waukegan / N suburbs." },
+    { name:"Lake",       portal:"https://tax.lakecountyil.gov/search/commonsearch.aspx?mode=realprop",        methods:ALL,         notes:"Waukegan / N suburbs." },
     { name:"Will",       portal:"https://www.willcountysoa.com/",                                               methods:ALL,         notes:"Joliet." },
     { name:"Kane",       portal:"https://kaneil.devnetwedge.com/",                                              methods:ALL,         notes:"Aurora / Elgin." },
     { name:"McHenry",    portal:"https://www.mchenrycountyil.gov/county-government/departments-a-i/assessments", methods:ALL,         notes:"NW suburbs." },
@@ -233,14 +233,14 @@ const COUNTY_PORTALS = {
     { name:"Johnson",    portal:"https://www.jocogov.org/dept/appraiser",                                       methods:ALL,         notes:"Overland Park / KC suburbs." },
     { name:"Sedgwick",   portal:"https://www.sedgwickcounty.org/appraiser/",                                    methods:ALL,         notes:"Wichita." },
     { name:"Shawnee",    portal:"https://ares.sncoapps.us/",                                                      methods:ALL,         notes:"Topeka." },
-    { name:"Wyandotte",  portal:"https://www.wycokck.org/Departments/Appraiser",                                methods:ALL,         notes:"Kansas City KS." }
+    { name:"Wyandotte",  portal:"https://appr.wycokck.org/",                                methods:ALL,         notes:"Kansas City KS." }
   ],
 
   /* ───────────── KENTUCKY ───────────── */
   KY: [
     { name:"Jefferson",  portal:"https://jeffersonpva.ky.gov/property-search/",                                 methods:ALL,         notes:"Louisville. PVA office." },
     { name:"Fayette",    portal:"https://www.fayettepva.com/",                                                  methods:ALL,         notes:"Lexington." },
-    { name:"Kenton",     portal:"https://kentonpva.org/property-search/",                                       methods:ALL,         notes:"Covington / N KY." },
+    { name:"Kenton",     portal:"https://www.kentonpva.org/187/Search-Property-Records",                                       methods:ALL,         notes:"Covington / N KY." },
     { name:"Boone",      portal:"https://boonepva.ky.gov/property-search/",                                     methods:ALL,         notes:"N KY / Cincinnati metro." }
   ],
 
@@ -286,7 +286,7 @@ const COUNTY_PORTALS = {
   /* ───────────── MICHIGAN ───────────── */
   MI: [
     { name:"Wayne",       portal:"https://pta.waynecounty.com/",             methods:ALL,         notes:"Detroit." },
-    { name:"Oakland",     portal:"https://www.oakgov.com/treasurer/Pages/property-tax-info.aspx",                methods:ALL,         notes:"Detroit's wealthier N suburbs." },
+    { name:"Oakland",     portal:"https://gis.oakgov.com/PropertyGateway/Home.mvc",                methods:ALL,         notes:"Detroit's wealthier N suburbs." },
     { name:"Macomb",      portal:"https://www.macombgov.org/departments/treasurers-office/tax-information", methods:ALL,        notes:"NE Detroit metro." },
     { name:"Kent",        portal:"https://www.accesskent.com/Departments/Equalization/property_search.htm",      methods:ALL,         notes:"Grand Rapids." },
     { name:"Genesee",     portal:"https://bsaonline.com/OnlinePayment/OnlinePaymentSearch?PaymentApplicationType=5&uid=304",                              methods:ALL,         notes:"Flint." },
@@ -314,8 +314,8 @@ const COUNTY_PORTALS = {
   /* ───────────── MISSOURI ───────────── */
   MO: [
     { name:"St. Louis County", portal:"https://revenue.stlouisco.com/IAS/index.htm",                            methods:ALL,         notes:"Suburbs (separate from city)." },
-    { name:"Jackson",          portal:"https://www.jacksongov.org/Residents/Pay-Taxes",                          methods:ALL,         notes:"Kansas City MO." },
-    { name:"St. Charles",      portal:"https://www.sccmo.org/189/Assessor",                                      methods:ALL,         notes:"W St. Louis suburbs." },
+    { name:"Jackson",          portal:"https://publicaccess.jacksongov.org/forms/htmlframe.aspx?mode=content/home.htm",                          methods:ALL,         notes:"Kansas City MO." },
+    { name:"St. Charles",      portal:"https://www.sccmo.org/151/Assessor",                                      methods:ALL,         notes:"W St. Louis suburbs." },
     { name:"St. Louis City",   portal:"https://www.stlouis-mo.gov/government/departments/assessor/",             methods:ALL,         notes:"Independent city." },
     { name:"Greene",           portal:"https://www.greenecountymo.gov/assessor/",                                methods:ALL,         notes:"Springfield MO." }
   ],
@@ -381,7 +381,7 @@ const COUNTY_PORTALS = {
     { name:"Erie",                portal:"https://www3.erie.gov/ecrpts/featured/search-property",                                              methods:ALL, notes:"Buffalo." },
     { name:"Monroe",              portal:"https://www.monroecounty.gov/etc/rp/",                                            methods:ALL, notes:"Rochester." },
     { name:"Onondaga",            portal:"https://ocfintax.ongov.net/",                                                     methods:ALL, notes:"Syracuse." },
-    { name:"Albany",              portal:"https://www.albanycounty.com/government/departments/real-property-tax-service",   methods:ALL, notes:"State capital." },
+    { name:"Albany",              portal:"https://www.albanycountyny.gov/rptsa",   methods:ALL, notes:"State capital." },
     { name:"Orange",              portal:"https://www.orangecountygov.com/612/Parcel-Information",                               methods:ALL, notes:"Newburgh / Hudson Valley." },
     { name:"Rockland",            portal:"https://rocklandgis.com/portal/apps/webappviewer/",                               methods:ALL, notes:"NYC northern suburb." },
     { name:"Dutchess",            portal:"https://gis.dutchessny.gov/parcelaccess/",                                        methods:ALL, notes:"Poughkeepsie." }
@@ -412,9 +412,9 @@ const COUNTY_PORTALS = {
     { name:"Cuyahoga",   portal:"https://myplace.cuyahogacounty.gov/",                                           methods:ALL,         notes:"Cleveland. MyPlace parcel viewer." },
     { name:"Franklin",   portal:"https://property.franklincountyauditor.com/",                                   methods:ALL,         notes:"Columbus." },
     { name:"Hamilton",   portal:"https://wedge1.hcauditor.org/",                                                 methods:ALL,         notes:"Cincinnati." },
-    { name:"Summit",     portal:"https://fiscaloffice.summitoh.net/index.php/property-search",                   methods:ALL,         notes:"Akron." },
+    { name:"Summit",     portal:"https://fiscaloffice.summitoh.net/property-tax-appraisal",                   methods:ALL,         notes:"Akron." },
     { name:"Montgomery", portal:"https://www.mcrealestate.org/",                                                 methods:ALL,         notes:"Dayton." },
-    { name:"Lucas",      portal:"https://www.co.lucas.oh.us/167/Auditor",                                        methods:ALL,         notes:"Toledo." },
+    { name:"Lucas",      portal:"https://www.lucascountyohioauditor.gov/areis",                                        methods:ALL,         notes:"Toledo." },
     { name:"Stark",      portal:"https://www.starkcountyohio.gov/government/offices/treasurer/index.php",                                               methods:ALL,         notes:"Canton." },
     { name:"Butler",     portal:"https://treasurer.bcohio.gov/",                                          methods:ALL,         notes:"Cincinnati N suburbs." },
     { name:"Lorain",     portal:"https://www.loraincounty.com/auditor/",                                         methods:ALL,         notes:"Elyria / W Cleveland metro." },
@@ -498,7 +498,7 @@ const COUNTY_PORTALS = {
     { name:"Collin",      portal:"https://www.collincad.org/propertysearch",                                     methods:ALL,         notes:"Plano / Frisco." },
     { name:"Hidalgo",     portal:"https://www.hidalgoad.org/",                                                   methods:ALL,         notes:"McAllen / Rio Grande Valley." },
     { name:"Denton",      portal:"https://www.dentoncad.com/property-search",                                    methods:ALL,         notes:"Denton / N Dallas suburbs." },
-    { name:"Fort Bend",   portal:"https://www.fbcad.org/property-search/",                                       methods:ALL,         notes:"Sugar Land / SW Houston." },
+    { name:"Fort Bend",   portal:"https://esearch.fbcad.org/",                                       methods:ALL,         notes:"Sugar Land / SW Houston." },
     { name:"El Paso",     portal:"https://www.epcad.org/Search",                                                 methods:ALL,         notes:"El Paso." },
     { name:"Montgomery",  portal:"https://www.mcad-tx.org/Property-Search",                                      methods:ALL,         notes:"The Woodlands / N Houston." },
     { name:"Williamson",  portal:"https://www.wcad.org/",                                        methods:ALL,         notes:"Round Rock / N Austin." },
@@ -538,9 +538,9 @@ const COUNTY_PORTALS = {
     { name:"Virginia Beach", portal:"https://www.vbgov.com/government/departments/assessor",                       methods:ALL,         notes:"Independent city." },
     { name:"Chesterfield",   portal:"https://www.chesterfield.gov/828/Real-Estate-Assessment-Data#/",                    methods:ALL,         notes:"Richmond suburbs." },
     { name:"Henrico",        portal:"https://henrico.us/finance/disclaimer/",                                              methods:ALL,         notes:"Richmond suburbs." },
-    { name:"Arlington",      portal:"https://www.arlingtonva.us/Government/Departments/Real-Estate-Assessments",   methods:ALL,         notes:"DC suburbs." },
-    { name:"Norfolk",        portal:"https://www.norfolk.gov/4225/Real-Estate-Search",                             methods:ALL,         notes:"Independent city." },
-    { name:"Richmond City",  portal:"https://www.rva.gov/finance/real-estate-assessor",                            methods:ALL,         notes:"State capital, independent city." }
+    { name:"Arlington",      portal:"https://propertysearch.arlingtonva.us/home/search",   methods:ALL,         notes:"DC suburbs." },
+    { name:"Norfolk",        portal:"https://www.norfolk.gov/4545/Property-Search",                             methods:ALL,         notes:"Independent city." },
+    { name:"Richmond City",  portal:"https://apps.richmondgov.com/applications/propertysearch/Search.aspx",                            methods:ALL,         notes:"State capital, independent city." }
   ],
 
   /* ───────────── WASHINGTON ───────────── */
@@ -566,13 +566,13 @@ const COUNTY_PORTALS = {
     { name:"Dane",       portal:"https://treasurer.countyofdane.com/",                                            methods:ALL,         notes:"Madison (state capital)." },
     { name:"Waukesha",   portal:"https://tapestry.fidlar.com/Tapestry2/Welcome.aspx?cid=46&cn=Waukesha",            methods:ALL,         notes:"W Milwaukee suburbs." },
     { name:"Brown",      portal:"https://www.browncountywi.gov/departments/real-property-tax-information/",        methods:ALL,         notes:"Green Bay." },
-    { name:"Racine",     portal:"https://www.racinecounty.com/government/treasurer/property-tax-information",      methods:ALL,         notes:"Racine." }
+    { name:"Racine",     portal:"https://www.racinecounty.gov/departments/county-treasurer/tax-inquiry",      methods:ALL,         notes:"Racine." }
   ],
 
   /* ───────────── WYOMING ───────────── */
   WY: [
-    { name:"Laramie",   portal:"https://www.laramiecountywy.gov/government/elected-officials/assessor/",           methods:ALL,         notes:"Cheyenne." },
-    { name:"Natrona",   portal:"https://www.natronacounty-wy.gov/176/Assessor",                                    methods:ALL,         notes:"Casper." }
+    { name:"Laramie",   portal:"https://www.laramiecountywy.gov/County-Government/Elected-Officials/County-Assessor",           methods:ALL,         notes:"Cheyenne." },
+    { name:"Natrona",   portal:"https://propsearch.natronacounty-wy.gov/",                                    methods:ALL,         notes:"Casper." }
   ]
 };
 
