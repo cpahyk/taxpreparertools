@@ -116,6 +116,10 @@ jobs:
           grep -q 'id="accountLastSignIn"' /tmp/dashboard.html
           grep -q 'user.email_confirmed_at' /tmp/dashboard.html
           grep -q 'user.last_sign_in_at' /tmp/dashboard.html
+          grep -q 'id="authGateRetry"' /tmp/dashboard.html
+          grep -q 'function showAuthGateError' /tmp/dashboard.html
+          grep -q "Session check timed out" /tmp/dashboard.html
+          grep -q "window.supabase ?" /tmp/dashboard.html
           grep -q 'class="auth-pending dashboard-page"' /tmp/dashboard.html
           grep -q '.dashboard-page .topbar' /tmp/dashboard.html
           grep -q '<main class="main-content" id="dashboardMain"' /tmp/dashboard.html
