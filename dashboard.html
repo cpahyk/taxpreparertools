@@ -522,22 +522,7 @@ const RECENT_TOOLS_KEY = 'tpt_recent_tools_v1';
 
 function isSafeRecentToolUrl(url) {
   return typeof url === 'string' &&
-    /^[A-Za-z0-9][A-Za-z0-9._-]*\.html(?:[?#][A-Za-z0-9._~!function readRecentTools() {
-  try {
-    const parsed = JSON.parse(localStorage.getItem(RECENT_TOOLS_KEY) || '[]');
-    if (!Array.isArray(parsed)) return [];
-    return parsed.filter(item =>
-      item && typeof item.name === 'string' &&
-      typeof item.url === 'string' &&
-      /^[A-Za-z0-9._/-]+\.html(?:[?#].*)?$/.test(item.url)
-    ).slice(0, 5);
-  } catch (_) {
-    return [];
-  }
-}
-
-function rememberToolVisit(name, url, emoji, description) {
-  if (!name || !url || !/^[A-Za-z0-9._/-]+\.html(?:[?#].*)?$/.test(url)) return;'()*+,;=:@/?%-]*)?$/.test(url);
+    /^[A-Za-z0-9][A-Za-z0-9._-]*\.html(?:[?#][A-Za-z0-9._~!$&'()*+,;=:@/?%-]*)?$/.test(url);
 }
 
 function readRecentTools() {
@@ -565,7 +550,6 @@ function rememberToolVisit(name, url, emoji, description) {
   });
   try { localStorage.setItem(RECENT_TOOLS_KEY, JSON.stringify(current.slice(0, 5))); } catch (_) {}
 }
-
 function formatRecentVisit(timestamp) {
   const value = Number(timestamp);
   if (!Number.isFinite(value) || value <= 0) return 'Recently visited';

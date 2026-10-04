@@ -810,9 +810,7 @@ const RECENT_TOOLS_KEY = 'tpt_recent_tools_v1';
 
 function isSafeRecentToolUrl(url) {
   return typeof url === 'string' &&
-    /^[A-Za-z0-9][A-Za-z0-9._-]*\.html(?:[?#][A-Za-z0-9._~!function recordRecentToolFromCard(link) {
-  const href = link?.getAttribute('href') || '';
-  if (!/^[A-Za-z0-9._/-]+\.html(?:[?#].*)?$/.test(href)) return;'()*+,;=:@/?%-]*)?$/.test(url);
+    /^[A-Za-z0-9][A-Za-z0-9._-]*\.html(?:[?#][A-Za-z0-9._~!$&'()*+,;=:@/?%-]*)?$/.test(url);
 }
 
 function recordRecentToolFromCard(link) {
@@ -836,7 +834,6 @@ function recordRecentToolFromCard(link) {
     localStorage.setItem(RECENT_TOOLS_KEY, JSON.stringify(current.slice(0,5)));
   } catch (_) {}
 }
-
 document.getElementById('toolsContainer')?.addEventListener('click', event => {
   const link = event.target.closest('a.tool-card[href]');
   if (link) recordRecentToolFromCard(link);
