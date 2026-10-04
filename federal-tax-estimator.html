@@ -241,8 +241,8 @@ footer{border-top:1px solid var(--border);padding:28px 48px;display:flex;align-i
     {
       "@type": "FAQPage",
       "mainEntity": [
-        {"@type": "Question", "name": 'What are the 2025 federal income tax brackets?', "acceptedAnswer": {"@type": "Answer", "text": 'The 2025 brackets range from 10% on income up to $11,925 (single) to 37% on income over $626,350 (single). Brackets are adjusted annually for inflation.'}},
-        {"@type": "Question", "name": 'What is the 2025 standard deduction?', "acceptedAnswer": {"@type": "Answer", "text": 'The 2025 standard deduction is $15,000 for single filers, $30,000 for married filing jointly, and $22,500 for head of household.'}},
+        {"@type": "Question", "name": 'What federal income tax years does this estimator support?', "acceptedAnswer": {"@type": "Answer", "text": 'The estimator supports both tax year 2025 and tax year 2026. Use the Tax Year selector to switch between the published IRS bracket schedules.'}},
+        {"@type": "Question", "name": 'What standard deductions does the estimator use?', "acceptedAnswer": {"@type": "Answer", "text": 'For 2025, it uses $15,750 for Single/MFS, $31,500 for MFJ, and $23,625 for HOH. For 2026, it uses $16,100, $32,200, and $24,150 respectively.'}},
         {"@type": "Question", "name": 'What is the difference between marginal and effective tax rate?', "acceptedAnswer": {"@type": "Answer", "text": 'Your marginal rate is the rate on your last dollar of income. Your effective rate is the average rate across all income — typically lower than your marginal rate due to progressive brackets.'}}
       ]
     }
@@ -476,8 +476,8 @@ footer{border-top:1px solid var(--border);padding:28px 48px;display:flex;align-i
         <div class="ic-row"><span class="ic-k">Top Bracket Rate</span><span class="ic-v">37%</span></div>
         <div class="ic-row"><span class="ic-k" id="refSSLabel">SS Wage Base (2026)</span><span class="ic-v" id="refSSBase">$184,500</span></div>
         <div class="ic-row"><span class="ic-k">Medicare Add'l (>$200k)</span><span class="ic-v">+0.9%</span></div>
-        <div class="ic-row"><span class="ic-k">SALT Deduction Cap</span><span class="ic-v" id="refSaltCap">$40,400*</span></div>
-        <div class="ic-row"><span class="ic-k">AMT Exemption (Single)</span><span class="ic-v">$88,100</span></div>
+        <div class="ic-row"><span class="ic-k">SALT Cap (before phaseout)</span><span class="ic-v" id="refSaltCap">$40,400*</span></div>
+        <div class="ic-row"><span class="ic-k">AMT Exemption (Single)</span><span class="ic-v" id="refAMT">$90,100</span></div>
       </div>
 
       <div class="tips-card">
@@ -555,7 +555,7 @@ const TAX_DATA = {
     stdDed: {single:15750, mfj:31500, mfs:15750, hoh:23625},
     seWageBase: 176100,
     saltCap: 40000, saltCapMfs: 20000,
-    saltPhaseout: 500000, saltPhaseoutMfs: 250000
+    saltPhaseout: 500000, saltPhaseoutMfs: 250000, amtSingle: 88100
   },
   2026: {
     brackets: {
@@ -567,7 +567,7 @@ const TAX_DATA = {
     stdDed: {single:16100, mfj:32200, mfs:16100, hoh:24150},
     seWageBase: 184500,
     saltCap: 40400, saltCapMfs: 20200,
-    saltPhaseout: 505000, saltPhaseoutMfs: 252500
+    saltPhaseout: 505000, saltPhaseoutMfs: 252500, amtSingle: 90100
   }
 };
 function getTaxYear() {
@@ -599,6 +599,7 @@ function handleTaxYearChange() {
   byId('refSSLabel', `SS Wage Base (${year})`);
   byId('refSSBase', fmt0(d.seWageBase));
   byId('refSaltCap', fmt0(d.saltCap) + '*');
+  byId('refAMT', fmt0(d.amtSingle));
   byId('deductionExplainer', `For ${year}, the standard deduction is ${fmt0(d.stdDed.single)} (Single/MFS), ${fmt0(d.stdDed.mfj)} (MFJ), and ${fmt0(d.stdDed.hoh)} (HOH). Itemizing may be beneficial when allowable deductions exceed the standard deduction; SALT phaseouts and other high-income limitations may apply.`);
   const panel = document.getElementById('resultsPanel');
   if (panel) panel.classList.remove('show');
