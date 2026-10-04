@@ -41,13 +41,14 @@ jobs:
         shell: bash
         run: |
           set -euo pipefail
-          for path in tools.html federal-tax-estimator.html deadlines.html resources.html; do
+          for path in tools.html federal-tax-estimator.html deadlines.html resources.html ai-assistant.html; do
             curl --fail --silent --show-error --location --retry 4 --retry-delay 3 \
               --header 'Cache-Control: no-cache' \
               "https://www.taxpreparertools.com/$path" -o "/tmp/$path"
             grep -q 'professional-light.css' "/tmp/$path"
           done
 
+          grep -q '@supabase/supabase-js@2.117.2/dist/umd/supabase.js' /tmp/ai-assistant.html
 
       - name: Verify auth pages production
         shell: bash
