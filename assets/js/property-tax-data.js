@@ -607,6 +607,43 @@ function isSearchFallback(county) {
   return !!(county && county.routeType === 'search');
 }
 
+function normalizeJurisdictionName(value) {
+  return String(value || '')
+    .toLowerCase()
+    .replace(/[.\u2019']/g, '')
+    .replace(/[-_/]+/g, ' ')
+    .replace(/[^a-z0-9\s&]/g, ' ')
+    .replace(/\s+/g, ' ')
+    .trim();
+}
+
+function jurisdictionBaseName(value) {
+  return normalizeJurisdictionName(
+    String(value || '').replace(/\s+(City and Borough|Census Area|Municipality|Parish|Borough|County|City)$/i, '')
+  );
+}
+
+function matchJurisdiction(stateCode, sourceName) {
+  const items = getCounties(stateCode);
+  if (!sourceName || !items.length) return null;
+
+  const want = normalizeJurisdictionName(sourceName);
+  const exact = items.filter(item => {
+    const label = getJurisdictionLabel(stateCode, item.name);
+    return normalizeJurisdictionName(item.name) === want
+      || normalizeJurisdictionName(label) === want;
+  });
+  if (exact.length === 1) return exact[0];
+
+  const wantBase = jurisdictionBaseName(sourceName);
+  const baseMatches = items.filter(item => {
+    const label = getJurisdictionLabel(stateCode, item.name);
+    return jurisdictionBaseName(item.name) === wantBase
+      || jurisdictionBaseName(label) === wantBase;
+  });
+  return baseMatches.length === 1 ? baseMatches[0] : null;
+}
+
 /* Build a jurisdiction-neutral fallback search URL. */
 function buildGoogleFallback(stateName, jurisdictionName) {
   const q = encodeURIComponent(`${jurisdictionName} ${stateName} property assessor tax records official`);
@@ -641,6 +678,7 @@ window.PROPERTY_TAX_DATA = {
   getJurisdictionLabel,
   getJurisdictionNoun,
   isSearchFallback,
+  matchJurisdiction,
   totalEntries: TOTAL_ENTRIES,
   directPortalCount: DIRECT_PORTAL_COUNT,
   uniqueDirectPortalCount: UNIQUE_DIRECT_PORTAL_COUNT
