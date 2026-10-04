@@ -473,6 +473,9 @@ jobs:
             "getJurisdictionNoun(out.abbr) === 'local area'",
             'Detected local area:',
             'Property assessment is generally municipal here',
+            'id="btnResetSearch"',
+            'Reset all search state',
+            "history.replaceState(null, '', window.location.pathname)",
             'function normalizeAreaFilter',
             "e.key === 'Home'",
             "e.key === 'End'"
