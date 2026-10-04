@@ -13,10 +13,10 @@
   <meta name="msapplication-TileColor" content="#08152a">
   <meta name="msapplication-config" content="/browserconfig.xml">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Property Tax Search — 50 States, 300+ Counties | TaxPreparerTools</title>
+<title>US Property Tax Search — Assessor & Tax Portals | TaxPreparerTools</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<meta name="description" content="Free property tax record lookup for all 50 states and 300+ counties. Deep-links to official assessor portals — search by address, parcel/PIN, or owner.">
+<meta name="description" content="Free US property tax and assessor portal directory for all 50 states plus DC. Find 300+ direct local record links and search by address, parcel/PIN, or owner where supported.">
 <link rel="canonical" href="https://www.taxpreparertools.com/property-tax-search" />
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700;900&family=DM+Sans:wght@300;400;500;600&family=DM+Mono:wght@400;500&display=swap" media="print" onload="this.media='all'">
 <noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700;900&family=DM+Sans:wght@300;400;500;600&family=DM+Mono:wght@400;500&display=swap"></noscript>
@@ -151,8 +151,13 @@ h1 { font-family:'Playfair Display',serif; font-size:clamp(2rem,4vw,3.2rem); fon
 .county-list::-webkit-scrollbar-track { background:transparent; }
 .county-list::-webkit-scrollbar-thumb { background:rgba(200,168,75,0.25); border-radius:3px; }
 .county-item {
+  width:100%;
   padding: 10px 16px;
   cursor:pointer;
+  background:transparent;
+  border:none;
+  text-align:left;
+  font-family:'DM Sans',sans-serif;
   font-size:0.88rem;
   color:var(--text);
   border-bottom: 1px solid rgba(200,168,75,0.06);
@@ -160,7 +165,7 @@ h1 { font-family:'Playfair Display',serif; font-size:clamp(2rem,4vw,3.2rem); fon
   display:flex; align-items:center; justify-content:space-between;
 }
 .county-item:last-child { border-bottom:none; }
-.county-item:hover, .county-item.kbd-focus { background:var(--card-h); color:var(--gold); }
+.county-item:hover, .county-item:focus-visible, .county-item.kbd-focus { background:var(--card-h); color:var(--gold); outline:none; }
 .county-item.selected { background: var(--gold-dim); color:var(--gold); }
 .county-item .county-meta { font-family:'DM Mono',monospace; font-size:0.7rem; color:var(--muted); }
 
@@ -381,12 +386,12 @@ footer { border-top:1px solid var(--border); padding:36px 48px; display:flex; al
 </style>
 <meta property="og:type" content="website" />
 <meta property="og:url" content="https://www.taxpreparertools.com/property-tax-search" />
-<meta property="og:title" content="US Property Tax Search — All 50 States &amp; 300+ Counties" />
-<meta property="og:description" content="Direct deep-links to every official county property tax portal in the US. Search by address, parcel/PIN, or owner name. Free, no signup." />
+<meta property="og:title" content="US Property Tax Search — Assessor &amp; Tax Portals" />
+<meta property="og:description" content="Find official or county-linked property tax and assessor portals across all 50 states plus DC, with 300+ direct local record links." />
 <meta property="og:image" content="https://www.taxpreparertools.com/assets/og-image.png" />
 <meta name="twitter:card" content="summary_large_image" />
 <meta name="twitter:title" content="US Property Tax Search Tool | TaxPreparerTools.com" />
-<meta name="twitter:description" content="The fastest way for tax preparers to find property tax records from any US state and county." />
+<meta name="twitter:description" content="Find local assessor and property tax record portals across all 50 states plus DC, with direct links and fallback search options." />
 <script type="application/ld+json">
 {"@context":"https://schema.org","@type":"WebApplication","name":"Property Tax Search","url":"https://www.taxpreparertools.com/property-tax-search","applicationCategory":"FinanceApplication","offers":{"@type":"Offer","price":"0","priceCurrency":"USD"}}
 </script>
@@ -406,10 +411,38 @@ footer { border-top:1px solid var(--border); padding:36px 48px; display:flex; al
   "@context": "https://schema.org",
   "@type": "FAQPage",
   "mainEntity": [
-    {"@type":"Question","name":"Is there a national property tax database?","acceptedAnswer":{"@type":"Answer","text":"No. There is no single federal or national property tax database — each of the 3,000+ US counties maintains its own assessor or tax-collector portal. This tool routes you to the correct official county portal instead of reselling aggregated data."}},
-    {"@type":"Question","name":"Do I have to pay or sign up to look up property tax records?","acceptedAnswer":{"@type":"Answer","text":"No. The official county portals this tool links to are free public records. There are no API fees, no subscription, and no signup — you are sent directly to the county's own search page."}},
-    {"@type":"Question","name":"What if my county isn't listed?","acceptedAnswer":{"@type":"Answer","text":"Use the Google fallback or the NETR Online directory link shown after you select a state. Between the 300+ direct portal links and the fallback options, every US county is reachable."}},
-    {"@type":"Question","name":"Why won't a county portal load (403 error or blank page)?","acceptedAnswer":{"@type":"Answer","text":"Many county sites sit behind CDNs that geo-block non-US traffic or require JavaScript challenges. Try a US-based VPN, the NETR Online directory link, or the Google fallback, which often surfaces a working alternative URL."}}
+    {
+      "@type": "Question",
+      "name": "Is there a national property tax database?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "There is no single federal property-tax record portal for every U.S. jurisdiction. Assessment and tax records are generally administered by local governments, and some states use cities, towns, boroughs, parishes, districts, or statewide systems rather than a county-only model."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Do I have to pay or sign up to look up property tax records?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Most assessor and property-tax lookup pages are free to search, but some jurisdictions or record vendors may charge for copies, certified documents, payments, or other services. TaxPreparerTools does not charge to use this directory."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "What if my jurisdiction isn't listed?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Use the Google fallback or NETR Online directory link after selecting a state. These options can help locate the relevant local assessor or tax office, but users should verify that the destination is an official government site or a vendor linked by the local government."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Why won't a property portal load?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Local government portals can move, require JavaScript or cookies, undergo maintenance, or block some network traffic. Try the local government's main assessor or tax-office page, then the alternative directory or web-search links, and report stale links to TaxPreparerTools."
+      }
+    }
   ]
 }
 </script>
@@ -451,12 +484,12 @@ footer { border-top:1px solid var(--border); padding:36px 48px; display:flex; al
       <span>/</span>
       property tax search
     </div>
-    <h1>US Property Tax<br>Lookup Tool</h1>
-    <p class="header-sub">Find property tax records, parcel data, and owner info from any US state and county. We deep-link directly to <strong style="color:var(--text)">official assessor portals</strong> &mdash; no API costs, no signups, no scraping. The fastest way to get to the right county search page.</p>
+    <h1>US Property Tax &amp;<br>Assessor Search</h1>
+    <p class="header-sub">Find local property tax, assessment, parcel, and ownership record portals across the U.S. We route you to <strong style="color:var(--text)">official government pages or county-linked record vendors</strong> instead of collecting property-record data ourselves.</p>
     <div class="header-meta">
       <div class="meta-pill"><span class="dot dot-green"></span><span id="metaStates">50 States &amp; DC Covered</span></div>
-      <div class="meta-pill"><span class="dot dot-gold"></span><span id="metaCounties">300+ Direct Portal Links</span></div>
-      <div class="meta-pill"><span class="dot dot-blue"></span>3 Search Methods</div>
+      <div class="meta-pill"><span class="dot dot-gold"></span><span id="metaCounties">300+ Curated Direct Links</span></div>
+      <div class="meta-pill"><span class="dot dot-blue"></span>Updated Oct 2026</div>
     </div>
   </div>
 </div>
@@ -468,16 +501,16 @@ footer { border-top:1px solid var(--border); padding:36px 48px; display:flex; al
     <!-- LEFT: Search Panel -->
     <div class="search-panel">
       <div class="panel-title">Property Tax Search</div>
-      <p class="panel-sub">Pick a state, then a county, then how you'd like to search. We'll hand you off to the official county portal &mdash; same data your local CPA would access, just faster to reach.</p>
+      <p class="panel-sub">Pick a state, then a listed jurisdiction, then the search method you plan to use. We hand you off to the local assessor, tax office, or its linked records vendor.</p>
 
       <!-- Shortcut: ZIP -> county auto-resolver -->
       <div id="ptZipBox" style="background:rgba(200,168,75,0.06);border:1px solid rgba(200,168,75,0.18);border-radius:12px;padding:16px 18px;margin-bottom:22px;">
-        <div style="font-size:0.72rem;font-family:'DM Mono',monospace;text-transform:uppercase;letter-spacing:0.1em;color:var(--gold,#c8a84b);margin-bottom:8px;">Shortcut &middot; Find by ZIP or address</div>
+        <div style="font-size:0.72rem;font-family:'DM Mono',monospace;text-transform:uppercase;letter-spacing:0.1em;color:var(--gold,#c8a84b);margin-bottom:8px;">Shortcut &middot; Find likely jurisdiction by ZIP</div>
         <div style="display:flex;gap:8px;flex-wrap:wrap;align-items:center;">
-          <input id="ptZipInput" type="text" placeholder="ZIP or address (e.g. 123 Main St, Atlanta GA 30303)" aria-label="Enter a ZIP code or full address to find the county" style="flex:1;min-width:200px;background:var(--navy-mid,#122040);border:1px solid rgba(200,168,75,0.25);border-radius:8px;color:var(--text,#e8edf5);padding:11px 14px;font-size:0.95rem;font-family:inherit;" />
-          <button id="ptZipBtn" type="button" style="background:var(--gold,#c8a84b);color:#0a1628;border:none;border-radius:8px;padding:11px 20px;font-weight:600;font-size:0.9rem;cursor:pointer;font-family:inherit;">Find county &rarr;</button>
+          <input id="ptZipInput" type="text" placeholder="ZIP or address containing ZIP (e.g. Atlanta GA 30303)" aria-label="Enter a ZIP code or address containing a ZIP code to find the likely jurisdiction" style="flex:1;min-width:200px;background:var(--navy-mid,#122040);border:1px solid rgba(200,168,75,0.25);border-radius:8px;color:var(--text,#e8edf5);padding:11px 14px;font-size:0.95rem;font-family:inherit;" />
+          <button id="ptZipBtn" type="button" style="background:var(--gold,#c8a84b);color:#0a1628;border:none;border-radius:8px;padding:11px 20px;font-weight:600;font-size:0.9rem;cursor:pointer;font-family:inherit;">Find jurisdiction &rarr;</button>
         </div>
-        <div id="ptZipMsg" role="status" aria-live="polite" style="font-size:0.82rem;color:var(--muted,#8a9bb5);margin-top:8px;min-height:1.1em;">Paste the client&rsquo;s address (or just the ZIP) and we&rsquo;ll jump to the right state &amp; county for you.</div>
+        <div id="ptZipMsg" role="status" aria-live="polite" style="font-size:0.82rem;color:var(--muted,#8a9bb5);margin-top:8px;min-height:1.1em;">Enter a 5-digit ZIP (or an address containing one). ZIP matches are approximate near jurisdiction boundaries, so verify the selected local office before relying on it.</div>
       </div>
 
       <!-- Step 1: State -->
@@ -495,14 +528,14 @@ footer { border-top:1px solid var(--border); padding:36px 48px; display:flex; al
       <div class="step" id="step2">
         <div class="step-header">
           <div class="step-num">02</div>
-          <div class="step-label">Select County</div>
+          <div class="step-label">Select Jurisdiction</div>
           <div class="step-hint" id="countyCount"></div>
         </div>
-        <input class="big-input" id="countyInput" type="text" placeholder="Type to filter counties…" autocomplete="off" aria-label="Filter and select a county" disabled />
-        <div class="county-list" id="countyList"></div>
+        <input class="big-input" id="countyInput" type="text" placeholder="Type to filter listed areas…" autocomplete="off" aria-label="Filter and select a jurisdiction" role="combobox" aria-autocomplete="list" aria-controls="countyList" aria-expanded="false" disabled />
+        <div class="county-list" id="countyList" role="listbox" aria-label="Matching jurisdictions"></div>
         <div class="fallback-row">
-          County not listed?
-          <a href="#" id="customCountyLink">Search any county via Google →</a>
+          Jurisdiction not listed?
+          <a href="#" id="customCountyLink">Search local assessor via Google →</a>
         </div>
       </div>
 
@@ -526,12 +559,12 @@ footer { border-top:1px solid var(--border); padding:36px 48px; display:flex; al
       <div class="result-empty" id="resultEmpty">
         <div class="result-empty-icon">🏛️</div>
         <div class="result-empty-title">Pick a state to begin</div>
-        <div class="result-empty-sub">We'll show you the official property tax portal, what search methods it supports, and any quirks to watch for.</div>
+        <div class="result-empty-sub">We'll show you the local assessor or tax-record destination, supported search methods, and important access notes.</div>
       </div>
 
       <!-- Result content (filled dynamically) -->
       <div class="result-content" id="resultContent">
-        <div class="result-tag" id="resultTag">PROPERTY TAX PORTAL</div>
+        <div class="result-tag" id="resultTag">ASSESSOR / TAX RECORDS</div>
         <div class="result-county-name" id="resultCountyName">—</div>
         <div class="result-state-name" id="resultStateName">—</div>
 
@@ -544,6 +577,10 @@ footer { border-top:1px solid var(--border); padding:36px 48px; display:flex; al
             <div class="result-info-label">Methods Supported</div>
             <div class="result-info-value" id="resultMethods">—</div>
           </div>
+          <div class="result-info">
+            <div class="result-info-label">Destination</div>
+            <div class="result-info-value" id="resultSourceType">—</div>
+          </div>
         </div>
 
         <div class="result-notes" id="resultNotesBox">
@@ -551,27 +588,27 @@ footer { border-top:1px solid var(--border); padding:36px 48px; display:flex; al
           <span id="resultNotes">—</span>
         </div>
 
-        <a class="btn-primary" id="btnPrimary" href="#" target="_blank" rel="noopener">
-          <span>Open Official Portal</span>
+        <a class="btn-primary" id="btnPrimary" href="#" target="_blank" rel="noopener noreferrer">
+          <span id="btnPrimaryText">Open Local Records Portal</span>
           <span>→</span>
         </a>
-        <a class="btn-secondary" id="btnGoogle" href="#" target="_blank" rel="noopener">
+        <a class="btn-secondary" id="btnGoogle" href="#" target="_blank" rel="noopener noreferrer">
           <span>🔎</span><span>Or Search via Google</span>
         </a>
-        <a class="btn-tertiary" id="btnNetr" href="#" target="_blank" rel="noopener">
+        <a class="btn-tertiary" id="btnNetr" href="#" target="_blank" rel="noopener noreferrer">
           <span>🗂️</span><span>NETR Online directory (alternative path)</span>
         </a>
 
         <details class="access-help">
-          <summary>⚠️ Portal not loading? (403 error, blank page, geo-block)</summary>
+          <summary>⚠️ Portal not loading or link looks stale?</summary>
           <div class="access-help-body">
-            <p>Some county portals block traffic from outside the US, redirect to blank pages, or return CloudFront 403 errors. If you hit any of these, try in this order:</p>
+            <p>Local government record systems change frequently. If the destination does not open:</p>
             <ul>
-              <li><strong>Use a US VPN.</strong> Most county sites are CDN-protected and geo-fence non-US traffic. A US East node clears it ~95% of the time.</li>
-              <li><strong>Click "NETR Online directory" above.</strong> Different IP path, different CDN — often loads when the direct portal won't, and you can navigate to the same record from there.</li>
-              <li><strong>Click "Search via Google" above.</strong> Frequently surfaces a working alternative URL or sub-page that bypasses the WAF rule.</li>
-              <li><strong>Blank page after click?</strong> The portal may need JS challenges to clear. Try opening in a fresh incognito window with no extensions, or disable aggressive ad-blockers for that domain.</li>
-              <li><strong>URL stale?</strong> County portals get rebuilt periodically. <a href="contact.html">Report a broken link</a> and we'll patch it.</li>
+              <li><strong>Start from the local government site.</strong> Look for Assessor, Property Appraiser, Auditor, PVA, Tax Commissioner, or Treasurer.</li>
+              <li><strong>Allow required browser features.</strong> Some record systems need JavaScript, cookies, pop-ups, or an acknowledgement screen before search.</li>
+              <li><strong>Use the alternative links above.</strong> NETR Online or Google can help locate a moved portal, but verify the destination belongs to the government office or a vendor linked by it.</li>
+              <li><strong>Do not rely on an unfamiliar payment page.</strong> Confirm the domain from the local government website before entering payment or sensitive information.</li>
+              <li><strong>Report stale links.</strong> <a href="contact.html">Tell us about a broken portal</a> so the directory can be corrected.</li>
             </ul>
           </div>
         </details>
@@ -588,22 +625,22 @@ footer { border-top:1px solid var(--border); padding:36px 48px; display:flex; al
 <!-- HOW IT WORKS -->
 <div class="how-section">
   <div class="how-title">How this tool works</div>
-  <p class="how-sub">There's no national property tax database in the US &mdash; every county runs its own portal. This tool is a smart router: it gets you to the right one in three clicks.</p>
+  <p class="how-sub">Property records are administered differently across the U.S. — by counties, parishes, boroughs, cities, towns, districts, and in some cases statewide systems. This tool is a directory that routes you toward the relevant local record source.</p>
   <div class="how-grid">
     <div class="how-card">
       <div class="how-card-num">STEP 01</div>
       <div class="how-card-title">Pick the state</div>
-      <div class="how-card-desc">All 50 states plus DC are covered. Some states like Connecticut, Massachusetts, and Maine assess property at the city/town level, not county &mdash; we flag that in the notes.</div>
+      <div class="how-card-desc">All 50 states plus DC are covered. Some states, including Connecticut and Massachusetts, administer property assessment at the municipal level; Alaska also uses boroughs and municipalities. The tool now labels those areas accordingly.</div>
     </div>
     <div class="how-card">
       <div class="how-card-num">STEP 02</div>
-      <div class="how-card-title">Pick the county</div>
-      <div class="how-card-desc">300+ counties have direct links to their assessor or tax-collector portal. If a county isn't listed, the Google fallback gets you there in one click.</div>
+      <div class="how-card-title">Pick the jurisdiction</div>
+      <div class="how-card-desc">300+ listed areas have direct links to government pages or record systems linked by local offices. If an area is not listed, the fallback options help you locate the correct assessor or tax office.</div>
     </div>
     <div class="how-card">
       <div class="how-card-num">STEP 03</div>
       <div class="how-card-title">Search the records</div>
-      <div class="how-card-desc">Most portals support address, parcel/PIN, or owner-name searches. We tell you which the county supports and any access fees, then send you straight to the search page.</div>
+      <div class="how-card-desc">Search capabilities vary by jurisdiction and vendor. The directory records whether address, parcel/PIN, or owner-name search is expected to be available, but the destination portal controls the actual fields and access rules.</div>
     </div>
   </div>
 </div>
@@ -613,9 +650,9 @@ footer { border-top:1px solid var(--border); padding:36px 48px; display:flex; al
   <div class="why-inner">
     <div>
       <div class="why-title">Why we don't pull data ourselves</div>
-      <p class="why-prose">There is no single API or database that covers all <strong>3,000+ US counties</strong>. Commercial aggregators like ATTOM and CoreLogic charge hundreds of dollars per month and still miss small counties.</p>
-      <p class="why-prose">Instead, we maintain a curated directory of <strong>official county portals</strong>. The data you see is the same data your CPA or attorney accesses &mdash; pulled live from the source of truth, with no middleman fees and no stale records.</p>
-      <p class="why-prose">For your privacy: we never see your search query. The handoff happens in your browser.</p>
+      <p class="why-prose">Property assessment and tax administration are decentralized, and local offices use many different government and vendor record systems. A single directory therefore needs jurisdiction-specific links and fallbacks.</p>
+      <p class="why-prose">We maintain a curated directory of <strong>government pages and locally linked record portals</strong>. TaxPreparerTools does not copy the property-record database into this page; you review records at the destination source.</p>
+      <p class="why-prose"><strong>Privacy note:</strong> property owner, parcel, and address searches happen after you leave this tool. If you use the ZIP shortcut, the ZIP is sent from your browser to Zippopotam and the returned coordinates are sent to the FCC area API to estimate the jurisdiction. You can always select the state and area manually instead.</p>
     </div>
     <div class="why-stats">
       <div class="why-stat">
@@ -624,15 +661,15 @@ footer { border-top:1px solid var(--border); padding:36px 48px; display:flex; al
       </div>
       <div class="why-stat">
         <div class="why-stat-num" id="statCounties">300+</div>
-        <div class="why-stat-label">Counties</div>
+        <div class="why-stat-label">Listed Jurisdictions</div>
       </div>
       <div class="why-stat">
         <div class="why-stat-num">$0</div>
         <div class="why-stat-label">API Fees</div>
       </div>
       <div class="why-stat">
-        <div class="why-stat-num">100%</div>
-        <div class="why-stat-label">Coverage via Fallback</div>
+        <div class="why-stat-num">3</div>
+        <div class="why-stat-label">Search Paths</div>
       </div>
     </div>
   </div>
@@ -640,7 +677,7 @@ footer { border-top:1px solid var(--border); padding:36px 48px; display:flex; al
 
 <!-- DISCLAIMER -->
 <div class="disclaimer">
-  <strong>Disclaimer:</strong> TaxPreparerTools.com is not affiliated with the IRS, any state revenue department, or any county assessor's office. Portal links are provided for navigational convenience only; the destination websites are owned and maintained by the respective county or municipal authorities. Always verify property tax data with the official source before relying on it for filings, transactions, or legal matters. Found a broken link? <a href="contact.html" style="color:var(--gold);">Let us know</a>.
+  <strong>Disclaimer:</strong> TaxPreparerTools.com is not affiliated with the IRS, any state revenue department, or any county assessor's office. Links are provided for navigational convenience only. Destinations may be government-operated sites or third-party record systems linked by local government offices. Always verify property tax data with the official source before relying on it for filings, transactions, or legal matters. Found a broken link? <a href="contact.html" style="color:var(--gold);">Let us know</a>.
 </div>
 
 <!-- FOOTER -->
@@ -659,7 +696,7 @@ footer { border-top:1px solid var(--border); padding:36px 48px; display:flex; al
 <div style="max-width:1100px;margin:0 auto 32px;padding:0 48px">
   <div style="background:rgba(255,255,255,0.03);border:1px solid rgba(200,168,75,0.15);border-radius:12px;padding:20px 24px;">
     <div style="font-family:monospace;font-size:0.68rem;text-transform:uppercase;letter-spacing:0.1em;color:#c8a84b;margin-bottom:14px;">Related Tools</div>
-      <a href="federal-tax-estimator.html" style="display:flex;align-items:center;gap:10px;color:#c8a84b;text-decoration:none;font-size:0.88rem;padding:8px 0;border-bottom:1px solid rgba(200,168,75,0.08);"><span style="flex-shrink:0">→</span><div><strong style="color:#e8edf5">Federal Tax Estimator</strong><span style="color:#8a9bb5;font-size:0.8rem;margin-left:6px">— Calculate your 2025 federal income tax liability</span></div></a>
+      <a href="federal-tax-estimator.html" style="display:flex;align-items:center;gap:10px;color:#c8a84b;text-decoration:none;font-size:0.88rem;padding:8px 0;border-bottom:1px solid rgba(200,168,75,0.08);"><span style="flex-shrink:0">→</span><div><strong style="color:#e8edf5">Federal Tax Estimator</strong><span style="color:#8a9bb5;font-size:0.8rem;margin-left:6px">— Estimate 2025 or 2026 federal income tax</span></div></a>
       <a href="home-office.html" style="display:flex;align-items:center;gap:10px;color:#c8a84b;text-decoration:none;font-size:0.88rem;padding:8px 0;border-bottom:1px solid rgba(200,168,75,0.08);"><span style="flex-shrink:0">→</span><div><strong style="color:#e8edf5">Home Office Deduction Calculator</strong><span style="color:#8a9bb5;font-size:0.8rem;margin-left:6px">— Deduct a home office if you run a business from home</span></div></a>
       <a href="capital-gains.html" style="display:flex;align-items:center;gap:10px;color:#c8a84b;text-decoration:none;font-size:0.88rem;padding:8px 0;border-bottom:1px solid rgba(200,168,75,0.08);"><span style="flex-shrink:0">→</span><div><strong style="color:#e8edf5">Capital Gains Calculator</strong><span style="color:#8a9bb5;font-size:0.8rem;margin-left:6px">— Calculate tax on the sale of property or investments</span></div></a>
   </div>
@@ -670,19 +707,19 @@ footer { border-top:1px solid var(--border); padding:36px 48px; display:flex; al
   <div style="display:flex;flex-direction:column;gap:14px;">
     <div style="background:rgba(255,255,255,0.03);border:1px solid rgba(200,168,75,0.15);border-radius:12px;padding:18px 22px;">
       <div style="font-weight:700;color:var(--text,#e8edf5);margin-bottom:6px;">Is there a national property tax database?</div>
-      <p style="color:var(--muted,#8a9bb5);font-size:0.92rem;line-height:1.7;margin:0;">No. There is no single federal or national property tax database — each of the 3,000+ US counties maintains its own assessor or tax-collector portal. This tool routes you to the correct official county portal instead of reselling aggregated data.</p>
+      <p style="color:var(--muted,#8a9bb5);font-size:0.92rem;line-height:1.7;margin:0;">There is no single federal property-tax record portal covering every U.S. jurisdiction. Records are generally administered by local governments, and the responsible level can be a county, parish, borough, municipality, city, town, district, or state system.</p>
     </div>
     <div style="background:rgba(255,255,255,0.03);border:1px solid rgba(200,168,75,0.15);border-radius:12px;padding:18px 22px;">
       <div style="font-weight:700;color:var(--text,#e8edf5);margin-bottom:6px;">Do I have to pay or sign up to look up property tax records?</div>
-      <p style="color:var(--muted,#8a9bb5);font-size:0.92rem;line-height:1.7;margin:0;">No. The official county portals this tool links to are free public records. There are no API fees, no subscription, and no signup — you are sent directly to the county&rsquo;s own search page.</p>
+      <p style="color:var(--muted,#8a9bb5);font-size:0.92rem;line-height:1.7;margin:0;">TaxPreparerTools is free to use. Most local lookup pages are also free to search, but a jurisdiction or records vendor may charge for copies, certified documents, payments, or other services.</p>
     </div>
     <div style="background:rgba(255,255,255,0.03);border:1px solid rgba(200,168,75,0.15);border-radius:12px;padding:18px 22px;">
-      <div style="font-weight:700;color:var(--text,#e8edf5);margin-bottom:6px;">What if my county isn&rsquo;t listed?</div>
-      <p style="color:var(--muted,#8a9bb5);font-size:0.92rem;line-height:1.7;margin:0;">Use the Google fallback or the NETR Online directory link shown after you select a state. Between the 300+ direct portal links and the fallback options, every US county is reachable.</p>
+      <div style="font-weight:700;color:var(--text,#e8edf5);margin-bottom:6px;">What if my jurisdiction isn&rsquo;t listed?</div>
+      <p style="color:var(--muted,#8a9bb5);font-size:0.92rem;line-height:1.7;margin:0;">Use the Google fallback or NETR Online directory shown after selecting a state. These can help locate the correct local office, but verify the result is a government site or a records vendor linked by that government.</p>
     </div>
     <div style="background:rgba(255,255,255,0.03);border:1px solid rgba(200,168,75,0.15);border-radius:12px;padding:18px 22px;">
-      <div style="font-weight:700;color:var(--text,#e8edf5);margin-bottom:6px;">Why won&rsquo;t a county portal load (403 error or blank page)?</div>
-      <p style="color:var(--muted,#8a9bb5);font-size:0.92rem;line-height:1.7;margin:0;">Many county sites sit behind CDNs that geo-block non-US traffic or require JavaScript challenges. Try a US-based VPN, the NETR Online directory link, or the Google fallback, which often surfaces a working alternative URL.</p>
+      <div style="font-weight:700;color:var(--text,#e8edf5);margin-bottom:6px;">Why won&rsquo;t a property portal load?</div>
+      <p style="color:var(--muted,#8a9bb5);font-size:0.92rem;line-height:1.7;margin:0;">Local record systems can move, require JavaScript or cookies, undergo maintenance, or block some network traffic. Try the local government assessor or tax-office homepage, then the alternative directory/search links, and report stale URLs.</p>
     </div>
   </div>
 </section>
@@ -698,7 +735,7 @@ footer { border-top:1px solid var(--border); padding:36px 48px; display:flex; al
     <a href="about.html">About</a>
     <a href="sitemap.html">Sitemap</a>
     <a href="blog/">Blog</a>
-    <a href="https://irs.gov" target="_blank">IRS.gov ↗</a>
+    <a href="https://irs.gov" target="_blank" rel="noopener noreferrer">IRS.gov ↗</a>
   </div>
 </footer>
 
@@ -710,8 +747,8 @@ footer { border-top:1px solid var(--border); padding:36px 48px; display:flex; al
    --------------------------------------------------------------------------
    Master directory of US property tax / assessor portal links.
    - 50 states + DC
-   - 200+ counties with verified direct-portal URLs (top counties by pop.)
-   - For any state/county not in the curated list, the UI falls back to a
+   - 300+ listed jurisdictions, including direct portals and municipal-level search fallbacks
+   - For any unlisted jurisdiction, the UI can fall back to a
      Google search query, so coverage is effectively 100% of US counties.
 
    Each county entry shape:
@@ -828,7 +865,7 @@ const COUNTY_PORTALS = {
     { name:"Jefferson",    portal:"https://jeffco.us/2412/Assessor",                             methods:ALL,         notes:"West Denver suburbs." },
     { name:"Adams",        portal:"https://gisapp.adcogov.org/PropertySearch",                                methods:ALL,         notes:"North Denver metro." },
     { name:"Larimer",      portal:"https://www.larimer.gov/assessor",                            methods:ALL,         notes:"Fort Collins." },
-    { name:"Douglas",      portal:"http://www.douglas.co.us/assessor/",                         methods:ALL,         notes:"Castle Rock / Highlands Ranch." },
+    { name:"Douglas",      portal:"https://www.douglasco.gov/assessor/",                         methods:ALL,         notes:"Castle Rock / Highlands Ranch." },
     { name:"Boulder",      portal:"https://www.bouldercounty.org/property-and-land/assessor/",   methods:ALL,         notes:"Boulder city + county." },
     { name:"Weld",         portal:"https://www.weldgov.com/government/departments/assessor",     methods:ALL,         notes:"Greeley / N Front Range." }
   ],
@@ -886,7 +923,7 @@ const COUNTY_PORTALS = {
     { name:"Cherokee",   portal:"https://www.cherokeega.com/Tax-Assessors-Office/",                             methods:ALL,         notes:"Canton / N Atlanta metro." },
     { name:"Henry",      portal:"https://qpublic.schneidercorp.com/Application.aspx?App=HenryCountyGA",         methods:ALL,         notes:"McDonough." },
     { name:"Forsyth",    portal:"https://www.forsythco.com/Departments-Offices/Board-of-Assessors",             methods:ALL,         notes:"Cumming." },
-    { name:"Chatham",    portal:"http://boa.chathamcounty.org/",                                             methods:ALL,         notes:"Savannah." },
+    { name:"Chatham",    portal:"https://boa.chathamcountyga.gov/",                                             methods:ALL,         notes:"Savannah." },
     { name:"Richmond",   portal:"https://qpublic.schneidercorp.com/Application.aspx?AppID=678&LayerID=11365&PageTypeID=2&PageID=4758",                              methods:ALL,         notes:"Augusta-Richmond consolidated." }
   ],
 
@@ -900,15 +937,15 @@ const COUNTY_PORTALS = {
 
   /* ───────────── IDAHO ───────────── */
   ID: [
-    { name:"Ada",        portal:"http://www.adacountyassessor.org/propsys/",                      methods:ALL,         notes:"Boise." },
+    { name:"Ada",        portal:"https://adacounty.id.gov/assessor/",                      methods:ALL,         notes:"Boise." },
     { name:"Canyon",     portal:"https://id-canyon.publicaccessnow.com/Assessor/PropertySearch.aspx",                         methods:ALL,         notes:"Nampa / Caldwell." },
-    { name:"Kootenai",   portal:"http://www.kcgov.us/departments/mapping/mapSearch/",                                            methods:ALL,         notes:"Coeur d'Alene." }
+    { name:"Kootenai",   portal:"https://www.kcgov.us/176/Assessor",                                            methods:ALL,         notes:"Coeur d'Alene." }
   ],
 
   /* ───────────── ILLINOIS ───────────── */
   IL: [
     { name:"Cook",       portal:"https://www.cookcountyassessor.com/advanced-search",                            methods:ALL,         notes:"Chicago. Comprehensive PIN/address/owner search." },
-    { name:"DuPage",     portal:"http://www.dupageco.org/PropertyInfo/PropertyLookup.aspx",                                  methods:ALL,         notes:"Naperville / W Chicago suburbs." },
+    { name:"DuPage",     portal:"https://propertylookup.dupagecounty.gov/forms/htmlframe.aspx?mode=content/home.htm",                                  methods:ALL,         notes:"Naperville / W Chicago suburbs." },
     { name:"Lake",       portal:"https://www.lakecountyil.gov/2854/Property-Tax-Assessment-Information",        methods:ALL,         notes:"Waukegan / N suburbs." },
     { name:"Will",       portal:"https://www.willcountysoa.com/",                                               methods:ALL,         notes:"Joliet." },
     { name:"Kane",       portal:"https://kaneil.devnetwedge.com/",                                              methods:ALL,         notes:"Aurora / Elgin." },
@@ -931,7 +968,7 @@ const COUNTY_PORTALS = {
   /* ───────────── IOWA ───────────── */
   IA: [
     { name:"Polk",       portal:"https://web.assess.co.polk.ia.us/cgi-bin/web/tt/infoqry.cgi",                  methods:ALL,         notes:"Des Moines." },
-    { name:"Linn",       portal:"http://linn.iowaassessors.com/search.php",                                  methods:ALL,         notes:"Cedar Rapids." },
+    { name:"Linn",       portal:"https://linn.iowaassessors.com/search/res/",                                  methods:ALL,         notes:"Cedar Rapids." },
     { name:"Scott",      portal:"https://www.scottcountyiowa.gov/assessor",                                     methods:ALL,         notes:"Davenport / Quad Cities." }
   ],
 
@@ -994,7 +1031,7 @@ const COUNTY_PORTALS = {
   MI: [
     { name:"Wayne",       portal:"https://pta.waynecounty.com/",             methods:ALL,         notes:"Detroit." },
     { name:"Oakland",     portal:"https://www.oakgov.com/treasurer/Pages/property-tax-info.aspx",                methods:ALL,         notes:"Detroit's wealthier N suburbs." },
-    { name:"Macomb",      portal:"http://treasurer.macombgov.org/", methods:ALL,        notes:"NE Detroit metro." },
+    { name:"Macomb",      portal:"https://www.macombgov.org/departments/treasurers-office/tax-information", methods:ALL,        notes:"NE Detroit metro." },
     { name:"Kent",        portal:"https://www.accesskent.com/Departments/Equalization/property_search.htm",      methods:ALL,         notes:"Grand Rapids." },
     { name:"Genesee",     portal:"https://bsaonline.com/OnlinePayment/OnlinePaymentSearch?PaymentApplicationType=5&uid=304",                              methods:ALL,         notes:"Flint." },
     { name:"Washtenaw",   portal:"https://www.washtenaw.org/172/Equalization",                                   methods:ALL,         notes:"Ann Arbor." },
@@ -1003,7 +1040,7 @@ const COUNTY_PORTALS = {
 
   /* ───────────── MINNESOTA ───────────── */
   MN: [
-    { name:"Hennepin",    portal:"http://www.hennepin.us/residents/property/property-information-search",      methods:ALL,         notes:"Minneapolis." },
+    { name:"Hennepin",    portal:"https://www.hennepincounty.gov/services/property/property-information-search",      methods:ALL,         notes:"Minneapolis." },
     { name:"Ramsey",      portal:"https://www.ramseycounty.us/residents/property-home/property-tax-and-value-lookup",                       methods:ALL,         notes:"St. Paul." },
     { name:"Dakota",      portal:"https://gis.co.dakota.mn.us/Webappbuilder/PropertyInformationPublic/index.html",    methods:ALL,         notes:"S Twin Cities suburbs." },
     { name:"Anoka",       portal:"https://www.anokacountymn.gov/313/Property-Records-Taxation",                  methods:ALL,         notes:"N Twin Cities suburbs." },
@@ -1037,7 +1074,7 @@ const COUNTY_PORTALS = {
   /* ───────────── NEBRASKA ───────────── */
   NE: [
     { name:"Douglas",   portal:"https://www.dcassessor.org/",                                                    methods:ALL,         notes:"Omaha." },
-    { name:"Lancaster", portal:"http://orion.lancaster.ne.gov/Appraisal/PublicAccess/",                                             methods:ALL,         notes:"Lincoln." }
+    { name:"Lancaster", portal:"https://orion.lancaster.ne.gov/Appraisal/PublicAccess/",                                             methods:ALL,         notes:"Lincoln." }
   ],
 
   /* ───────────── NEVADA ───────────── */
@@ -1085,7 +1122,7 @@ const COUNTY_PORTALS = {
     { name:"Suffolk",             portal:"https://www.suffolkcountyny.gov/Departments/Real-Property-Tax-Service-Agency", methods:ALL, notes:"Long Island east." },
     { name:"Nassau",              portal:"https://lrv.nassaucountyny.gov/",                                                methods:ALL, notes:"Long Island west." },
     { name:"Westchester",         portal:"https://www.westchestergov.com/property-tax",                                    methods:ALL, notes:"NYC northern suburbs." },
-    { name:"Erie",                portal:"http://www2.erie.gov/ecrpts/index.php?q=real-property-parcel-search",                                              methods:ALL, notes:"Buffalo." },
+    { name:"Erie",                portal:"https://www3.erie.gov/ecrpts/featured/search-property",                                              methods:ALL, notes:"Buffalo." },
     { name:"Monroe",              portal:"https://www.monroecounty.gov/etc/rp/",                                            methods:ALL, notes:"Rochester." },
     { name:"Onondaga",            portal:"https://ocfintax.ongov.net/",                                                     methods:ALL, notes:"Syracuse." },
     { name:"Albany",              portal:"https://www.albanycounty.com/government/departments/real-property-tax-service",   methods:ALL, notes:"State capital." },
@@ -1098,8 +1135,8 @@ const COUNTY_PORTALS = {
   NC: [
     { name:"Mecklenburg", portal:"https://property.spatialest.com/nc/mecklenburg/",                              methods:ALL,         notes:"Charlotte." },
     { name:"Wake",        portal:"https://services.wake.gov/realestate/",                                        methods:ALL,         notes:"Raleigh." },
-    { name:"Guilford",    portal:"http://taxcama.guilfordcountync.gov/camapwa/",      methods:ALL,         notes:"Greensboro." },
-    { name:"Forsyth",     portal:"http://www.co.forsyth.nc.us/tax/default.aspx",                              methods:ALL,         notes:"Winston-Salem." },
+    { name:"Guilford",    portal:"https://lrcpwa.ncptscloud.com/guilford",      methods:ALL,         notes:"Greensboro." },
+    { name:"Forsyth",     portal:"https://www.co.forsyth.nc.us/tax/",                              methods:ALL,         notes:"Winston-Salem." },
     { name:"Cumberland",  portal:"https://www.cumberlandcountync.gov/departments/tax-group/tax",                 methods:ALL,         notes:"Fayetteville." },
     { name:"Durham",      portal:"https://www.dconc.gov/county-departments/departments-f-z/tax-administration",  methods:ALL,         notes:"Durham." },
     { name:"Buncombe",    portal:"https://tax.buncombecounty.org/",                          methods:ALL,         notes:"Asheville." },
@@ -1122,10 +1159,10 @@ const COUNTY_PORTALS = {
     { name:"Summit",     portal:"https://fiscaloffice.summitoh.net/index.php/property-search",                   methods:ALL,         notes:"Akron." },
     { name:"Montgomery", portal:"https://www.mcrealestate.org/",                                                 methods:ALL,         notes:"Dayton." },
     { name:"Lucas",      portal:"https://www.co.lucas.oh.us/167/Auditor",                                        methods:ALL,         notes:"Toledo." },
-    { name:"Stark",      portal:"http://www.starkcountyohio.gov/treasurer",                                               methods:ALL,         notes:"Canton." },
-    { name:"Butler",     portal:"http://www.butlercountytreasurer.org/",                                          methods:ALL,         notes:"Cincinnati N suburbs." },
+    { name:"Stark",      portal:"https://www.starkcountyohio.gov/government/offices/treasurer/index.php",                                               methods:ALL,         notes:"Canton." },
+    { name:"Butler",     portal:"https://treasurer.bcohio.gov/",                                          methods:ALL,         notes:"Cincinnati N suburbs." },
     { name:"Lorain",     portal:"https://www.loraincounty.com/auditor/",                                         methods:ALL,         notes:"Elyria / W Cleveland metro." },
-    { name:"Mahoning",   portal:"http://treasurer.mahoningcountyoh.gov/",                                     methods:ALL,         notes:"Youngstown." }
+    { name:"Mahoning",   portal:"https://treasurer.mahoningcountyoh.gov/",                                     methods:ALL,         notes:"Youngstown." }
   ],
 
   /* ───────────── OKLAHOMA ───────────── */
@@ -1141,7 +1178,7 @@ const COUNTY_PORTALS = {
     { name:"Multnomah",  portal:"https://multcoproptax.com/Property-Search",                                     methods:ALL,         notes:"Portland." },
     { name:"Washington", portal:"https://www.washingtoncountyor.gov/at",                                         methods:ALL,         notes:"Hillsboro / W Portland metro." },
     { name:"Clackamas",  portal:"https://www.clackamas.us/at",                                                   methods:ALL,         notes:"Oregon City / S Portland metro." },
-    { name:"Lane",       portal:"http://apps.lanecounty.org/propertyaccountinformation/",     methods:ALL,         notes:"Eugene." },
+    { name:"Lane",       portal:"https://apps.lanecounty.org/propertyaccountinformation/",     methods:ALL,         notes:"Eugene." },
     { name:"Marion",     portal:"https://www.co.marion.or.us/AO/Pages/default.aspx",                             methods:ALL,         notes:"Salem (state capital)." },
     { name:"Jackson",    portal:"https://pdo.jacksoncountyor.gov/pdo/",                   methods:ALL,         notes:"Medford." }
   ],
@@ -1150,7 +1187,7 @@ const COUNTY_PORTALS = {
   PA: [
     { name:"Philadelphia",  portal:"https://property.phila.gov/",                                                methods:ALL,         notes:"Philadelphia OPA." },
     { name:"Allegheny",     portal:"https://www2.alleghenycounty.us/RealEstate/Search.aspx",                     methods:ALL,         notes:"Pittsburgh." },
-    { name:"Montgomery",    portal:"http://propertyrecords.montcopa.org/pt/forms/htmlframe.aspx?mode=content/home.htm",   methods:ALL,         notes:"Norristown / Philly suburbs." },
+    { name:"Montgomery",    portal:"https://propertyrecords.montcopa.org/pt/forms/htmlframe.aspx?mode=content/home.htm",   methods:ALL,         notes:"Norristown / Philly suburbs." },
     { name:"Bucks",         portal:"https://www.buckscountyboa.org/search/commonsearch.aspx?mode=owner",     methods:ALL,         notes:"Doylestown / Philly N suburbs." },
     { name:"Chester",       portal:"https://www.chesco.org/Assessment",                                          methods:ALL,         notes:"West Chester." },
     { name:"Delaware",      portal:"https://delcorealestate.co.delaware.pa.us/",                                  methods:ALL,         notes:"Media / Philly W suburbs." },
@@ -1170,11 +1207,11 @@ const COUNTY_PORTALS = {
 
   /* ───────────── SOUTH CAROLINA ───────────── */
   SC: [
-    { name:"Greenville",  portal:"http://www.greenvillecounty.org/appsAS400/RealProperty/",                        methods:ALL,         notes:"Upstate SC." },
+    { name:"Greenville",  portal:"https://www.greenvillecounty.org/appsAS400/RealProperty/",                        methods:ALL,         notes:"Upstate SC." },
     { name:"Richland",    portal:"https://richlandcountysc.gov/Government/Departments/Taxes/Assessor",                                                methods:ALL,         notes:"Columbia (state capital)." },
     { name:"Charleston",  portal:"https://sc-charleston.publicaccessnow.com/",                                   methods:ALL,         notes:"Charleston." },
     { name:"Horry",       portal:"https://www.horrycountysc.gov/departments/assessor/",                          methods:ALL,         notes:"Myrtle Beach." },
-    { name:"Spartanburg", portal:"http://www.spartanburgcounty.org/288/Assessor-Property-Records-Search",                                methods:ALL,         notes:"Spartanburg." },
+    { name:"Spartanburg", portal:"https://www.spartanburgcounty.org/288/Assessor-Property-Records-Search",                                methods:ALL,         notes:"Spartanburg." },
     { name:"Lexington",   portal:"https://www.lex-co.sc.gov/departments/assessor",                                methods:ALL,         notes:"W Columbia metro." }
   ],
 
@@ -1188,11 +1225,11 @@ const COUNTY_PORTALS = {
   TN: [
     { name:"Shelby",     portal:"https://www.assessormelvinburgess.com/propertysearch",                          methods:ALL,         notes:"Memphis." },
     { name:"Davidson",   portal:"https://www.padctn.org/",                                                       methods:ALL,         notes:"Nashville-Davidson consolidated." },
-    { name:"Knox",       portal:"http://www.knoxcounty.org/property/",                                          methods:ALL,         notes:"Knoxville." },
+    { name:"Knox",       portal:"https://propertyinfo.knoxcountytn.gov/",                                          methods:ALL,         notes:"Knoxville." },
     { name:"Hamilton",   portal:"https://assessor.hamiltontn.gov/",                                              methods:ALL,         notes:"Chattanooga." },
     { name:"Rutherford", portal:"https://secured.rutherfordcountytn.gov/propertydata/",                                                       methods:ALL,         notes:"Murfreesboro." },
-    { name:"Williamson", portal:"http://www.williamson-tn.org/assessor/",                                   methods:ALL,         notes:"Franklin / Nashville S suburbs." },
-    { name:"Montgomery", portal:"http://www.mcgtn.org/assessor",                                                methods:ALL,         notes:"Clarksville." }
+    { name:"Williamson", portal:"https://www.williamson-tn.org/property_search/",                                   methods:ALL,         notes:"Franklin / Nashville S suburbs." },
+    { name:"Montgomery", portal:"https://montgomerytn.gov/assessor",                                                methods:ALL,         notes:"Clarksville." }
   ],
 
   /* ───────────── TEXAS ───────────── */
@@ -1208,7 +1245,7 @@ const COUNTY_PORTALS = {
     { name:"Fort Bend",   portal:"https://www.fbcad.org/property-search/",                                       methods:ALL,         notes:"Sugar Land / SW Houston." },
     { name:"El Paso",     portal:"https://www.epcad.org/Search",                                                 methods:ALL,         notes:"El Paso." },
     { name:"Montgomery",  portal:"https://www.mcad-tx.org/Property-Search",                                      methods:ALL,         notes:"The Woodlands / N Houston." },
-    { name:"Williamson",  portal:"http://www.wcad.org/",                                        methods:ALL,         notes:"Round Rock / N Austin." },
+    { name:"Williamson",  portal:"https://www.wcad.org/",                                        methods:ALL,         notes:"Round Rock / N Austin." },
     { name:"Cameron",     portal:"https://www.cameroncad.org/",                                                  methods:ALL,         notes:"Brownsville / RGV." },
     { name:"Brazoria",    portal:"https://esearch.brazoriacad.org/",                             methods:ALL,         notes:"Pearland / Lake Jackson." },
     { name:"Galveston",   portal:"https://www.galvestoncountytx.gov/our-county/county-clerk/records-search",                                 methods:ALL,         notes:"Galveston / League City." },
@@ -1254,8 +1291,8 @@ const COUNTY_PORTALS = {
   WA: [
     { name:"King",       portal:"https://blue.kingcounty.com/Assessor/eRealProperty/default.aspx",                methods:ALL,         notes:"Seattle. eRealProperty portal." },
     { name:"Pierce",     portal:"https://www.piercecountywa.gov/736/Property-Search",                              methods:ALL,         notes:"Tacoma." },
-    { name:"Snohomish",  portal:"http://www.snohomishcountywa.gov/175/Assessor",                                      methods:ALL,         notes:"Everett / N Seattle metro." },
-    { name:"Spokane",    portal:"http://www.spokanecounty.org/pubpadal/",                                       methods:ALL,         notes:"Spokane." },
+    { name:"Snohomish",  portal:"https://www.snohomishcountywa.gov/5167/Assessor",                                      methods:ALL,         notes:"Everett / N Seattle metro." },
+    { name:"Spokane",    portal:"https://cp.spokanecounty.org/SCOUT/propertyinformation/Default.aspx",                                       methods:ALL,         notes:"Spokane." },
     { name:"Clark",      portal:"https://gis.clark.wa.gov/gishome/property/",                                      methods:ALL,         notes:"Vancouver WA." },
     { name:"Thurston",   portal:"https://www.thurstoncountywa.gov/departments/assessor",                           methods:ALL,         notes:"Olympia (state capital)." },
     { name:"Kitsap",     portal:"https://psearch.kitsapgov.com/pdetails/",                                             methods:ALL,         notes:"Bremerton." }
@@ -1283,9 +1320,38 @@ const COUNTY_PORTALS = {
   ]
 };
 
-/* Build a fallback Google search URL for any state/county not covered above. */
-function buildGoogleFallback(stateName, countyName) {
-  const q = encodeURIComponent(`${countyName} County ${stateName} property tax search`);
+const MUNICIPAL_LEVEL_STATES = new Set(["CT","MA","ME","NH","RI","VT"]);
+
+function getJurisdictionLabel(stateCode, name) {
+  const n = String(name || '').trim();
+  if (!n) return '';
+  if (stateCode === 'DC') return n === 'Washington DC' ? 'Washington, DC' : n;
+  if (stateCode === 'LA') return /Parish$/i.test(n) ? n : n + ' Parish';
+  if (stateCode === 'AK') {
+    if (/Municipality$/i.test(n)) return n;
+    return /Borough$/i.test(n) ? n : n + ' Borough';
+  }
+  if (stateCode === 'VA' && /^(Virginia Beach|Norfolk)$/i.test(n)) return n + ' City';
+  if (stateCode === 'VA' && /City$/i.test(n)) return n;
+  if (MUNICIPAL_LEVEL_STATES.has(stateCode)) return n + ' area';
+  return n + ' County';
+}
+
+function getJurisdictionNoun(stateCode) {
+  if (stateCode === 'LA') return 'parish';
+  if (stateCode === 'AK') return 'borough / municipality';
+  if (stateCode === 'DC') return 'district';
+  if (MUNICIPAL_LEVEL_STATES.has(stateCode)) return 'local area';
+  return 'county';
+}
+
+function isSearchFallback(county) {
+  return !!(county && /google\.com\/search/i.test(county.portal || ''));
+}
+
+/* Build a jurisdiction-neutral fallback search URL. */
+function buildGoogleFallback(stateName, jurisdictionName) {
+  const q = encodeURIComponent(`${jurisdictionName} ${stateName} property assessor tax records official`);
   return `https://www.google.com/search?q=${q}`;
 }
 
@@ -1303,12 +1369,21 @@ function getCounties(stateCode) {
 }
 
 /* Public API exposed to the page. */
+const TOTAL_ENTRIES = Object.values(COUNTY_PORTALS).reduce((n, arr) => n + arr.length, 0);
+const DIRECT_PORTAL_COUNT = Object.values(COUNTY_PORTALS)
+  .flat()
+  .filter(county => !isSearchFallback(county)).length;
+
 window.PROPERTY_TAX_DATA = {
   states: US_STATES,
   getCounties,
   buildGoogleFallback,
   buildNetrFallback,
-  totalCounties: Object.values(COUNTY_PORTALS).reduce((n, arr) => n + arr.length, 0)
+  getJurisdictionLabel,
+  getJurisdictionNoun,
+  isSearchFallback,
+  totalEntries: TOTAL_ENTRIES,
+  directPortalCount: DIRECT_PORTAL_COUNT
 };
 
 /* ===== end inlined data ===== */
@@ -1337,14 +1412,16 @@ window.PROPERTY_TAX_DATA = {
   var resultStateName = document.getElementById('resultStateName');
   var resultMethod    = document.getElementById('resultMethod');
   var resultMethods   = document.getElementById('resultMethods');
-  var resultNotes     = document.getElementById('resultNotes');
-  var btnPrimary      = document.getElementById('btnPrimary');
-  var btnGoogle       = document.getElementById('btnGoogle');
-  var btnNetr         = document.getElementById('btnNetr');
+  var resultNotes      = document.getElementById('resultNotes');
+  var resultSourceType = document.getElementById('resultSourceType');
+  var btnPrimary       = document.getElementById('btnPrimary');
+  var btnPrimaryText   = document.getElementById('btnPrimaryText');
+  var btnGoogle        = document.getElementById('btnGoogle');
+  var btnNetr          = document.getElementById('btnNetr');
 
-  // Meta header
-  document.getElementById('metaCounties').textContent = DATA.totalCounties + '+ Direct Portal Links';
-  document.getElementById('statCounties').textContent = DATA.totalCounties + '+';
+  // Meta header: distinguish true direct links from search fallbacks.
+  document.getElementById('metaCounties').textContent = DATA.directPortalCount + '+ Curated Direct Links';
+  document.getElementById('statCounties').textContent = DATA.totalEntries + '+';
 
   // ── Populate state dropdown
   DATA.states.forEach(function(s){
@@ -1381,6 +1458,7 @@ window.PROPERTY_TAX_DATA = {
       countyCountEl.textContent = '';
       methodBtns.forEach(function(b){ b.disabled = true; });
       showEmpty();
+      syncUrl();
       return;
     }
 
@@ -1391,26 +1469,46 @@ window.PROPERTY_TAX_DATA = {
     countyInput.value = '';
 
     var counties = DATA.getCounties(currentState.code);
-    countyCountEl.textContent = counties.length + ' counties listed';
+    countyCountEl.textContent = counties.length + ' areas listed';
     renderCountyList(counties);
     countyList.classList.add('show');
+    countyInput.setAttribute('aria-expanded','true');
     methodBtns.forEach(function(b){ b.disabled = true; });
 
     showStateOnly();
+    syncUrl();
   });
 
   // ── County filter typing
   countyInput.addEventListener('input', function(){
     if (!currentState) return;
+
+    if (currentCounty) {
+      var selectedLabel = DATA.getJurisdictionLabel(currentState.code, currentCounty.name);
+      if (countyInput.value.trim() !== selectedLabel) {
+        currentCounty = null;
+        step2.classList.remove('completed');
+        step3.classList.remove('active','completed');
+        methodBtns.forEach(function(b){ b.disabled = true; b.classList.remove('active'); });
+        methodBtns[0] && methodBtns[0].classList.add('active');
+        currentMethod = 'address';
+        showStateOnly();
+      }
+    }
+
     var q = countyInput.value.trim().toLowerCase();
     var counties = DATA.getCounties(currentState.code);
-    var filtered = q ? counties.filter(function(c){ return c.name.toLowerCase().indexOf(q) >= 0; }) : counties;
+    var filtered = q ? counties.filter(function(item){
+      var label = DATA.getJurisdictionLabel(currentState.code, item.name).toLowerCase();
+      return item.name.toLowerCase().indexOf(q) >= 0 || label.indexOf(q) >= 0;
+    }) : counties;
     renderCountyList(filtered);
     countyList.classList.add('show');
+    countyInput.setAttribute('aria-expanded','true');
   });
 
   countyInput.addEventListener('focus', function(){
-    if (currentState) countyList.classList.add('show');
+    if (currentState) { countyList.classList.add('show'); countyInput.setAttribute('aria-expanded','true'); }
   });
 
   // ── Render county list
@@ -1426,14 +1524,14 @@ window.PROPERTY_TAX_DATA = {
       return;
     }
     counties.forEach(function(county){
-      var div = document.createElement('div');
+      var div = document.createElement('button');
+      div.type = 'button';
       div.className = 'county-item';
+      div.setAttribute('role','option');
       div.dataset.name = county.name;
-      div.innerHTML = '<span>' + escapeHTML(county.name) + ' County</span>'
+      div.innerHTML = '<span>' + escapeHTML(DATA.getJurisdictionLabel(currentState.code, county.name)) + '</span>'
                     + '<span class="county-meta">' + county.methods.length + ' methods</span>';
-      div.addEventListener('click', function(){
-        selectCounty(county);
-      });
+      div.addEventListener('click', function(){ selectCounty(county); });
       countyList.appendChild(div);
     });
   }
@@ -1441,8 +1539,9 @@ window.PROPERTY_TAX_DATA = {
   // ── Select a county
   function selectCounty(county) {
     currentCounty = county;
-    countyInput.value = county.name + ' County';
+    countyInput.value = DATA.getJurisdictionLabel(currentState.code, county.name);
     countyList.classList.remove('show');
+    countyInput.setAttribute('aria-expanded','false');
 
     step2.classList.add('completed');
     step3.classList.add('active');
@@ -1464,6 +1563,17 @@ window.PROPERTY_TAX_DATA = {
     }
 
     renderResult();
+    syncUrl();
+  }
+
+  function syncUrl() {
+    try {
+      var params = new URLSearchParams(window.location.search);
+      if (currentState) params.set('state', currentState.code); else params.delete('state');
+      if (currentCounty) params.set('area', currentCounty.name); else params.delete('area');
+      var qs = params.toString();
+      history.replaceState(null, '', window.location.pathname + (qs ? '?' + qs : ''));
+    } catch (e) {}
   }
 
   // ── Method change
@@ -1484,9 +1594,13 @@ window.PROPERTY_TAX_DATA = {
       alert('Pick a state first.');
       return;
     }
-    var q = prompt('Enter the county name (e.g., "Travis"):');
+    var q = countyInput.value.trim();
+    if (!q || (currentCounty && q === DATA.getJurisdictionLabel(currentState.code, currentCounty.name))) {
+      q = prompt('Enter a county, parish, borough, city, or town name:') || '';
+    }
+    q = q.replace(/\s+(County|Parish|Borough|Municipality|City|area)$/i,'').trim();
     if (!q) return;
-    var stub = { name:q, portal: DATA.buildGoogleFallback(currentState.name, q), methods:["address","parcel","owner"], notes:"County not in our curated list. Using Google search to locate the official portal." };
+    var stub = { name:q, portal: DATA.buildGoogleFallback(currentState.name, q), methods:["address","parcel","owner"], notes:"This area is not in the curated direct-link list. Google search is being used only to help locate the relevant local assessor or tax office." };
     selectCounty(stub);
   });
 
@@ -1494,7 +1608,9 @@ window.PROPERTY_TAX_DATA = {
   function renderResult() {
     if (!currentState || !currentCounty) { showEmpty(); return; }
 
-    resultCountyName.textContent = currentCounty.name + ' County';
+    var displayName = DATA.getJurisdictionLabel(currentState.code, currentCounty.name);
+    var isFallback = DATA.isSearchFallback(currentCounty);
+    resultCountyName.textContent = displayName;
     resultStateName.textContent  = currentState.name;
     resultMethod.textContent     = METHOD_LABEL[currentMethod] || '—';
 
@@ -1518,6 +1634,11 @@ window.PROPERTY_TAX_DATA = {
     btnGoogle.href = DATA.buildGoogleFallback(currentState.name, currentCounty.name);
     btnNetr.href = DATA.buildNetrFallback(currentState.code);
 
+    var destinationHost = '';
+    try { destinationHost = new URL(currentCounty.portal).hostname.replace(/^www\./,''); } catch(e) {}
+    resultSourceType.textContent = (isFallback ? 'Search fallback' : 'Government / locally linked') + (destinationHost ? ' · ' + destinationHost : '');
+    btnPrimaryText.textContent = isFallback ? 'Find Local Assessor / Tax Office' : 'Open Local Records Portal';
+
     resultEmpty.style.display = 'none';
     resultContent.classList.add('show');
   }
@@ -1525,21 +1646,41 @@ window.PROPERTY_TAX_DATA = {
   function showStateOnly() {
     resultEmpty.style.display = 'flex';
     resultContent.classList.remove('show');
-    resultEmpty.querySelector('.result-empty-title').textContent = 'Pick a county in ' + currentState.name;
-    resultEmpty.querySelector('.result-empty-sub').textContent  = currentState.name + ' has ' + DATA.getCounties(currentState.code).length + ' counties in our directory. Pick one to see its portal.';
+    var noun = DATA.getJurisdictionNoun(currentState.code);
+    resultEmpty.querySelector('.result-empty-title').textContent = 'Pick a ' + noun + ' in ' + currentState.name;
+    resultEmpty.querySelector('.result-empty-sub').textContent  = currentState.name + ' has ' + DATA.getCounties(currentState.code).length + ' listed areas in this directory. Choose one to see the available record destination.';
   }
 
   function showEmpty() {
     resultEmpty.style.display = 'flex';
     resultContent.classList.remove('show');
     resultEmpty.querySelector('.result-empty-title').textContent = 'Pick a state to begin';
-    resultEmpty.querySelector('.result-empty-sub').textContent  = "We'll show you the official property tax portal, what search methods it supports, and any quirks to watch for.";
+    resultEmpty.querySelector('.result-empty-sub').textContent  = "We'll show you the local assessor or tax-record destination, expected search methods, and important access notes.";
   }
 
   // ── Click outside county list closes it
   document.addEventListener('click', function(e){
-    if (!step2.contains(e.target)) countyList.classList.remove('show');
+    if (!step2.contains(e.target)) {
+      countyList.classList.remove('show');
+      countyInput.setAttribute('aria-expanded','false');
+    }
   });
+
+  (function restoreFromUrl(){
+    try {
+      var params = new URLSearchParams(window.location.search);
+      var stateCode = (params.get('state') || '').toUpperCase();
+      var area = params.get('area') || '';
+      if (!stateCode) return;
+      if (!DATA.states.some(function(s){ return s.code === stateCode; })) return;
+      stateSelect.value = stateCode;
+      stateSelect.dispatchEvent(new Event('change',{bubbles:true}));
+      if (area) {
+        var match = DATA.getCounties(stateCode).find(function(item){ return item.name.toLowerCase() === area.toLowerCase(); });
+        if (match) selectCounty(match);
+      }
+    } catch(e) {}
+  })();
 
   // ── Helpers
   function escapeHTML(s){ return String(s).replace(/[&<>"']/g, function(c){ return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]; }); }
@@ -1578,7 +1719,7 @@ window.PROPERTY_TAX_DATA = {
     msg.style.color = kind==='err' ? '#e8a0a0' : (kind==='ok' ? '#9fd5a0' : 'var(--muted,#8a9bb5)');
   }
   function stripSuffix(n){
-    return (n||'').replace(/\s+(County|Parish|Borough|Census Area|Municipality|City and Borough|City)$/i,'').trim();
+    return (n||'').replace(/\s+(City and Borough|Census Area|Municipality|Parish|Borough|County|City)$/i,'').trim();
   }
   function setState(abbr){
     stateSelect.value=abbr;
@@ -1623,14 +1764,18 @@ window.PROPERTY_TAX_DATA = {
         if(!out.abbr) throw new Error('nostate');
         setState(out.abbr);
         if(out.county){
-          var hit=findCountyItem(out.county);
+          var hit = out.abbr === 'DC'
+            ? (countyList && countyList.querySelector('.county-item'))
+            : findCountyItem(out.county);
+          var data = window.PROPERTY_TAX_DATA;
+          var label = data && data.getJurisdictionLabel ? data.getJurisdictionLabel(out.abbr, out.county) : out.county;
           if(hit){
             hit.click();
             try{ document.getElementById('step3').scrollIntoView({behavior:'smooth',block:'nearest'}); }catch(e){}
-            setMsg('Found '+out.county+' County, '+out.abbr+' \u2014 portal ready below. \u2713','ok');
+            setMsg('Likely match: '+label+', '+out.abbr+' — verify the jurisdiction if the ZIP is near a boundary. ✓','ok');
           } else {
             if(countyInput){ countyInput.value=out.county; countyInput.dispatchEvent(new Event('input',{bubbles:true})); }
-            setMsg('State set to '+out.abbr+'. No direct portal for '+out.county+' County yet \u2014 use the county list or the Google fallback below.','');
+            setMsg('State set to '+out.abbr+'. No curated direct link for '+label+' yet — use the listed areas or fallback search below.','');
           }
         } else {
           setMsg('State set to '+out.abbr+'. Pick your county from the list below.','');
