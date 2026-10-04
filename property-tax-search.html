@@ -1331,15 +1331,27 @@ footer { border-top:1px solid var(--border); padding:36px 48px; display:flex; al
   // ── Custom (Google) fallback
   customLink.addEventListener('click', function(e){
     e.preventDefault();
+
     if (!currentState) {
-      alert('Pick a state first.');
+      countyCountEl.textContent = 'Choose a state first';
+      try { stateSelect.focus(); } catch (err) {}
       return;
     }
+
     var q = countyInput.value.trim();
-    if (!q || (currentCounty && q === DATA.getJurisdictionLabel(currentState.code, currentCounty.name))) {
-      q = prompt('Enter a county, parish, borough, city, or town name:') || '';
+    var selectedLabel = currentCounty ? DATA.getJurisdictionLabel(currentState.code, currentCounty.name) : '';
+
+    if (!q || (selectedLabel && q === selectedLabel)) {
+      currentCounty = null;
+      countyInput.value = '';
+      countyInput.dispatchEvent(new Event('input',{bubbles:true}));
+      countyList.classList.add('show');
+      countyInput.setAttribute('aria-expanded','true');
+      countyCountEl.textContent = 'Type an unlisted county, city, parish, borough, or town';
+      try { countyInput.focus(); } catch (err) {}
+      return;
     }
-    if (!q) return;
+
     var stub = createSearchFallback(q, "manual");
     if (stub) selectCounty(stub);
   });
