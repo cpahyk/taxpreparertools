@@ -587,6 +587,17 @@ textarea {
   -webkit-tap-highlight-color: rgba(21, 95, 160, 0.12);
 }
 
+:where(a, button, input, select, textarea, summary, [tabindex]):focus-visible {
+  outline: 3px solid rgba(21, 95, 160, 0.38) !important;
+  outline-offset: 3px !important;
+  border-radius: 6px;
+}
+
+:where(input, select, textarea):focus-visible {
+  border-color: #155fa0 !important;
+  box-shadow: 0 0 0 3px rgba(21, 95, 160, 0.10) !important;
+}
+
 @media (prefers-reduced-motion: reduce) {
   html {
     scroll-behavior: auto !important;
