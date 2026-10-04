@@ -71,6 +71,13 @@ jobs:
           grep -q '<form id="formSection"' /tmp/forgot-password.html
           grep -q 'name="email"' /tmp/forgot-password.html
 
+          curl --fail --silent --show-error --location --retry 4 --retry-delay 3 \
+            --header 'Cache-Control: no-cache' \
+            'https://www.taxpreparertools.com/dashboard.html' -o /tmp/dashboard.html
+          grep -q 'class="auth-pending"' /tmp/dashboard.html
+          grep -q 'id="authGate"' /tmp/dashboard.html
+          grep -q "window.location.replace('login.html')" /tmp/dashboard.html
+
       - name: Verify property tax search production
         shell: bash
         run: |
