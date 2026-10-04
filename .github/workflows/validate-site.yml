@@ -463,6 +463,8 @@ jobs:
             'function applyResolvedJurisdiction',
             'routeType:"search"',
             'routeType: "search"',
+            'var detectedFallback = {',
+            'No curated direct portal is listed yet',
             'function normalizeAreaFilter',
             "e.key === 'Home'",
             "e.key === 'End'"
