@@ -192,12 +192,12 @@
     <div class="auth-title" id="loginTitle">Sign in to<br>your account</div>
     <p class="auth-sub" id="loginSub">Access your saved calculations, Pro resources, and personalized tax dashboard.</p>
 
-    <div class="social-btns" id="loginSocialBtns">
-      <button type="button" class="social-btn" onclick="signInWithGoogle()"><span class="social-icon">🔵</span> Continue with Google</button>
-      <button type="button" class="social-btn" onclick="signInWithMicrosoft()"><span class="social-icon">🔷</span> Continue with Microsoft</button>
+    <div class="social-btns" id="loginSocialBtns" hidden>
+      <button type="button" class="social-btn" id="googleLoginBtn" onclick="signInWithGoogle()" hidden><span class="social-icon">🔵</span> Continue with Google</button>
+      <button type="button" class="social-btn" id="microsoftLoginBtn" onclick="signInWithMicrosoft()" hidden><span class="social-icon">🔷</span> Continue with Microsoft</button>
     </div>
 
-    <div class="divider" id="loginDivider">
+    <div class="divider" id="loginDivider" hidden>
       <div class="divider-line"></div>
       <div class="divider-text">or sign in with email</div>
       <div class="divider-line"></div>
@@ -344,6 +344,37 @@ function setLoginGeneralError(message) {
   box.textContent = message || '';
   box.classList.toggle('show', !!message);
 }
+
+async function loadSocialProviders() {
+  const container = document.getElementById('loginSocialBtns');
+  const divider = document.getElementById('loginDivider');
+  const google = document.getElementById('googleLoginBtn');
+  const microsoft = document.getElementById('microsoftLoginBtn');
+
+  try {
+    const response = await fetch(SUPABASE_URL + '/auth/v1/settings', {
+      headers: { apikey: SUPABASE_ANON },
+      cache: 'no-store'
+    });
+    if (!response.ok) throw new Error('Auth settings unavailable');
+
+    const settings = await response.json();
+    const external = settings?.external || {};
+    const googleEnabled = external.google === true;
+    const azureEnabled = external.azure === true;
+
+    google.hidden = !googleEnabled;
+    microsoft.hidden = !azureEnabled;
+    container.hidden = !(googleEnabled || azureEnabled);
+    divider.hidden = !(googleEnabled || azureEnabled);
+  } catch (error) {
+    console.warn('Social provider availability check failed:', error);
+    container.hidden = true;
+    divider.hidden = true;
+  }
+}
+
+loadSocialProviders();
 
 async function signInWithProvider(provider, scopes) {
   setLoginGeneralError('');
