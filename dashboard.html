@@ -169,6 +169,15 @@
   .usage-track{height:5px;background:rgba(255,255,255,.08);border-radius:5px;overflow:hidden;margin-bottom:14px;}
   .usage-fill{height:100%;border-radius:5px;background:linear-gradient(90deg,var(--gold),var(--gold-light));}
 
+  /* ACCOUNT SECURITY */
+  .security-list{display:flex;flex-direction:column;}
+  .security-row{display:flex;align-items:flex-start;justify-content:space-between;gap:18px;padding:10px 0;border-bottom:1px solid rgba(15,34,56,.08);}
+  .security-row:last-child{border-bottom:0;}
+  .security-label{font-size:.72rem;color:var(--muted);font-family:'DM Mono',monospace;}
+  .security-value{font-size:.78rem;color:var(--text);font-weight:600;text-align:right;overflow-wrap:anywhere;}
+  .security-ok{display:inline-flex;align-items:center;gap:6px;color:var(--green);}
+  .security-ok::before{content:'';width:7px;height:7px;border-radius:50%;background:currentColor;flex-shrink:0;}
+
   /* SAVED CALCS */
   .calc-item{display:flex;align-items:center;gap:12px;padding:10px 0;border-bottom:1px solid rgba(255,255,255,.05);text-decoration:none;}
   .calc-item:last-child{border-bottom:none;}
@@ -476,6 +485,34 @@
           </div>
         </div>
 
+        <!-- Account Security -->
+        <div class="widget" id="accountSecurity">
+          <div class="widget-header">
+            <span class="widget-title">Account Security</span>
+            <a href="forgot-password.html" class="widget-action">Reset password →</a>
+          </div>
+          <div class="widget-body">
+            <div class="security-list">
+              <div class="security-row">
+                <span class="security-label">Email</span>
+                <span class="security-value" id="accountEmail">Loading…</span>
+              </div>
+              <div class="security-row">
+                <span class="security-label">Email status</span>
+                <span class="security-value" id="accountEmailStatus">Checking…</span>
+              </div>
+              <div class="security-row">
+                <span class="security-label">Sign-in method</span>
+                <span class="security-value" id="accountProvider">—</span>
+              </div>
+              <div class="security-row">
+                <span class="security-label">Last sign in</span>
+                <span class="security-value" id="accountLastSignIn">—</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
         <!-- Resources -->
         <div class="widget">
           <div class="widget-header">
@@ -764,6 +801,14 @@ _supabase.auth.onAuthStateChange((event) => {
     const firstName = profile?.first_name || fallbackFirst;
     const lastName  = profile?.last_name  || fallbackLast;
     const roleLabel = profile?.role || meta.role || 'Tax Professional';
+
+    const providerRaw = String(user.app_metadata?.provider || 'email').toLowerCase();
+    const providerLabels = { email:'Email & password', google:'Google', azure:'Microsoft' };
+    const providerLabel = providerLabels[providerRaw] || providerRaw.replace(/(^|[_-])([a-z])/g, (_, p, ch) => (p ? ' ' : '') + ch.toUpperCase());
+    const emailStatus = user.email_confirmed_at ? 'Verified' : 'Not verified';
+    const lastSignIn = user.last_sign_in_at
+      ? new Date(user.last_sign_in_at).toLocaleString(undefined, { dateStyle:'medium', timeStyle:'short' })
+      : 'First session';
     // Auth metadata is user controlled; only a server-managed profile plan is displayable.
     const plan      = (profile?.plan || 'Free').toUpperCase();
     const initials  = ((firstName[0] || '') + (lastName[0] || '')).toUpperCase() || 'U';
@@ -778,6 +823,12 @@ _supabase.auth.onAuthStateChange((event) => {
     if (greetEl) greetEl.textContent = greet + ', ' + firstName + ' 👋';
     document.getElementById('sbUserRole').textContent  = roleLabel;
     document.getElementById('sbPlanBadge').textContent = plan;
+    document.getElementById('accountEmail').textContent = user.email || 'No email on account';
+    const emailStatusEl = document.getElementById('accountEmailStatus');
+    emailStatusEl.textContent = emailStatus;
+    if (user.email_confirmed_at) emailStatusEl.classList.add('security-ok');
+    document.getElementById('accountProvider').textContent = providerLabel;
+    document.getElementById('accountLastSignIn').textContent = lastSignIn;
     document.getElementById('accountPlanTitle').textContent = plan === 'FREE' ? 'Free account' : plan + ' account';
     document.getElementById('accountPlanSub').textContent = 'Signed in securely. Contact support for account or plan help.';
     document.getElementById('sbUserBlock').style.opacity = '1';
