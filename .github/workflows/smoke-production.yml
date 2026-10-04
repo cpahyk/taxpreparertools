@@ -103,6 +103,10 @@ jobs:
           grep -q 'function openSidebar' /tmp/dashboard.html
           grep -q 'No saved calculations yet' /tmp/dashboard.html
           grep -q 'Recommended Tools' /tmp/dashboard.html
+          grep -q '<main class="main-content" id="dashboardMain"' /tmp/dashboard.html
+          grep -q 'class="skip-link"' /tmp/dashboard.html
+          grep -q 'aria-current="page"' /tmp/dashboard.html
+          grep -q 'aria-label="Ask AI Tax Assistant"' /tmp/dashboard.html
           if grep -q 'Sunday, May 3, 2026' /tmp/dashboard.html; then
             echo 'Dashboard still contains stale hard-coded date' >&2
             exit 1
