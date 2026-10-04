@@ -763,13 +763,25 @@ footer { border-top:1px solid var(--border); padding:36px 48px; display:flex; al
 </footer>
 
 <!-- PROPERTY TAX DIRECTORY DATA — single source of truth -->
-<script src="/assets/js/property-tax-data.js"></script>
+<script src="/assets/js/property-tax-data.js?v=20261004-2"></script>
 
 
 <!-- LOGIC -->
 <script>
 (function(){
   var DATA = window.PROPERTY_TAX_DATA;
+  if (!DATA || typeof DATA.getJurisdictionLabel !== 'function' || typeof DATA.getCounties !== 'function') {
+    var failedState = document.getElementById('stateSelect');
+    var failedEmpty = document.getElementById('resultEmpty');
+    if (failedState) failedState.disabled = true;
+    if (failedEmpty) {
+      var failedTitle = failedEmpty.querySelector('.result-empty-title');
+      var failedSub = failedEmpty.querySelector('.result-empty-sub');
+      if (failedTitle) failedTitle.textContent = 'Directory data could not load';
+      if (failedSub) failedSub.textContent = 'Refresh this page. If the problem continues, use the local government assessor site directly or report the issue to TaxPreparerTools.';
+    }
+    return;
+  }
 
   // Element refs
   var stateSelect    = document.getElementById('stateSelect');
@@ -833,6 +845,22 @@ footer { border-top:1px solid var(--border); padding:36px 48px; display:flex; al
     MA: {
       text: "Massachusetts property valuation is administered by cities and towns. County names here are search regions rather than the assessing authority.",
       url: "https://www.mass.gov/property-assessment-valuation-guidance"
+    },
+    ME: {
+      text: "Maine property tax is generally administered by municipalities. Maine Revenue Services acts as the local assessor for the Unorganized Territory, so confirm the municipality or UT before searching.",
+      url: "https://www.maine.gov/revenue/taxes/property-tax"
+    },
+    NH: {
+      text: "New Hampshire local property taxes are assessed, levied, and collected by municipalities. County names here are search regions; use the city or town assessor for the actual property record.",
+      url: "https://www.revenue.nh.gov/taxes-glance/property-tax"
+    },
+    RI: {
+      text: "Rhode Island real-property assessment is handled by city and town assessors. County names here are search regions, so confirm the municipality before relying on a record.",
+      url: "https://municipalfinance.ri.gov/"
+    },
+    VT: {
+      text: "Vermont property taxes and specific property records are administered at the municipal level. Payments and property-specific questions should go to the town where the property is located.",
+      url: "https://tax.vermont.gov/property"
     },
     AK: {
       text: "Alaska property tax is municipal. Boroughs and some cities levy property tax, while substantial unincorporated areas do not.",
@@ -938,7 +966,7 @@ footer { border-top:1px solid var(--border); padding:36px 48px; display:flex; al
       return;
     }
     activeCountyOption = Math.max(0, Math.min(nextIndex, items.length - 1));
-    items.forEach(function(item, index){ item.classList.toggle('keyboard-active', index === activeCountyOption); });
+    items.forEach(function(item, index){ item.classList.toggle('kbd-focus', index === activeCountyOption); });
     var active = items[activeCountyOption];
     countyInput.setAttribute('aria-activedescendant', active.id);
     try { active.scrollIntoView({block:'nearest'}); } catch(e) {}
