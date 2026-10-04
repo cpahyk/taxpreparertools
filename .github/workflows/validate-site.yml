@@ -402,6 +402,13 @@ jobs:
             failures.push('Florida Polk County / Lakeland ZIP fallback fixture is missing.');
           }
 
+          if (!data.includes('{ name:"Cook",       portal:"https://www.cookcountypropertyinfo.com/"')) {
+            failures.push('Cook County must use cookcountypropertyinfo.com as the primary property destination.');
+          }
+          if (data.includes('{ name:"Cook",       portal:"https://www.cookcountyassessor.com/advanced-search"')) {
+            failures.push('Cook County reverted to the old Assessor advanced-search primary destination.');
+          }
+
           const knownStalePropertyTaxUrls = [
             'https://www.mc-ala.org/residents/online-services/property-search',
             'https://www.muni.org/Departments/finance/treasury/PropertyTax/Pages/default.aspx',
