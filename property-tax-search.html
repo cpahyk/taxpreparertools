@@ -16,7 +16,7 @@
 <title>US Property Tax Search — Assessor & Tax Portals | TaxPreparerTools</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<meta name="description" content="Free US property tax and assessor portal directory for all 50 states plus DC. Find 300+ direct local record links and search by address, parcel/PIN, or owner where supported.">
+<meta name="description" content="Free US property tax and assessor portal directory for all 50 states plus DC. Browse 321 listed jurisdictions with direct local record destinations and fallback search options.">
 <link rel="canonical" href="https://www.taxpreparertools.com/property-tax-search" />
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700;900&family=DM+Sans:wght@300;400;500;600&family=DM+Mono:wght@400;500&display=swap" media="print" onload="this.media='all'">
 <noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700;900&family=DM+Sans:wght@300;400;500;600&family=DM+Mono:wght@400;500&display=swap"></noscript>
@@ -387,7 +387,7 @@ footer { border-top:1px solid var(--border); padding:36px 48px; display:flex; al
 <meta property="og:type" content="website" />
 <meta property="og:url" content="https://www.taxpreparertools.com/property-tax-search" />
 <meta property="og:title" content="US Property Tax Search — Assessor &amp; Tax Portals" />
-<meta property="og:description" content="Find official or county-linked property tax and assessor portals across all 50 states plus DC, with 300+ direct local record links." />
+<meta property="og:description" content="Find property tax and assessor record destinations across all 50 states plus DC, covering 321 listed jurisdictions with direct and fallback routes." />
 <meta property="og:image" content="https://www.taxpreparertools.com/assets/og-image.png" />
 <meta name="twitter:card" content="summary_large_image" />
 <meta name="twitter:title" content="US Property Tax Search Tool | TaxPreparerTools.com" />
@@ -488,7 +488,7 @@ footer { border-top:1px solid var(--border); padding:36px 48px; display:flex; al
     <p class="header-sub">Find local property tax, assessment, parcel, and ownership record portals across the U.S. We route you to <strong style="color:var(--text)">official government pages or county-linked record vendors</strong> instead of collecting property-record data ourselves.</p>
     <div class="header-meta">
       <div class="meta-pill"><span class="dot dot-green"></span><span id="metaStates">50 States &amp; DC Covered</span></div>
-      <div class="meta-pill"><span class="dot dot-gold"></span><span id="metaCounties">300+ Curated Direct Links</span></div>
+      <div class="meta-pill"><span class="dot dot-gold"></span><span id="metaCounties">290+ Unique Direct Destinations</span></div>
       <div class="meta-pill"><span class="dot dot-blue"></span>Updated Oct 2026</div>
     </div>
   </div>
@@ -563,7 +563,7 @@ footer { border-top:1px solid var(--border); padding:36px 48px; display:flex; al
       </div>
 
       <!-- Result content (filled dynamically) -->
-      <div class="result-content" id="resultContent">
+      <div class="result-content" id="resultContent" role="region" aria-live="polite" aria-label="Property record destination">
         <div class="result-tag" id="resultTag">ASSESSOR / TAX RECORDS</div>
         <div class="result-county-name" id="resultCountyName">—</div>
         <div class="result-state-name" id="resultStateName">—</div>
@@ -635,7 +635,7 @@ footer { border-top:1px solid var(--border); padding:36px 48px; display:flex; al
     <div class="how-card">
       <div class="how-card-num">STEP 02</div>
       <div class="how-card-title">Pick the jurisdiction</div>
-      <div class="how-card-desc">300+ listed areas have direct links to government pages or record systems linked by local offices. If an area is not listed, the fallback options help you locate the correct assessor or tax office.</div>
+      <div class="how-card-desc">321 listed areas are mapped to direct record destinations or search fallbacks. If an area is not listed, the fallback options help you locate the correct assessor or tax office.</div>
     </div>
     <div class="how-card">
       <div class="how-card-num">STEP 03</div>
@@ -660,7 +660,7 @@ footer { border-top:1px solid var(--border); padding:36px 48px; display:flex; al
         <div class="why-stat-label">States &amp; DC</div>
       </div>
       <div class="why-stat">
-        <div class="why-stat-num" id="statCounties">300+</div>
+        <div class="why-stat-num" id="statCounties">321</div>
         <div class="why-stat-label">Listed Jurisdictions</div>
       </div>
       <div class="why-stat">
@@ -748,8 +748,8 @@ footer { border-top:1px solid var(--border); padding:36px 48px; display:flex; al
    Master directory of US property tax / assessor portal links.
    - 50 states + DC
    - 300+ listed jurisdictions, including direct portals and municipal-level search fallbacks
-   - For any unlisted jurisdiction, the UI can fall back to a
-     Google search query, so coverage is effectively 100% of US counties.
+   - For an unlisted jurisdiction, the UI offers Google and NETR directory
+     fallbacks; users must verify the resulting local office.
 
    Each county entry shape:
      {
@@ -1355,10 +1355,7 @@ function buildGoogleFallback(stateName, jurisdictionName) {
   return `https://www.google.com/search?q=${q}`;
 }
 
-/* Build a NETR Online directory URL — alternative path that often loads
-   when direct county portals are geo-blocked or behind aggressive WAF rules.
-   We link to the state-level NETR page (most reliable URL pattern); user
-   clicks through to county from there. */
+/* Build a NETR Online state-directory URL as an alternative discovery path. */
 function buildNetrFallback(stateCode) {
   return `https://publicrecords.netronline.com/state/${stateCode}`;
 }
@@ -1370,9 +1367,13 @@ function getCounties(stateCode) {
 
 /* Public API exposed to the page. */
 const TOTAL_ENTRIES = Object.values(COUNTY_PORTALS).reduce((n, arr) => n + arr.length, 0);
-const DIRECT_PORTAL_COUNT = Object.values(COUNTY_PORTALS)
+const DIRECT_PORTAL_ENTRIES = Object.values(COUNTY_PORTALS)
   .flat()
-  .filter(county => !isSearchFallback(county)).length;
+  .filter(county => !isSearchFallback(county));
+const DIRECT_PORTAL_COUNT = DIRECT_PORTAL_ENTRIES.length;
+const UNIQUE_DIRECT_PORTAL_COUNT = new Set(
+  DIRECT_PORTAL_ENTRIES.map(county => county.portal)
+).size;
 
 window.PROPERTY_TAX_DATA = {
   states: US_STATES,
@@ -1383,7 +1384,8 @@ window.PROPERTY_TAX_DATA = {
   getJurisdictionNoun,
   isSearchFallback,
   totalEntries: TOTAL_ENTRIES,
-  directPortalCount: DIRECT_PORTAL_COUNT
+  directPortalCount: DIRECT_PORTAL_COUNT,
+  uniqueDirectPortalCount: UNIQUE_DIRECT_PORTAL_COUNT
 };
 
 /* ===== end inlined data ===== */
@@ -1420,7 +1422,7 @@ window.PROPERTY_TAX_DATA = {
   var btnNetr          = document.getElementById('btnNetr');
 
   // Meta header: distinguish true direct links from search fallbacks.
-  document.getElementById('metaCounties').textContent = DATA.directPortalCount + ' Curated Direct Links';
+  document.getElementById('metaCounties').textContent = DATA.uniqueDirectPortalCount + ' Unique Direct Destinations';
   document.getElementById('statCounties').textContent = DATA.totalEntries;
 
   // ── Populate state dropdown
@@ -1494,6 +1496,7 @@ window.PROPERTY_TAX_DATA = {
         methodBtns[0] && methodBtns[0].classList.add('active');
         currentMethod = 'address';
         showStateOnly();
+        syncUrl();
       }
     }
 
@@ -1779,7 +1782,8 @@ window.PROPERTY_TAX_DATA = {
             ? (countyList && countyList.querySelector('.county-item'))
             : findCountyItem(out.county);
           var data = window.PROPERTY_TAX_DATA;
-          var label = data && data.getJurisdictionLabel ? data.getJurisdictionLabel(out.abbr, out.county) : out.county;
+          var matchedName = hit && hit.dataset && hit.dataset.name ? hit.dataset.name : out.county;
+          var label = data && data.getJurisdictionLabel ? data.getJurisdictionLabel(out.abbr, matchedName) : matchedName;
           if(hit){
             hit.click();
             try{ document.getElementById('step3').scrollIntoView({behavior:'smooth',block:'nearest'}); }catch(e){}
