@@ -1147,7 +1147,7 @@ footer { border-top:1px solid var(--border); padding:36px 48px; display:flex; al
     }
     q = q.replace(/\s+(County|Parish|Borough|Municipality|City|area)$/i,'').trim();
     if (!q) return;
-    var stub = { name:q, portal: DATA.buildGoogleFallback(currentState.name, q), routeType:"search", methods:["address","parcel","owner"], notes:"This area is not in the curated direct-link list. Google search is being used only to help locate the relevant local assessor or tax office." };
+    var stub = { name:q, portal: DATA.buildGoogleFallback(currentState.name, q), routeType:"search", matchSource:"manual", methods:["address","parcel","owner"], notes:"This area is not in the curated direct-link list. Google search is being used only to help locate the relevant local assessor or tax office." };
     selectCounty(stub);
   });
 
@@ -1159,6 +1159,19 @@ footer { border-top:1px solid var(--border); padding:36px 48px; display:flex; al
     var isFallback = DATA.isSearchFallback(currentCounty);
     resultCountyName.textContent = displayName;
     resultStateName.textContent  = currentState.name;
+
+    if (!isFallback) {
+      resultTag.textContent = 'CURATED DIRECT DESTINATION';
+    } else if (currentCounty.matchSource === 'detected') {
+      resultTag.textContent = 'DETECTED JURISDICTION · SEARCH FALLBACK';
+    } else if (currentCounty.matchSource === 'manual') {
+      resultTag.textContent = 'UNLISTED JURISDICTION · SEARCH FALLBACK';
+    } else if (currentCounty.matchSource === 'shared') {
+      resultTag.textContent = 'SHARED SELECTION · SEARCH FALLBACK';
+    } else {
+      resultTag.textContent = 'CURATED SEARCH FALLBACK';
+    }
+
     resultMethod.textContent     = isFallback ? 'Varies by destination' : (METHOD_LABEL[currentMethod] || '—');
 
     // Search-option metadata is a directory hint; the destination portal is authoritative.
@@ -1187,7 +1200,17 @@ footer { border-top:1px solid var(--border); padding:36px 48px; display:flex; al
 
     var destinationHost = '';
     try { destinationHost = new URL(currentCounty.portal).hostname.replace(/^www\./,''); } catch(e) {}
-    resultSourceType.textContent = (isFallback ? 'Search fallback' : 'Government / locally linked') + (destinationHost ? ' · ' + destinationHost : '');
+    var sourceLabel = 'Government / locally linked';
+    if (isFallback) {
+      sourceLabel = currentCounty.matchSource === 'detected'
+        ? 'Detected jurisdiction · search fallback'
+        : currentCounty.matchSource === 'manual'
+          ? 'Manual area · search fallback'
+          : currentCounty.matchSource === 'shared'
+            ? 'Shared fallback area'
+            : 'Curated search fallback';
+    }
+    resultSourceType.textContent = sourceLabel + (destinationHost ? ' · ' + destinationHost : '');
     btnPrimaryText.textContent = isFallback ? 'Find Local Assessor / Tax Office' : 'Open Local Records Portal';
 
     resultEmpty.style.display = 'none';
@@ -1234,6 +1257,7 @@ footer { border-top:1px solid var(--border); padding:36px 48px; display:flex; al
             name: area,
             portal: DATA.buildGoogleFallback(currentState.name, area),
             routeType: "search",
+            matchSource: "shared",
             methods: ["address","parcel","owner"],
             notes: "Shared fallback area. Verify the local assessor or tax office from the search results."
           };
@@ -1485,6 +1509,7 @@ footer { border-top:1px solid var(--border); padding:36px 48px; display:flex; al
         name: out.county,
         portal: data.buildGoogleFallback(currentState.name, out.county),
         routeType: "search",
+        matchSource: "detected",
         methods: ["address","parcel","owner"],
         notes: "Detected from the ZIP/address shortcut, but this jurisdiction does not yet have a curated direct portal in our directory. Use the search result to locate the official assessor or tax office and verify the government source before relying on it."
       };
