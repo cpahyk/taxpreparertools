@@ -1,0 +1,24 @@
+name: Publish verified converter executable
+on:
+  push:
+    branches: [main]
+    paths: ['converter-release-incoming/**']
+permissions:
+  contents: write
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v6
+      - name: Assemble and verify release
+        run: |
+          cat converter-release-incoming/part-* > converter/PDF_to_QBO_Converter.exe
+          echo 'a965438fa67b640a2e38c179a90a3764c2f326b537324b077d74d9de0397abc3  converter/PDF_to_QBO_Converter.exe' | sha256sum --check
+          test "$(stat -c%s converter/PDF_to_QBO_Converter.exe)" = 101679235
+          cp converter-release-incoming/latest.json converter/latest.json
+          git rm converter-release-incoming/part-* converter-release-incoming/latest.json
+          git add converter/PDF_to_QBO_Converter.exe converter/latest.json
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git commit -m 'Publish PDF to QBO Converter 4.0.0'
+          git push origin HEAD:main
